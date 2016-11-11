@@ -70,7 +70,8 @@ public class MentorController {
     private int parentCategoryMatchingPoints;
 
     /**
-     * The coefficient for the professional interests score (professional interests are more important than personal ones).
+     * The coefficient for the professional interests score
+     * (professional interests are more important than personal ones).
      */
     @Value("${matchingMentees.professionalInterestsCoefficient}")
     private int professionalInterestsCoefficient;
@@ -106,7 +107,8 @@ public class MentorController {
         Helper.checkPositive(professionalInterestsCoefficient, "professionalInterestsCoefficient");
         Helper.checkPositive(personalInterestsCoefficient, "personalInterestsCoefficient");
         Helper.checkPositive(topMatchingAmount, "topMatchingAmount");
-        Helper.checkConfigState(professionalInterestsCoefficient > personalInterestsCoefficient, "professional interests are more important than personal ones");
+        Helper.checkConfigState(professionalInterestsCoefficient > personalInterestsCoefficient,
+                "professional interests are more important than personal ones");
         //TODO uncomment below if implemented linkedin
         // Helper.checkConfigNotNull(linkedIn, "linkedIn");
     }
@@ -182,7 +184,8 @@ public class MentorController {
      * @throws MentorMeException if any other error occurred during operation
      */
     @RequestMapping(method = RequestMethod.GET)
-    public SearchResult<Mentor> search(@ModelAttribute MentorSearchCriteria criteria, @ModelAttribute Paging paging) throws MentorMeException {
+    public SearchResult<Mentor> search(@ModelAttribute MentorSearchCriteria criteria,
+            @ModelAttribute Paging paging) throws MentorMeException {
         return mentorService.search(criteria, paging);
     }
 
@@ -222,16 +225,30 @@ public class MentorController {
         List<Mentee> mentees = menteeService.search(criteria, null).getEntities();
         Map<Mentee, Integer> menteeScores = new HashMap<>();
         for (Mentee mentee : mentees) {
-            int professionalScore = Helper.getScore(directMatchingPoints, parentCategoryMatchingPoints, new ArrayList<>(mentee.getProfessionalInterests()), new ArrayList<>(mentee.getProfessionalInterests()), WeightedProfessionalInterest::getWeight, WeightedProfessionalInterest::getProfessionalInterest, Helper::getParentCategoryFromWeightedProfessionalInterest);
-            int personalScore = Helper.getScore(directMatchingPoints, parentCategoryMatchingPoints, new ArrayList<>(mentee.getPersonalInterests()), new ArrayList<>(mentee.getPersonalInterests()), WeightedPersonalInterest::getWeight, WeightedPersonalInterest::getPersonalInterest, Helper::getParentCategoryFromWeightedPersonalInterest);
-            menteeScores.put(mentee, professionalScore * professionalInterestsCoefficient + personalScore * personalInterestsCoefficient);
+            int professionalScore = Helper.getScore(directMatchingPoints, parentCategoryMatchingPoints,
+                    new ArrayList<>(mentee.getProfessionalInterests()),
+                    new ArrayList<>(mentee.getProfessionalInterests()),
+                    WeightedProfessionalInterest::getWeight,
+                    WeightedProfessionalInterest::getProfessionalInterest,
+                    Helper::getParentCategoryFromWeightedProfessionalInterest);
+            int personalScore = Helper.getScore(directMatchingPoints,
+                    parentCategoryMatchingPoints,
+                    new ArrayList<>(mentee.getPersonalInterests()),
+                    new ArrayList<>(mentee.getPersonalInterests()),
+                    WeightedPersonalInterest::getWeight,
+                    WeightedPersonalInterest::getPersonalInterest,
+                    Helper::getParentCategoryFromWeightedPersonalInterest);
+            menteeScores.put(mentee, professionalScore * professionalInterestsCoefficient
+                    + personalScore * personalInterestsCoefficient);
         }
 
         // comment below if do not want to show score in log
-        menteeScores.entrySet().forEach(k -> Helper.logDebugMessage(LogAspect.LOGGER, k.getKey().getId() + "," + k.getValue()));
+        menteeScores.entrySet().forEach(k ->
+                Helper.logDebugMessage(LogAspect.LOGGER, k.getKey().getId() + "," + k.getValue()));
         // sort the mentorScores by scores and return the top <topMatchingAmount> mentees;
-        return menteeScores.entrySet().stream().sorted(Comparator.comparing(Map.Entry<Mentee, Integer>::getValue).reversed()) // reverse means desc order
-            .map(Map.Entry::getKey).limit(topMatchingAmount).collect(Collectors.toList());
+        return menteeScores.entrySet().stream() // reverse means desc order
+                .sorted(Comparator.comparing(Map.Entry<Mentee, Integer>::getValue).reversed())
+                .map(Map.Entry::getKey).limit(topMatchingAmount).collect(Collectors.toList());
     }
 
     /**

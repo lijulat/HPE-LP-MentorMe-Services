@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * The search result.
+ * @param <T> the entity type
  */
 @Getter
 @Setter

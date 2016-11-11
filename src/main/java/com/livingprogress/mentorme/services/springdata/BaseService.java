@@ -1,6 +1,8 @@
 package com.livingprogress.mentorme.services.springdata;
 
 import com.livingprogress.mentorme.entities.AuditableEntity;
+import com.livingprogress.mentorme.entities.AuditableUserEntity;
+import com.livingprogress.mentorme.entities.Goal;
 import com.livingprogress.mentorme.entities.IdentifiableEntity;
 import com.livingprogress.mentorme.entities.InstitutionUser;
 import com.livingprogress.mentorme.entities.Paging;
@@ -93,8 +95,12 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
         Helper.checkNull(entity, "entity");
         handleNestedProperties(entity);
         if (entity instanceof AuditableEntity) {
-            AuditableEntity auditableEntity = (AuditableEntity) entity;
-            auditableEntity.setCreatedOn(new Date());
+            if (entity instanceof AuditableUserEntity) {
+                Helper.audit((AuditableUserEntity) entity);
+            } else {
+                AuditableEntity auditableEntity = (AuditableEntity) entity;
+                auditableEntity.setCreatedOn(new Date());
+            }
         }
         return repository.save(entity);
     }
@@ -131,8 +137,15 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
         T existing = checkUpdate(id, entity);
         handleNestedProperties(entity);
         if (entity instanceof AuditableEntity) {
-            AuditableEntity auditableEntity = (AuditableEntity) entity;
-            auditableEntity.setCreatedOn(((AuditableEntity) existing).getCreatedOn());
+            if (entity instanceof AuditableUserEntity) {
+                AuditableUserEntity newEntity = (AuditableUserEntity) entity;
+                AuditableUserEntity existingEntity = (AuditableUserEntity) existing;
+                newEntity.setCreatedBy(existingEntity.getCreatedBy());
+                newEntity.setCreatedOn(existingEntity.getCreatedOn());
+            } else {
+                AuditableEntity auditableEntity = (AuditableEntity) entity;
+                auditableEntity.setCreatedOn(((AuditableEntity) existing).getCreatedOn());
+            }
         }
         return repository.save(entity);
     }
@@ -148,12 +161,7 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
      * @throws EntityNotFoundException if the entity does not exist
      */
     protected T checkUpdate(long id, T entity) throws EntityNotFoundException {
-        Helper.checkPositive(id, "id");
-        Helper.checkNull(entity, "entity");
-        Helper.checkPositive(entity.getId(), "entity.id");
-        if (entity.getId() != id) {
-            throw new IllegalArgumentException("id and id of passed entity should be same.");
-        }
+        Helper.checkUpdate(id, entity);
         return ensureEntityExist(id);
     }
 
@@ -207,7 +215,7 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
      * @param entity the entity
      * @throws MentorMeException if any error occurred during operation
      */
-    protected void handleNestedProperties(T entity) throws MentorMeException {}
+    protected void handleNestedProperties(T entity) throws MentorMeException { }
 
     /**
      * This method is used to handle nested properties for institution user.
@@ -226,6 +234,34 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
             entity.getProfessionalInterests().forEach(p -> p.setUser(entity));
         } else {
             entity.setProfessionalInterests(Collections.emptyList());
+        }
+    }
+
+    /**
+     * This method is used to handle nested properties for goal.
+     *
+     * @param entity the entity
+     */
+    protected  void handleGoalNestedProperties(Goal entity) {
+        Helper.checkEntity(entity.getGoalCategory(), "entity.goalCategory");
+        Helper.checkPositive(entity.getNumber(), "entity.number");
+        if (entity.getCustomData() != null) {
+            entity.getCustomData().setGoal(entity);
+        }
+        if (entity.getTasks() != null) {
+            entity.getTasks()
+                  .forEach(t -> {
+                      t.setGoal(entity);
+                      if (t.getCustomData() != null) {
+                          t.getCustomData()
+                           .setTask(t);
+                      }
+                      if (t.getCustomData() != null) {
+                          t.getCustomData().setTask(t);
+                      }
+                  });
+        } else {
+            entity.setTasks(Collections.emptyList());
         }
     }
 

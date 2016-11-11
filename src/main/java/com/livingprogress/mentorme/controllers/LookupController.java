@@ -1,7 +1,7 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.entities.Country;
-import com.livingprogress.mentorme.entities.DocumentCategory;
+import com.livingprogress.mentorme.entities.DocumentType;
 import com.livingprogress.mentorme.entities.GoalCategory;
 import com.livingprogress.mentorme.entities.PersonalInterest;
 import com.livingprogress.mentorme.entities.ProfessionalConsultantArea;
@@ -135,14 +135,14 @@ public class LookupController {
     }
 
     /**
-     * This method is used to document category lookups.
+     * This method is used to document type lookups.
      *
-     * @return the lookups for document category
+     * @return the lookups for document type
      * @throws MentorMeException if any other error occurred during operation
      */
-    @RequestMapping(value = "/documentCategories ", method = RequestMethod.GET)
-    public List<DocumentCategory> getDocumentCategories() throws MentorMeException {
-        return lookupService.getDocumentCategories();
+    @RequestMapping(value = "/documentTypes", method = RequestMethod.GET)
+    public List<DocumentType> getDocumentTypes() throws MentorMeException {
+        return lookupService.getDocumentTypes();
     }
 }
 

@@ -6,11 +6,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+import static javax.persistence.EnumType.STRING;
 
 /**
  * The user.
@@ -21,7 +30,7 @@ import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class User extends AuditableEntity {
     /**
-     * An username
+     * An username.
      */
     private String username;
 
@@ -45,11 +54,13 @@ public class User extends AuditableEntity {
      * The user roles.
      */
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "user_role_id")})
+    @JoinTable(name = "user_user_role",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_role_id")})
     private List<UserRole> roles;
 
     /**
-     * The email
+     * The email.
      */
     private String email;
 
@@ -86,7 +97,7 @@ public class User extends AuditableEntity {
     /**
      * The user status.
      */
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private UserStatus status;
 }
 

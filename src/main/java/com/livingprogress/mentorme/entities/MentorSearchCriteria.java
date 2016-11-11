@@ -3,7 +3,6 @@ package com.livingprogress.mentorme.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Enumerated;
 import java.util.List;
 
 /**

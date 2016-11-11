@@ -34,7 +34,8 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
      * @throws ServletException throws if servlet error happens.
      */
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain filterChain) throws IOException, ServletException {
         setAuthenticationFromHeader((HttpServletRequest) request);
         filterChain.doFilter(request, response);
     }
@@ -43,7 +44,7 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
      * Set auth from header.
      * @param request the http servlet request.
      */
-    private void setAuthenticationFromHeader(HttpServletRequest request){
+    private void setAuthenticationFromHeader(HttpServletRequest request) {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof UserAuthentication)) {
             final UserAuthentication userAuthentication = tokenAuthenticationService.getAuthentication(request);

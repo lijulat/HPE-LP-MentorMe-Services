@@ -1,8 +1,11 @@
 package com.livingprogress.mentorme.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,7 +14,7 @@ import javax.persistence.Temporal;
 import java.util.Date;
 import java.util.List;
 
-import static javax.persistence.TemporalType.DATE;
+import static javax.persistence.TemporalType.TIMESTAMP;
 
 /**
  * The mentee mentor goal.
@@ -35,30 +38,29 @@ public class MenteeMentorGoal extends IdentifiableEntity {
     /**
      * The completed date.
      */
+    @Temporal(TIMESTAMP)
     private Date completedOn;
 
     /**
      * The goal's tasks.
      */
-    @OneToMany(mappedBy = "menteeMentorGoalId")
+    @OneToMany(mappedBy = "menteeMentorGoalId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MenteeMentorTask> tasks;
-
-    /**
-     * The start date.
-     */
-    @Temporal(DATE)
-    private Date startDate;
-
-    /**
-     * The end date.
-     */
-    @Temporal(DATE)
-    private Date endDate;
 
     /**
      * The mentee-mentor program id.
      */
-    @JoinColumn(name = "mentee_mentor_program_id")
+    @Column(name = "mentee_mentor_program_id", insertable = false, updatable = false)
     private long menteeMentorProgramId;
+
+    /**
+     * The mentee mentor program.
+     */
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "mentee_mentor_program_id")
+    private MenteeMentorProgram menteeMentorProgram;
+
+
 }
 

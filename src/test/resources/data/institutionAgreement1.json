@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "agreementName": "agreementName1",
+  "agreementFilePath": "agreementFilePath1",
+  "institutionId": 1,
+  "userRoles": [
+    {
+      "id": 1,
+      "value": "SYSTEM_ADMIN"
+    },
+    {
+      "id": 2,
+      "value": "INSTITUTION_ADMIN"
+    }
+  ]
+}

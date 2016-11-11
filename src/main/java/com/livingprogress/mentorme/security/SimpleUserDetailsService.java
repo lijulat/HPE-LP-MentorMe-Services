@@ -73,7 +73,7 @@ public class SimpleUserDetailsService implements UserDetailsService {
             }
             List<GrantedAuthority> authorities = buildUserAuthority(user.getRoles());
             return buildUserForAuthentication(user, authorities);
-        }catch (UsernameNotFoundException e) {
+        } catch (UsernameNotFoundException e) {
             throw e;
         } catch (Exception e) {
             throw new UsernameNotFoundException("Failed to get user data.", e);
@@ -103,7 +103,6 @@ public class SimpleUserDetailsService implements UserDetailsService {
      */
     private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
         // will check active/inactive status here
-        return new org.springframework.security.core.userdetails.User(
-                user.getUsername(), user.getPassword(), UserStatus.ACTIVE.equals(user.getStatus()), true, true, true, authorities);
+        return new CustomUserDetails(user, UserStatus.ACTIVE.equals(user.getStatus()), true, true, true, authorities);
     }
 }

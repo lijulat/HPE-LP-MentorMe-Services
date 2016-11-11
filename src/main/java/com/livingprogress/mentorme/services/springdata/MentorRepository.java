@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 /**
  * The Mentor repository.
  */
-public interface MentorRepository extends JpaRepository<Mentor,Long>, JpaSpecificationExecutor<Mentor> {
+public interface MentorRepository extends JpaRepository<Mentor, Long>, JpaSpecificationExecutor<Mentor> {
 }
 

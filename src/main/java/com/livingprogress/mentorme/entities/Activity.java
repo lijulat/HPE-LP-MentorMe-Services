@@ -3,15 +3,10 @@ package com.livingprogress.mentorme.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.Temporal;
-import java.util.Date;
-
-import static javax.persistence.TemporalType.TIMESTAMP;
 
 /**
  * The activity.
@@ -19,7 +14,7 @@ import static javax.persistence.TemporalType.TIMESTAMP;
 @Getter
 @Setter
 @Entity
-public class Activity extends IdentifiableEntity {
+public class Activity extends AuditableUserEntity {
     /**
      * The institutional program id.
      */
@@ -41,19 +36,6 @@ public class Activity extends IdentifiableEntity {
      * The description.
      */
     private String description;
-
-    /**
-     * The created by.
-     */
-    @JoinColumn(name = "created_by", insertable = true, updatable = false)
-    private long createdBy;
-
-    /**
-     * The created on.
-     */
-    @Column(name = "created_on", insertable = true, updatable = false)
-    @Temporal(TIMESTAMP)
-    private Date createdOn;
 
     /**
      * Mentee id.

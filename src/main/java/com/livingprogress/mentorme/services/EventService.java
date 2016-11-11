@@ -6,6 +6,6 @@ import com.livingprogress.mentorme.entities.EventSearchCriteria;
 /**
  * The event service. Extends generic service interface.Implementation should be effectively thread-safe.
 */
-public interface EventService extends GenericService<Event,EventSearchCriteria> {
+public interface EventService extends GenericService<Event, EventSearchCriteria> {
 }
 

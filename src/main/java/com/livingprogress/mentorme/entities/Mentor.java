@@ -44,7 +44,9 @@ public class Mentor extends InstitutionUser {
      * The professional areas.
      */
     @ManyToMany
-    @JoinTable(name = "mentor_professional_area", joinColumns = {@JoinColumn(name = "mentor_id")}, inverseJoinColumns = {@JoinColumn(name = "professional_area_id")})
+    @JoinTable(name = "mentor_professional_area",
+            joinColumns = {@JoinColumn(name = "mentor_id")},
+            inverseJoinColumns = {@JoinColumn(name = "professional_area_id")})
     private List<ProfessionalConsultantArea> professionalAreas;
 
     /**

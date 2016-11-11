@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * The InventoryTransferRequest repository.
  */
-public interface StateRepository extends JpaRepository<State,Long> {
+public interface StateRepository extends JpaRepository<State, Long> {
 }
 

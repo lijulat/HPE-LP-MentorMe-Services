@@ -1,0 +1,18 @@
+{
+  "task":  {
+      "id": 2,
+      "number":2,
+      "description": "description2",
+      "durationInDays": 2,
+      "mentorAssignment": true,
+      "menteeAssignment": false,
+      "documents": [],
+      "usefulLinks": [],
+      "custom": false,
+      "customData": null,
+      "goalId": 2
+  },
+  "completed": false,
+  "completedOn": null,
+  "menteeMentorGoalId": 2
+}

@@ -23,7 +23,8 @@ public class UserSpecification implements Specification<User> {
 
 
     /**
-     * Creates a WHERE clause for a query of the referenced entity in form of a Predicate for the given Root and CriteriaQuery.
+     * Creates a WHERE clause for a query of the referenced entity
+     * in form of a Predicate for the given Root and CriteriaQuery.
      * @param root the root
      * @param query the criteria query
      * @param cb the query builder
@@ -32,7 +33,7 @@ public class UserSpecification implements Specification<User> {
     public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         Predicate pd = cb.and();
         pd = Helper.buildLikePredicate(criteria.getEmail(), pd, root.get("email"), cb);
-        pd = Helper.buildNamePredicate(criteria.getName(),pd, root, cb);
+        pd = Helper.buildNamePredicate(criteria.getName(), pd, root, cb);
         pd = Helper.buildLikePredicate(criteria.getUsername(), pd, root.get("username"), cb);
         if (criteria.getRole() != null) {
             pd = cb.and(pd, cb.equal(root.join("roles").get("id"),

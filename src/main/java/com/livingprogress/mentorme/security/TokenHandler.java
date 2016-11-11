@@ -76,8 +76,8 @@ public class TokenHandler {
                     }
                 }
             } catch (IllegalArgumentException e) {
-                Helper.logException(LogAspect.LOGGER, "com.livingprogress.mentorme.security" +
-                        ".TokenHandler#parseUserFromToken", e);
+                Helper.logException(LogAspect.LOGGER, "com.livingprogress.mentorme.security"
+                        + ".TokenHandler#parseUserFromToken", e);
             }
         }
         return null;
@@ -144,7 +144,7 @@ public class TokenHandler {
     }
 
     /**
-     * Get bytes from base64 string
+     * Get bytes from base64 string.
      *
      * @param val the base64 string value.
      * @return bytes from base64 string

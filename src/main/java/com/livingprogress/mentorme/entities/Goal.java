@@ -1,8 +1,10 @@
 package com.livingprogress.mentorme.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -10,7 +12,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import java.util.List;
+
+import static javax.persistence.CascadeType.ALL;
 
 /**
  * The goal.
@@ -49,27 +54,40 @@ public class Goal extends IdentifiableEntity {
     /**
      * The tasks.
      */
-    @OneToMany(mappedBy = "goalId")
+    @OneToMany(mappedBy = "goalId", cascade = ALL)
+    @OrderBy("number")
     private List<Task> tasks;
 
     /**
      * The institutional program id.
      */
-    @JoinColumn(name = "institutional_program_id")
+    @Column(name = "institutional_program_id", insertable = false, updatable = false)
     private long institutionalProgramId;
+
+    /**
+     * The institutional program.
+     */
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "institutional_program_id")
+    private InstitutionalProgram institutionalProgram;
 
     /**
      * The useful links.
      */
-    @ManyToMany
-    @JoinTable(name = "goal_useful_link", joinColumns = {@JoinColumn(name = "goal_id")}, inverseJoinColumns = {@JoinColumn(name = "useful_link_id")})
+    @ManyToMany(cascade = ALL)
+    @JoinTable(name = "goal_useful_link",
+            joinColumns = {@JoinColumn(name = "goal_id")},
+            inverseJoinColumns = {@JoinColumn(name = "useful_link_id")})
     private List<UsefulLink> usefulLinks;
 
     /**
      * The documents.
      */
-    @ManyToMany
-    @JoinTable(name = "goal_document", joinColumns = {@JoinColumn(name = "goal_id")}, inverseJoinColumns = {@JoinColumn(name = "document_id")})
+    @ManyToMany(cascade = ALL)
+    @JoinTable(name = "goal_document",
+            joinColumns = {@JoinColumn(name = "goal_id")},
+            inverseJoinColumns = {@JoinColumn(name = "document_id")})
     private List<Document> documents;
 
     /**
@@ -80,9 +98,7 @@ public class Goal extends IdentifiableEntity {
     /**
      * Custom assigned goal data.
      */
-    @OneToOne(mappedBy = "goal")
-    //  @OneToOne
-    // @JoinColumn(name ="goal_id")
+    @OneToOne(mappedBy = "goal", cascade = ALL, orphanRemoval = true)
     private CustomAssignedGoalData customData;
 }
 

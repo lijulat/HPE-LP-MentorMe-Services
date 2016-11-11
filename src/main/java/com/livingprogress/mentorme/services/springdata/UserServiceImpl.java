@@ -22,7 +22,8 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * The Spring Data JPA implementation of UserService, extends BaseService<User,UserSearchCriteria>. Effectively thread safe after configuration.
+ * The Spring Data JPA implementation of UserService,
+ * extends BaseService<User,UserSearchCriteria>. Effectively thread safe after configuration.
  */
 @Service
 @NoArgsConstructor
@@ -62,7 +63,8 @@ public class UserServiceImpl extends BaseService<User, UserSearchCriteria> imple
         super.checkConfiguration();
         Helper.checkConfigNotNull(forgotPasswordRepository, "forgotPasswordRepository");
         Helper.checkConfigNotNull(userRepository, "userRepository");
-        Helper.checkConfigPositive(forgotPasswordExpirationTimeInMillis, "forgotPasswordExpirationTimeInMillis");
+        Helper.checkConfigPositive(forgotPasswordExpirationTimeInMillis,
+                "forgotPasswordExpirationTimeInMillis");
         Helper.checkConfigPositive(forgotPasswordMaxTimes, "forgotPasswordMaxTimes");
     }
 
@@ -117,8 +119,8 @@ public class UserServiceImpl extends BaseService<User, UserSearchCriteria> imple
      * @param providerId the provider id
      * @param providerUserId the provider user id
      * @return the match user
-     * @throws IllegalArgumentException: if parameters are null or not valid
-     * @throws MentorMeException: if any other error occurred during operation
+     * @throws IllegalArgumentException if parameters are null or not valid
+     * @throws MentorMeException if any other error occurred during operation
      */
     public User findByProviderIdAndProviderUserId(String providerId, String providerUserId) throws MentorMeException {
         Helper.checkNullOrEmpty(providerId, "providerId");

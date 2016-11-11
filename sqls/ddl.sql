@@ -140,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `institutional_program` (
   `program_category_id` BIGINT NOT NULL,
   `duration_in_days` INT NOT NULL,
   `created_on` DATETIME NOT NULL,
+  `program_image_url` VARCHAR(256) NULL,
   PRIMARY KEY (`id`),
   INDEX `ip_i_fk_idx` (`institution_id` ASC),
   INDEX `ip_pc_idx` (`program_category_id` ASC),
@@ -323,8 +324,8 @@ CREATE TABLE IF NOT EXISTS `mentee_mentor_program` (
   `mentor_id` BIGINT NOT NULL,
   `institutional_program_id` BIGINT NOT NULL,
   `request_status` VARCHAR(45) NULL,
-  `mentee_feedback_id` BIGINT NOT NULL,
-  `mentor_feedback_id` BIGINT NOT NULL,
+  `mentee_feedback_id` BIGINT NULL,
+  `mentor_feedback_id` BIGINT NULL,
   `start_date` DATE NULL,
   `end_date` DATE NULL,
   `completed` TINYINT(1) NOT NULL,
@@ -353,12 +354,12 @@ CREATE TABLE IF NOT EXISTS `mentee_mentor_program` (
   CONSTRAINT `mmp_mef_fk`
     FOREIGN KEY (`mentee_feedback_id`)
     REFERENCES `mentee_feedback` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `mmp_mf_fk`
     FOREIGN KEY (`mentor_feedback_id`)
     REFERENCES `mentor_feedback` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -369,9 +370,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mentee_mentor_goal` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `goal_id` BIGINT NULL,
-  `mentee_mentor_program_id` BIGINT NULL,
-  `start_date` DATE NULL,
-  `end_date` DATE NULL,
+  `mentee_mentor_program_id` BIGINT NOT NULL,
   `completed` TINYINT(1) NOT NULL,
   `completed_on` DATETIME NULL,
   PRIMARY KEY (`id`),
@@ -380,12 +379,12 @@ CREATE TABLE IF NOT EXISTS `mentee_mentor_goal` (
   CONSTRAINT `mg_mmp`
     FOREIGN KEY (`mentee_mentor_program_id`)
     REFERENCES `mentee_mentor_program` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `mg_g`
     FOREIGN KEY (`goal_id`)
     REFERENCES `goal` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -401,6 +400,7 @@ CREATE TABLE IF NOT EXISTS `task` (
   `mentor_assignment` TINYINT(1) NULL,
   `custom` TINYINT(1) NULL,
   `goal_id` BIGINT NOT NULL,
+  `number` INTEGER NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `t_g_fk_idx` (`goal_id` ASC),
   CONSTRAINT `t_g_fk`
@@ -420,18 +420,20 @@ CREATE TABLE IF NOT EXISTS `mentee_mentor_task` (
   `completed` TINYINT(1) NOT NULL,
   `completed_on` DATETIME NULL,
   `mentee_mentor_goal_id` BIGINT NOT NULL,
+  `start_date` DATE NULL,
+  `end_date` DATE NULL,
   PRIMARY KEY (`id`),
   INDEX `mt_mg_idx` (`mentee_mentor_goal_id` ASC),
   INDEX `mt_t_idx` (`task_id` ASC),
   CONSTRAINT `mt_mg`
     FOREIGN KEY (`mentee_mentor_goal_id`)
     REFERENCES `mentee_mentor_goal` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `mt_t`
     FOREIGN KEY (`task_id`)
     REFERENCES `task` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -509,8 +511,8 @@ CREATE TABLE IF NOT EXISTS `activity` (
   `description` VARCHAR(512) NULL,
   `created_by` BIGINT NOT NULL,
   `created_on` DATETIME NOT NULL,
-  `mentee_id` BIGINT NOT NULL,
-  `mentor_id` BIGINT NOT NULL,
+  `mentee_id` BIGINT NULL,
+  `mentor_id` BIGINT NULL,
   `global` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `a_me_idx` (`mentee_id` ASC),
@@ -518,17 +520,17 @@ CREATE TABLE IF NOT EXISTS `activity` (
   CONSTRAINT `a_ip`
     FOREIGN KEY (`institutional_program_id`)
     REFERENCES `institutional_program` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `a_me`
     FOREIGN KEY (`mentee_id`)
     REFERENCES `mentee` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `a_m`
     FOREIGN KEY (`mentor_id`)
     REFERENCES `mentor` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -545,7 +547,7 @@ CREATE TABLE IF NOT EXISTS `institution_agreement` (
   CONSTRAINT `ia_ii_fk`
     FOREIGN KEY (`institution_id`)
     REFERENCES `institution` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -571,7 +573,7 @@ CREATE TABLE IF NOT EXISTS `institution_agreement_user_role` (
   CONSTRAINT `i_a_u_r_i_i_fk`
     FOREIGN KEY (`institution_agreement_id`)
     REFERENCES `institution_agreement` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `i_a_u_r_u_r_fk`
     FOREIGN KEY (`user_role_id`)
@@ -687,11 +689,12 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `document_category`
+-- Table `document_type`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `document_category` (
+CREATE TABLE IF NOT EXISTS `document_type` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `value` VARCHAR(256) NOT NULL,
+  `icon_path` VARCHAR(256) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -703,14 +706,9 @@ CREATE TABLE IF NOT EXISTS `document` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(512) NOT NULL,
   `path` VARCHAR(512) NOT NULL,
-  `category_id` BIGINT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `d_dc_fk_idx` (`category_id` ASC),
-  CONSTRAINT `d_dc_fk`
-    FOREIGN KEY (`category_id`)
-    REFERENCES `document_category` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `created_by` BIGINT NOT NULL,
+  `created_on` DATETIME NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -741,7 +739,7 @@ CREATE TABLE IF NOT EXISTS `responsibility` (
   CONSTRAINT `r_ip_fk`
     FOREIGN KEY (`institutional_program_id`)
     REFERENCES `institutional_program` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -887,12 +885,12 @@ CREATE TABLE IF NOT EXISTS `custom_assigned_goal_data` (
   CONSTRAINT `cagd_me_fk`
     FOREIGN KEY (`mentee_id`)
     REFERENCES `mentee` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `cagd_m_fk`
     FOREIGN KEY (`mentor_id`)
     REFERENCES `mentor` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `cagd_g_fk`
     FOREIGN KEY (`goal_id`)
@@ -917,12 +915,12 @@ CREATE TABLE IF NOT EXISTS `custom_assigned_task_data` (
   CONSTRAINT `catd_me_fk0`
     FOREIGN KEY (`mentee_id`)
     REFERENCES `mentee` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `catd_m_fk0`
     FOREIGN KEY (`mentor_id`)
     REFERENCES `mentor` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `catd_t_fk0`
     FOREIGN KEY (`task_id`)
@@ -1028,7 +1026,7 @@ CREATE TABLE IF NOT EXISTS `institutional_program_document` (
   CONSTRAINT `ipd_ip_fk0`
     FOREIGN KEY (`institutional_program_id`)
     REFERENCES `institutional_program` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `ipd_d_fk00`
     FOREIGN KEY (`document_id`)
@@ -1048,7 +1046,7 @@ CREATE TABLE IF NOT EXISTS `institutional_program_link` (
   CONSTRAINT `ipl_ip_fk0`
     FOREIGN KEY (`institutional_program_id`)
     REFERENCES `institutional_program` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `ipl_l_fk00`
     FOREIGN KEY (`useful_link_id`)
@@ -1075,4 +1073,30 @@ CREATE TABLE IF NOT EXISTS `mentor_professional_area` (
     REFERENCES `professional_consultant_area` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `mentee_mentor_responsibility`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mentee_mentor_responsibility` (
+`id` BIGINT NOT NULL AUTO_INCREMENT,
+`number` INT NOT NULL,
+`title` VARCHAR(128) NOT NULL,
+`date` DATE NOT NULL,
+`mentee_responsibility` TINYINT(1) NULL,
+`mentor_responsibility` TINYINT(1) NULL,
+`responsibility_id` BIGINT NOT NULL,
+`mentee_mentor_program_id` BIGINT NOT NULL,
+PRIMARY KEY (`id`),
+INDEX `r_mmpi_fk_idx` (`mentee_mentor_program_id` ASC),
+CONSTRAINT `r_mmpi_fk`
+FOREIGN KEY (`mentee_mentor_program_id`)
+REFERENCES `mentee_mentor_program` (`id`)
+ON DELETE CASCADE
+ON UPDATE NO ACTION,
+CONSTRAINT `r_mmri_fk`
+FOREIGN KEY (`responsibility_id`)
+REFERENCES `responsibility` (`id`)
+ON DELETE CASCADE
+ON UPDATE NO ACTION)
 ENGINE = InnoDB;

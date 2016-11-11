@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Configure global auth manager builder
+     * Configure global auth manager builder.
      *
      * @param auth the auth manager builder
      * @throws Exception throws if any error happen
@@ -138,15 +138,72 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority("SYSTEM_ADMIN,MENTOR")
                 .antMatchers(DELETE, "/mentors/{id}")
                 .hasAnyAuthority("SYSTEM_ADMIN,MENTOR")
-                .antMatchers(GET, "/mentors/linkedInExperience").hasAnyAuthority("MENTOR")
-                //allow anonymous calls to social login
+                .antMatchers(GET, "/mentors/linkedInExperience").hasAuthority("MENTOR")
+                .antMatchers(POST, "/menteeMentorPrograms")
+                .hasAnyAuthority("MENTOR,MENTEE,INSTITUTION_ADMIN")
+                .antMatchers(PUT, "/menteeMentorPrograms/{id}")
+                .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
+                .antMatchers(DELETE, "/menteeMentorPrograms/{id}")
+                .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
+                .antMatchers(PUT, "/menteeMentorPrograms/{id}/menteeFeedback")
+                .hasAuthority("MENTEE")
+                .antMatchers(PUT, "/menteeMentorPrograms/{id}/mentorFeedback")
+                .hasAuthority("MENTOR")
+                .antMatchers(POST, "/menteeMentorTasks")
+                .hasAuthority("MENTOR")
+                .antMatchers(PUT, "/menteeMentorTasks/{id}")
+                .hasAnyAuthority("MENTOR")
+                .antMatchers(DELETE, "/menteeMentorTasks/{id}")
+                .hasAnyAuthority("MENTOR")
+                .antMatchers(POST, "/menteeMentorGoals")
+                .hasAnyAuthority("MENTOR")
+                .antMatchers(PUT, "/menteeMentorGoals/{id}")
+                .hasAnyAuthority("MENTOR")
+                .antMatchers(DELETE, "/menteeMentorGoals/{id}")
+                .hasAnyAuthority("MENTOR")
+                .antMatchers(POST, "/menteeMentorResponsibilities")
+                .hasAuthority("MENTOR")
+                .antMatchers(PUT, "/menteeMentorResponsibilities/{id}")
+                .hasAuthority("MENTOR")
+                .antMatchers(DELETE, "/menteeMentorResponsibilities/{id}")
+                .hasAuthority("MENTOR")
+                .antMatchers(POST, "/institutionAgreements")
+                .hasAnyAuthority("SYSTEM_ADMIN,INSTITUTION_ADMIN")
+                .antMatchers(PUT, "/institutionAgreements/{id}")
+                .hasAnyAuthority("SYSTEM_ADMIN,INSTITUTION_ADMIN")
+                .antMatchers(DELETE, "/institutionAgreements/{id}")
+                .hasAnyAuthority("SYSTEM_ADMIN,INSTITUTION_ADMIN")
+                .antMatchers(POST, "/goals")
+                .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
+                .antMatchers(POST, "/goals/{id}")
+                .hasAnyAuthority("INSTITUTION_ADMIN")
+                .antMatchers(DELETE, "/goals/{id}")
+                .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
+                .antMatchers(POST, "/tasks") // mentee can only update task but cannot create
+                .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
+                .antMatchers(POST, "/tasks/{id}")
+                .hasAnyAuthority("MENTOR,MENTEE,INSTITUTION_ADMIN")
+                .antMatchers(DELETE, "/tasks/{id}")
+                .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
+                .antMatchers(POST, "/institutionalPrograms")
+                .hasAnyAuthority("SYSTEM_ADMIN,INSTITUTION_ADMIN")
+                .antMatchers(POST, "/institutionalPrograms/{id}")
+                .hasAnyAuthority("SYSTEM_ADMIN,INSTITUTION_ADMIN")
+                .antMatchers(DELETE, "/institutionalPrograms/{id}")
+                .hasAnyAuthority("SYSTEM_ADMIN,INSTITUTION_ADMIN")
+                .antMatchers(POST, "/responsibilities")
+                .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
+                .antMatchers(PUT, "/responsibilities/{id}")
+                .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
+                .antMatchers(DELETE, "/responsibilities/{id}")
+                .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
+                 //allow anonymous calls to social login
                 .antMatchers("/auth/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
-
     }
 }
 

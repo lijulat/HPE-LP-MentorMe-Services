@@ -71,7 +71,8 @@ public class MenteeController extends BaseEmailController {
     private int parentCategoryMatchingPoints;
 
     /**
-     * The coefficient for the professional interests score (professional interests are more important than personal ones).
+     * The coefficient for the professional interests score
+     * (professional interests are more important than personal ones).
      */
     @Value("${matchingMentors.professionalInterestsCoefficient}")
     private int professionalInterestsCoefficient;
@@ -104,7 +105,8 @@ public class MenteeController extends BaseEmailController {
         Helper.checkPositive(professionalInterestsCoefficient, "professionalInterestsCoefficient");
         Helper.checkPositive(personalInterestsCoefficient, "personalInterestsCoefficient");
         Helper.checkPositive(topMatchingAmount, "topMatchingAmount");
-        Helper.checkConfigState(professionalInterestsCoefficient > personalInterestsCoefficient, "professional interests are more important than personal ones");
+        Helper.checkConfigState(professionalInterestsCoefficient > personalInterestsCoefficient,
+                "professional interests are more important than personal ones");
     }
 
     /**
@@ -193,7 +195,8 @@ public class MenteeController extends BaseEmailController {
      * @throws MentorMeException if any other error occurred during operation
      */
     @RequestMapping(method = RequestMethod.GET)
-    public SearchResult<Mentee> search(@ModelAttribute MenteeSearchCriteria criteria, @ModelAttribute Paging paging) throws MentorMeException {
+    public SearchResult<Mentee> search(@ModelAttribute MenteeSearchCriteria criteria,
+            @ModelAttribute Paging paging) throws MentorMeException {
         return menteeService.search(criteria, paging);
     }
 
@@ -233,16 +236,30 @@ public class MenteeController extends BaseEmailController {
         List<Mentor> mentors = mentorService.search(criteria, null).getEntities();
         Map<Mentor, Integer> mentorScores = new HashMap<>();
         for (Mentor mentor : mentors) {
-            int professionalScore = Helper.getScore(directMatchingPoints, parentCategoryMatchingPoints, new ArrayList<>(mentee.getProfessionalInterests()), new ArrayList<>(mentor.getProfessionalInterests()), WeightedProfessionalInterest::getWeight, WeightedProfessionalInterest::getProfessionalInterest, Helper::getParentCategoryFromWeightedProfessionalInterest);
-            int personalScore = Helper.getScore(directMatchingPoints, parentCategoryMatchingPoints, new ArrayList<>(mentee.getPersonalInterests()), new ArrayList<>(mentor.getPersonalInterests()), WeightedPersonalInterest::getWeight, WeightedPersonalInterest::getPersonalInterest, Helper::getParentCategoryFromWeightedPersonalInterest);
-            mentorScores.put(mentor, professionalScore * professionalInterestsCoefficient + personalScore * personalInterestsCoefficient);
+            int professionalScore = Helper.getScore(directMatchingPoints, parentCategoryMatchingPoints,
+                    new ArrayList<>(mentee.getProfessionalInterests()),
+                    new ArrayList<>(mentor.getProfessionalInterests()),
+                    WeightedProfessionalInterest::getWeight,
+                    WeightedProfessionalInterest::getProfessionalInterest,
+                    Helper::getParentCategoryFromWeightedProfessionalInterest);
+            int personalScore = Helper.getScore(directMatchingPoints, parentCategoryMatchingPoints,
+                    new ArrayList<>(mentee.getPersonalInterests()),
+                    new ArrayList<>(mentor.getPersonalInterests()),
+                    WeightedPersonalInterest::getWeight,
+                    WeightedPersonalInterest::getPersonalInterest,
+                    Helper::getParentCategoryFromWeightedPersonalInterest);
+            mentorScores.put(mentor,
+                    professionalScore * professionalInterestsCoefficient
+                            + personalScore * personalInterestsCoefficient);
         }
 
         // comment below if do not want to show score in log
-        mentorScores.entrySet().forEach(k -> Helper.logDebugMessage(LogAspect.LOGGER, k.getKey().getId() + "," + k.getValue()));
+        mentorScores.entrySet().forEach(k ->
+                Helper.logDebugMessage(LogAspect.LOGGER, k.getKey().getId() + "," + k.getValue()));
         // sort the mentorScores by scores and return the top <topMatchingAmount> mentors
-        return mentorScores.entrySet().stream().sorted(Comparator.comparing(Map.Entry<Mentor, Integer>::getValue).reversed()) // reverse means desc order
-            .map(Map.Entry::getKey).limit(topMatchingAmount).collect(Collectors.toList());
+        return mentorScores.entrySet().stream()  // reverse means desc order
+                .sorted(Comparator.comparing(Map.Entry<Mentor, Integer>::getValue).reversed())
+                .map(Map.Entry::getKey).limit(topMatchingAmount).collect(Collectors.toList());
     }
 
     /**

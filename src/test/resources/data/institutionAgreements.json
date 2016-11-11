@@ -1,0 +1,57 @@
+{
+  "total": 6,
+  "totalPages": 1,
+  "entities": [
+    {
+      "id": 1,
+      "agreementName": "agreementName1",
+      "agreementFilePath": "agreementFilePath1",
+      "institutionId": 1,
+      "userRoles": [
+        {
+          "id": 1,
+          "value": "SYSTEM_ADMIN"
+        },
+        {
+          "id": 2,
+          "value": "INSTITUTION_ADMIN"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "agreementName": "agreementName2",
+      "agreementFilePath": "agreementFilePath2",
+      "institutionId": 2,
+      "userRoles": []
+    },
+    {
+      "id": 3,
+      "agreementName": "agreementName3",
+      "agreementFilePath": "agreementFilePath3",
+      "institutionId": 3,
+      "userRoles": []
+    },
+    {
+      "id": 4,
+      "agreementName": "agreementName4",
+      "agreementFilePath": "agreementFilePath4",
+      "institutionId": 4,
+      "userRoles": []
+    },
+    {
+      "id": 5,
+      "agreementName": "agreementName5",
+      "agreementFilePath": "agreementFilePath5",
+      "institutionId": 5,
+      "userRoles": []
+    },
+    {
+      "id": 6,
+      "agreementName": "agreementName6",
+      "agreementFilePath": "agreementFilePath6",
+      "institutionId": 6,
+      "userRoles": []
+    }
+  ]
+}

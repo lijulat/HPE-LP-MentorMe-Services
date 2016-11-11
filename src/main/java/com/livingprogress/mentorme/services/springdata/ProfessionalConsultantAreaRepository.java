@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * The ProfessionalConsultantArea repository.
  */
-public interface ProfessionalConsultantAreaRepository extends JpaRepository<ProfessionalConsultantArea,Long> {
+public interface ProfessionalConsultantAreaRepository extends JpaRepository<ProfessionalConsultantArea, Long> {
 }
 

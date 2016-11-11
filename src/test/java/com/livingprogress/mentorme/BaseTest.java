@@ -2,10 +2,18 @@ package com.livingprogress.mentorme;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.livingprogress.mentorme.entities.Activity;
+import com.livingprogress.mentorme.entities.ActivityType;
+import com.livingprogress.mentorme.entities.Document;
+import com.livingprogress.mentorme.entities.Goal;
 import com.livingprogress.mentorme.entities.IdentifiableEntity;
+import com.livingprogress.mentorme.entities.InstitutionalProgram;
 import com.livingprogress.mentorme.entities.SearchResult;
+import com.livingprogress.mentorme.entities.Task;
 import com.livingprogress.mentorme.services.LookupService;
 import com.livingprogress.mentorme.utils.Helper;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -13,6 +21,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,18 +30,28 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.servlet.Filter;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -46,7 +65,6 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes ={Application.class})
-//@SpringApplicationConfiguration(classes ={Application.class, TestConfig.class})
 @WebAppConfiguration
 @EnableWebSecurity
 @TestPropertySource(locations = "classpath:test.properties")
@@ -60,6 +78,21 @@ public abstract class BaseTest {
      * The sql names list.
      */
     private static final List<String> SQLS = Arrays.asList("clear.sql", "testdata.sql");
+
+    /**
+     * The token auth header name.
+     */
+    protected static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
+
+    /**
+     * The mock multi part file1
+     */
+    protected static MockMultipartFile FILE1 = new MockMultipartFile("files", "test1.txt", "application/octet-stream", "doc1".getBytes());
+
+    /**
+     * The mock multi part file2
+     */
+    protected static MockMultipartFile FILE2 = new MockMultipartFile("files", "test2.txt", "application/octet-stream", "doc2".getBytes());
 
     /**
      * The lookup service used to perform operations.
@@ -92,6 +125,18 @@ public abstract class BaseTest {
     private String fromAddress;
 
     /**
+     * The upload directory.
+     */
+    @Value("${uploadDirectory}")
+    private String uploadDirectory;
+
+    /**
+     * The upload directory cleanup flag.
+     */
+    @Value("${cleanupUploadDirectory}")
+    private boolean cleanupUploadDirectory;
+
+    /**
      * The web application context.
      */
     @Autowired
@@ -108,6 +153,17 @@ public abstract class BaseTest {
     protected MockMvc mockMvc;
 
     /**
+     * The spring security filter chain.
+     */
+    @Autowired
+    private Filter springSecurityFilterChain;
+
+    /**
+     * The mock mvc object with security support.
+     */
+    protected MockMvc mockAuthMvc;
+
+    /**
      * The wiser email server.
      */
     protected Wiser wiser;
@@ -116,6 +172,31 @@ public abstract class BaseTest {
      * The sample future date.
      */
     protected Date sampleFutureDate;
+
+    /**
+     * The system admin token.
+     */
+    protected String systemAdminToken;
+
+    /**
+     * The institution admin token.
+     */
+    protected String institutionAdminToken;
+
+    /**
+     * The mentor token.
+     */
+    protected String mentorToken;
+
+    /**
+     * The mentee token.
+     */
+    protected String menteeToken;
+
+    /**
+     * The default locale.
+    */
+    private Locale defaultLocale;
 
     /**
      * Setup test.
@@ -127,12 +208,23 @@ public abstract class BaseTest {
         wiser = new Wiser(port);
         wiser.start();
         this.mockMvc = webAppContextSetup(context).build();
+        this.mockAuthMvc = webAppContextSetup(context)
+                .addFilters(springSecurityFilterChain)
+                .build();
+        systemAdminToken = readFile("sytemAdminToken.txt");
+        institutionAdminToken = readFile("institutionAdminToken.txt");
+        mentorToken = readFile("mentorToken.txt");
+        menteeToken = readFile("menteeToken.txt");
         for (String sql : SQLS) {
             runSQL(sql);
         }
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, 2);
         sampleFutureDate = calendar.getTime();
+        defaultLocale = Locale.getDefault();
+        // use english as default locale during test
+        Locale.setDefault(Locale.ENGLISH);
+        cleanupUploadDirectory();
     }
 
     /**
@@ -143,6 +235,24 @@ public abstract class BaseTest {
     @After
     public void tearDown() throws Exception {
         wiser.stop();
+        if (defaultLocale != null) {
+            Locale.setDefault(defaultLocale);
+        }
+        cleanupUploadDirectory();
+    }
+
+    /**
+     * Clean up upload directory.
+     *
+     * @throws IOException throws if any io error happen
+     */
+    protected void cleanupUploadDirectory() throws IOException {
+       File dir = new File(uploadDirectory);
+        if(!dir.exists()){
+            FileUtils.forceMkdir(dir);
+        } else if(cleanupUploadDirectory){
+            FileUtils.cleanDirectory(dir);
+        }
     }
 
     /**
@@ -165,7 +275,9 @@ public abstract class BaseTest {
      */
     @Transactional
     protected void runSQL(String name) throws IOException {
-        Stream<String> lines = FileUtils.readLines(new File(SQL_FOLDER, name), Helper.UTF8).stream().filter(c -> !Helper.isNullOrEmpty(c) && !c.trim().startsWith("-"));
+        Stream<String> lines = FileUtils.readLines(new File(SQL_FOLDER, name), Helper.UTF8).stream()
+                                        .filter(c -> !Helper.isNullOrEmpty(c) && !c.trim()
+                                                                                   .startsWith("-"));
         new TransactionTemplate(txManager).execute(status -> {
             lines.forEach(sql -> entityManager.createNativeQuery(sql).executeUpdate());
             return null;
@@ -258,7 +370,7 @@ public abstract class BaseTest {
      * @param entities the entities
      * @param <T> the entity class
      */
-    protected static <T extends IdentifiableEntity> void checkEntities(List<T> entities) throws Exception {
+    protected static <T extends IdentifiableEntity> void checkEntities(List<T> entities) {
         assertTrue(entities.size() > 0);
         entities.forEach(BaseTest::checkEntity);
     }
@@ -270,7 +382,7 @@ public abstract class BaseTest {
      * @param newEntities the new entities
      * @param <T> the entity class
      */
-    protected static <T extends IdentifiableEntity> void verifyEntities(List<T> oldEntities, List<T> newEntities) throws Exception {
+    protected static <T extends IdentifiableEntity> void verifyEntities(List<T> oldEntities, List<T> newEntities){
         assertTrue(oldEntities.size() > 0);
         assertEquals(oldEntities.size(), newEntities.size());
         IntStream.range(0, oldEntities.size()).forEach(idx -> {
@@ -278,5 +390,200 @@ public abstract class BaseTest {
             assertTrue(id > 0);
             oldEntities.get(idx).setId(id);
         });
+    }
+
+    /**
+     * Verify documents.
+     */
+    protected  void verifyDocuments(long count) throws Exception {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<Document> root = query.from(Document.class);
+        Predicate pd = cb.or(
+                cb.equal(root.get("name"), FILE1.getOriginalFilename()),
+                cb.equal(root.get("name"), FILE2.getOriginalFilename()));
+      query.select(cb.count(root))
+             .where(pd);
+        assertEquals(count, (long) entityManager.createQuery(query)
+                                             .getSingleResult());
+    }
+
+    /**
+     * Verify activity entity.
+     * @param activityType the activity type
+     * @param objectId the object id
+     * @param description the description
+     * @param institutionalProgramId the institutional program id
+     * @param menteeId the mentee id
+     * @param mentorId  mentor id
+     * @param global the global flag
+     */
+    protected void verifyActivity(
+            ActivityType activityType, long objectId,
+            String description, Long institutionalProgramId,
+            Long menteeId, Long mentorId, boolean global)  {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> query = cb.createQuery(Long.class);
+        Root<Activity> root = query.from(Activity.class);
+        Predicate pd = cb.and(cb.equal(root.get("objectId"), objectId),
+                cb.equal(root.get("activityType"), activityType),
+                cb.equal(root.get("description"), description),
+                cb.equal(root.get("institutionalProgramId"), institutionalProgramId),
+                cb.equal(root.get("menteeId"), menteeId),
+                cb.equal(root.get("mentorId"), mentorId),
+                cb.equal(root.get("global"), global));
+        query.select(cb.count(root)).where(pd);
+        assertEquals(1L, (long) entityManager.createQuery(query)
+                                             .getSingleResult());
+    }
+
+    /**
+     * Get multi value map for institutional program.
+     * @param entity the entity.
+     * @return the match multi value map.
+     * @throws Exception throws if any error happens
+     */
+    protected MultiValueMap<String, String> getInstitutionalProgramParams(InstitutionalProgram entity) throws Exception{
+        List<String> args = new ArrayList<>();
+        args.addAll(Arrays.asList("programName", "startDate", "endDate",
+                "institution.id", "programCategory.id",
+                 "programCategory.value","durationInDays", "programImageUrl"));
+        if(entity.getUsefulLinks() != null){
+            IntStream.range(0, entity.getUsefulLinks().size()).forEach(idx -> {
+                args.add("usefulLinks[" + idx + "].title");
+                args.add("usefulLinks[" + idx + "].address");
+            });
+        }
+        if(entity.getResponsibilities() != null){
+            IntStream.range(0, entity.getResponsibilities().size()).forEach(idx -> {
+                args.add("responsibilities[" + idx + "].number");
+                args.add("responsibilities[" + idx + "].title");
+                args.add("responsibilities[" + idx + "].date");
+                args.add("responsibilities[" + idx + "].menteeResponsibility");
+                args.add("responsibilities[" + idx + "].mentorResponsibility");
+            });
+        }
+        if(entity.getGoals() != null){
+            IntStream.range(0, entity.getGoals().size()).forEach(idx -> {
+                args.add("goals[" + idx + "].number");
+                args.add("goals[" + idx + "].subject");
+                args.add("goals[" + idx + "].description");
+                args.add("goals[" + idx + "].goalCategory.id");
+                args.add("goals[" + idx + "].goalCategory.value");
+                args.add("goals[" + idx + "].durationInDays");
+                args.add("goals[" + idx + "].custom");
+                args.add("goals[" + idx + "].customData.mentor.id");
+                args.add("goals[" + idx + "].customData.mentee.id");
+                if(entity.getGoals().get(idx).getUsefulLinks() != null){
+                    IntStream.range(0, entity.getUsefulLinks().size()).forEach(idy -> {
+                        args.add("goals[" + idx + "].usefulLinks[" + idy + "].title");
+                        args.add("goals[" + idx + "].usefulLinks[" + idy + "].address");
+                    });
+                }
+                if(entity.getGoals().get(idx).getTasks() != null){
+                    IntStream.range(0, entity.getGoals().get(idx).getTasks().size()).forEach(idy -> {
+                        args.add("goals[" + idx + "].tasks[" + idy + "].number");
+                        args.add("goals[" + idx + "].tasks[" + idy + "].description");
+                        args.add("goals[" + idx + "].tasks[" + idy + "].durationInDays");
+                        args.add("goals[" + idx + "].tasks[" + idy + "].mentorAssignment");
+                        args.add("goals[" + idx + "].tasks[" + idy + "].menteeAssignment");
+                        args.add("goals[" + idx + "].tasks[" + idy + "].menteeAssignment");
+                        args.add("goals[" + idx + "].tasks[" + idy + "].custom");
+                        args.add("goals[" + idx + "].tasks[" + idy + "].custom");
+                        args.add("goals[" + idx + "].tasks[" + idy + "].customData.mentee.id");
+                        args.add("goals[" + idx + "].tasks[" + idy + "].customData.mentor.id");
+                    });
+                }
+            });
+        }
+        return postForm(entity, args);
+    }
+
+    /**
+     * Get multi value map for goal.
+     * @param entity the entity.
+     * @return the match multi value map.
+     * @throws Exception throws if any error happens
+     */
+    protected MultiValueMap<String, String> getGoalParams(Goal entity) throws Exception{
+        List<String> args = new ArrayList<>();
+        args.addAll(Arrays.asList("subject", "description",
+                "goalCategory.id","goalCategory.value",
+                "durationInDays", "institutionalProgramId",
+                "custom", "number"));
+        if(entity.getUsefulLinks() != null){
+            IntStream.range(0, entity.getUsefulLinks().size()).forEach(idx -> {
+                args.add("usefulLinks[" + idx + "].title");
+                args.add("usefulLinks[" + idx + "].address");
+            });
+        }
+        if(entity.getTasks() != null){
+            IntStream.range(0, entity.getTasks().size()).forEach(idx -> {
+                args.add("tasks[" + idx + "].number");
+                args.add("tasks[" + idx + "].description");
+                args.add("tasks[" + idx + "].durationInDays");
+                args.add("tasks[" + idx + "].mentorAssignment");
+                args.add("tasks[" + idx + "].menteeAssignment");
+                args.add("tasks[" + idx + "].menteeAssignment");
+                args.add("tasks[" + idx + "].custom");
+                args.add("tasks[" + idx + "].custom");
+                args.add("tasks[" + idx + "].customData.mentee.id");
+                args.add("tasks[" + idx + "].customData.mentor.id");
+            });
+        }
+        if(entity.getCustomData() != null){
+            args.add("customData.mentor.id");
+            args.add("customData.mentee.id");
+        }
+        return postForm(entity, args);
+    }
+
+    /**
+     * Get multi value map for task.
+     * @param entity the entity.
+     * @return the match multi value map.
+     * @throws Exception throws if any error happens
+     */
+    protected MultiValueMap<String, String> getTaskParams(Task entity) throws Exception{
+        List<String> args = new ArrayList<>();
+        args.addAll(Arrays.asList("description","durationInDays",
+                "custom", "mentorAssignment", "menteeAssignment", "goalId", "number"));
+        if(entity.getUsefulLinks() != null){
+            IntStream.range(0, entity.getUsefulLinks().size()).forEach(idx -> {
+                args.add("usefulLinks[" + idx + "].title");
+                args.add("usefulLinks[" + idx + "].address");
+            });
+        }
+        if(entity.getCustomData() != null){
+            args.add("customData.mentor.id");
+            args.add("customData.mentee.id");
+        }
+        return postForm(entity, args);
+    }
+
+    /**
+     * Post form with object params.
+     * @param obj the object.
+     * @param props the properties
+     * @param <T> the entity type
+     * @return the multi value map
+     * @throws Exception throws if any error happens.
+     */
+    public static <T extends IdentifiableEntity> MultiValueMap<String, String> postForm(T obj, List<String> props) throws Exception{
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        if(obj.getId() > 0){
+            props.add("id");
+        }
+        for (String path : props) {
+            Object prop = PropertyUtils.getProperty(obj, path);
+            if (prop instanceof Date) {
+                // special handle for date type to avoid locale issue
+                SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+                params.set(path, format.format(prop));
+            } else {
+                params.set(path, BeanUtils.getProperty(obj, path));
+            }
+        }
+        return params;
     }
 }

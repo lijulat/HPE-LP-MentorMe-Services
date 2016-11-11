@@ -11,20 +11,24 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 
 /**
- * The Spring Data JPA implementation of InstitutionService, extends BaseService<Institution,InstitutionSearchCriteria>. Effectively thread safe after configuration.
+ * The Spring Data JPA implementation of InstitutionService,
+ * extends BaseService<Institution,InstitutionSearchCriteria>.
+ * Effectively thread safe after configuration.
  */
 @Service
 @NoArgsConstructor
-public class InstitutionServiceImpl extends BaseService<Institution, InstitutionSearchCriteria> implements InstitutionService {
+public class InstitutionServiceImpl
+        extends BaseService<Institution, InstitutionSearchCriteria> implements InstitutionService {
 
     /**
      * This method is used to get the specification.
      *
-     * @param criteria: the search criteria
+     * @param criteria the search criteria
      * @return the specification
      * @throws MentorMeException if any other error occurred during operation
      */
-    protected Specification<Institution> getSpecification(InstitutionSearchCriteria criteria) throws MentorMeException {
+    protected Specification<Institution> getSpecification(InstitutionSearchCriteria criteria)
+            throws MentorMeException {
         return new InstitutionSpecification(criteria);
     }
 

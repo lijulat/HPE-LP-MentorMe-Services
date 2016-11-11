@@ -1,7 +1,7 @@
 package com.livingprogress.mentorme.services;
 
 import com.livingprogress.mentorme.entities.Country;
-import com.livingprogress.mentorme.entities.DocumentCategory;
+import com.livingprogress.mentorme.entities.DocumentType;
 import com.livingprogress.mentorme.entities.GoalCategory;
 import com.livingprogress.mentorme.entities.PersonalInterest;
 import com.livingprogress.mentorme.entities.ProfessionalConsultantArea;
@@ -82,11 +82,11 @@ public interface LookupService {
     List<ProfessionalInterest> getProfessionalInterests() throws MentorMeException;
 
     /**
-     * This method is used to document category lookups.
+     * This method is used to document type lookups.
      *
-     * @return the lookups for document category
+     * @return the lookups for document type
      * @throws MentorMeException if any other error occurred during operation
      */
-    List<DocumentCategory> getDocumentCategories() throws MentorMeException;
+    List<DocumentType> getDocumentTypes() throws MentorMeException;
 }
 

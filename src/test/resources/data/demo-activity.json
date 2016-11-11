@@ -1,0 +1,9 @@
+{
+  "institutionalProgramId": 2,
+  "activityType": "GOAL_UPDATED",
+  "objectId": 2,
+  "description": "demoDescription",
+  "menteeId": 12,
+  "mentorId": 8,
+  "global": false
+}

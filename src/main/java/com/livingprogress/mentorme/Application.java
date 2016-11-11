@@ -1,5 +1,6 @@
 package com.livingprogress.mentorme;
 
+import com.livingprogress.mentorme.utils.CustomMessageSource;
 import com.livingprogress.mentorme.utils.Helper;
 import org.apache.log4j.MDC;
 import org.springframework.boot.SpringApplication;
@@ -7,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -21,7 +24,7 @@ import java.util.UUID;
 @SpringBootApplication
 public class Application {
     /**
-     * The request id listener
+     * The request id listener.
      */
     public class RequestIdListener implements ServletRequestListener {
         /**
@@ -67,7 +70,7 @@ public class Application {
     }
 
     /**
-     * The error attributes
+     * The error attributes.
      *
      * @return the custom error attributes.
      */
@@ -84,12 +87,14 @@ public class Application {
             public Map<String, Object> getErrorAttributes(RequestAttributes requestAttributes, boolean
                     includeStackTrace) {
                 Map<String, Object> errorAttributes = super.getErrorAttributes(requestAttributes, includeStackTrace);
-                if (!errorAttributes.containsKey("code") || !errorAttributes.containsKey("message") ||
-                        errorAttributes.size() != 2) {
+                if (!errorAttributes.containsKey("code") || !errorAttributes.containsKey("message")
+                        || errorAttributes.size() != 2) {
                     Throwable error = getError(requestAttributes);
-                    Object status = errorAttributes.getOrDefault("status", 500);
-                    Object message = errorAttributes.getOrDefault("message", error != null && !Helper.isNullOrEmpty(error.getMessage()) ? error.getMessage() :
-                            "Unexpected error");
+                    Object status = errorAttributes.getOrDefault("status",
+                            HttpStatus.INTERNAL_SERVER_ERROR.value());
+                    Object message = errorAttributes.getOrDefault("message",
+                            error != null && !Helper.isNullOrEmpty(error.getMessage()) ? error.getMessage()
+                                    : "Unexpected error");
                     errorAttributes.clear();
                     errorAttributes.put("code", status);
                     errorAttributes.put("message", message);
@@ -100,12 +105,23 @@ public class Application {
     }
 
     /**
+     * The resource bundle message source bean.
+     * @return the resource bundle message source bean.
+     */
+    @Bean
+    public ResourceBundleMessageSource messageSource() {
+        return new CustomMessageSource();
+    }
+
+    /**
      * The main entry point of the application.
      *
      * @param args the arguments
      */
     public static void main(String[] args) {
+        // change to use Spanish Locale
+        // see http://www.oracle.com/technetwork/java/javase/java8locales-2095355.html
+        // Locale.setDefault(new Locale("es"));
         SpringApplication.run(Application.class, args);
     }
-
 }

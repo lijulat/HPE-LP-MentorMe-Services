@@ -108,6 +108,17 @@ public class MentorControllerTest extends BaseTest {
         verifyEntities(demoEntity.getProfessionalExperiences(), result.getProfessionalExperiences());
         verifyEntities(demoEntity.getProfessionalInterests(), result.getProfessionalInterests());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
+        // test null nested properties
+        mockMvc.perform(MockMvcRequestBuilders.post("/mentors")
+                                              .contentType(MediaType.APPLICATION_JSON)
+                                              .content(readFile("demo-mentor2.json")))
+               .andExpect(status().isCreated())
+               .andExpect(jsonPath("$.password").doesNotExist())
+               .andExpect(jsonPath("$.id").isNumber())
+               .andExpect(jsonPath("$.createdOn").exists())
+               .andExpect(jsonPath("$.personalInterests", Matchers.hasSize(0)))
+               .andExpect(jsonPath("$.professionalInterests", Matchers.hasSize(0)))
+               .andExpect(jsonPath("$.professionalExperiences", Matchers.hasSize(0)));
     }
 
     /**
@@ -386,10 +397,9 @@ public class MentorControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/mentors?mentorRequestStatus=APPROVED")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$.total").value(1))
+               .andExpect(jsonPath("$.total").value(3))
                .andExpect(jsonPath("$.totalPages").value(1))
-               .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
-               .andExpect(jsonPath("$.entities[0].id").value(3));
+               .andExpect(jsonPath("$.entities", Matchers.hasSize(3)));
         mockMvc.perform(MockMvcRequestBuilders.get("/mentors?personalInterests[0].id=1")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
@@ -441,9 +451,14 @@ public class MentorControllerTest extends BaseTest {
      */
     @Test
     public void getMatchingMentees() throws Exception {
+        // assigned
         mockMvc.perform(MockMvcRequestBuilders.get("/mentors/3/matchingMentees"))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("mentor3MatchingMentees.json")));
+        // not assigned
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentors/5/matchingMentees"))
+               .andExpect(status().isOk())
+               .andExpect(content().json(readFile("mentor5MatchingMentees.json")));
         mockMvc.perform(MockMvcRequestBuilders.get("/mentors/999/matchingMentees"))
                .andExpect(status().isNotFound());
     }
