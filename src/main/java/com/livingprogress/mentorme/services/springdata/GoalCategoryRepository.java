@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * The GoalCategory repository.
  */
-public interface GoalCategoryRepository extends JpaRepository<GoalCategory,Long> {
+public interface GoalCategoryRepository extends JpaRepository<GoalCategory, Long> {
 }
 

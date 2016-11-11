@@ -22,7 +22,8 @@ public class EventSpecification implements Specification<Event> {
     private final EventSearchCriteria criteria;
 
     /**
-     * Creates a WHERE clause for a query of the referenced entity in form of a Predicate for the given Root and CriteriaQuery.
+     * Creates a WHERE clause for a query of the referenced entity
+     * in form of a Predicate for the given Root and CriteriaQuery.
      * @param root the root
      * @param query the criteria query
      * @param cb the query builder
@@ -31,7 +32,7 @@ public class EventSpecification implements Specification<Event> {
     public Predicate toPredicate(Root<Event> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         Predicate pd = cb.and();
         //TODO implement other criteria
-        if(Boolean.TRUE.equals(criteria.getUpcoming())){
+        if (Boolean.TRUE.equals(criteria.getUpcoming())) {
             Date now = new Date();
             pd = cb.and(pd, cb.and(cb.greaterThan(root.get("startTime"), now),
                      cb.greaterThan(root.get("endTime"), now)));

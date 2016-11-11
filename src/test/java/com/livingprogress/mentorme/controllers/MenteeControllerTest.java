@@ -420,9 +420,14 @@ public class MenteeControllerTest extends BaseTest {
      */
     @Test
     public void getMatchingMentors() throws Exception {
+        // assigned
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/matchingMentors"))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("mentee4MatchingMentors.json")));
+        // not assigned
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentees/10/matchingMentors"))
+               .andExpect(status().isOk())
+               .andExpect(content().json(readFile("mentee10MatchingMentors.json")));
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees/999/matchingMentors"))
                .andExpect(status().isNotFound());
     }

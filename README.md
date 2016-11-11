@@ -51,6 +51,24 @@ similar for database,email related configurations.
 Details about order please check [Externalized Configuration](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html).
 For example if you define port in command line parameter and system variable at same time it will use command line parameter.
 
+### default institutional program id
+Edit `src/main/resources/application.properties`.
+You can change default institutional program id for mentee mentor program with key **menteeMentorProgram.defaultInstitutionalProgramId**.
+
+### upload file configuration
+Edit `src/main/resources/application.properties`.
+You can change upload directory with key **uploadDirectory**, the folder must exist before application starts or tests.
+
+You can change max size for **multipart.maxFileSize**, **multipart.maxRequestSize**.
+
+If you want to view uploaded files during test please set **cleanupUploadDirectory** to **false** `src/test/resources/test.properties` and check **uploadDirectory**.
+
+### international support
+Please check message values in `src/main/resources/locale/messages.properties` 
+and `src/main/resources/locale/messages_es.properties`(spanish) and 
+`src/test/resources/locale/messages_en.properties`(english).
+
+It contains description for creating/updating goal/task/menteeMentorGoal/menteeMentorTask.
 
 ## Mysql setup 
 Create schemas with `sqls/schema.sql`.
@@ -73,7 +91,19 @@ You can also test with coverage report in `target/site/jacoco/index.html` after 
 mvn clean test jacoco:report
 ```
 
+## Check code style
+You can run below command to check code style using [Checkstyle plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/)
+
+``` bash
+mvn checkstyle:checkstyle
+```
+
 ## Deployment
+You can run below mvn command to run application directly.
+``` bash
+mvn clean spring-boot:run
+```
+You can also package and run(make sure related configurations is right for example upload directory exists before run).
 ``` bash
 mvn clean package
 ```

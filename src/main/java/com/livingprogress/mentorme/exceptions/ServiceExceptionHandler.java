@@ -1,5 +1,6 @@
 package com.livingprogress.mentorme.exceptions;
 
+import com.livingprogress.mentorme.utils.Helper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -44,7 +44,7 @@ public class ServiceExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Handle no handler found exception.
+     * Handle internal exception with custom error response.
      * @param ex the exception.
      * @param headers the http header.
      * @param status the http status
@@ -52,7 +52,11 @@ public class ServiceExceptionHandler extends ResponseEntityExceptionHandler {
      * @return the error response entity
      */
     @Override
-    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body,
+            HttpHeaders headers, HttpStatus status, WebRequest request) {
+        if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
+            request.setAttribute("javax.servlet.error.exception", ex, 0);
+        }
         return buildErrorResponse(status, ex);
     }
 
@@ -62,10 +66,11 @@ public class ServiceExceptionHandler extends ResponseEntityExceptionHandler {
      * @param ex the exception.
      * @return the error response entity with code and message.
      */
-    private static ResponseEntity<Object> buildErrorResponse(HttpStatus status, Throwable ex){
-        Map<String,Object> responseBody = new HashMap<>();
+    private static ResponseEntity<Object> buildErrorResponse(HttpStatus status, Throwable ex) {
+        Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("code", status.value());
-        responseBody.put("message", ex.getMessage());
+        responseBody.put("message", !Helper.isNullOrEmpty(ex.getMessage()) ? ex.getMessage()
+                : "Unexpected error");
         return new ResponseEntity<>(responseBody, status);
     }
 }

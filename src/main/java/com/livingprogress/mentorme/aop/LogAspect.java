@@ -19,9 +19,9 @@ public class LogAspect {
     /**
      * The logger pointcut.
      */
-    private static final String LOG_POINTCUT = "execution(* com.livingprogress.mentorme.services.*.*(..)) || " +
-            "execution(* com.livingprogress.mentorme.controllers.*.*(..)) || execution(* com.livingprogress.mentorme" +
-            ".security.SimpleUserDetailsService.*(..))";
+    private static final String LOG_POINTCUT = "execution(* com.livingprogress.mentorme.services.*.*(..)) || "
+            + "execution(* com.livingprogress.mentorme.controllers.*.*(..)) || execution(* com.livingprogress.mentorme"
+            + ".security.SimpleUserDetailsService.*(..))";
 
     /**
      * The logger with package name.

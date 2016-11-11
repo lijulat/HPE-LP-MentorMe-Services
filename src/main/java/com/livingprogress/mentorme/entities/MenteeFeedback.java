@@ -15,7 +15,7 @@ public class MenteeFeedback extends IdentifiableEntity {
     /**
      * The mentor score.
      */
-    private int mentorScore;
+    private Integer mentorScore;
 
     /**
      * The comment.

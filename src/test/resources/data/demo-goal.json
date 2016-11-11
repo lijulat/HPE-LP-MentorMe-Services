@@ -1,0 +1,47 @@
+{
+  "number": 1,
+  "subject": "demoSubject",
+  "description": "demoDescription",
+  "goalCategory": {
+    "id": 2,
+    "value" : "GoalCategory2"
+  },
+  "durationInDays": 11,
+  "tasks": [{
+    "number":1,
+    "description":"demoDescription",
+    "durationInDays":2,
+    "mentorAssignment":true,
+    "menteeAssignment":true,
+    "custom": true,
+    "customData":{
+      "mentor":{
+        "id":3
+      },
+      "mentee":{
+        "id":4
+      }
+    }
+  }],
+  "institutionalProgramId": 2,
+  "usefulLinks": [
+    {
+      "title": "title1",
+      "address": "address1"
+    },
+    {
+      "title": "title2",
+      "address": "address2"
+    }
+  ],
+  "documents": [],
+  "custom": true,
+  "customData": {
+    "mentor": {
+      "id": 3
+    },
+    "mentee": {
+      "id": 4
+    }
+  }
+}

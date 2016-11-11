@@ -3,11 +3,16 @@ package com.livingprogress.mentorme.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.livingprogress.mentorme.entities.Activity;
+import com.livingprogress.mentorme.entities.ActivityType;
+import com.livingprogress.mentorme.entities.AuditableUserEntity;
+import com.livingprogress.mentorme.entities.Document;
 import com.livingprogress.mentorme.entities.IdentifiableEntity;
 import com.livingprogress.mentorme.entities.InstitutionAffiliationCode;
 import com.livingprogress.mentorme.entities.InstitutionUser;
 import com.livingprogress.mentorme.entities.InstitutionUserSearchCriteria;
 import com.livingprogress.mentorme.entities.Mentee;
+import com.livingprogress.mentorme.entities.MenteeMentorProgram;
 import com.livingprogress.mentorme.entities.Mentor;
 import com.livingprogress.mentorme.entities.NewPassword;
 import com.livingprogress.mentorme.entities.ParentConsent;
@@ -18,12 +23,21 @@ import com.livingprogress.mentorme.entities.User;
 import com.livingprogress.mentorme.entities.WeightedPersonalInterest;
 import com.livingprogress.mentorme.entities.WeightedProfessionalInterest;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
-import lombok.NoArgsConstructor;
+import com.livingprogress.mentorme.exceptions.MentorMeException;
+import com.livingprogress.mentorme.security.CustomUserDetails;
+import com.livingprogress.mentorme.security.UserAuthentication;
+import com.livingprogress.mentorme.services.springdata.ActivityRepository;
+import com.livingprogress.mentorme.services.springdata.MenteeMentorProgramRepository;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -33,21 +47,24 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static lombok.AccessLevel.PRIVATE;
 
 /**
  * This class provides help methods used in this application.
  */
-@NoArgsConstructor(access = PRIVATE)
 public class Helper {
     /**
      * Represents the entrance message.
@@ -76,6 +93,11 @@ public class Helper {
     public static final String UTF8 = "UTF-8";
 
     /**
+     * The private constructor.
+     */
+    private Helper() { }
+
+    /**
      * It checks whether a given object is null.
      *
      * @param object the object to be checked
@@ -86,6 +108,20 @@ public class Helper {
         if (object == null) {
             throw new IllegalArgumentException(String.format("%s should be provided", name));
         }
+    }
+
+    /**
+     * It checks whether a given identifiable entity is valid.
+     *
+     * @param object the object to be checked
+     * @param name the name of the object, used in the exception message
+     * @param <T> the entity class
+     * @throws IllegalArgumentException the exception thrown when the object is null or id of object is not positive
+     */
+    public static <T extends IdentifiableEntity> void checkEntity(T object, String name)
+            throws IllegalArgumentException {
+        checkNull(object, name);
+        checkPositive(object.getId(), name + ".id");
     }
 
     /**
@@ -103,6 +139,7 @@ public class Helper {
      *
      * @param str the string to be checked
      * @return true if a given string is null or empty
+     * @throws IllegalArgumentException throws if string is null or empty
      */
     public static boolean isNullOrEmpty(String str) throws IllegalArgumentException {
         return str == null || str.trim().isEmpty();
@@ -117,7 +154,8 @@ public class Helper {
      */
     public static void checkNullOrEmpty(String str, String name) throws IllegalArgumentException {
         if (isNullOrEmpty(str)) {
-            throw new IllegalArgumentException(String.format("%s should be valid string(not null and not empty)", name));
+            throw new IllegalArgumentException(
+                    String.format("%s should be valid string(not null and not empty)", name));
         }
     }
 
@@ -171,6 +209,23 @@ public class Helper {
     public static void checkConfigNotNull(Object object, String name) {
         if (object == null) {
             throw new ConfigurationException(String.format("%s should be provided", name));
+        }
+    }
+
+    /**
+     * Check if the directory configuration is valid.
+     *
+     * @param path the path
+     * @param name the name
+     * @throws ConfigurationException if the configuration is null or empty or valid directory not exist.
+     */
+    public static void checkDirectory(String path, String name) {
+        if (Helper.isNullOrEmpty(path)) {
+            throw new ConfigurationException(String.format("%s should be provided", name));
+        }
+        File file = new File(path);
+        if (!file.exists() || !file.isDirectory()) {
+            throw new ConfigurationException(String.format("%s should be valid directory path", name));
         }
     }
 
@@ -283,6 +338,8 @@ public class Helper {
                 result = "Spring model and view object";
             } else if (obj instanceof NewPassword) {
                 result = "New Password request";
+            } else if (obj instanceof  MultipartFile[]) {
+                result = "Multipart file request";
             } else {
                 result = MAPPER.writeValueAsString(obj);
             }
@@ -301,6 +358,12 @@ public class Helper {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Encode password for user.
+     * @param user the user entity.
+     * @param isUpdating the updating flag.
+     * @return the user with encrypted password field.
+     */
     public static User encodePassword(User user, boolean isUpdating) {
         Helper.checkNull(user, "user");
         String rawPassword = user.getPassword();
@@ -324,7 +387,8 @@ public class Helper {
      * @param <T> the identifiable entity
      * @return the match predicate
      */
-    public static <T extends IdentifiableEntity> Predicate buildInPredicate(List<T> val, Predicate pd, Path<?> path, CriteriaBuilder cb) {
+    public static <T extends IdentifiableEntity> Predicate
+    buildInPredicate(List<T> val, Predicate pd, Path<?> path, CriteriaBuilder cb) {
         if (val != null && !val.isEmpty()) {
             List<Long> ids = val.stream().map(IdentifiableEntity::getId).collect(Collectors.toList());
             pd = cb.and(pd, path.in(ids));
@@ -342,7 +406,8 @@ public class Helper {
      * @param <Y> the comparable entity
      * @return the match predicate
      */
-    public static <Y extends Comparable<? super Y>> Predicate buildGreaterThanOrEqualToPredicate(Y val, Predicate pd, Path<? extends Y> path, CriteriaBuilder cb) {
+    public static <Y extends Comparable<? super Y>> Predicate
+    buildGreaterThanOrEqualToPredicate(Y val, Predicate pd, Path<? extends Y> path, CriteriaBuilder cb) {
         if (val != null) {
             pd = cb.and(pd, cb.greaterThanOrEqualTo(path, val));
         }
@@ -359,7 +424,8 @@ public class Helper {
      * @param <Y> the comparable entity
      * @return the match predicate
      */
-    public static <Y extends Comparable<? super Y>> Predicate buildLessThanOrEqualToPredicate(Y val, Predicate pd, Path<? extends Y> path, CriteriaBuilder cb) {
+    public static <Y extends Comparable<? super Y>> Predicate
+    buildLessThanOrEqualToPredicate(Y val, Predicate pd, Path<? extends Y> path, CriteriaBuilder cb) {
         if (val != null) {
             pd = cb.and(pd, cb.lessThanOrEqualTo(path, val));
         }
@@ -430,13 +496,15 @@ public class Helper {
      * Build name predicate..
      *
      * @param name the name
+     * @param pd the predicate
      * @param root the root
      * @param cb the criteria builder.
      * @return the match predicate
      */
     public static Predicate buildNamePredicate(String name, Predicate pd, Root<?> root, CriteriaBuilder cb) {
         if (!isNullOrEmpty(name)) {
-            pd = cb.and(pd, cb.or(Helper.buildLike(name, root.get("firstName"), cb), Helper.buildLike(name, root.get("lastName"), cb)));
+            pd = cb.and(pd, cb.or(Helper.buildLike(name,
+                    root.get("firstName"), cb), Helper.buildLike(name, root.get("lastName"), cb)));
         }
         return pd;
     }
@@ -445,30 +513,42 @@ public class Helper {
      * Build predicate for institution user.
      *
      * @param criteria the institution user criteria
+     * @param pd the predicate
      * @param root the root
      * @param cb the criteria builder.
      * @return the match predicate
      */
-    public static Predicate buildPredicate(InstitutionUserSearchCriteria criteria, Predicate pd, Root<?> root, CriteriaBuilder cb) {
+    public static Predicate
+    buildPredicate(InstitutionUserSearchCriteria criteria, Predicate pd, Root<?> root, CriteriaBuilder cb) {
         pd = Helper.buildEqualPredicate(criteria.getInstitutionId(), pd, root.get("institution").get("id"), cb);
         pd = Helper.buildEqualPredicate(criteria.getStatus(), pd, root.get("status"), cb);
-        pd = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinAveragePerformanceScore(), pd, root.get("averagePerformanceScore"), cb);
-        pd = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxAveragePerformanceScore(), pd, root.get("averagePerformanceScore"), cb);
+        pd = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinAveragePerformanceScore(),
+                pd, root.get("averagePerformanceScore"), cb);
+        pd = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxAveragePerformanceScore(),
+                pd, root.get("averagePerformanceScore"), cb);
         pd = Helper.buildNamePredicate(criteria.getName(), pd, root, cb);
-        pd = Helper.buildInPredicate(criteria.getPersonalInterests(), pd, root.join("personalInterests", JoinType.LEFT).get("personalInterest").get("id"), cb);
-        pd = Helper.buildInPredicate(criteria.getProfessionalInterests(), pd, root.join("professionalInterests", JoinType.LEFT).get("professionalInterest").get("id"), cb);
-        pd = Helper.buildEqualPredicate(criteria.getAssignedToInstitution(), pd, root.get("assignedToInstitution"), cb);
+        pd = Helper.buildInPredicate(criteria.getPersonalInterests(), pd,
+                root.join("personalInterests", JoinType.LEFT).get("personalInterest").get("id"), cb);
+        pd = Helper.buildInPredicate(criteria.getProfessionalInterests(), pd,
+                root.join("professionalInterests", JoinType.LEFT).get("professionalInterest").get("id"), cb);
+        pd = Helper.buildEqualPredicate(criteria.getAssignedToInstitution(), pd,
+                root.get("assignedToInstitution"), cb);
         return pd;
     }
 
     /**
-     * Check whether entity list is null or empty.
+     * Get id of entity.
      *
-     * @param values the entity list.
-     * @return true if value has been updated.
+     * @param entity the entity.
+     * @param <T> the entity class
+     * @return if of entity if exists otherwise null.
      */
-    public static <T extends IdentifiableEntity> boolean isNullOrEmptyList(List<T> values) {
-        return values == null || values.isEmpty();
+    public static <T extends IdentifiableEntity> Long getId(T entity) {
+        Long id = null;
+        if (entity != null) {
+            id = entity.getId();
+        }
+        return id;
     }
 
     /**
@@ -498,11 +578,15 @@ public class Helper {
      *
      * @param oldValues the old values
      * @param newValues the new values.
+     * @param <T> the entity class
      * @return true if value has been updated.
      */
     public static <T extends IdentifiableEntity> boolean isUpdated(List<T> oldValues, List<T> newValues) {
-        List<Long> oldIds = oldValues == null ? Collections.emptyList() : oldValues.stream().map(IdentifiableEntity::getId).collect(Collectors.toList());
-        return newValues == null && !oldIds.isEmpty() || newValues != null && (oldIds.size() != newValues.size() || newValues.stream().anyMatch(a -> !oldIds.contains(a.getId())));
+        List<Long> oldIds = oldValues == null ? Collections.emptyList()
+                : oldValues.stream().map(IdentifiableEntity::getId).collect(Collectors.toList());
+        return newValues == null && !oldIds.isEmpty()
+                || newValues != null
+                && (oldIds.size() != newValues.size() || newValues.stream().anyMatch(a -> !oldIds.contains(a.getId())));
     }
 
     /**
@@ -510,12 +594,15 @@ public class Helper {
      *
      * @param oldValues the old values
      * @param newValues the new values.
+     * @param <T> the entity class
      * @return true if value has been updated.
      */
-    public static <T extends WeightedPersonalInterest> boolean isUpdatedWeightedPersonalInterests(List<T> oldValues, List<T> newValues) {
+    public static <T extends WeightedPersonalInterest> boolean
+    isUpdatedWeightedPersonalInterests(List<T> oldValues, List<T> newValues) {
         return isUpdated(oldValues, newValues) || oldValues.stream().anyMatch(w -> {
             T match = newValues.stream().filter(n -> n.getId() == w.getId()).findFirst().get();
-            return isUpdated(w.getWeight(), match.getWeight()) || isUpdated(w.getPersonalInterest().getId(), match.getPersonalInterest().getId());
+            return isUpdated(w.getWeight(), match.getWeight())
+                    || isUpdated(w.getPersonalInterest().getId(), match.getPersonalInterest().getId());
         });
     }
 
@@ -524,12 +611,15 @@ public class Helper {
      *
      * @param oldValues the old values
      * @param newValues the new values.
+     * @param <T> the entity class
      * @return true if value has been updated.
      */
-    public static <T extends WeightedProfessionalInterest> boolean isUpdatedWeightedProfessionalInterests(List<T> oldValues, List<T> newValues) {
+    public static <T extends WeightedProfessionalInterest> boolean
+    isUpdatedWeightedProfessionalInterests(List<T> oldValues, List<T> newValues) {
         return isUpdated(oldValues, newValues) || oldValues.stream().anyMatch(w -> {
             T match = newValues.stream().filter(n -> n.getId() == w.getId()).findFirst().get();
-            return isUpdated(w.getWeight(), match.getWeight()) || isUpdated(w.getProfessionalInterest().getId(), match.getProfessionalInterest().getId());
+            return isUpdated(w.getWeight(), match.getWeight())
+                    || isUpdated(w.getProfessionalInterest().getId(), match.getProfessionalInterest().getId());
         });
     }
 
@@ -538,10 +628,11 @@ public class Helper {
      *
      * @param oldEntity the old entity
      * @param newEntity the new entity.
+     * @param <T> the entity class
      * @return true if value has been updated.
      */
     public static <T extends User> boolean isUpdated(T oldEntity, T newEntity) {
-        if(isBothNull(oldEntity, newEntity)){
+        if (isBothNull(oldEntity, newEntity)) {
             return false;
         }
         boolean updated = false;
@@ -588,10 +679,11 @@ public class Helper {
      *
      * @param oldEntity the old entity
      * @param newEntity the new entity.
+     * @param <T> the entity class
      * @return true if value has been updated.
      */
     public static <T extends InstitutionUser> boolean isUpdated(T oldEntity, T newEntity) {
-        if(isBothNull(oldEntity, newEntity)){
+        if (isBothNull(oldEntity, newEntity)) {
             return false;
         }
         boolean updated = isUpdated((User) oldEntity, (User) newEntity);
@@ -632,7 +724,8 @@ public class Helper {
                 oldEntity.getPersonalInterests().forEach(c -> c.setUser(oldEntity));
             }
         }
-        if (isUpdatedWeightedProfessionalInterests(oldEntity.getProfessionalInterests(), newEntity.getProfessionalInterests())) {
+        if (isUpdatedWeightedProfessionalInterests(oldEntity.getProfessionalInterests(),
+                newEntity.getProfessionalInterests())) {
             updated = true;
             oldEntity.getProfessionalInterests().clear();
             if (newEntity.getProfessionalInterests() != null) {
@@ -652,12 +745,18 @@ public class Helper {
      *
      * @param oldValues the old values
      * @param newValues the new values.
+     * @param <T> the entity class
      * @return true if value has been updated.
      */
-    public static <T extends ProfessionalExperienceData> boolean isUpdatedProfessionalExperienceDatas(List<T> oldValues, List<T> newValues) {
+    public static <T extends ProfessionalExperienceData> boolean
+    isUpdatedProfessionalExperienceDatas(List<T> oldValues, List<T> newValues) {
         return isUpdated(oldValues, newValues) || oldValues.stream().anyMatch(w -> {
             T match = newValues.stream().filter(n -> n.getId() == w.getId()).findFirst().get();
-            return isUpdated(w.getPosition(), match.getPosition()) || isUpdated(w.getWorkLocation(), match.getWorkLocation()) || isUpdated(w.getStartDate(), match.getStartDate()) || isUpdated(w.getEndDate(), match.getEndDate()) || isUpdated(w.getDescription(), match.getDescription());
+            return isUpdated(w.getPosition(), match.getPosition())
+                    || isUpdated(w.getWorkLocation(), match.getWorkLocation())
+                    || isUpdated(w.getStartDate(), match.getStartDate())
+                    || isUpdated(w.getEndDate(), match.getEndDate())
+                    || isUpdated(w.getDescription(), match.getDescription());
         });
     }
 
@@ -666,14 +765,16 @@ public class Helper {
      *
      * @param oldEntity the old entity
      * @param newEntity the new entity.
+     * @param <T> the entity class
      * @return true if value has been updated.
      */
     public static <T extends Mentor> boolean isUpdated(T oldEntity, T newEntity) {
-        if(isBothNull(oldEntity, newEntity)){
+        if (isBothNull(oldEntity, newEntity)) {
             return false;
         }
         boolean updated = isUpdated((InstitutionUser) oldEntity, (InstitutionUser) newEntity);
-        if (isUpdatedProfessionalExperienceDatas(oldEntity.getProfessionalExperiences(), newEntity.getProfessionalExperiences())) {
+        if (isUpdatedProfessionalExperienceDatas(oldEntity.getProfessionalExperiences(),
+                newEntity.getProfessionalExperiences())) {
             updated = true;
             oldEntity.getProfessionalExperiences().clear();
             if (newEntity.getProfessionalExperiences() != null) {
@@ -708,14 +809,15 @@ public class Helper {
      * @return true if value has been updated.
      */
     public static boolean isUpdatedParentConsent(ParentConsent oldEntity, ParentConsent newEntity) {
-        if(isBothNull(oldEntity, newEntity)){
+        if (isBothNull(oldEntity, newEntity)) {
             return false;
         }
-        return isUpdated(oldEntity, newEntity) ||
-                isUpdated(oldEntity.getParentName(), newEntity.getParentEmail()) ||
-                isUpdated(oldEntity.getSignatureFilePath(), oldEntity.getSignatureFilePath()) ||
-                isUpdated(oldEntity.getParentEmail(), oldEntity.getParentEmail()) ||
-                isUpdated(oldEntity.getToken(), oldEntity.getToken());
+        return isUpdated(oldEntity, newEntity)
+                || isUpdated(oldEntity.getParentName(), newEntity.getParentEmail())
+                || isUpdated(oldEntity.getSignatureFilePath(), oldEntity.getSignatureFilePath())
+                || isUpdated(oldEntity.getParentEmail(), oldEntity.getParentEmail())
+                || isUpdated(oldEntity.getToken(), oldEntity.getToken());
+
     }
 
     /**
@@ -725,12 +827,15 @@ public class Helper {
      * @param newEntity the new entity.
      * @return true if value has been updated.
      */
-    public static boolean isUpdatedInstitutionAffiliationCode(InstitutionAffiliationCode oldEntity, InstitutionAffiliationCode newEntity) {
-        if(isBothNull(oldEntity, newEntity)){
+    public static boolean
+    isUpdatedInstitutionAffiliationCode(InstitutionAffiliationCode oldEntity, InstitutionAffiliationCode newEntity) {
+        if (isBothNull(oldEntity, newEntity)) {
             return false;
         }
-        return isUpdated(oldEntity, newEntity) ||
-                isUpdated(oldEntity.getCode(), newEntity.getCode()) || isUpdated(oldEntity.isUsed(), oldEntity.isUsed());
+        return isUpdated(oldEntity, newEntity)
+                || isUpdated(oldEntity.getCode(), newEntity.getCode())
+                || isUpdated(oldEntity.isUsed(), oldEntity.isUsed());
+
     }
 
     /**
@@ -738,10 +843,11 @@ public class Helper {
      *
      * @param oldEntity the old entity
      * @param newEntity the new entity.
+     * @param <T> the entity class
      * @return true if value has been updated.
      */
     public static <T extends Mentee> boolean isUpdated(T oldEntity, T newEntity) {
-        if(isBothNull(oldEntity, newEntity)){
+        if (isBothNull(oldEntity, newEntity)) {
             return false;
         }
         boolean updated = isUpdated((InstitutionUser) oldEntity, (InstitutionUser) newEntity);
@@ -753,7 +859,8 @@ public class Helper {
             updated = true;
             oldEntity.setSchool(newEntity.getSchool());
         }
-        if (isUpdatedInstitutionAffiliationCode(oldEntity.getInstitutionAffiliationCode(), newEntity.getInstitutionAffiliationCode())) {
+        if (isUpdatedInstitutionAffiliationCode(oldEntity.getInstitutionAffiliationCode(),
+                newEntity.getInstitutionAffiliationCode())) {
             updated = true;
             oldEntity.setInstitutionAffiliationCode(newEntity.getInstitutionAffiliationCode());
         }
@@ -776,7 +883,8 @@ public class Helper {
      * @return parent category
      */
     public static PersonalInterest getParentCategoryFromWeightedPersonalInterest(WeightedPersonalInterest entity) {
-        if (entity != null && entity.getPersonalInterest() != null && entity.getPersonalInterest().getParentCategory() != null) {
+        if (entity != null && entity.getPersonalInterest() != null
+                && entity.getPersonalInterest().getParentCategory() != null) {
             return entity.getPersonalInterest().getParentCategory();
         }
         return null;
@@ -788,8 +896,10 @@ public class Helper {
      * @param entity the weighted professional interest entity.
      * @return parent category
      */
-    public static ProfessionalInterest getParentCategoryFromWeightedProfessionalInterest(WeightedProfessionalInterest entity) {
-        if (entity != null && entity.getProfessionalInterest() != null && entity.getProfessionalInterest().getParentCategory() != null) {
+    public static ProfessionalInterest
+    getParentCategoryFromWeightedProfessionalInterest(WeightedProfessionalInterest entity) {
+        if (entity != null && entity.getProfessionalInterest() != null
+                && entity.getProfessionalInterest().getParentCategory() != null) {
             return entity.getProfessionalInterest().getParentCategory();
         }
         return null;
@@ -808,7 +918,11 @@ public class Helper {
      * @param <T> the identifiable entity
      * @return the matching score.
      */
-    public static <T extends IdentifiableEntity> int getScore(int directMatchingPoints, int parentCategoryMatchingPoints, List<T> interests1, List<T> interests2, Function<? super T, Integer> weightExtractor, Function<? super T, IdentifiableEntity> interestExtractor, Function<? super T, IdentifiableEntity> parentCategoryExtractor) {
+    public static <T extends IdentifiableEntity> int getScore(int directMatchingPoints,
+            int parentCategoryMatchingPoints, List<T> interests1, List<T> interests2,
+            Function<? super T, Integer> weightExtractor,
+            Function<? super T, IdentifiableEntity> interestExtractor,
+            Function<? super T, IdentifiableEntity> parentCategoryExtractor) {
         int score = 0;
         while (!interests1.isEmpty()) {
             // gets the most weighted interest from the list
@@ -823,17 +937,20 @@ public class Helper {
                 // check if direct matching or parent category matching applies
                 if (interest1 != null && interest2 != null && interest1.getId() == interest2.getId()) {
                     matchingScore = directMatchingPoints;
-                } else if (parentCategory1 != null && parentCategory2 != null && parentCategory1.getId() == parentCategory2.getId()) {
+                } else if (parentCategory1 != null && parentCategory2 != null
+                        && parentCategory1.getId() == parentCategory2.getId()) {
                     matchingScore = parentCategoryMatchingPoints;
                 }
                 // only add for matching found
                 if (matchingScore > 0) {
-                    int weightedMatchingScore = weightExtractor.apply(maxWeightInterest) * weightExtractor.apply(interest) * matchingScore;
+                    int weightedMatchingScore =
+                            weightExtractor.apply(maxWeightInterest) * weightExtractor.apply(interest) * matchingScore;
                     scoresForMatching.put(interest, weightedMatchingScore);
                 }
             }
             //get interest with max score from scoresForMatching;
-            Optional<Map.Entry<T, Integer>> maxScoreInterest = scoresForMatching.entrySet().stream().max(Comparator.comparing(Map.Entry<T, Integer>::getValue));
+            Optional<Map.Entry<T, Integer>> maxScoreInterest =
+                    scoresForMatching.entrySet().stream().max(Comparator.comparing(Map.Entry<T, Integer>::getValue));
             if (maxScoreInterest.isPresent() && maxScoreInterest.get().getValue() > 0) {
                 score += maxScoreInterest.get().getValue();
                 //  remove the maxMentorInterest from interests2
@@ -843,5 +960,179 @@ public class Helper {
             interests1.remove(maxWeightInterest);
         }
         return score;
+    }
+
+    /**
+     * Get user from authentication.
+     * @return user if exists valid user authentication otherwise null
+     */
+    public static User getAuthUser()  {
+        User user = null;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth instanceof UserAuthentication) {
+            UserAuthentication userAuth = (UserAuthentication) auth;
+            user = (User) userAuth.getPrincipal();
+        } else if (auth != null  && auth.getPrincipal() instanceof CustomUserDetails) {
+            CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+            user = userDetails.getUser();
+        }
+        return user;
+    }
+
+    /**
+     * Audit with entity with created by and createdOn information.
+     * @param entity the  entity
+     * @param <T> the auditable entity
+     */
+    public static <T extends AuditableUserEntity> void audit(T entity)  {
+        User user = getAuthUser();
+        if (user != null) {
+            entity.setCreatedOn(new Date());
+            entity.setCreatedBy(user.getId());
+        }
+    }
+
+    /**
+     * Get user id match given role .
+     * @param role the role name
+     * @return the user id if exist valid user role otherwise null.
+     */
+    public static Long getUserRoleId(String role)  {
+        Long id = null;
+        User user = getAuthUser();
+        if (user != null && user.getRoles().stream().anyMatch(r -> role.equals(r.getValue()))) {
+           id = user.getId();
+        }
+        return id;
+    }
+
+    /**
+     * Get mentor role user id.
+     * @return the mentor id if exist valid mentor role user otherwise null.
+     */
+    public static Long getMentorId()  {
+        return getUserRoleId("MENTOR");
+    }
+
+    /**
+     * Get mentee role user id.
+     * @return the mentor id if exist valid mentee role user otherwise null.
+     */
+    public static Long getMenteeId()  {
+        return getUserRoleId("MENTEE");
+    }
+
+    /**
+     * Audit with activity entity.
+     * @param activityRepository the activity repository
+     * @param activityType the activity type
+     * @param objectId the object id
+     * @param description the description
+     * @param institutionalProgramId the institutional program id
+     * @param menteeId the mentee id
+     * @param mentorId  mentor id
+     * @param global the global flag
+     */
+    public static  void audit(ActivityRepository activityRepository,
+            ActivityType activityType, long objectId,
+            String description, Long institutionalProgramId, Long menteeId, Long mentorId, boolean global)  {
+        User user = getAuthUser();
+        if (user != null) {
+            Activity activity = new Activity();
+            audit(activity);
+            activity.setObjectId(objectId);
+            activity.setActivityType(activityType);
+            activity.setDescription(description);
+            activity.setInstitutionalProgramId(institutionalProgramId);
+            activity.setMenteeId(menteeId);
+            activity.setMentorId(mentorId);
+            activity.setGlobal(global);
+            activityRepository.save(activity);
+        }
+    }
+
+
+    /**
+     * Audit with activity entity.
+     * @param activityRepository the activity repository
+     * @param menteeMentorProgramRepository the mentee mentor program repository
+     * @param activityType the activity type
+     * @param objectId the object id
+     * @param description the description
+     * @param menteeMentorProgramId the mentee mentor program id
+     * @param global the global flag
+     */
+    public static  void audit(ActivityRepository activityRepository,
+            MenteeMentorProgramRepository menteeMentorProgramRepository,
+            ActivityType activityType, long objectId,
+            String description, Long menteeMentorProgramId, boolean global)  {
+        User user = getAuthUser();
+        if (user != null) {
+            Long institutionalProgramId = null;
+            Long menteeId = getMenteeId();
+            Long mentorId = getMentorId();
+            if (menteeMentorProgramId != null) {
+                MenteeMentorProgram program = menteeMentorProgramRepository.findOne(menteeMentorProgramId);
+                institutionalProgramId = program.getInstitutionalProgram().getId();
+                if (menteeId == null) {
+                    menteeId = program.getMentee().getId();
+                }
+                if (mentorId == null) {
+                    mentorId = program.getMentor().getId();
+                }
+            }
+            audit(activityRepository, activityType, objectId, description,
+                    institutionalProgramId, menteeId, mentorId, global);
+        }
+    }
+
+    /**
+     * Handle upload documents request.
+     * @param uploadDirectory the upload directory.
+     * @param documents the documents.
+     * @return the saved documents list.
+     * @throws MentorMeException throws if error to save uploaded document.
+     */
+    public static List<Document> uploadDocuments(String uploadDirectory,
+            MultipartFile[] documents) throws MentorMeException {
+        List<Document> docs = new ArrayList<>();
+        if (documents != null && documents.length > 0) {
+            for (MultipartFile document: documents) {
+                try {
+                    String outFolder = FilenameUtils.concat(uploadDirectory, UUID.randomUUID()
+                                                                                 .toString());
+                    FileUtils.forceMkdir(new File(outFolder));
+                    String path = FilenameUtils.concat(outFolder, document.getOriginalFilename());
+                    FileUtils.writeByteArrayToFile(new File(path), document.getBytes());
+                    Document doc = new Document();
+                    doc.setName(document.getOriginalFilename());
+                    doc.setPath(path);
+                    audit(doc);
+                    docs.add(doc);
+                } catch (IOException e) {
+                    throw new MentorMeException("Error to write document", e);
+                }
+            }
+        }
+        return docs;
+    }
+
+
+    /**
+     * Check id and entity for update method.
+     *
+     * @param id the id of the entity to update
+     * @param entity the entity to update
+     * @param <T> the entity class
+     * @throws IllegalArgumentException if id is not positive or entity is null or id of entity is not positive
+     * or id of  entity not match id
+     */
+    public static <T extends IdentifiableEntity> void checkUpdate(long id, T entity) {
+        checkPositive(id, "id");
+        checkNull(entity, "entity");
+        checkPositive(entity.getId(), "entity.id");
+        if (entity.getId() != id) {
+            throw new IllegalArgumentException("id and id of passed entity should be same.");
+        }
     }
 }

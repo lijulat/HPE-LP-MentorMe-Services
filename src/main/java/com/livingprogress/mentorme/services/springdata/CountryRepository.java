@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * The Country repository.
  */
-public interface CountryRepository extends JpaRepository<Country,Long> {
+public interface CountryRepository extends JpaRepository<Country, Long> {
 }
 

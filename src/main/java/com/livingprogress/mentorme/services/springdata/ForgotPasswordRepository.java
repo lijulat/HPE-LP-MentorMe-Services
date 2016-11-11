@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * The ForgotPassword repository.
  */
-public interface ForgotPasswordRepository extends JpaRepository<ForgotPassword,Long> {
+public interface ForgotPasswordRepository extends JpaRepository<ForgotPassword, Long> {
     /**
      * This method is used to get the ForgotPassword by token.
      * @param token the reset password token

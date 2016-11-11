@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 /**
  * The Mentee repository.
  */
-public interface MenteeRepository extends JpaRepository<Mentee,Long>, JpaSpecificationExecutor<Mentee> {
+public interface MenteeRepository extends JpaRepository<Mentee, Long>, JpaSpecificationExecutor<Mentee> {
     /**
      * This method is used to get the the mentee by the parent consent token.
      * @param token the token

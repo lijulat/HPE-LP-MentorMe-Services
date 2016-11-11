@@ -33,9 +33,9 @@ insert into professional_interest values(2,'ProfessionalInterest2', 'picturePath
 insert into professional_interest values(3,'ProfessionalInterest3', 'picturePath3', 1);
 insert into professional_interest values(4,'ProfessionalInterest4', 'picturePath4', 1);
 
-insert into document_category values(1,'DocumentCategory1');
-insert into document_category values(2,'DocumentCategory2');
-insert into document_category values(3,'DocumentCategory3');
+insert into document_type values(1,'DocumentType1', 'iconPath1');
+insert into document_type values(2,'DocumentType2', 'iconPath2');
+insert into document_type values(3,'DocumentType3', 'iconPath3');
 
 insert into user values(1,'test1', '$2a$10$x89u76j2IgiINI/LzVeXzOEq63VprctUKupS0QtPYGFd6JhzkBgke', 'firstname1', 'lastname1', 'email1@test.com', 'profilePicturePath1', '2016-10-01','ACTIVE', NULL, NULL, NULL);
 insert into user values(2,'test2', '$2a$10$x89u76j2IgiINI/LzVeXzOEq63VprctUKupS0QtPYGFd6JhzkBgke', 'firstname2', 'lastname2', 'email2@test.com', 'profilePicturePath2', '2016-10-02','ACTIVE', NULL, NULL, NULL);
@@ -133,9 +133,12 @@ insert into weighted_professional_interest values(10,12,4,2);
 -- matching mentees not same professional_interest id and same parent category and has bigger weight
 insert into weighted_professional_interest values(11,14,4,3);
 
-insert into institutional_program values (1, 'programName1', '2016-10-11','2016-10-31',1,1,20, '2016-10-10');
-insert into institutional_program values (2, 'programName2', '2016-10-11','2016-10-21',2,2,10, '2016-10-11');
-
+insert into institutional_program values (1, 'programName1', '2016-10-11','2016-10-31',1,1,20, '2016-10-10','programImageUrl1');
+insert into institutional_program values (2, 'programName2', '2016-10-12','2016-10-21',2,2,10, '2016-10-11','programImageUrl2');
+insert into institutional_program values (3, 'programName3', '2016-10-13','2016-10-20',3,3,8, '2016-10-12','programImageUrl3');
+insert into institutional_program values (4, 'programName4', '2016-10-14','2016-10-19',4,1,7, '2016-10-13','programImageUrl4');
+insert into institutional_program values (5, 'programName5', '2016-10-15','2016-10-18',5,2,6, '2016-10-14','programImageUrl5');
+insert into institutional_program values (6, 'programName6', '2016-10-16','2016-10-17',6,3,5, '2016-10-15','programImageUrl6');
 
 insert into institution_affiliation_code values(1, 'code1', 1, true);
 insert into institution_affiliation_code values(2, 'code2', 2, true);
@@ -161,6 +164,112 @@ insert into mentor_feedback values(1, 12, 'mentor_feedback_comment1');
 
 insert into mentee_feedback values(1, 12, 'mentee_feedback_comment1');
 
-insert into mentee_mentor_program values(1, 4, 3, 1, 'APPROVED', 1, 1, '2016-10-11','2016-10-31',false, NULL);
+insert into mentee_mentor_program values(1, 4, 3, 1, 'APPROVED', 1, 1, '2016-10-01','2016-10-31',true,'2016-10-31');
+insert into mentee_mentor_program values(2, 10, 5, 2, 'REJECTED', 1, 1, '2016-10-02','2016-10-30',false, NULL);
+insert into mentee_mentor_program values(3, 11, 6, 3, 'REQUESTED_BY_MENTOR', 1, 1, '2016-10-03','2016-10-29',false, NULL);
+insert into mentee_mentor_program values(4, 12, 7, 4, 'REQUESTED_BY_MENTEE', 1, 1, '2016-10-04','2016-10-28',false, NULL);
+insert into mentee_mentor_program values(5, 13, 8, 5, 'APPROVED', 1, 1, '2016-10-05','2016-10-27',false, NULL);
+insert into mentee_mentor_program values(6, 14, 9, 6, 'APPROVED', 1, 1, '2016-10-06','2016-10-26',false, NULL);
 
-insert into event values(1, 1,'name1', 'description1', '2017-11-11','2017-10-31', 'eventLocation1', 'eventLocationAddress1','city1',1 ,'zip1',1,1,true)
+insert into goal values(1, 1, 'subject1','description1',1,1,1,true);
+insert into goal values(2, 2, 'subject2','description2',2,2,2,false);
+insert into goal values(3, 3, 'subject3','description3',3,3,3,true);
+insert into goal values(4, 4, 'subject4','description4',1,4,4,false);
+insert into goal values(5, 5, 'subject5','description5',2,5,5,true);
+insert into goal values(6, 6, 'subject6','description6',3,6,6,false);
+
+insert into mentee_mentor_goal values(1, 1, 1,true,'2016-10-31');
+insert into mentee_mentor_goal values(2, 2, 2,false, NULL);
+insert into mentee_mentor_goal values(3, 3, 3,false, NULL);
+insert into mentee_mentor_goal values(4, 4, 4,false, NULL);
+insert into mentee_mentor_goal values(5, 5, 5,false, NULL);
+insert into mentee_mentor_goal values(6, 6, 2,false, NULL);
+
+insert into task values(1, 'description1',1,true,true,true,1,1);
+insert into task values(2, 'description2',2, false,true,false,2,2);
+insert into task values(3, 'description3',3, true,false,true,3,3);
+insert into task values(4, 'description4',4,false,true,true,4,4);
+insert into task values(5, 'description5',5,true,true,false,5,5);
+insert into task values(6, 'description6',2,true,false,true,6,6);
+
+insert into mentee_mentor_task values(1, 1, true,'2016-10-31',1, '2016-10-01','2016-10-31');
+insert into mentee_mentor_task values(2, 2, false,NULL,2, '2016-10-02','2016-10-30');
+insert into mentee_mentor_task values(3, 3, false,NULL,3, '2016-10-03','2016-10-29');
+insert into mentee_mentor_task values(4, 4, false,NULL,4, '2016-10-04','2016-10-28');
+insert into mentee_mentor_task values(5, 5, false,NULL,5, '2016-10-05','2016-10-27');
+insert into mentee_mentor_task values(6, 2, false,NULL,6, '2016-10-06','2016-10-26');
+
+
+
+insert into event values(1, 1,'name1', 'description1', '2017-11-11','2017-10-31', 'eventLocation1', 'eventLocationAddress1','city1',1 ,'zip1',1,1,true);
+
+
+insert into activity values(1, 1, 'GOAL_CREATED', 1, 'description1', 1, '2016-10-01',4, 3, true);
+insert into activity values(2, 2, 'GOAL_UPDATED', 2, 'description2', 2, '2016-10-02',10, 5, false);
+insert into activity values(3, 3, 'TASK_CREATED', 3, 'description3', 3, '2016-10-03',11, 6, true);
+insert into activity values(4, 4, 'TASK_UPDATED', 4, 'description4', 4, '2016-10-04',12, 7, false);
+insert into activity values(5, 5, 'EVENT_CREATED', 5, 'description5', 5, '2016-10-05',13, 8, true);
+insert into activity values(6, NULL , 'EVENT_UPDATED', 6, 'description6', 6, '2016-10-06',NULL, NULL, false);
+
+
+insert into institution_agreement values(1, 'agreementName1', 'agreementFilePath1', 1);
+insert into institution_agreement values(2, 'agreementName2', 'agreementFilePath2', 2);
+insert into institution_agreement values(3, 'agreementName3', 'agreementFilePath3', 3);
+insert into institution_agreement values(4, 'agreementName4', 'agreementFilePath4', 4);
+insert into institution_agreement values(5, 'agreementName5', 'agreementFilePath5', 5);
+insert into institution_agreement values(6, 'agreementName6', 'agreementFilePath6', 6);
+
+insert into institution_agreement_user_role values(1, 1);
+insert into institution_agreement_user_role values(1, 2);
+
+insert into document values(1,'name1', 'path1', 1, '2016-10-01');
+insert into document values(2,'name2', 'path2', 2, '2016-10-02');
+insert into document values(3,'name3', 'path3', 3, '2016-10-03');
+insert into document values(4,'name4', 'path4', 4, '2016-10-04');
+insert into document values(5,'name5', 'path5', 5, '2016-10-05');
+insert into document values(6,'name6', 'path6', 6, '2016-10-06');
+
+insert into institutional_program_document values(1,1);
+insert into institutional_program_document values(1, 2);
+
+insert into goal_document values(1,3);
+insert into goal_document values(1,4);
+
+insert into task_document values(1, 5);
+insert into task_document values(1, 6);
+
+insert into useful_link values(1, 'title1', 'address1');
+insert into useful_link values(2, 'title2', 'address2');
+insert into useful_link values(3, 'title3', 'address3');
+insert into useful_link values(4, 'title4', 'address4');
+insert into useful_link values(5, 'title5', 'address5');
+insert into useful_link values(6, 'title6', 'address6');
+
+insert into goal_useful_link values(1, 1);
+insert into goal_useful_link values(1, 2);
+
+insert into task_useful_link values(1, 3);
+insert into task_useful_link values(1, 4);
+
+insert into institutional_program_link values(1, 5);
+insert into institutional_program_link values(1, 6);
+
+insert into custom_assigned_goal_data values(1, 3, 4, 1);
+
+insert into custom_assigned_task_data values(1,3,4,1);
+
+insert into responsibility values(1, 1, 'title1', '2016-10-01', true, true, 1);
+insert into responsibility values(2, 2, 'title2', '2016-10-02', false, true, 2);
+insert into responsibility values(3, 3, 'title3', '2016-10-03', true, false, 3);
+insert into responsibility values(4, 4, 'title4', '2016-10-04', false, true, 4);
+insert into responsibility values(5, 5, 'title5', '2016-10-05', true, true, 5);
+insert into responsibility values(6, 6, 'title6', '2016-10-06', false, false, 6);
+
+
+insert into mentee_mentor_responsibility values(1, 1, 'title1', '2016-10-01', true, true, 1,1);
+insert into mentee_mentor_responsibility values(2, 2, 'title2', '2016-10-02', false, true, 2,2);
+insert into mentee_mentor_responsibility values(3, 3, 'title3', '2016-10-03', true, false, 3,3);
+insert into mentee_mentor_responsibility values(4, 4, 'title4', '2016-10-04', false, true, 4,4);
+insert into mentee_mentor_responsibility values(5, 5, 'title5', '2016-10-05', true, true, 5,5);
+insert into mentee_mentor_responsibility values(6, 6, 'title6', '2016-10-06', false, false, 6,6);
+

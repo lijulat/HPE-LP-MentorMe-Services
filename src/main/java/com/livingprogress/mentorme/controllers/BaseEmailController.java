@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.velocity.VelocityEngineUtils;
@@ -82,7 +83,7 @@ public abstract class BaseEmailController {
             helper.setSubject(getTemplate(emailName + "/subject.vm", model));
             helper.setText(getTemplate(emailName + "/body.vm", model), true);
             javaMailSender.send(mail);
-        } catch (MessagingException e) {
+        } catch (MessagingException | MailException e) {
             throw new MentorMeException("Error to send email!", e);
         }
     }

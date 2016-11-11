@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 /**
  * The InstitutionalProgram repository.
  */
-public interface InstitutionalProgramRepository extends JpaRepository<InstitutionalProgram,Long>, JpaSpecificationExecutor<InstitutionalProgram> {
+public interface InstitutionalProgramRepository
+        extends JpaRepository<InstitutionalProgram, Long>, JpaSpecificationExecutor<InstitutionalProgram> {
 }
 

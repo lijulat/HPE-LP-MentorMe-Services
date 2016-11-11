@@ -124,7 +124,8 @@ public class UserController extends BaseEmailController {
      * @throws MentorMeException if any other error occurred during operation
      */
     @RequestMapping(method = RequestMethod.GET)
-    public SearchResult<User> search(@ModelAttribute UserSearchCriteria criteria, @ModelAttribute Paging paging) throws MentorMeException {
+    public SearchResult<User> search(@ModelAttribute UserSearchCriteria criteria,
+            @ModelAttribute Paging paging) throws MentorMeException {
         return userService.search(criteria, paging);
     }
 
@@ -137,7 +138,7 @@ public class UserController extends BaseEmailController {
      * @throws AccessDeniedException if does not allow to perform action
      * @throws MentorMeException if any other error occurred during operation
      */
-    @Transactional
+    @Transactional(rollbackOn = MentorMeException.class)
     @RequestMapping(value = "forgotPassword", method = RequestMethod.PUT)
     public void forgotPassword(@RequestParam(value = "email") String email) throws MentorMeException {
         Helper.checkEmail(email, "email");

@@ -9,10 +9,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import java.util.Date;
 import java.util.List;
 
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.TemporalType.DATE;
 
 /**
@@ -56,32 +58,42 @@ public class InstitutionalProgram extends AuditableEntity {
     /**
      * The goals.
      */
-    @OneToMany(mappedBy = "institutionalProgramId")
+    @OneToMany(mappedBy = "institutionalProgram", cascade = ALL)
+    @OrderBy("number")
     private List<Goal> goals;
 
     /**
      * The responsibilities.
      */
-    @OneToMany(mappedBy = "institutionalProgramId")
+    @OneToMany(mappedBy = "institutionalProgram", cascade = ALL)
     private List<Responsibility> responsibilities;
 
     /**
      * The documents.
      */
-    @ManyToMany
-    @JoinTable(name = "institutional_program_document", joinColumns = {@JoinColumn(name = "institutional_program_id")}, inverseJoinColumns = {@JoinColumn(name = "document_id")})
+    @ManyToMany(cascade = ALL)
+    @JoinTable(name = "institutional_program_document",
+            joinColumns = {@JoinColumn(name = "institutional_program_id")},
+            inverseJoinColumns = {@JoinColumn(name = "document_id")})
     private List<Document> documents;
 
     /**
      * The useful links.
      */
-    @ManyToMany
-    @JoinTable(name = "institutional_program_link", joinColumns = {@JoinColumn(name = "institutional_program_id")}, inverseJoinColumns = {@JoinColumn(name = "useful_link_id")})
+    @ManyToMany(cascade = ALL)
+    @JoinTable(name = "institutional_program_link",
+            joinColumns = {@JoinColumn(name = "institutional_program_id")},
+            inverseJoinColumns = {@JoinColumn(name = "useful_link_id")})
     private List<UsefulLink> usefulLinks;
 
     /**
      * The duration in days.
      */
     private int durationInDays;
+
+    /**
+     * The program url.
+     */
+    private String programImageUrl;
 }
 

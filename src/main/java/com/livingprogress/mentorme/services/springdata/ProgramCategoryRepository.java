@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * The ProgramCategory repository.
  */
-public interface ProgramCategoryRepository extends JpaRepository<ProgramCategory,Long> {
+public interface ProgramCategoryRepository extends JpaRepository<ProgramCategory, Long> {
 }
 

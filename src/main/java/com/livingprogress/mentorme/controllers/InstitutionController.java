@@ -48,7 +48,8 @@ public class InstitutionController {
     /**
      * The alphabet used to generate random String.
      */
-    private static final String ALPHABET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    private static final String ALPHABET =
+            "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
     /**
      * The institution service used to perform operations. Should be non-null after injection.
@@ -180,7 +181,8 @@ public class InstitutionController {
      * @throws MentorMeException if any other error occurred during operation
      */
     @RequestMapping(method = RequestMethod.GET)
-    public SearchResult<Institution> search(@ModelAttribute InstitutionSearchCriteria criteria, @ModelAttribute Paging paging) throws MentorMeException {
+    public SearchResult<Institution> search(@ModelAttribute InstitutionSearchCriteria criteria,
+            @ModelAttribute Paging paging) throws MentorMeException {
         return institutionService.search(criteria, paging);
     }
 
@@ -215,7 +217,8 @@ public class InstitutionController {
      * @throws MentorMeException if any other error occurred during operation
      */
     @RequestMapping(value = "/affiliationCode/{affiliationCode}", method = RequestMethod.GET)
-    public Institution getInstitutionForAffiliationCode(@PathVariable String affiliationCode) throws MentorMeException {
+    public Institution getInstitutionForAffiliationCode(@PathVariable String affiliationCode)
+            throws MentorMeException {
         InstitutionAffiliationCode ac = getInstitutionAffiliationCode(affiliationCode);
         if (ac != null && !ac.isUsed()) {
             return institutionService.get(ac.getInstitutionId());
@@ -233,13 +236,15 @@ public class InstitutionController {
      */
     @Transactional
     @RequestMapping(value = "useAffiliationCode", method = RequestMethod.PUT)
-    public void useAffiliationCode(@RequestParam(name = "affiliationCode") String affiliationCode) throws MentorMeException {
+    public void useAffiliationCode(@RequestParam(name = "affiliationCode") String affiliationCode)
+            throws MentorMeException {
         InstitutionAffiliationCode ac = getInstitutionAffiliationCode(affiliationCode);
         if (ac != null && !ac.isUsed()) {
             ac.setUsed(true);
             institutionAffiliationCodeService.update(ac.getId(), ac);
         } else {
-            throw new EntityNotFoundException("AffiliationCode with code=" + affiliationCode + " can not be found.");
+            throw new EntityNotFoundException("AffiliationCode with code="
+                    + affiliationCode + " can not be found.");
         }
     }
 
@@ -257,9 +262,11 @@ public class InstitutionController {
     public InstitutionSummary getInstitutionSummary(@PathVariable long id) throws MentorMeException {
         institutionService.get(id);
         InstitutionSummary result = new InstitutionSummary();
-        InstitutionalProgramSearchCriteria institutionalProgramSearchCriteria = new InstitutionalProgramSearchCriteria();
+        InstitutionalProgramSearchCriteria institutionalProgramSearchCriteria =
+                new InstitutionalProgramSearchCriteria();
         institutionalProgramSearchCriteria.setInstitutionId(id);
-        result.setInstitutionalProgramsCount(institutionalProgramService.count(institutionalProgramSearchCriteria));
+        result.setInstitutionalProgramsCount(institutionalProgramService
+                .count(institutionalProgramSearchCriteria));
 
         EventSearchCriteria eventSearchCriteria = new EventSearchCriteria();
         eventSearchCriteria.setUpcoming(true);
@@ -283,11 +290,13 @@ public class InstitutionController {
      * @throws IllegalArgumentException if affiliation code is null or empty
      * @throws MentorMeException if any other error occurred during operation
      */
-    private InstitutionAffiliationCode getInstitutionAffiliationCode(String affiliationCode) throws MentorMeException {
+    private InstitutionAffiliationCode getInstitutionAffiliationCode(String affiliationCode)
+            throws MentorMeException {
         Helper.checkNullOrEmpty(affiliationCode, "affiliationCode");
         InstitutionAffiliationCodeSearchCriteria criteria = new InstitutionAffiliationCodeSearchCriteria();
         criteria.setCode(affiliationCode);
-        SearchResult<InstitutionAffiliationCode> searchResult = institutionAffiliationCodeService.search(criteria, null);
+        SearchResult<InstitutionAffiliationCode> searchResult =
+                institutionAffiliationCodeService.search(criteria, null);
         if (searchResult.getTotal() > 0) {
             return searchResult.getEntities().get(0);
         }

@@ -1,0 +1,28 @@
+{
+  "number": 1,
+  "description": "demoDescription",
+  "durationInDays": 11,
+  "mentorAssignment": true,
+  "menteeAssignment": true,
+  "documents": [],
+  "usefulLinks": [
+    {
+      "title": "title1",
+      "address": "address1"
+    },
+    {
+      "title": "title2",
+      "address": "address2"
+    }
+  ],
+  "custom": true,
+  "customData": {
+    "mentor": {
+      "id": 3
+    },
+    "mentee": {
+      "id": 4
+    }
+  },
+  "goalId": 2
+}

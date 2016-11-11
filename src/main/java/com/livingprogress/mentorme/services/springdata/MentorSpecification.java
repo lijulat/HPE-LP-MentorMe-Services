@@ -24,7 +24,8 @@ public class MentorSpecification implements Specification<Mentor> {
 
 
     /**
-     * Creates a WHERE clause for a query of the referenced entity in form of a Predicate for the given Root and CriteriaQuery.
+     * Creates a WHERE clause for a query of the referenced entity
+     * in form of a Predicate for the given Root and CriteriaQuery.
      *
      * @param root the root
      * @param query the criteria query
@@ -36,8 +37,10 @@ public class MentorSpecification implements Specification<Mentor> {
         Predicate pd = cb.and();
         pd = Helper.buildPredicate(criteria, pd, root, cb);
         pd = Helper.buildEqualPredicate(criteria.getMentorType(), pd, root.get("mentorType"), cb);
-        pd = Helper.buildInPredicate(criteria.getProfessionalAreas(), pd, root.join("professionalAreas", JoinType.LEFT).get("id"), cb);
-        pd = Helper.buildEqualPredicate(criteria.getMentorRequestStatus(), pd, root.join("menteeMentorPrograms", JoinType.LEFT).get("requestStatus"), cb);
+        pd = Helper.buildInPredicate(criteria.getProfessionalAreas(), pd,
+                root.join("professionalAreas", JoinType.LEFT).get("id"), cb);
+        pd = Helper.buildEqualPredicate(criteria.getMentorRequestStatus(), pd,
+                root.join("menteeMentorPrograms", JoinType.LEFT).get("requestStatus"), cb);
         pd = Helper.buildLikePredicate(criteria.getCompanyName(), pd, root.get("companyName"), cb);
         return pd;
     }

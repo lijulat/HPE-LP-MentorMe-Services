@@ -126,16 +126,16 @@ public class LookupControllerTest extends BaseTest {
     }
 
     /**
-     * Test getDocumentCategories method.
+     * Test getDocumentTypes method.
      *
      * @throws Exception throws if any error happens.
      */
     @Test
-    public void getDocumentCategories() throws Exception {
+    public void getDocumentTypes() throws Exception {
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/lookups/documentCategories")
+                MockMvcRequestBuilders.get("/lookups/documentTypes")
                                       .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(content().json(readFile("documentCategories.json")));
+               .andExpect(content().json(readFile("documentTypes.json")));
     }
 }

@@ -47,6 +47,7 @@ public class LoginController {
 
     /**
      * The login controller constructor.
+     * @param secret the secret
      */
     @Autowired
     public LoginController(@Value("${token.secret}") String secret) {

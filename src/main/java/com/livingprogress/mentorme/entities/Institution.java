@@ -30,7 +30,7 @@ public class Institution extends AuditableEntity {
     private String parentOrganization;
 
     /**
-     * The street address
+     * The street address.
      */
     private String streetAddress;
 
@@ -86,7 +86,7 @@ public class Institution extends AuditableEntity {
     private InstitutionStatus status;
 
     /**
-     * The logo path
+     * The logo path.
      */
     private String logoPath;
 }

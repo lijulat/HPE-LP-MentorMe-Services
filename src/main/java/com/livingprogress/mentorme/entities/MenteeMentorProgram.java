@@ -3,18 +3,24 @@ package com.livingprogress.mentorme.entities;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Temporal;
 import java.util.Date;
 import java.util.List;
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.TemporalType.DATE;
+import static javax.persistence.TemporalType.TIMESTAMP;
 
 /**
  * The mentee-mentor program.
@@ -26,14 +32,14 @@ public class MenteeMentorProgram extends IdentifiableEntity {
     /**
      * The mentor.
      */
-    @ManyToOne
+    @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "mentor_id")
     private Mentor mentor;
 
     /**
      * The mentee.
      */
-    @ManyToOne
+    @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "mentee_id")
     private Mentee mentee;
 
@@ -47,14 +53,14 @@ public class MenteeMentorProgram extends IdentifiableEntity {
     /**
      * The mentor feedback.
      */
-    @OneToOne
+    @OneToOne(cascade = {MERGE, REMOVE})
     @JoinColumn(name = "mentor_feedback_id")
     private MentorFeedback mentorFeedback;
 
     /**
      * The mentee feedback.
      */
-    @OneToOne
+    @OneToOne(cascade = {MERGE, REMOVE})
     @JoinColumn(name = "mentee_feedback_id")
     private MenteeFeedback menteeFeedback;
 
@@ -73,8 +79,15 @@ public class MenteeMentorProgram extends IdentifiableEntity {
     /**
      * The mentee mentor goals.
      */
-    @OneToMany(mappedBy = "menteeMentorProgramId")
+    @OneToMany(mappedBy = "menteeMentorProgram", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MenteeMentorGoal> goals;
+
+    /**
+     * The mentee mentor responsibilities.
+     */
+    @OneToMany(mappedBy = "menteeMentorProgram", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("number")
+    private List<MenteeMentorResponsibility> responsibilities;
 
     /**
      * The completed flag.
@@ -84,12 +97,13 @@ public class MenteeMentorProgram extends IdentifiableEntity {
     /**
      * The completed on date.
      */
+    @Temporal(TIMESTAMP)
     private Date completedOn;
 
     /**
      * The request status.
      */
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     private MenteeMentorProgramRequestStatus requestStatus;
 }
 

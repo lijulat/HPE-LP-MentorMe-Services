@@ -13,9 +13,10 @@ import java.util.List;
 /**
  * The MenteeMentorProgram repository.
  */
-public interface MenteeMentorProgramRepository extends JpaRepository<MenteeMentorProgram,Long>, JpaSpecificationExecutor<MenteeMentorProgram> {
+public interface MenteeMentorProgramRepository
+        extends JpaRepository<MenteeMentorProgram, Long>, JpaSpecificationExecutor<MenteeMentorProgram> {
     /**
-     * This method is used to get the mentees for the program
+     * This method is used to get the mentees for the program.
      * @param programId the program id
      * @return the mentees
      */
@@ -23,7 +24,7 @@ public interface MenteeMentorProgramRepository extends JpaRepository<MenteeMento
     List<Mentee> getProgramMentees(@Param(value = "programId") long programId);
 
     /**
-     * This method is used to get the mentors for the program
+     * This method is used to get the mentors for the program.
      * @param programId the program id
      * @return the mentors.
      */

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 /**
  * The User repository.
  */
-public interface UserRepository extends JpaRepository<User,Long>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     /**
      * This method is used to get the user by provider id and provider user id.
      *
@@ -16,7 +16,7 @@ public interface UserRepository extends JpaRepository<User,Long>, JpaSpecificati
      * @param providerUserId the provider user id
      * @return the match user
      * @throws IllegalArgumentException: if parameters are null or not valid
-     * @throws MentorMeException : if any other error occurred during operation
+     * @throws MentorMeException if any other error occurred during operation
      */
     User findByProviderIdAndProviderUserId(String providerId, String providerUserId);
 }

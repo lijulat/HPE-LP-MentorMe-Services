@@ -29,10 +29,10 @@ public class UserAuthentication implements Authentication {
     /**
      * The user authentication constructor.
      *
-     * @param user the user.
+     * @param entity the user.
      */
-    public UserAuthentication(User user) {
-        this.user = user;
+    public UserAuthentication(User entity) {
+        this.user = entity;
     }
 
     /**
@@ -95,12 +95,12 @@ public class UserAuthentication implements Authentication {
     /**
      * Set authenticated flag.
      *
-     * @param authenticated authenticated flag
+     * @param authenticatedFlag authenticated flag
      * @throws IllegalArgumentException throws if invalid request.
      */
     @Override
-    public void setAuthenticated(boolean authenticated) throws IllegalArgumentException {
-        this.authenticated = authenticated;
+    public void setAuthenticated(boolean authenticatedFlag) throws IllegalArgumentException {
+        this.authenticated = authenticatedFlag;
     }
 
     /**

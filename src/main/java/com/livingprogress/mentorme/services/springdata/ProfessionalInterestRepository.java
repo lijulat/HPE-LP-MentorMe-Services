@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * The ProfessionalInterest repository.
  */
-public interface ProfessionalInterestRepository extends JpaRepository<ProfessionalInterest,Long> {
+public interface ProfessionalInterestRepository extends JpaRepository<ProfessionalInterest, Long> {
 }
 

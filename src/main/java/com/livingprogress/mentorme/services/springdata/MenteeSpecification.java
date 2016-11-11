@@ -15,14 +15,15 @@ import javax.persistence.criteria.Root;
  * The specification used to query Mentee by criteria.
  */
 @AllArgsConstructor
-public class MenteeSpecification implements Specification<Mentee>{
+public class MenteeSpecification implements Specification<Mentee> {
     /**
      * The criteria. Final.
      */
     private final MenteeSearchCriteria criteria;
 
     /**
-     * Creates a WHERE clause for a query of the referenced entity in form of a Predicate for the given Root and CriteriaQuery.
+     * Creates a WHERE clause for a query of the referenced entity
+     * in form of a Predicate for the given Root and CriteriaQuery.
      * @param root the root
      * @param query the criteria query
      * @param cb the query builder

@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * The PersonalInterest repository.
  */
-public interface PersonalInterestRepository extends JpaRepository<PersonalInterest,Long> {
+public interface PersonalInterestRepository extends JpaRepository<PersonalInterest, Long> {
 }
 

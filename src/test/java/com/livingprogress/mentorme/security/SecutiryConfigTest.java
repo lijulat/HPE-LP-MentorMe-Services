@@ -2,48 +2,20 @@ package com.livingprogress.mentorme.security;
 
 import com.livingprogress.mentorme.BaseTest;
 import com.livingprogress.mentorme.entities.NewPassword;
-import org.junit.Before;
+import com.livingprogress.mentorme.entities.User;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import javax.servlet.Filter;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 /**
  * The test cases for <code>SecurityConfig</code>
  */
 public class SecutiryConfigTest extends BaseTest {
-
-    /**
-     * The token auth header name.
-     */
-    private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
-
-    /**
-     * The spring security filter chain.
-     */
-    @Autowired
-    private Filter springSecurityFilterChain;
-
-    /**
-     * Setup test.
-     *
-     * @throws Exception throws if any error happen
-     */
-    @Before
-    public void setupTest() throws Exception {
-        super.setupTest();
-        this.mockMvc = webAppContextSetup(context)
-                .addFilters(springSecurityFilterChain)
-                .build();
-    }
 
     /**
      * Test anonymous requests.
@@ -52,21 +24,21 @@ public class SecutiryConfigTest extends BaseTest {
     @Test
     public void anonymousTest() throws Exception {
         // test /lookups/**
-        mockMvc.perform(
+        mockAuthMvc.perform(
                 MockMvcRequestBuilders.get("/lookups/userRoles")
                                       .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("userRoles.json")));
 
         // test /users/forgotPassword
-        mockMvc.perform(MockMvcRequestBuilders.put("/users/forgotPassword?email=notexist@test.com"))
+        mockAuthMvc.perform(MockMvcRequestBuilders.put("/users/forgotPassword?email=notexist@test.com"))
                .andExpect(status().isNotFound());
 
         NewPassword entity = new NewPassword();
         entity.setToken("notexist");
         entity.setNewPassword("newPassword");
         // test /users/updatePassword
-        mockMvc.perform(MockMvcRequestBuilders.put("/users/updatePassword")
+        mockAuthMvc.perform(MockMvcRequestBuilders.put("/users/updatePassword")
                                               .contentType(MediaType.APPLICATION_JSON)
                                               .content(objectMapper.writeValueAsString(entity)))
                .andExpect(status().isOk())
@@ -79,7 +51,7 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void unauthorizedTest1() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/users/1")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isUnauthorized());
     }
@@ -90,7 +62,7 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void unauthorizedTest2() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/users/1")
                                               .accept(MediaType.APPLICATION_JSON)
                                               .with(httpBasic("wrong", "password")))
                                               .andExpect(status().isUnauthorized());
@@ -102,7 +74,7 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void unauthorizedTest3() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/users/1")
                                               .accept(MediaType.APPLICATION_JSON)
                                               .with(httpBasic("test1", "wrong")))
                .andExpect(status().isUnauthorized());
@@ -114,7 +86,7 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void unauthorizedTest4() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/users/1")
                                               .accept(MediaType.APPLICATION_JSON)
                                               .with(httpBasic("test5", "password")))
                .andExpect(status().isUnauthorized());
@@ -126,7 +98,7 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void unauthorizedTest5() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/users/1")
                                               .accept(MediaType.APPLICATION_JSON)
                                               .header(AUTH_HEADER_NAME, "wrong"))
                .andExpect(status().isUnauthorized());
@@ -138,7 +110,7 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void unauthorizedTest6() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/users/1")
                                               .accept(MediaType.APPLICATION_JSON)
                                               .header(AUTH_HEADER_NAME, readFile("expiredToken.txt")))
                .andExpect(status().isUnauthorized());
@@ -150,7 +122,7 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void basicTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/users/1")
                                               .accept(MediaType.APPLICATION_JSON).with(httpBasic("test1", "password")))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("user1.json")));
@@ -162,9 +134,9 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void sytemAdminTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/users/1")
                                               .accept(MediaType.APPLICATION_JSON)
-                                              .header(AUTH_HEADER_NAME, readFile("sytemAdminToken.txt")))
+                                              .header(AUTH_HEADER_NAME, systemAdminToken))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("user1.json")));
     }
@@ -175,9 +147,9 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void institutionAdminTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/institutions/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/institutions/1")
                                               .accept(MediaType.APPLICATION_JSON)
-                                              .header(AUTH_HEADER_NAME, readFile("institutionAdminToken.txt")))
+                                              .header(AUTH_HEADER_NAME, institutionAdminToken))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("institution1.json")));
     }
@@ -188,9 +160,9 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void mentorTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/mentors/3")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/mentors/3")
                                               .accept(MediaType.APPLICATION_JSON)
-                                              .header(AUTH_HEADER_NAME, readFile("mentorToken.txt")))
+                                              .header(AUTH_HEADER_NAME,  mentorToken))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("mentor3.json")));
     }
@@ -201,9 +173,9 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void menteeTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/mentees/4")
                                               .accept(MediaType.APPLICATION_JSON)
-                                              .header(AUTH_HEADER_NAME, readFile("menteeToken.txt")))
+                                              .header(AUTH_HEADER_NAME, menteeToken))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("mentee4.json")));
     }
@@ -214,9 +186,9 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void forbiddenTest1() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put("/mentees/4")
+        mockAuthMvc.perform(MockMvcRequestBuilders.put("/mentees/4")
                                               .accept(MediaType.APPLICATION_JSON)
-                                              .header(AUTH_HEADER_NAME, readFile("mentorToken.txt")))
+                                              .header(AUTH_HEADER_NAME, mentorToken))
                .andExpect(status().isForbidden());
     }
 
@@ -226,9 +198,9 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void forbiddenTest2() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.delete("/users/1")
                                               .accept(MediaType.APPLICATION_JSON)
-                                              .header(AUTH_HEADER_NAME, readFile("mentorToken.txt")))
+                                              .header(AUTH_HEADER_NAME, mentorToken))
                .andExpect(status().isForbidden());
     }
 
@@ -238,7 +210,7 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void loginAsSytemAdminTest() throws Exception {
-        String json = mockMvc.perform(MockMvcRequestBuilders.post("/login")
+        String json = mockAuthMvc.perform(MockMvcRequestBuilders.post("/login")
                                               .accept(MediaType.APPLICATION_JSON)
                                               .with(httpBasic("test1", "password")))
                .andExpect(status().isOk())
@@ -246,7 +218,7 @@ public class SecutiryConfigTest extends BaseTest {
                .getResponse()
                .getContentAsString();
         String token = objectMapper.readValue(json, String.class);
-        mockMvc.perform(MockMvcRequestBuilders.get("/users/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/users/1")
                                               .accept(MediaType.APPLICATION_JSON)
                                               .header(AUTH_HEADER_NAME, token))
                .andExpect(status().isOk())
@@ -259,7 +231,7 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void loginAsInstitutionAdminTest() throws Exception {
-        String json = mockMvc.perform(MockMvcRequestBuilders.post("/login")
+        String json = mockAuthMvc.perform(MockMvcRequestBuilders.post("/login")
                                                             .accept(MediaType.APPLICATION_JSON)
                                                             .with(httpBasic("test2", "password")))
                              .andExpect(status().isOk())
@@ -267,7 +239,7 @@ public class SecutiryConfigTest extends BaseTest {
                              .getResponse()
                              .getContentAsString();
         String token = objectMapper.readValue(json, String.class);
-        mockMvc.perform(MockMvcRequestBuilders.get("/institutions/1")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/institutions/1")
                                               .accept(MediaType.APPLICATION_JSON)
                                               .header(AUTH_HEADER_NAME, token))
                .andExpect(status().isOk())
@@ -280,7 +252,7 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void loginAsMentorTest() throws Exception {
-        String json = mockMvc.perform(MockMvcRequestBuilders.post("/login")
+        String json = mockAuthMvc.perform(MockMvcRequestBuilders.post("/login")
                                                             .accept(MediaType.APPLICATION_JSON)
                                                             .with(httpBasic("test3", "password")))
                              .andExpect(status().isOk())
@@ -288,7 +260,7 @@ public class SecutiryConfigTest extends BaseTest {
                              .getResponse()
                              .getContentAsString();
         String token = objectMapper.readValue(json, String.class);
-        mockMvc.perform(MockMvcRequestBuilders.get("/mentors/3")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/mentors/3")
                                               .accept(MediaType.APPLICATION_JSON)
                                               .header(AUTH_HEADER_NAME, token))
                .andExpect(status().isOk())
@@ -302,7 +274,7 @@ public class SecutiryConfigTest extends BaseTest {
      */
     @Test
     public void loginAsMenteeTest() throws Exception {
-        String json = mockMvc.perform(MockMvcRequestBuilders.post("/login")
+        String json = mockAuthMvc.perform(MockMvcRequestBuilders.post("/login")
                                                             .accept(MediaType.APPLICATION_JSON)
                                                             .with(httpBasic("test4", "password")))
                              .andExpect(status().isOk())
@@ -310,10 +282,35 @@ public class SecutiryConfigTest extends BaseTest {
                              .getResponse()
                              .getContentAsString();
         String token = objectMapper.readValue(json, String.class);
-        mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4")
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/mentees/4")
                                               .accept(MediaType.APPLICATION_JSON)
                                               .header(AUTH_HEADER_NAME, token))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("mentee4.json")));
+    }
+
+    /**
+     * Test login as user without roles.
+     * @throws Exception throws if any error happen
+     */
+    @Test
+    public void loginWithUserWithoutRolesTest() throws Exception {
+        User demoEntity = objectMapper.readValue(readFile("demo-user.json"), User.class);
+        demoEntity.setRoles(null);
+        demoEntity.setId(1L);
+        String newUserName = "newUsername";
+        String newPassword = "newPassword";
+        demoEntity.setPassword(newPassword);
+        demoEntity.setUsername(newUserName);
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/1")
+                                              .contentType(MediaType.APPLICATION_JSON)
+                                              .content(objectMapper.writeValueAsString(demoEntity)))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.roles").doesNotExist());
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/mentees/4")
+                                                  .accept(MediaType.APPLICATION_JSON)
+                                                  .with(httpBasic(newUserName, newPassword)))
+                                                  .andExpect(status().isUnauthorized());
+
     }
 }

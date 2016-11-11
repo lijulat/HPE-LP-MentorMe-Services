@@ -20,7 +20,7 @@ public class PersonalInterest extends LookupEntity {
     private String picturePath;
 
     /**
-     * The parent category
+     * The parent category.
      */
     @ManyToOne
     @JoinColumn(name = "parent_category_id")

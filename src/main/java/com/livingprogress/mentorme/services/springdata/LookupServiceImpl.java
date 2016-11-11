@@ -1,7 +1,7 @@
 package com.livingprogress.mentorme.services.springdata;
 
 import com.livingprogress.mentorme.entities.Country;
-import com.livingprogress.mentorme.entities.DocumentCategory;
+import com.livingprogress.mentorme.entities.DocumentType;
 import com.livingprogress.mentorme.entities.GoalCategory;
 import com.livingprogress.mentorme.entities.PersonalInterest;
 import com.livingprogress.mentorme.entities.ProfessionalConsultantArea;
@@ -70,10 +70,10 @@ public class LookupServiceImpl implements LookupService {
     private ProfessionalInterestRepository professionalInterestRepository;
 
     /**
-     * The document category repository for DocumentCategory CRUD operations. Should be non-null after injection.
+     * The document type repository for DocumentType CRUD operations. Should be non-null after injection.
      */
     @Autowired
-    private DocumentCategoryRepository documentCategoryRepository;
+    private DocumentTypeRepository documentTypeRepository;
 
     /**
      * The user role repository for UserRole CRUD operations. Should be non-null after injection.
@@ -95,7 +95,7 @@ public class LookupServiceImpl implements LookupService {
         Helper.checkConfigNotNull(programCategoryRepository, "programCategoryRepository");
         Helper.checkConfigNotNull(personalInterestRepository, "personalInterestRepository");
         Helper.checkConfigNotNull(professionalInterestRepository, "professionalInterestRepository");
-        Helper.checkConfigNotNull(documentCategoryRepository, "documentCategoryRepository");
+        Helper.checkConfigNotNull(documentTypeRepository, "documentTypeRepository");
         Helper.checkConfigNotNull(userRoleRepository, "userRoleRepository");
     }
 
@@ -180,13 +180,13 @@ public class LookupServiceImpl implements LookupService {
     }
 
     /**
-     * This method is used to document category lookups.
+     * This method is used to document type lookups.
      *
-     * @return the lookups for document category
+     * @return the lookups for document type
      * @throws MentorMeException if any other error occurred during operation
      */
-    public List<DocumentCategory> getDocumentCategories() throws MentorMeException {
-        return documentCategoryRepository.findAll();
+    public List<DocumentType> getDocumentTypes() throws MentorMeException {
+        return documentTypeRepository.findAll();
     }
 }
 

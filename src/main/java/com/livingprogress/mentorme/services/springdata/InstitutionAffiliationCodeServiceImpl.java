@@ -9,11 +9,14 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 /**
- * The Spring Data JPA implementation of InstitutionAffiliationCodeService, extends BaseService<InstitutionAffiliationCode,InstitutionAffiliationCodeSearchCriteria>. Effectively thread safe after configuration.
+ * The Spring Data JPA implementation of InstitutionAffiliationCodeService,
+ * extends BaseService<InstitutionAffiliationCode,InstitutionAffiliationCodeSearchCriteria>.
+ * Effectively thread safe after configuration.
  */
 @Service
 @NoArgsConstructor
-public class InstitutionAffiliationCodeServiceImpl extends BaseService<InstitutionAffiliationCode, InstitutionAffiliationCodeSearchCriteria>
+public class InstitutionAffiliationCodeServiceImpl
+        extends BaseService<InstitutionAffiliationCode, InstitutionAffiliationCodeSearchCriteria>
         implements InstitutionAffiliationCodeService {
 
     /**

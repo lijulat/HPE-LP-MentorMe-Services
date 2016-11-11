@@ -18,8 +18,8 @@ public interface UserService extends GenericService<User, UserSearchCriteria> {
      * @param providerId the provider id
      * @param providerUserId the provider user id
      * @return the match user
-     * @throws IllegalArgumentException: if parameters are null or not valid
-     * @throws MentorMeException: if any other error occurred during operation
+     * @throws IllegalArgumentException if parameters are null or not valid
+     * @throws MentorMeException if any other error occurred during operation
      */
     User findByProviderIdAndProviderUserId(String providerId, String providerUserId) throws MentorMeException;
 

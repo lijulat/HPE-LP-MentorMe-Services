@@ -1,0 +1,15 @@
+{
+  "agreementName": "demoAgreementName",
+  "agreementFilePath": "demoAgreementFilePath",
+  "institutionId": 2,
+  "userRoles": [
+    {
+      "id": 3,
+      "value": "MENTOR"
+    },
+    {
+      "id": 4,
+      "value": "MENTEE"
+    }
+  ]
+}

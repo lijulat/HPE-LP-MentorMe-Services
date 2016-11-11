@@ -1,0 +1,251 @@
+[
+  {
+    "id": 5,
+    "createdOn": "2016-10-05T00:00:00",
+    "username": "test5",
+    "firstName": "firstname5",
+    "lastName": "lastname5",
+    "roles": [
+      {
+        "id": 3,
+        "value": "MENTOR"
+      }
+    ],
+    "email": "email5@test.com",
+    "profilePicturePath": "profilePicturePath5",
+    "status": "INACTIVE",
+    "institution": {
+      "id": 2,
+      "createdOn": "2016-10-02T00:00:00",
+      "institutionName": "institutionName2",
+      "parentOrganization": null,
+      "streetAddress": "streetAddress2",
+      "city": "city2",
+      "state": {
+        "id": 2,
+        "value": "State2"
+      },
+      "zip": "zip2",
+      "country": {
+        "id": 2,
+        "value": "Country2"
+      },
+      "phone": "phone2",
+      "email": "institution2@test.com",
+      "description": "description2",
+      "contacts": [
+        {
+          "id": 3,
+          "title": "title3",
+          "firstName": "firstName3",
+          "lastName": "lastName3",
+          "email": "institutionContact3@test.com",
+          "phoneNumber": "phoneNumber3",
+          "primaryContact": true
+        }
+      ],
+      "status": "INACTIVE",
+      "logoPath": "logoPath2"
+    },
+    "assignedToInstitution": false,
+    "birthDate": "1988-08-02",
+    "phone": "phone2",
+    "skypeUsername": "skypeUsername2",
+    "introVideoLink": "introVideoLink2",
+    "description": "description2",
+    "personalInterests": [
+      {
+        "id": 7,
+        "personalInterest": {
+          "id": 3,
+          "value": "PersonalInterest3",
+          "picturePath": "picturePath3",
+          "parentCategory": {
+            "id": 1,
+            "value": "PersonalInterest1",
+            "picturePath": "picturePath1",
+            "parentCategory": null
+          }
+        },
+        "weight": 3,
+        "userId": 5
+      }
+    ],
+    "professionalInterests": [
+      {
+        "id": 9,
+        "professionalInterest": {
+          "id": 3,
+          "value": "ProfessionalInterest3",
+          "picturePath": "picturePath3",
+          "parentCategory": {
+            "id": 1,
+            "value": "ProfessionalInterest1",
+            "picturePath": "picturePath1",
+            "parentCategory": null
+          }
+        },
+        "weight": 2,
+        "userId": 5
+      }
+    ],
+    "averagePerformanceScore": 1,
+    "professionalExperiences": [],
+    "mentorType": "PROFESSIONAL_CONSULTANT",
+    "professionalAreas": [],
+    "companyName": "companyName2",
+    "linkedInUrl": "linkedInUrl2"
+  },
+  {
+    "id": 9,
+    "createdOn": "2016-10-09T00:00:00",
+    "username": "test9",
+    "firstName": "firstname9",
+    "lastName": "lastname9",
+    "roles": [
+      {
+        "id": 3,
+        "value": "MENTOR"
+      }
+    ],
+    "email": "email9@test.com",
+    "profilePicturePath": "profilePicturePath9",
+    "status": "ACTIVE",
+    "institution": {
+      "id": 6,
+      "createdOn": "2016-10-06T00:00:00",
+      "institutionName": "institutionName6",
+      "parentOrganization": "parentOrganization6",
+      "streetAddress": "streetAddress6",
+      "city": "city6",
+      "state": {
+        "id": 2,
+        "value": "State2"
+      },
+      "zip": "zip6",
+      "country": {
+        "id": 2,
+        "value": "Country2"
+      },
+      "phone": "phone6",
+      "email": "institution6@test.com",
+      "description": "description6",
+      "contacts": [],
+      "status": "ACTIVE",
+      "logoPath": "logoPath5"
+    },
+    "assignedToInstitution": false,
+    "birthDate": "1988-08-06",
+    "phone": "phone6",
+    "skypeUsername": "skypeUsername6",
+    "introVideoLink": "introVideoLink5",
+    "description": "description6",
+    "personalInterests": [
+      {
+        "id": 8,
+        "personalInterest": {
+          "id": 2,
+          "value": "PersonalInterest2",
+          "picturePath": "picturePath2",
+          "parentCategory": null
+        },
+        "weight": 2,
+        "userId": 9
+      }
+    ],
+    "professionalInterests": [],
+    "averagePerformanceScore": 5,
+    "professionalExperiences": [],
+    "mentorType": "PROFESSIONAL_CONSULTANT",
+    "professionalAreas": [],
+    "companyName": "companyName6",
+    "linkedInUrl": "linkedInUrl6"
+  },
+  {
+    "id": 7,
+    "createdOn": "2016-10-07T00:00:00",
+    "username": "test7",
+    "firstName": "firstname7",
+    "lastName": "lastname7",
+    "roles": [
+      {
+        "id": 3,
+        "value": "MENTOR"
+      }
+    ],
+    "email": "email7@test.com",
+    "profilePicturePath": "profilePicturePath7",
+    "status": "ACTIVE",
+    "institution": {
+      "id": 4,
+      "createdOn": "2016-10-04T00:00:00",
+      "institutionName": "institutionName4",
+      "parentOrganization": "parentOrganization4",
+      "streetAddress": "streetAddress4",
+      "city": "city4",
+      "state": {
+        "id": 2,
+        "value": "State2"
+      },
+      "zip": "zip4",
+      "country": {
+        "id": 2,
+        "value": "Country2"
+      },
+      "phone": "phone4",
+      "email": "institution4@test.com",
+      "description": "description4",
+      "contacts": [],
+      "status": "ACTIVE",
+      "logoPath": "logoPath3"
+    },
+    "assignedToInstitution": false,
+    "birthDate": "1988-08-04",
+    "phone": "phone4",
+    "skypeUsername": "skypeUsername4",
+    "introVideoLink": "introVideoLink4",
+    "description": "description4",
+    "personalInterests": [
+      {
+        "id": 5,
+        "personalInterest": {
+          "id": 3,
+          "value": "PersonalInterest3",
+          "picturePath": "picturePath3",
+          "parentCategory": {
+            "id": 1,
+            "value": "PersonalInterest1",
+            "picturePath": "picturePath1",
+            "parentCategory": null
+          }
+        },
+        "weight": 2,
+        "userId": 7
+      }
+    ],
+    "professionalInterests": [
+      {
+        "id": 7,
+        "professionalInterest": {
+          "id": 3,
+          "value": "ProfessionalInterest3",
+          "picturePath": "picturePath3",
+          "parentCategory": {
+            "id": 1,
+            "value": "ProfessionalInterest1",
+            "picturePath": "picturePath1",
+            "parentCategory": null
+          }
+        },
+        "weight": 3,
+        "userId": 7
+      }
+    ],
+    "averagePerformanceScore": 3,
+    "professionalExperiences": [],
+    "mentorType": "PROFESSIONAL_CONSULTANT",
+    "professionalAreas": [],
+    "companyName": "companyName4",
+    "linkedInUrl": "linkedInUrl4"
+  }
+]

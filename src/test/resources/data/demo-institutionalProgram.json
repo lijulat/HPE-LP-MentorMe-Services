@@ -1,0 +1,81 @@
+{
+  "programName": "demoProgramName",
+  "startDate": "2016-11-11",
+  "endDate": "2016-11-31",
+  "institution": {
+    "id": 3
+  },
+  "programCategory": {
+    "id": 3,
+    "value": "ProgramCategory3"
+  },
+  "goals": [
+    {
+      "number": 1,
+      "subject": "demoSubject",
+      "description": "demoDescription",
+      "goalCategory": {
+        "id": 2,
+        "value" : "GoalCategory2"
+      },
+      "durationInDays": 11,
+      "tasks": [{
+        "number":1,
+        "description":"demoDescription",
+        "durationInDays":2,
+        "mentorAssignment":true,
+        "menteeAssignment":true,
+        "custom": true,
+        "customData":{
+          "mentor":{
+            "id":3
+          },
+          "mentee":{
+            "id":4
+          }
+        }
+      }],
+      "usefulLinks": [
+        {
+          "title": "title1",
+          "address": "address1"
+        },
+        {
+          "title": "title2",
+          "address": "address2"
+        }
+      ],
+      "custom": true,
+      "customData": {
+        "mentor": {
+          "id": 3
+        },
+        "mentee": {
+          "id": 4
+        }
+      }
+    }
+  ],
+  "responsibilities":[
+    {
+      "number": 2,
+      "title": "demoTitle1",
+      "date": "2016-10-02",
+      "menteeResponsibility": true,
+      "mentorResponsibility": false
+    }
+  ],
+  "documents": [],
+  "usefulLinks": [
+    {
+      "title": "title1",
+      "address": "address1"
+    },
+    {
+      "title": "title2",
+      "address": "address2"
+    }
+  ],
+  "durationInDays": 30,
+  "programImageUrl": "demoProgramImageUrl"
+}

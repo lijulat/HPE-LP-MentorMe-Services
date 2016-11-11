@@ -3,7 +3,6 @@ package com.livingprogress.mentorme.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -56,7 +55,7 @@ public class Event extends IdentifiableEntity {
     private String eventLocation;
 
     /**
-     * The event location address
+     * The event location address.
      */
     private String eventLocationAddress;
 
@@ -85,28 +84,29 @@ public class Event extends IdentifiableEntity {
     private Country country;
 
     /**
-     * The created by
+     * The created by.
      */
-    @Column(name = "created_by", insertable = true, updatable = false)
     @JoinColumn(name = "created_by", insertable = true, updatable = false)
     private long createdBy;
 
     /**
-     * The invited mentors
+     * The invited mentors.
      */
     @ManyToMany
-    @JoinTable(name = "event_invited_mentor", joinColumns = {@JoinColumn(name = "event_id")}, inverseJoinColumns = {@JoinColumn(name = "mentor_id")})
+    @JoinTable(name = "event_invited_mentor",
+            joinColumns = {@JoinColumn(name = "event_id")}, inverseJoinColumns = {@JoinColumn(name = "mentor_id")})
     private List<Mentor> invitedMentors;
 
     /**
-     * The invited mentees
+     * The invited mentees.
      */
     @ManyToMany
-    @JoinTable(name = "event_invited_mentee", joinColumns = {@JoinColumn(name = "event_id")}, inverseJoinColumns = {@JoinColumn(name = "mentee_id")})
+    @JoinTable(name = "event_invited_mentee",
+            joinColumns = {@JoinColumn(name = "event_id")}, inverseJoinColumns = {@JoinColumn(name = "mentee_id")})
     private List<Mentee> invitedMentees;
 
     /**
-     * The global flag
+     * The global flag.
      */
     private boolean global;
 }

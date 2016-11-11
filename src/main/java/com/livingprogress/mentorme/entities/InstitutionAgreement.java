@@ -36,7 +36,9 @@ public class InstitutionAgreement extends IdentifiableEntity {
      * The user roles.
      */
     @ManyToMany
-    @JoinTable(name = "institution_agreement_user_role", joinColumns = {@JoinColumn(name = "institution_agreement_id")}, inverseJoinColumns = {@JoinColumn(name = "user_role_id")})
+    @JoinTable(name = "institution_agreement_user_role",
+            joinColumns = {@JoinColumn(name = "institution_agreement_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_role_id")})
     private List<UserRole> userRoles;
 }
 

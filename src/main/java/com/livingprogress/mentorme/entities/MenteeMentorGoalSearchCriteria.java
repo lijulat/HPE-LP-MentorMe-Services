@@ -5,7 +5,7 @@ import lombok.Setter;
 
 
 /**
- * The mentee goal search criteria.
+ * The mentee mentor goal search criteria.
  */
 @Getter
 @Setter

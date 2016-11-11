@@ -311,6 +311,13 @@ public class UserControllerTest extends BaseTest {
                .andExpect(status().isForbidden());
         mockMvc.perform(MockMvcRequestBuilders.put("/users/forgotPassword?email=notexist@test.com"))
                .andExpect(status().isNotFound());
+        assertEquals(2, getForgotPasswords().size());
+        wiser.stop();
+        // test failure case
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/forgotPassword?email=email2@test.com"))
+               .andExpect(status().isInternalServerError());
+        // rollback for failed inserted entities
+        assertEquals(2, getForgotPasswords().size());
     }
 
     /**

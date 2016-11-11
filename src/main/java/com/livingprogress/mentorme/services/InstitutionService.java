@@ -6,6 +6,6 @@ import com.livingprogress.mentorme.entities.InstitutionSearchCriteria;
 /**
  * The institution service. Extends generic service interface. Implementation should be effectively thread-safe.
 */
-public interface InstitutionService extends GenericService<Institution,InstitutionSearchCriteria> {
+public interface InstitutionService extends GenericService<Institution, InstitutionSearchCriteria> {
 }
 

@@ -22,7 +22,8 @@ public class InstitutionalProgramSpecification implements Specification<Institut
     private final InstitutionalProgramSearchCriteria criteria;
 
     /**
-     * Creates a WHERE clause for a query of the referenced entity in form of a Predicate for the given Root and CriteriaQuery.
+     * Creates a WHERE clause for a query of the referenced entity
+     * in form of a Predicate for the given Root and CriteriaQuery.
      *
      * @param root the root
      * @param query the criteria query
@@ -31,8 +32,16 @@ public class InstitutionalProgramSpecification implements Specification<Institut
      */
     public Predicate toPredicate(Root<InstitutionalProgram> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         Predicate pd = cb.and();
-        // TODO implement other criteria
+        pd = Helper.buildLikePredicate(criteria.getProgramName(), pd, root.get("programName"), cb);
         pd = Helper.buildEqualPredicate(criteria.getInstitutionId(), pd, root.get("institution").get("id"), cb);
+        if (criteria.getProgramCategory() != null) {
+            pd = Helper.buildEqualPredicate(criteria.getProgramCategory().getId(),
+                    pd, root.get("programCategory").get("id"), cb);
+        }
+        pd = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinDurationInDays(),
+                pd, root.get("durationInDays"), cb);
+        pd = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxDurationInDays(),
+                pd, root.get("durationInDays"), cb);
         return pd;
     }
 }

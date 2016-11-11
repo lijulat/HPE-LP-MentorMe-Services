@@ -1,0 +1,56 @@
+{
+  "goal": {
+    "id": 2,
+    "number": 2,
+    "subject": "subject2",
+    "description": "description2",
+    "goalCategory": {
+      "id": 2,
+      "value": "GoalCategory2"
+    },
+    "durationInDays": 2,
+    "tasks": [
+      {
+        "id": 2,
+        "number": 2,
+        "description": "description2",
+        "durationInDays": 2,
+        "mentorAssignment": true,
+        "menteeAssignment": false,
+        "documents": [],
+        "usefulLinks": [],
+        "custom": false,
+        "customData": null,
+        "goalId": 2
+      }
+    ],
+    "institutionalProgramId": 2,
+    "usefulLinks": [],
+    "documents": [],
+    "custom": false,
+    "customData": null
+  },
+  "completed": false,
+  "completedOn": null,
+  "tasks": [
+    {
+      "task": {
+        "id": 2,
+        "number": 2,
+        "description": "description2",
+        "durationInDays": 2,
+        "mentorAssignment": true,
+        "menteeAssignment": false,
+        "documents": [],
+        "usefulLinks": [],
+        "custom": false,
+        "customData": null,
+        "goalId": 2
+      },
+      "completed": false
+    }
+  ],
+  "startDate": "2016-11-01",
+  "endDate": "2016-11-31",
+  "menteeMentorProgramId": 2
+}
