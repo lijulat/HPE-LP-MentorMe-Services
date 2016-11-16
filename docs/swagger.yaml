@@ -1940,6 +1940,92 @@ paths:
             description: The id
             type: number
             required: true
+          - name: maxCount
+            in: query
+            description: The max count
+            type: number
+            required: false
+          - name: distance
+            in: query
+            description: The distance
+            type: number
+            required: false
+          - name: personalInterests[].id
+            in: query
+            description: The personal interests
+            type: number
+            required: false
+          - name: professionalInterests[].id
+            in: number
+            description: The personal interests
+            type: string
+            required: false
+        responses:
+          200:
+            description: The response containing the match mentors
+            schema:
+              type: array
+              items:
+                 $ref: '#/definitions/Mentor'
+          400:
+            description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+            schema:
+              $ref: '#/definitions/Error'
+          401:
+            description: Authentication Error - ien is missing or invalid
+            schema:
+              $ref: '#/definitions/Error'
+          403:
+            description: Access Denied Error - if forbidden to access
+            schema:
+              $ref: '#/definitions/Error'
+          404:
+            description: Not Found - if match entity not found
+            schema:
+              $ref: '#/definitions/Error'
+          500:
+            description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+            schema:
+              $ref: '#/definitions/Error'
+          default:
+            description: Unexpected error.
+            schema:
+              $ref: '#/definitions/Error'
+
+  /mentees/{id}/remoteMatchingMentors:
+      get:
+        tags:
+          - Mentee
+        summary: get Mentee match mentors
+        description: This endpoint is responsible for getting match mentors Mentee using Haven OnDemand API
+        security:
+          - basicAuth: []
+        parameters:
+          - name: id
+            in: path
+            description: The id
+            type: number
+            required: true
+          - name: maxCount
+            in: query
+            description: The max count
+            type: number
+            required: false
+          - name: distance
+            in: query
+            description: The distance
+            type: number
+            required: false
+          - name: personalInterests[].value
+            in: query
+            description: The personal interests
+            type: string
+            required: false
+          - name: professionalInterests[].value
+            in: query
+            description: The personal interests
+            type: string
+            required: false
         responses:
           200:
             description: The response containing the match mentors
@@ -2350,6 +2436,92 @@ paths:
             description: The id
             type: number
             required: true
+          - name: maxCount
+            in: query
+            description: The max count
+            type: number
+            required: false
+          - name: distance
+            in: query
+            description: The distance
+            type: number
+            required: false
+          - name: personalInterests[].id
+            in: query
+            description: The personal interests
+            type: number
+            required: false
+          - name: professionalInterests[].id
+            in: query
+            description: The personal interests
+            type: number
+            required: false
+        responses:
+          200:
+            description: The response containing the  match mentees
+            schema:
+              type: array
+              items:
+                 $ref: '#/definitions/Mentee'
+          400:
+            description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+            schema:
+              $ref: '#/definitions/Error'
+          401:
+            description: Authentication Error - ien is missing or invalid
+            schema:
+              $ref: '#/definitions/Error'
+          403:
+            description: Access Denied Error - if forbidden to access
+            schema:
+              $ref: '#/definitions/Error'
+          404:
+            description: Not Found - if match entity not found
+            schema:
+              $ref: '#/definitions/Error'
+          500:
+            description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+            schema:
+              $ref: '#/definitions/Error'
+          default:
+            description: Unexpected error.
+            schema:
+              $ref: '#/definitions/Error'
+
+  /mentors/{id}/remoteMatchingMentees:
+      get:
+        tags:
+          - Mentor
+        summary: get Mentor match mentees
+        description: This endpoint is responsible for getting match mentees Mentees using Haven OnDemand API
+        security:
+          - basicAuth: []
+        parameters:
+          - name: id
+            in: path
+            description: The id
+            type: number
+            required: true
+          - name: maxCount
+            in: query
+            description: The max count
+            type: number
+            required: false
+          - name: distance
+            in: query
+            description: The distance
+            type: number
+            required: false
+          - name: personalInterests[].value
+            in: query
+            description: The personal interests
+            type: string
+            required: false
+          - name: professionalInterests[].value
+            in: query
+            description: The personal interests
+            type: string
+            required: false
         responses:
           200:
             description: The response containing the  match mentees
@@ -5173,6 +5345,28 @@ definitions:
       lastName:
         type: string
         description: The last name.
+      isVirtualUser:
+        type: boolean
+        description: The is virtual user flag.
+      streetAddress:
+        type: string
+        description: The street address.
+      city:
+        type: string
+        description: The city.
+      postalCode:
+        type: string
+        description: The postal code.
+      longitude:
+        type: string
+        description: The longitude.
+      latitude:
+        type: string
+        description: The latitude.
+      country:
+         $ref: '#/definitions/Country'
+      state:
+        $ref: '#/definitions/State'
       roles:
         type: array
         items:
@@ -5467,6 +5661,10 @@ definitions:
         type: integer
         format: int32
         description: The created on datetime with unix epoch format.
+      lastModifiedOn:
+        type: integer
+        format: int32
+        description: The last modified on time
       institutionName:
         type: string
         description: The name.
@@ -5798,6 +5996,28 @@ definitions:
       linkedInUrl:
         type: string
         description: The linkedIn url.
+      isVirtualUser:
+        type: boolean
+        description: The is virtual user flag.
+      streetAddress:
+        type: string
+        description: The street address.
+      city:
+        type: string
+        description: The city.
+      postalCode:
+        type: string
+        description: The postal code.
+      longitude:
+        type: string
+        description: The longitude.
+      latitude:
+        type: string
+        description: The latitude.
+      country:
+         $ref: '#/definitions/Country'
+      state:
+        $ref: '#/definitions/State'
       roles:
         type: array
         items:
@@ -5828,6 +6048,10 @@ definitions:
         type: integer
         format: int32
         description: The created on datetime with unix epoch format.
+      lastModifiedOn:
+        type: integer
+        format: int32
+        description: The last modified on time
       username:
         type: string
         description: The username.
@@ -5876,6 +6100,28 @@ definitions:
       linkedInUrl:
         type: string
         description: The linkedIn url.
+      isVirtualUser:
+        type: boolean
+        description: The is virtual user flag.
+      streetAddress:
+        type: string
+        description: The street address.
+      city:
+        type: string
+        description: The city.
+      postalCode:
+        type: string
+        description: The postal code.
+      longitude:
+        type: string
+        description: The longitude.
+      latitude:
+        type: string
+        description: The latitude.
+      country:
+         $ref: '#/definitions/Country'
+      state:
+        $ref: '#/definitions/State'
       roles:
         type: array
         items:
@@ -5962,6 +6208,28 @@ definitions:
       facebookUrl:
         type: string
         description: The facebook url.
+      isVirtualUser:
+        type: boolean
+        description: The is virtual user flag.
+      streetAddress:
+        type: string
+        description: The street address.
+      city:
+        type: string
+        description: The city.
+      postalCode:
+        type: string
+        description: The postal code.
+      longitude:
+        type: string
+        description: The longitude.
+      latitude:
+        type: string
+        description: The latitude.
+      country:
+         $ref: '#/definitions/Country'
+      state:
+        $ref: '#/definitions/State'
       roles:
         type: array
         items:
@@ -5992,6 +6260,10 @@ definitions:
         type: integer
         format: int32
         description: The created on datetime with unix epoch format.
+      lastModifiedOn:
+        type: integer
+        format: int32
+        description: The last modified on time
       username:
         type: string
         description: The username.
@@ -6040,6 +6312,28 @@ definitions:
       facebookUrl:
         type: string
         description: The facebook url.
+      isVirtualUser:
+        type: boolean
+        description: The is virtual user flag.
+      streetAddress:
+        type: string
+        description: The street address.
+      city:
+        type: string
+        description: The city.
+      postalCode:
+        type: string
+        description: The postal code.
+      longitude:
+        type: string
+        description: The longitude.
+      latitude:
+        type: string
+        description: The latitude.
+      country:
+         $ref: '#/definitions/Country'
+      state:
+        $ref: '#/definitions/State'
       roles:
         type: array
         items:
@@ -6272,7 +6566,12 @@ definitions:
         createdBy:
           type: number
           description: The created by user id.
-
+        lastModifiedOn:
+          type: number
+          description: The last modified on time
+        lastModifiedBy:
+          type: number
+          description: The last modified by user id.
   CustomAssignedGoalData:
       type: object
       properties:
@@ -6461,7 +6760,12 @@ definitions:
         createdBy:
           type: number
           description: The created by user id.
-
+        lastModifiedOn:
+          type: number
+          description: The last modified on time
+        lastModifiedBy:
+          type: number
+          description: The last modified by user id.
   ActivitySearchResult:
       type: object
       properties:

@@ -15,6 +15,7 @@
   "institution": {
     "id": 1,
     "createdOn": "2016-10-01T00:00:00",
+    "lastModifiedOn" : "2016-10-01T00:00:00",
     "institutionName": "institutionName1",
     "parentOrganization": "parentOrganization1",
     "streetAddress": "streetAddress1",
@@ -129,5 +130,13 @@
     }
   ],
   "companyName": "demoMentor1CompanyName1",
-  "linkedInUrl": "demoMentorLinkedInUrl1"
+  "linkedInUrl": "demoMentorLinkedInUrl1",
+  "state": {
+    "id": 2,
+    "value": "State2"
+  },
+  "country": {
+    "id": 2,
+    "value": "Country2"
+  }
 }

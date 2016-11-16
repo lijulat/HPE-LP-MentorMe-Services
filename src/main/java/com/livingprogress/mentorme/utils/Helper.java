@@ -11,10 +11,12 @@ import com.livingprogress.mentorme.entities.IdentifiableEntity;
 import com.livingprogress.mentorme.entities.InstitutionAffiliationCode;
 import com.livingprogress.mentorme.entities.InstitutionUser;
 import com.livingprogress.mentorme.entities.InstitutionUserSearchCriteria;
+import com.livingprogress.mentorme.entities.MatchSearchCriteria;
 import com.livingprogress.mentorme.entities.Mentee;
 import com.livingprogress.mentorme.entities.MenteeMentorProgram;
 import com.livingprogress.mentorme.entities.Mentor;
 import com.livingprogress.mentorme.entities.NewPassword;
+import com.livingprogress.mentorme.entities.Paging;
 import com.livingprogress.mentorme.entities.ParentConsent;
 import com.livingprogress.mentorme.entities.PersonalInterest;
 import com.livingprogress.mentorme.entities.ProfessionalExperienceData;
@@ -26,6 +28,7 @@ import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.security.CustomUserDetails;
 import com.livingprogress.mentorme.security.UserAuthentication;
+import com.livingprogress.mentorme.services.GenericService;
 import com.livingprogress.mentorme.services.springdata.ActivityRepository;
 import com.livingprogress.mentorme.services.springdata.MenteeMentorProgramRepository;
 import org.apache.commons.io.FileUtils;
@@ -49,7 +52,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -67,19 +72,20 @@ import java.util.stream.Collectors;
  */
 public class Helper {
     /**
-     * Represents the entrance message.
+     * Mysql ST_Distance_Sphere will return distance in meters so we have to multiply 1000 to compare as kilometers.
      */
-    private static final String MESSAGE_ENTRANCE = "Entering method %1$s.";
+    public static final String KILOMETERS = "1000";
 
     /**
-     * Represents the exit message.
+     * Represents the mysql function to calculate distance between two points.
      */
-    private static final String MESSAGE_EXIT = "Exiting method %1$s.";
+    private static final String CALCULATE_DISTANCE = "calculate_distance";
 
     /**
-     * Represents the error message.
+     * Represents the classes that there is no need to log.
      */
-    private static final String MESSAGE_ERROR = "Error in method %1$s. Details:";
+    private static final List<Class> NOLOGS = Arrays.asList(HttpServletRequest.class,
+            HttpServletResponse.class, ModelAndView.class, NewPassword.class, MultipartFile[].class);
 
     /**
      * The object mapper.
@@ -106,7 +112,7 @@ public class Helper {
      */
     public static void checkNull(Object object, String name) throws IllegalArgumentException {
         if (object == null) {
-            throw new IllegalArgumentException(String.format("%s should be provided", name));
+            throw new IllegalArgumentException(CustomMessageSource.getMessage("checkNull.error", name));
         }
     }
 
@@ -155,7 +161,7 @@ public class Helper {
     public static void checkNullOrEmpty(String str, String name) throws IllegalArgumentException {
         if (isNullOrEmpty(str)) {
             throw new IllegalArgumentException(
-                    String.format("%s should be valid string(not null and not empty)", name));
+                    CustomMessageSource.getMessage("checkNullOrEmpty.error", name));
         }
     }
 
@@ -168,7 +174,7 @@ public class Helper {
      */
     public static void checkPositive(long value, String name) {
         if (value <= 0) {
-            throw new IllegalArgumentException(String.format("%s should be positive", name));
+            throw new IllegalArgumentException(CustomMessageSource.getMessage("checkPositive.error", name));
         }
     }
 
@@ -182,7 +188,7 @@ public class Helper {
     public static void checkEmail(String value, String name) {
         checkNullOrEmpty(value, name);
         if (!isEmail(value)) {
-            throw new IllegalArgumentException(String.format("%s should be valid email address", name));
+            throw new IllegalArgumentException(CustomMessageSource.getMessage("checkEmail.error", name));
         }
     }
 
@@ -208,7 +214,7 @@ public class Helper {
      */
     public static void checkConfigNotNull(Object object, String name) {
         if (object == null) {
-            throw new ConfigurationException(String.format("%s should be provided", name));
+            throw new ConfigurationException(CustomMessageSource.getMessage("checkNull.error", name));
         }
     }
 
@@ -221,11 +227,11 @@ public class Helper {
      */
     public static void checkDirectory(String path, String name) {
         if (Helper.isNullOrEmpty(path)) {
-            throw new ConfigurationException(String.format("%s should be provided", name));
+            throw new ConfigurationException(CustomMessageSource.getMessage("checkNullOrEmpty.error", name));
         }
         File file = new File(path);
         if (!file.exists() || !file.isDirectory()) {
-            throw new ConfigurationException(String.format("%s should be valid directory path", name));
+            throw new ConfigurationException(CustomMessageSource.getMessage("checkDirectory.error", name));
         }
     }
 
@@ -238,7 +244,7 @@ public class Helper {
      */
     public static void checkConfigPositive(long value, String name) {
         if (value <= 0) {
-            throw new ConfigurationException(String.format("%s should be positive", name));
+            throw new ConfigurationException(CustomMessageSource.getMessage("checkPositive.error", name));
         }
     }
 
@@ -264,7 +270,7 @@ public class Helper {
      */
     public static void logEntrance(Logger logger, String signature, String[] paramNames, Object[] params) {
         if (logger.isDebugEnabled()) {
-            String msg = String.format(MESSAGE_ENTRANCE, signature) + toString(paramNames, params);
+            String msg = CustomMessageSource.getMessage("log.entering", signature) + toString(paramNames, params);
             logger.debug(msg);
         }
     }
@@ -278,9 +284,9 @@ public class Helper {
      */
     public static void logExit(Logger logger, String signature, Object value) {
         if (logger.isDebugEnabled()) {
-            String msg = String.format(MESSAGE_EXIT, signature);
+            String msg = CustomMessageSource.getMessage("log.exiting", signature);
             if (value != null) {
-                msg += " Output parameter : " + toString(value);
+                msg += CustomMessageSource.getMessage("log.output") + toString(value);
             }
             logger.debug(msg);
         }
@@ -296,7 +302,7 @@ public class Helper {
      */
     public static <T extends Throwable> void logException(Logger logger, String signature, T ex) {
         StringBuilder sw = new StringBuilder();
-        sw.append(String.format(MESSAGE_ERROR, signature)).append(": ").append(ex.getMessage());
+        sw.append(CustomMessageSource.getMessage("log.error", signature)).append(": ").append(ex.getMessage());
         logger.error(sw.toString(), ex);
     }
 
@@ -308,7 +314,8 @@ public class Helper {
      * @return the string
      */
     private static String toString(String[] paramNames, Object[] params) {
-        StringBuilder sb = new StringBuilder(" Input parameters: {");
+        StringBuilder sb = new StringBuilder(CustomMessageSource.getMessage("log.input"));
+        sb.append("{");
         if (params != null) {
             for (int i = 0; i < params.length; i++) {
                 if (i > 0) {
@@ -330,21 +337,13 @@ public class Helper {
     public static String toString(Object obj) {
         String result;
         try {
-            if (obj instanceof HttpServletRequest) {
-                result = "Http servlet request";
-            } else if (obj instanceof HttpServletResponse) {
-                result = "Http servlet response";
-            } else if (obj instanceof ModelAndView) {
-                result = "Spring model and view object";
-            } else if (obj instanceof NewPassword) {
-                result = "New Password request";
-            } else if (obj instanceof  MultipartFile[]) {
-                result = "Multipart file request";
+            if (NOLOGS.stream().anyMatch(s -> s.isInstance(obj))) {
+                result = obj.getClass().getSimpleName();
             } else {
                 result = MAPPER.writeValueAsString(obj);
             }
         } catch (JsonProcessingException e) {
-            result = "The object can not be serialized by Jackson JSON mapper, error: " + e.getMessage();
+            result = CustomMessageSource.getMessage("json.error", e.getMessage());
         }
         return result;
     }
@@ -533,6 +532,27 @@ public class Helper {
                 root.join("professionalInterests", JoinType.LEFT).get("professionalInterest").get("id"), cb);
         pd = Helper.buildEqualPredicate(criteria.getAssignedToInstitution(), pd,
                 root.get("assignedToInstitution"), cb);
+        pd = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinLastModifiedOn(),
+                pd, root.get("lastModifiedOn"), cb);
+        pd = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxLastModifiedOn(),
+                pd, root.get("lastModifiedOn"), cb);
+        if (criteria.getIds() != null && !criteria.getIds().isEmpty()) {
+            pd = cb.and(pd, root.get("id")
+                                .in(criteria.getIds()));
+        }
+        if (criteria.getDistance() != null
+                && criteria.getLatitude() != null
+                && criteria.getLongitude() != null) {
+            pd = cb.and(pd, cb.or(cb.equal(root.get("isVirtualUser"), true),
+                    cb.lessThanOrEqualTo(cb.function(CALCULATE_DISTANCE,
+                                    BigDecimal.class,
+                                    root.get("longitude"),
+                                    root.get("latitude"),
+                                    cb.literal(criteria.getLongitude()),
+                                    cb.literal(criteria.getLatitude())),
+                            criteria.getDistance()
+                                    .multiply(new BigDecimal(KILOMETERS)))));
+        }
         return pd;
     }
 
@@ -560,6 +580,18 @@ public class Helper {
      */
     public static boolean isUpdated(Object oldValue, Object newValue) {
         return (oldValue != null && !oldValue.equals(newValue)) || (newValue != null && !newValue.equals(oldValue));
+    }
+
+    /**
+     * Check whether BigDecimal value has been updated.
+     *
+     * @param oldValue the old value
+     * @param newValue the new value.
+     * @return true if value has been updated.
+     */
+    public static boolean isUpdated(BigDecimal oldValue, BigDecimal newValue) {
+        return (oldValue != null && (newValue == null || oldValue.compareTo(newValue) != 0))
+                || (newValue != null && (oldValue == null || newValue.compareTo(oldValue) != 0));
     }
 
     /**
@@ -669,6 +701,38 @@ public class Helper {
         if (isUpdated(oldEntity.getStatus(), newEntity.getStatus())) {
             updated = true;
             oldEntity.setStatus(newEntity.getStatus());
+        }
+        if (isUpdated(oldEntity.isVirtualUser(), newEntity.isVirtualUser())) {
+            updated = true;
+            oldEntity.setVirtualUser(newEntity.isVirtualUser());
+        }
+        if (isUpdated(oldEntity.getStreetAddress(), newEntity.getStreetAddress())) {
+            updated = true;
+            oldEntity.setStreetAddress(newEntity.getStreetAddress());
+        }
+        if (isUpdated(oldEntity.getCity(), newEntity.getCity())) {
+            updated = true;
+            oldEntity.setCity(newEntity.getCity());
+        }
+        if (isUpdated(oldEntity.getState(), newEntity.getState())) {
+            updated = true;
+            oldEntity.setState(newEntity.getState());
+        }
+        if (isUpdated(oldEntity.getCountry(), newEntity.getCountry())) {
+            updated = true;
+            oldEntity.setCountry(newEntity.getCountry());
+        }
+        if (isUpdated(oldEntity.getPostalCode(), newEntity.getPostalCode())) {
+            updated = true;
+            oldEntity.setPostalCode(newEntity.getPostalCode());
+        }
+        if (isUpdated(oldEntity.getLatitude(), newEntity.getLatitude())) {
+            updated = true;
+            oldEntity.setLatitude(newEntity.getLatitude());
+        }
+        if (isUpdated(oldEntity.getLongitude(), newEntity.getLongitude())) {
+            updated = true;
+            oldEntity.setLongitude(newEntity.getLongitude());
         }
         return updated;
     }
@@ -980,15 +1044,18 @@ public class Helper {
     }
 
     /**
-     * Audit with entity with created by and createdOn information.
+     * Audit with entity with created by and createdOn, last modified on/by information.
      * @param entity the  entity
      * @param <T> the auditable entity
      */
     public static <T extends AuditableUserEntity> void audit(T entity)  {
         User user = getAuthUser();
         if (user != null) {
-            entity.setCreatedOn(new Date());
+            Date now = new Date();
+            entity.setCreatedOn(now);
+            entity.setLastModifiedOn(now);
             entity.setCreatedBy(user.getId());
+            entity.setLastModifiedBy(user.getId());
         }
     }
 
@@ -1110,7 +1177,7 @@ public class Helper {
                     audit(doc);
                     docs.add(doc);
                 } catch (IOException e) {
-                    throw new MentorMeException("Error to write document", e);
+                    throw new MentorMeException(CustomMessageSource.getMessage("uploadDocument.error"), e);
                 }
             }
         }
@@ -1132,7 +1199,47 @@ public class Helper {
         checkNull(entity, "entity");
         checkPositive(entity.getId(), "entity.id");
         if (entity.getId() != id) {
-            throw new IllegalArgumentException("id and id of passed entity should be same.");
+            throw new IllegalArgumentException(CustomMessageSource.getMessage("update.notSameId.error"));
         }
+    }
+
+    /**
+     * Search match mentor/mentee according to match criteria.
+     * @param entity the entity
+     * @param criteria the search criteria
+     * @param matchSearchCriteria the match criteria
+     * @param service the mentor/mentee service
+     * @param <T> the search criteria class
+     * @param <S> the entity class
+     * @param <R> the entity class
+     * @return the match entities
+     * @throws IllegalArgumentException if match criteria is invalid
+     * @throws MentorMeException if any error happens during searching
+     */
+    public static <T extends InstitutionUserSearchCriteria, S extends InstitutionUser, R extends InstitutionUser>
+     List<R> searchMatchEntities(S entity, T criteria, MatchSearchCriteria matchSearchCriteria,
+            GenericService<R, T> service) throws MentorMeException {
+        if (entity.isAssignedToInstitution()) {
+            criteria.setInstitutionId(entity.getInstitution().getId());
+        } else {
+            criteria.setAssignedToInstitution(false);
+        }
+        Paging paging = null;
+        // copy match criteria properties
+        if (matchSearchCriteria != null) {
+            criteria.setPersonalInterests(matchSearchCriteria.getPersonalInterests());
+            criteria.setProfessionalInterests(matchSearchCriteria.getProfessionalInterests());
+            criteria.setDistance(matchSearchCriteria.getDistance());
+            if (matchSearchCriteria.getDistance() !=  null) {
+                criteria.setLongitude(entity.getLongitude());
+                criteria.setLatitude(entity.getLatitude());
+            }
+            if (matchSearchCriteria.getMaxCount() != null) {
+                checkPositive(matchSearchCriteria.getMaxCount(), "matchSearchCriteria.maxCount");
+                paging = new Paging();
+                paging.setPageSize(matchSearchCriteria.getMaxCount());
+            }
+        }
+        return service.search(criteria, paging).getEntities();
     }
 }

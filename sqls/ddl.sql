@@ -1,25 +1,4 @@
 -- -----------------------------------------------------
--- Table `user`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `user` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(256) NOT NULL,
-  `password` VARCHAR(256) NOT NULL,
-  `first_name` VARCHAR(256) NOT NULL,
-  `last_name` VARCHAR(256) NOT NULL,
-  `email` VARCHAR(256) NOT NULL,
-  `profile_picture_path` VARCHAR(512) NULL,
-  `created_on` DATETIME NOT NULL,
-  `status` VARCHAR(45) NOT NULL,
-  `provider_id` VARCHAR(256) NULL,
-  `provider_user_id` VARCHAR(256) NULL,
-  `access_token` VARCHAR(256) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_user_username` (`username`),
-  UNIQUE KEY `UK_user_email` (`email`))
-ENGINE = InnoDB;
-
--- -----------------------------------------------------
 -- Table `state`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `state` (
@@ -35,6 +14,46 @@ CREATE TABLE IF NOT EXISTS `country` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `value` VARCHAR(256) NOT NULL,
   PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `user`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `user` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(256) NOT NULL,
+  `password` VARCHAR(256) NOT NULL,
+  `first_name` VARCHAR(256) NOT NULL,
+  `last_name` VARCHAR(256) NOT NULL,
+  `email` VARCHAR(256) NOT NULL,
+  `profile_picture_path` VARCHAR(512) NULL,
+  `created_on` DATETIME NOT NULL,
+  `status` VARCHAR(45) NOT NULL,
+  `provider_id` VARCHAR(256) NULL,
+  `provider_user_id` VARCHAR(256) NULL,
+  `access_token` VARCHAR(256) NULL,
+  `is_virtual_user` TINYINT(1) NOT NULL,
+  `street_address` VARCHAR (512),
+  `city` VARCHAR(128),
+  `state_id` BIGINT NOT NULL,
+  `country_id` BIGINT NOT NULL,
+  `postal_code` VARCHAR(25),
+  `longitude` DECIMAL (16, 8),
+  `latitude` DECIMAL (16, 8),
+  `last_modified_on` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_user_username` (`username`),
+  UNIQUE KEY `UK_user_email` (`email`),
+  CONSTRAINT `user_state_id_fk`
+    FOREIGN KEY (`state_id`)
+    REFERENCES `state` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `user_country_id_fk`
+    FOREIGN KEY (`country_id`)
+    REFERENCES `country` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -80,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `institution` (
   `status` VARCHAR(45) NOT NULL,
   `logo_path` VARCHAR(512) NULL,
   `created_on` DATETIME NOT NULL,
+  `last_modified_on` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `i_c_idx` (`country_id` ASC),
   INDEX `i_s_idx` (`state_id` ASC),
@@ -141,6 +161,7 @@ CREATE TABLE IF NOT EXISTS `institutional_program` (
   `duration_in_days` INT NOT NULL,
   `created_on` DATETIME NOT NULL,
   `program_image_url` VARCHAR(256) NULL,
+  `last_modified_on` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `ip_i_fk_idx` (`institution_id` ASC),
   INDEX `ip_pc_idx` (`program_category_id` ASC),
@@ -514,6 +535,8 @@ CREATE TABLE IF NOT EXISTS `activity` (
   `mentee_id` BIGINT NULL,
   `mentor_id` BIGINT NULL,
   `global` TINYINT(1) NOT NULL,
+  `last_modified_by` BIGINT NOT NULL,
+  `last_modified_on` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `a_me_idx` (`mentee_id` ASC),
   INDEX `a_m_idx` (`mentor_id` ASC),
@@ -708,6 +731,8 @@ CREATE TABLE IF NOT EXISTS `document` (
   `path` VARCHAR(512) NOT NULL,
   `created_by` BIGINT NOT NULL,
   `created_on` DATETIME NOT NULL,
+  `last_modified_by` BIGINT NOT NULL,
+  `last_modified_on` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -1100,3 +1125,5 @@ REFERENCES `responsibility` (`id`)
 ON DELETE CASCADE
 ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+CREATE FUNCTION `calculate_distance` (`longitude1` DECIMAL (16, 8),  `latitude1` DECIMAL (16, 8),`longitude2` DECIMAL (16, 8),  `latitude2` DECIMAL (16, 8)) RETURNS DECIMAL(16, 8) RETURN ST_Distance_Sphere(Point(longitude1, latitude1), Point(longitude2, latitude2));

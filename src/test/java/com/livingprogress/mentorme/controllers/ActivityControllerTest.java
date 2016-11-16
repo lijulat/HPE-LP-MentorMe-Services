@@ -74,7 +74,9 @@ public class ActivityControllerTest extends BaseTest {
     public void create() throws Exception {
         Activity demoEntity = objectMapper.readValue(demo, Activity.class);
         assertNull(demoEntity.getCreatedOn());
+        assertNull(demoEntity.getLastModifiedOn());
         assertEquals(0, demoEntity.getCreatedBy());
+        assertEquals(0, demoEntity.getLastModifiedBy());
         String res = mockAuthMvc.perform(MockMvcRequestBuilders.post("/activities")
                                                                .header(AUTH_HEADER_NAME, systemAdminToken)
                                                                .contentType(MediaType.APPLICATION_JSON)
@@ -83,15 +85,20 @@ public class ActivityControllerTest extends BaseTest {
                                 .andExpect(jsonPath("$.id").isNumber())
                                 .andExpect(jsonPath("$.createdOn").exists())
                                 .andExpect(jsonPath("$.createdBy").isNumber())
+                                .andExpect(jsonPath("$.lastModifiedOn").exists())
+                                .andExpect(jsonPath("$.lastModifiedBy").isNumber())
                                 .andReturn()
                                 .getResponse()
                                 .getContentAsString();
         Activity result = objectMapper.readValue(res, Activity.class);
         assertNotNull(result.getCreatedOn());
         assertEquals(1, result.getCreatedBy());
+        assertEquals(1, result.getLastModifiedBy());
         demoEntity.setId(result.getId());
         demoEntity.setCreatedBy(result.getCreatedBy());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        demoEntity.setLastModifiedBy(result.getLastModifiedBy());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
     }
 
@@ -106,11 +113,14 @@ public class ActivityControllerTest extends BaseTest {
         demoEntity.setId(1);
         // try to update created on/by
         demoEntity.setCreatedOn(sampleFutureDate);
+        demoEntity.setLastModifiedOn(sampleFutureDate);
         demoEntity.setCreatedBy(6);
+        demoEntity.setLastModifiedBy(6);
         String json = objectMapper.writeValueAsString(demoEntity);
-        String res = mockMvc.perform(MockMvcRequestBuilders.put("/activities/1")
-                                                           .contentType(MediaType.APPLICATION_JSON)
-                                                           .content(json))
+        String res = mockAuthMvc.perform(MockMvcRequestBuilders.put("/activities/1")
+                                                            .header(AUTH_HEADER_NAME, systemAdminToken)
+                                                            .contentType(MediaType.APPLICATION_JSON)
+                                                            .content(json))
                             .andExpect(status().isOk())
                             .andReturn()
                             .getResponse()
@@ -119,8 +129,12 @@ public class ActivityControllerTest extends BaseTest {
         // will not update created on/by during updating
         assertNotEquals(sampleFutureDate, result.getCreatedOn());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        assertNotEquals(sampleFutureDate, result.getLastModifiedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         assertNotEquals(6, result.getCreatedBy());
         demoEntity.setCreatedBy(result.getCreatedBy());
+        assertNotEquals(6, result.getLastModifiedBy());
+        demoEntity.setLastModifiedBy(result.getLastModifiedBy());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
     }
 
@@ -150,7 +164,7 @@ public class ActivityControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/activities?sortColumn=id&sortOrder=ASC")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(content().json(entities, true));
+               .andExpect(content().json(entities));
         // default to use id as sort column
         SearchResult<Activity> result1 = getSearchResult
                 ("/activities?pageNumber=1&pageSize=2&sortOrder=ASC", Activity

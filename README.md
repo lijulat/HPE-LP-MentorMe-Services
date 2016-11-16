@@ -10,7 +10,7 @@ Living Progress - Build - Mentor Me API.
 
 1. Java 8
 2. Maven3+
-3. MySQL 5.7.x
+3. MySQL 5.7.6+ that supports [ST_Distance_Sphere](http://dev.mysql.com/doc/refman/5.7/en/spatial-convenience-functions.html#function_st-distance-sphere)
 4. SMTP Server You may use [FakeSMTP](https://github.com/Nilhcem/FakeSMTP)
 5. Chrome with postman(to verify api only)
 
@@ -70,6 +70,20 @@ and `src/main/resources/locale/messages_es.properties`(spanish) and
 
 It contains description for creating/updating goal/task/menteeMentorGoal/menteeMentorTask.
 
+### Haven On Demand API
+Register account in [havenondemand](https://havenondemand.com/) and get key after login with [api keys](https://www.havenondemand.com/account/api-keys.html).
+Free users only have 15 units and single standard index will cost 10 units, single explorer index will cost 1 unit but cannot create numeric_fields(for Custom_Fields flavor only) and we could use single index with different type for mentor and mentee.
+You can edit **havenondemand.apiKey** in `src/main/resources/application.properties`.
+
+If you set **havenondemand.forceDeleteIndex=true** in `src/main/resources/application.properties`, it will check exist index and recreate index, but it will not delete index with different name,
+so if you have created text index with different name you must delete this index. 
+If you set **havenondemand.forceDeleteIndex=false** in `src/main/resources/application.properties`, and exist index it will load updated mentees/mentors in last 24 hours by default.
+
+### Google Maps Geocoding API
+Please [get api key ](https://developers.google.com/maps/documentation/geocoding/get-api-key).
+Please check [api limits](https://developers.google.com/maps/documentation/geocoding/usage-limits).
+You can edit **google.geocoding.apiKey** in `src/main/resources/application.properties`.
+
 ## Mysql setup 
 Create schemas with `sqls/schema.sql`.
 Create tables in above schemas with `sqls/ddl.sql`.
@@ -79,7 +93,7 @@ If you want to prepare test data please run `sqls/testdata.sql`.
 
 
 ## Running Tests
-Make sure your configurations are right.
+Make sure your configurations are right and there are no special characters in file path for example whitespace.
 
 ``` bash
 mvn clean test
@@ -95,7 +109,7 @@ mvn clean test jacoco:report
 You can run below command to check code style using [Checkstyle plugin](https://maven.apache.org/plugins/maven-checkstyle-plugin/)
 
 ``` bash
-mvn checkstyle:checkstyle
+mvn clean checkstyle:checkstyle
 ```
 
 ## Deployment
@@ -121,3 +135,29 @@ Prepare clean and test data in mysql with `sqls/clear.sql` and `sqls/testdata.sq
 Import Postman collection `docs/postman.json` with environment variables `docs/postman-env.json`.
 You can test basic auth with username=test{X} X could be 1-14, password=password, please use basic auth feature of Postman to verify.
 Almost all requests will use JWT token auth defined in environment variable, but you can change to use basic auth easily.
+
+## Verification for Remote Service Implementation
+Related codes in package/directory `com.livingprogress.mentorme.remote`.
+Please prepare api key for google map and Haven On Demand API.
+It will invoke real remote service so test cases are not covered.
+
+You can still verify **remoteMatchingMentees** and **remoteMatchingMentors** endpoints in postman like previous.
+You can still set configurations using system variables like before for example **HAVENONDEMAND_APIKEY** for api key of havenondemand.
+You can still prepare test data like before or you can use below steps to prepare new sample data.
+Prepare clean and test data in mysql with order `sqls/clear.sql`,`sqls/country.sql`,`sqls/state.sql`,`sqls/personal_interest.sql`,`sqls/professional_interest.sql`,`sqls/lookup.sql`,`sqls/remote.sql`.
+
+I recommend to use **havenondemand.forceDeleteIndex=true** to test new index every time.
+Otherwise you have to update and then index and see latest result in last 24 hours.
+
+You can run below mvn command to run remote application directly.
+``` bash
+mvn clean compile exec:exec
+```
+You can also package and run(make sure related configurations is right).
+``` bash
+mvn clean package
+```
+Move to `target` folder
+``` bash
+java -jar -Dloader.main=com.livingprogress.mentorme.remote.RemoteApplication mentorme-api.jar
+```

@@ -1,5 +1,6 @@
 package com.livingprogress.mentorme.aop;
 
+import com.livingprogress.mentorme.utils.CustomMessageSource;
 import com.livingprogress.mentorme.utils.Helper;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
@@ -19,9 +20,10 @@ public class LogAspect {
     /**
      * The logger pointcut.
      */
-    private static final String LOG_POINTCUT = "execution(* com.livingprogress.mentorme.services.*.*(..)) || "
-            + "execution(* com.livingprogress.mentorme.controllers.*.*(..)) || execution(* com.livingprogress.mentorme"
-            + ".security.SimpleUserDetailsService.*(..))";
+    private static final String LOG_POINTCUT = "execution(* com.livingprogress.mentorme.services"
+            + ".*.*(..)) || execution(* com.livingprogress.mentorme.controllers.*.*(..)) "
+            + "|| execution(* com.livingprogress.mentorme.security.SimpleUserDetailsService.*(..)) "
+            + "|| execution(* com.livingprogress.mentorme.remote.consumers.*.*(..))";
 
     /**
      * The logger with package name.
@@ -39,7 +41,7 @@ public class LogAspect {
         if (parameterNames == null) {
             parameterNames = new String[joinPoint.getArgs().length];
             for (int i = 0; i < joinPoint.getArgs().length; i++) {
-                parameterNames[i] = "arg" + i;
+                parameterNames[i] = CustomMessageSource.getMessage("log.arg") + i;
             }
         }
         Helper.logEntrance(LOGGER, joinPoint.getSignature()

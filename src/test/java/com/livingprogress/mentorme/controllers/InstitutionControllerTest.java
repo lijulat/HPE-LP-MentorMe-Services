@@ -89,6 +89,7 @@ public class InstitutionControllerTest extends BaseTest {
     public void create() throws Exception {
         Institution demoEntity = objectMapper.readValue(demo, Institution.class);
         assertNull(demoEntity.getCreatedOn());
+        assertNull(demoEntity.getLastModifiedOn());
         checkEntities(demoEntity.getContacts());
         String res = mockMvc.perform(MockMvcRequestBuilders.post("/institutions")
                                                            .contentType(MediaType.APPLICATION_JSON)
@@ -96,12 +97,14 @@ public class InstitutionControllerTest extends BaseTest {
                             .andExpect(status().isCreated())
                             .andExpect(jsonPath("$.id").isNumber())
                             .andExpect(jsonPath("$.createdOn").exists())
+                            .andExpect(jsonPath("$.lastModifiedOn").exists())
                             .andReturn()
                             .getResponse()
                             .getContentAsString();
         Institution result = objectMapper.readValue(res, Institution.class);
         demoEntity.setId(result.getId());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         verifyEntities(demoEntity.getContacts(), result.getContacts());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
     }
@@ -117,6 +120,7 @@ public class InstitutionControllerTest extends BaseTest {
         Institution demoEntity = objectMapper.readValue(demo, Institution.class);
         BeanUtils.copyProperties(demoEntity, sampleEntity);
         demoEntity.setCreatedOn(sampleFutureDate);
+        demoEntity.setLastModifiedOn(sampleFutureDate);
         demoEntity.setId(1);
         checkEntities(demoEntity.getContacts());
         demoEntity.getContacts().get(0).setId(1L);
@@ -127,13 +131,16 @@ public class InstitutionControllerTest extends BaseTest {
                             .andExpect(status().isOk())
                             .andExpect(jsonPath("$.id").isNumber())
                             .andExpect(jsonPath("$.createdOn").exists())
+                            .andExpect(jsonPath("$.lastModifiedOn").exists())
                             .andReturn()
                             .getResponse()
                             .getContentAsString();
         Institution result = objectMapper.readValue(res, Institution.class);
         // will not update created on during updating
         assertNotEquals(sampleFutureDate, result.getCreatedOn());
+        assertNotEquals(sampleFutureDate, result.getLastModifiedOn());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         // same id entity just updates
         assertEquals(1, result.getContacts().get(0).getId());
         verifyEntities(demoEntity.getContacts(), result.getContacts());

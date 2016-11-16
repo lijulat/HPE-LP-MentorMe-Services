@@ -8,18 +8,22 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.math.BigDecimal;
 import java.util.List;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
 import static javax.persistence.EnumType.STRING;
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.InheritanceType.JOINED;
 
 /**
  * The user.
@@ -27,7 +31,7 @@ import static javax.persistence.EnumType.STRING;
 @Getter
 @Setter
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = JOINED)
 public class User extends AuditableEntity {
     /**
      * An username.
@@ -53,7 +57,7 @@ public class User extends AuditableEntity {
     /**
      * The user roles.
      */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = EAGER)
     @JoinTable(name = "user_user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_role_id")})
@@ -99,5 +103,53 @@ public class User extends AuditableEntity {
      */
     @Enumerated(STRING)
     private UserStatus status;
+
+    /**
+     * The is virtual user flag.
+     */
+    private boolean isVirtualUser;
+
+    /**
+     * The street address.
+     */
+    private String streetAddress;
+
+    /**
+     * The city.
+     */
+    private String city;
+
+    /**
+     * The state.
+     */
+    @ManyToOne(fetch = EAGER)
+    @JoinColumn(name = "state_id")
+    private State state;
+
+    /**
+     * The country.
+     */
+    @ManyToOne(fetch = EAGER)
+    @JoinColumn(name = "country_id")
+    private Country country;
+
+    /**
+     * The postal code.
+     */
+    private String postalCode;
+
+    /**
+     * The longitude.
+     */
+    @Max(180)
+    @Min(-180)
+    private BigDecimal longitude;
+
+    /**
+     * The latitude.
+     */
+    @Max(90)
+    @Min(-90)
+    private BigDecimal latitude;
 }
 

@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.livingprogress.mentorme.remote.services.HODClient;
+import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -63,6 +65,16 @@ public class TestConfig extends WebMvcConfigurerAdapter {
         MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
         jsonConverter.setObjectMapper(buildObjectMapper());
         return jsonConverter;
+    }
+
+    /**
+     * Create mock HOD client bean.
+     * @return the mock HOD client bean.
+     */
+    @Bean
+    @Primary
+    public HODClient mockHODClient() {
+        return Mockito.mock(HODClient.class);
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.aop.LogAspect;
+import com.livingprogress.mentorme.entities.MatchSearchCriteria;
 import com.livingprogress.mentorme.entities.Mentee;
 import com.livingprogress.mentorme.entities.MenteeSearchCriteria;
 import com.livingprogress.mentorme.entities.Mentor;
@@ -14,6 +15,7 @@ import com.livingprogress.mentorme.entities.WeightedProfessionalInterest;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
+import com.livingprogress.mentorme.remote.services.HODClient;
 import com.livingprogress.mentorme.services.MenteeService;
 import com.livingprogress.mentorme.services.MentorService;
 import com.livingprogress.mentorme.utils.Helper;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -57,6 +60,12 @@ public class MenteeController extends BaseEmailController {
      */
     @Autowired
     private MentorService mentorService;
+
+    /**
+     * The hod client used to perform operations. Should be non-null after injection.
+     */
+    @Autowired
+    private HODClient hodClient;
 
     /**
      * The amount of points if there is a direct matching of the interests.
@@ -100,6 +109,7 @@ public class MenteeController extends BaseEmailController {
         super.checkConfiguration();
         Helper.checkConfigNotNull(menteeService, "menteeService");
         Helper.checkConfigNotNull(mentorService, "mentorService");
+        Helper.checkConfigNotNull(hodClient, "hodClient");
         Helper.checkPositive(directMatchingPoints, "directMatchingPoints");
         Helper.checkPositive(parentCategoryMatchingPoints, "parentCategoryMatchingPoints");
         Helper.checkPositive(professionalInterestsCoefficient, "professionalInterestsCoefficient");
@@ -218,22 +228,18 @@ public class MenteeController extends BaseEmailController {
      * This method is used to get the matching mentors.
      *
      * @param id the id of the entity to retrieve
+     * @param matchSearchCriteria the match criteria
      * @return the matching mentors.
      * @throws IllegalArgumentException if id is not positive
      * @throws EntityNotFoundException if the entity does not exist
      * @throws MentorMeException if any other error occurred during operation
      */
     @RequestMapping(value = "{id}/matchingMentors", method = RequestMethod.GET)
-    public List<Mentor> getMatchingMentors(@PathVariable long id) throws MentorMeException {
+    public List<Mentor> getMatchingMentors(@PathVariable long id,
+            @ModelAttribute MatchSearchCriteria matchSearchCriteria) throws MentorMeException {
         Mentee mentee = menteeService.get(id);
-        // get all institution mentors or all unassigned mentors
-        MentorSearchCriteria criteria = new MentorSearchCriteria();
-        if (mentee.isAssignedToInstitution()) {
-            criteria.setInstitutionId(mentee.getInstitution().getId());
-        } else {
-            criteria.setAssignedToInstitution(false);
-        }
-        List<Mentor> mentors = mentorService.search(criteria, null).getEntities();
+        List<Mentor> mentors = Helper.searchMatchEntities(mentee,
+                new MentorSearchCriteria(), matchSearchCriteria, mentorService);
         Map<Mentor, Integer> mentorScores = new HashMap<>();
         for (Mentor mentor : mentors) {
             int professionalScore = Helper.getScore(directMatchingPoints, parentCategoryMatchingPoints,
@@ -256,10 +262,15 @@ public class MenteeController extends BaseEmailController {
         // comment below if do not want to show score in log
         mentorScores.entrySet().forEach(k ->
                 Helper.logDebugMessage(LogAspect.LOGGER, k.getKey().getId() + "," + k.getValue()));
+        // could custom max count to return
+        int limit = matchSearchCriteria.getMaxCount() != null
+                ? matchSearchCriteria.getMaxCount() : topMatchingAmount;
         // sort the mentorScores by scores and return the top <topMatchingAmount> mentors
         return mentorScores.entrySet().stream()  // reverse means desc order
-                .sorted(Comparator.comparing(Map.Entry<Mentor, Integer>::getValue).reversed())
-                .map(Map.Entry::getKey).limit(topMatchingAmount).collect(Collectors.toList());
+                .filter(c -> c.getValue() > 0) // must match or weight >0
+                .sorted(Comparator.comparing(Map.Entry<Mentor, Integer>::getValue)
+                                  .reversed())
+                .map(Map.Entry::getKey).limit(limit).collect(Collectors.toList());
     }
 
     /**
@@ -274,6 +285,29 @@ public class MenteeController extends BaseEmailController {
     @RequestMapping(value = "confirmParentConsent", method = RequestMethod.PUT)
     public boolean confirmParentConsent(String token) throws MentorMeException {
         return menteeService.confirmParentConsent(token);
+    }
+
+    /**
+     * This method is used to get the matching mentors using havenondemand api.
+     *
+     * @param id the id of the entity to retrieve
+     * @param criteria the match criteria
+     * @return the matching mentors.
+     * @throws IllegalArgumentException if id is not positive
+     * @throws EntityNotFoundException if the entity does not exist
+     * @throws MentorMeException if any other error occurred during operation
+     */
+    @RequestMapping(value = "{id}/remoteMatchingMentors")
+    public List<Mentor> remoteMatchingMentors(@PathVariable long id,
+            @ModelAttribute MatchSearchCriteria criteria) throws MentorMeException {
+        List<Long> ids = hodClient.getMatchingMentors(menteeService.get(id), criteria);
+        if (ids.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            MentorSearchCriteria mentorSearchCriteria = new MentorSearchCriteria();
+            mentorSearchCriteria.setIds(ids);
+            return mentorService.search(mentorSearchCriteria, null).getEntities();
+        }
     }
 }
 

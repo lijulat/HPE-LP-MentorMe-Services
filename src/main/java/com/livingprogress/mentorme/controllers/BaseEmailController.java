@@ -1,5 +1,6 @@
 package com.livingprogress.mentorme.controllers;
 
+import com.livingprogress.mentorme.utils.CustomMessageSource;
 import com.livingprogress.mentorme.utils.Helper;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
@@ -84,7 +85,7 @@ public abstract class BaseEmailController {
             helper.setText(getTemplate(emailName + "/body.vm", model), true);
             javaMailSender.send(mail);
         } catch (MessagingException | MailException e) {
-            throw new MentorMeException("Error to send email!", e);
+            throw new MentorMeException(CustomMessageSource.getMessage("sendEmail.error"), e);
         }
     }
 }
