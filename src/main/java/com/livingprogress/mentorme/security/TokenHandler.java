@@ -3,6 +3,7 @@ package com.livingprogress.mentorme.security;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.livingprogress.mentorme.aop.LogAspect;
 import com.livingprogress.mentorme.entities.User;
+import com.livingprogress.mentorme.utils.CustomMessageSource;
 import com.livingprogress.mentorme.utils.Helper;
 
 import javax.crypto.Mac;
@@ -51,7 +52,8 @@ public class TokenHandler {
             hmac = Mac.getInstance(HMAC_ALGO);
             hmac.init(new SecretKeySpec(secretKey, HMAC_ALGO));
         } catch (NoSuchAlgorithmException | InvalidKeyException e) {
-            throw new IllegalStateException("failed to initialize HMAC: " + e.getMessage(), e);
+            throw new IllegalStateException(
+                    CustomMessageSource.getMessage("tokenHandler.error", e.getMessage()), e);
         }
     }
 

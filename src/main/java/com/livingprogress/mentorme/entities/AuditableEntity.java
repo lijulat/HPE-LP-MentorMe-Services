@@ -26,5 +26,11 @@ public abstract class AuditableEntity extends IdentifiableEntity {
     @Column(name = "created_on", insertable = true, updatable = false)
     @Temporal(TIMESTAMP)
     private Date createdOn;
+
+    /**
+     * The last modified on date.
+     */
+    @Temporal(TIMESTAMP)
+    private Date lastModifiedOn;
 }
 

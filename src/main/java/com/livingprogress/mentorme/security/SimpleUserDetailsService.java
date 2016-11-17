@@ -8,6 +8,7 @@ import com.livingprogress.mentorme.entities.UserSearchCriteria;
 import com.livingprogress.mentorme.entities.UserStatus;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.services.UserService;
+import com.livingprogress.mentorme.utils.CustomMessageSource;
 import com.livingprogress.mentorme.utils.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -62,21 +63,21 @@ public class SimpleUserDetailsService implements UserDetailsService {
             if (users.getEntities()
                      .isEmpty()) {
                 throw new UsernameNotFoundException(
-                        String.format("The user with name [%s] can not be found.", username));
+                        CustomMessageSource.getMessage("user.notFound.byUsername", username));
             }
             User user = users.getEntities()
                              .get(0);
             if (user.getRoles()
                     .isEmpty()) {
                 throw new UsernameNotFoundException(
-                        String.format("The user with name [%s] does not have roles defined.", username));
+                        CustomMessageSource.getMessage("user.noRoles.error", username));
             }
             List<GrantedAuthority> authorities = buildUserAuthority(user.getRoles());
             return buildUserForAuthentication(user, authorities);
         } catch (UsernameNotFoundException e) {
             throw e;
         } catch (Exception e) {
-            throw new UsernameNotFoundException("Failed to get user data.", e);
+            throw new UsernameNotFoundException(CustomMessageSource.getMessage("loadUserByUsername.error"), e);
         }
     }
 

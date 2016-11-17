@@ -1,6 +1,7 @@
 {
   "id": 4,
   "createdOn": "2016-10-04T00:00:00",
+  "lastModifiedOn": "2016-10-04T00:00:00",
   "username": "test4",
   "firstName": "firstname4",
   "lastName": "lastname4",
@@ -16,6 +17,7 @@
   "institution": {
     "id": 1,
     "createdOn": "2016-10-01T00:00:00",
+    "lastModifiedOn": "2016-10-01T00:00:00",
     "institutionName": "institutionName1",
     "parentOrganization": "parentOrganization1",
     "streetAddress": "streetAddress1",
@@ -141,5 +143,19 @@
     "parentEmail": "parentEmail1@test.com",
     "token": "token1"
   },
-  "facebookUrl": "facebookUrl1"
+  "facebookUrl": "facebookUrl1",
+  "streetAddress": "54-29 Metropolitan Ave",
+  "city": "Ridgewood",
+  "state": {
+    "id": 32,
+    "value": "New York"
+  },
+  "country": {
+    "id": 230,
+    "value": "United States"
+  },
+  "postalCode": "11385",
+  "longitude": -73.90954940,
+  "latitude": 40.71311970,
+  "virtualUser": true
 }

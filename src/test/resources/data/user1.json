@@ -1,6 +1,7 @@
 {
   "id": 1,
   "createdOn": "2016-10-01T00:00:00",
+  "lastModifiedOn": "2016-10-01T00:00:00",
   "username": "test1",
   "firstName": "firstname1",
   "lastName": "lastname1",
@@ -12,5 +13,19 @@
   ],
   "email": "email1@test.com",
   "profilePicturePath": "profilePicturePath1",
-  "status": "ACTIVE"
+  "status": "ACTIVE",
+  "streetAddress": "7583 Classon Avenue",
+  "city": "Brooklyn",
+  "state": {
+    "id": 32,
+    "value": "New York"
+  },
+  "country": {
+    "id": 230,
+    "value": "United States"
+  },
+  "postalCode": "11205",
+  "longitude": -73.96171760,
+  "latitude": 40.69788770,
+  "virtualUser": false
 }

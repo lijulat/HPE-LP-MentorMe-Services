@@ -18,6 +18,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
      * @throws IllegalArgumentException: if parameters are null or not valid
      * @throws MentorMeException if any other error occurred during operation
      */
-    User findByProviderIdAndProviderUserId(String providerId, String providerUserId);
+    User findByProviderIdAndProviderUserId(String providerId, String providerUserId) throws MentorMeException;
 }
 

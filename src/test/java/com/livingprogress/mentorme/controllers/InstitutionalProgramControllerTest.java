@@ -76,6 +76,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
     public void create() throws Exception {
         InstitutionalProgram demoEntity = objectMapper.readValue(demo, InstitutionalProgram.class);
         assertNull(demoEntity.getCreatedOn());
+        assertNull(demoEntity.getLastModifiedOn());
         checkEntities(demoEntity.getUsefulLinks());
         checkEntities(demoEntity.getResponsibilities());
         checkEntities(demoEntity.getGoals());
@@ -93,6 +94,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
                             .andExpect(status().isCreated())
                             .andExpect(jsonPath("$.id").isNumber())
                             .andExpect(jsonPath("$.createdOn").exists())
+                            .andExpect(jsonPath("$.lastModifiedOn").exists())
                             .andExpect(jsonPath("$.documents", Matchers.hasSize(0)))
                             .andReturn()
                             .getResponse()
@@ -100,6 +102,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         final InstitutionalProgram result = objectMapper.readValue(res, InstitutionalProgram.class);
         demoEntity.setId(result.getId());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         verifyEntities(demoEntity.getUsefulLinks(), result.getUsefulLinks());
         verifyEntities(demoEntity.getResponsibilities(), result.getResponsibilities());
         verifyEntities(demoEntity.getGoals(), result.getGoals());
@@ -174,6 +177,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         });
         // try to update created on
         demoEntity.setCreatedOn(sampleFutureDate);
+        demoEntity.setLastModifiedOn(sampleFutureDate);
         demoEntity.setId(1);
         // update without documents
         String res = mockMvc.perform(MockMvcRequestBuilders.post("/institutionalPrograms/1")
@@ -187,6 +191,8 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         // will not update created on during updating
         assertNotEquals(sampleFutureDate, result.getCreatedOn());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        assertNotEquals(sampleFutureDate, result.getLastModifiedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         verifyEntities(demoEntity.getUsefulLinks(), result.getUsefulLinks());
         verifyEntities(demoEntity.getResponsibilities(), result.getResponsibilities());
         verifyEntities(demoEntity.getGoals(), result.getGoals());
@@ -252,7 +258,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/institutionalPrograms?sortColumn=id&sortOrder=ASC")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(content().json(entities, true));
+               .andExpect(content().json(entities));
         SearchResult<InstitutionalProgram> result1 = getSearchResult
                 ("/institutionalPrograms?pageNumber=1&pageSize=2&sortColumn=id&sortOrder=ASC", InstitutionalProgram
                         .class);
@@ -378,5 +384,16 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/institutionalPrograms/999/mentors")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isNotFound());
+    }
+
+    /**
+     * Test clone method.
+     *
+     * @throws Exception throws if any error happens.
+     */
+    @Test
+    public void cloneTest() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/institutionalPrograms/1/clone"))
+               .andExpect(status().isInternalServerError());
     }
 }

@@ -8,9 +8,11 @@ import com.livingprogress.mentorme.entities.InstitutionUser;
 import com.livingprogress.mentorme.entities.Paging;
 import com.livingprogress.mentorme.entities.SearchResult;
 import com.livingprogress.mentorme.entities.SortOrder;
+import com.livingprogress.mentorme.entities.User;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
+import com.livingprogress.mentorme.utils.CustomMessageSource;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -99,7 +101,9 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
                 Helper.audit((AuditableUserEntity) entity);
             } else {
                 AuditableEntity auditableEntity = (AuditableEntity) entity;
+                Date now = new Date();
                 auditableEntity.setCreatedOn(new Date());
+                auditableEntity.setLastModifiedOn(now);
             }
         }
         return repository.save(entity);
@@ -137,14 +141,17 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
         T existing = checkUpdate(id, entity);
         handleNestedProperties(entity);
         if (entity instanceof AuditableEntity) {
+            AuditableEntity auditableEntity = (AuditableEntity) entity;
+            auditableEntity.setCreatedOn(((AuditableEntity) existing).getCreatedOn());
+            auditableEntity.setLastModifiedOn(new Date());
             if (entity instanceof AuditableUserEntity) {
                 AuditableUserEntity newEntity = (AuditableUserEntity) entity;
                 AuditableUserEntity existingEntity = (AuditableUserEntity) existing;
                 newEntity.setCreatedBy(existingEntity.getCreatedBy());
-                newEntity.setCreatedOn(existingEntity.getCreatedOn());
-            } else {
-                AuditableEntity auditableEntity = (AuditableEntity) entity;
-                auditableEntity.setCreatedOn(((AuditableEntity) existing).getCreatedOn());
+                User authUser = Helper.getAuthUser();
+                if (authUser != null) {
+                    newEntity.setLastModifiedBy(authUser.getId());
+                }
             }
         }
         return repository.save(entity);
@@ -218,12 +225,23 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
     protected void handleNestedProperties(T entity) throws MentorMeException { }
 
     /**
+     * This method is used to handle nested properties for user.
+     *
+     * @param entity the entity
+     */
+    protected  void handleUserNestedProperties(User entity) {
+        Helper.checkEntity(entity.getCountry(), "entity.country");
+        Helper.checkEntity(entity.getState(), "entity.state");
+    }
+
+    /**
      * This method is used to handle nested properties for institution user.
      *
      * @param entity the entity
      * @param <T> the entity that extends institution user
      */
     protected <T extends InstitutionUser> void handleInstitutionUserNestedProperties(T entity) {
+        handleUserNestedProperties(entity);
         if (entity.getPersonalInterests() != null) {
             entity.getPersonalInterests().forEach(p -> p.setUser(entity));
         } else {
@@ -342,7 +360,7 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
         Helper.checkPositive(id, "id");
         T entity = repository.findOne(id);
         if (entity == null) {
-            throw new EntityNotFoundException("Entity with ID=" + id + " can not be found.");
+            throw new EntityNotFoundException(CustomMessageSource.getMessage("entity.notFound.byId", id));
         }
         return entity;
     }

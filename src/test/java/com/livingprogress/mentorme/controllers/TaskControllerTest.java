@@ -189,7 +189,7 @@ public class TaskControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/tasks?sortColumn=id&sortOrder=ASC")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(content().json(entities, true));
+               .andExpect(content().json(entities));
         SearchResult<Task> result1 = getSearchResult
                 ("/tasks?pageNumber=1&pageSize=2&sortColumn=id&sortOrder=ASC", Task
                         .class);

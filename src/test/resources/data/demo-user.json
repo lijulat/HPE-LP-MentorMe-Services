@@ -90,5 +90,13 @@
     }
   ],
   "companyName": "demoMentor1CompanyName1",
-  "linkedInUrl": "demoMentorLinkedInUrl1"
+  "linkedInUrl": "demoMentorLinkedInUrl1",
+  "state": {
+    "id": 2,
+    "value": "State2"
+  },
+  "country": {
+    "id": 2,
+    "value": "Country2"
+  }
 }

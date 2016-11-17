@@ -197,6 +197,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
                 .antMatchers(DELETE, "/responsibilities/{id}")
                 .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
+                .antMatchers(POST, "/institutionalPrograms/{id}/clone")
+                .hasAnyAuthority("MENTOR")
                  //allow anonymous calls to social login
                 .antMatchers("/auth/**")
                 .permitAll()

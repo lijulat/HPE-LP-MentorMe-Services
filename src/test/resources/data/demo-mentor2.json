@@ -67,5 +67,13 @@
   "mentorType": "MENTEE_PAIRED",
   "professionalAreas": null,
   "companyName": "demoMentor1CompanyName2",
-  "linkedInUrl": "demoMentorLinkedInUrl2"
+  "linkedInUrl": "demoMentorLinkedInUrl2",
+  "state": {
+    "id": 2,
+    "value": "State2"
+  },
+  "country": {
+    "id": 2,
+    "value": "Country2"
+  }
 }

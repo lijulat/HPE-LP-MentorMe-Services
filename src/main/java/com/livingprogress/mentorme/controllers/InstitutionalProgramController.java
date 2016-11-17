@@ -4,6 +4,7 @@ import com.livingprogress.mentorme.entities.Document;
 import com.livingprogress.mentorme.entities.InstitutionalProgram;
 import com.livingprogress.mentorme.entities.InstitutionalProgramSearchCriteria;
 import com.livingprogress.mentorme.entities.Mentee;
+import com.livingprogress.mentorme.entities.MenteeMentorProgram;
 import com.livingprogress.mentorme.entities.Mentor;
 import com.livingprogress.mentorme.entities.Paging;
 import com.livingprogress.mentorme.entities.SearchResult;
@@ -182,6 +183,23 @@ public class InstitutionalProgramController extends BaseUploadController {
         // make sure exist valid program
         institutionalProgramService.get(id);
         return mentorService.getProgramMentors(id);
+    }
+
+    /**
+     * This method is used to clone program requested by mentor.
+     * @param id the id of the entity to retrieve
+     * @return the cloned mentee mentor program
+     * @throws IllegalArgumentException if id is not positive
+     * @throws EntityNotFoundException if the entity does not exist
+     * @throws MentorMeException if any other error occurred during operation
+     */
+    @RequestMapping(value = "{id}/clone", method = RequestMethod.POST)
+    public MenteeMentorProgram clone(@PathVariable long id) throws MentorMeException {
+        // make sure exist valid program
+        institutionalProgramService.get(id);
+        //TODO implmement
+        // need to create MentorMenteeDocuments and MentorMenteeLinks related endpoints and etc
+        throw new MentorMeException("Not implemented!");
     }
 }
 

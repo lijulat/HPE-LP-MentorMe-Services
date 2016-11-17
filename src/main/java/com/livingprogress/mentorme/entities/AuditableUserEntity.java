@@ -21,5 +21,11 @@ public abstract class AuditableUserEntity extends AuditableEntity {
      */
     @JoinColumn(name = "created_by", insertable = true, updatable = false)
     private long createdBy;
+
+    /**
+     * The last modified by.
+     */
+    @JoinColumn(name = "last_modified_by")
+    private long lastModifiedBy;
 }
 

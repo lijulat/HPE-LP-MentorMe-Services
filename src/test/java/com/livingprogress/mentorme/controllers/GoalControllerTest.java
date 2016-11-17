@@ -218,7 +218,7 @@ public class GoalControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/goals?sortColumn=id&sortOrder=ASC")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(content().json(entities, true));
+               .andExpect(content().json(entities));
         SearchResult<Goal> result1 = getSearchResult
                 ("/goals?pageNumber=1&pageSize=2&sortColumn=id&sortOrder=ASC", Goal
                         .class);

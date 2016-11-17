@@ -10,13 +10,17 @@ import com.livingprogress.mentorme.entities.ProfessionalInterest;
 import com.livingprogress.mentorme.entities.SearchResult;
 import com.livingprogress.mentorme.entities.WeightedPersonalInterest;
 import com.livingprogress.mentorme.entities.WeightedProfessionalInterest;
+import com.livingprogress.mentorme.remote.services.HODClient;
 import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +33,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,6 +57,12 @@ public class MentorControllerTest extends BaseTest {
      * All entities json.
      */
     private static String entities;
+
+    /**
+     * The mock HOD client.
+     */
+    @Autowired
+    private HODClient hodClient;
 
     /**
      * Read related json.
@@ -87,6 +99,7 @@ public class MentorControllerTest extends BaseTest {
         Mentor demoEntity = objectMapper.readValue(demo, Mentor.class);
         assertNotNull(demoEntity.getPassword());
         assertNull(demoEntity.getCreatedOn());
+        assertNull(demoEntity.getLastModifiedOn());
         demoEntity.setPassword(null);
         checkEntities(demoEntity.getPersonalInterests());
         checkEntities(demoEntity.getProfessionalExperiences());
@@ -98,12 +111,14 @@ public class MentorControllerTest extends BaseTest {
                             .andExpect(jsonPath("$.password").doesNotExist())
                             .andExpect(jsonPath("$.id").isNumber())
                             .andExpect(jsonPath("$.createdOn").exists())
+                            .andExpect(jsonPath("$.lastModifiedOn").exists())
                             .andReturn()
                             .getResponse()
                             .getContentAsString();
         Mentor result = objectMapper.readValue(res, Mentor.class);
         demoEntity.setId(result.getId());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         verifyEntities(demoEntity.getPersonalInterests(), result.getPersonalInterests());
         verifyEntities(demoEntity.getProfessionalExperiences(), result.getProfessionalExperiences());
         verifyEntities(demoEntity.getProfessionalInterests(), result.getProfessionalInterests());
@@ -116,6 +131,7 @@ public class MentorControllerTest extends BaseTest {
                .andExpect(jsonPath("$.password").doesNotExist())
                .andExpect(jsonPath("$.id").isNumber())
                .andExpect(jsonPath("$.createdOn").exists())
+               .andExpect(jsonPath("$.lastModifiedOn").exists())
                .andExpect(jsonPath("$.personalInterests", Matchers.hasSize(0)))
                .andExpect(jsonPath("$.professionalInterests", Matchers.hasSize(0)))
                .andExpect(jsonPath("$.professionalExperiences", Matchers.hasSize(0)));
@@ -158,6 +174,7 @@ public class MentorControllerTest extends BaseTest {
                             .andExpect(jsonPath("$.password").doesNotExist())
                             .andExpect(jsonPath("$.id").isNumber())
                             .andExpect(jsonPath("$.createdOn").exists())
+                            .andExpect(jsonPath("$.lastModifiedOn").exists())
                             .andReturn()
                             .getResponse()
                             .getContentAsString();
@@ -176,6 +193,7 @@ public class MentorControllerTest extends BaseTest {
         // will not update created on during updating
         assertNotEquals(sampleFutureDate, result.getCreatedOn());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         verifyEntities(demoEntity.getPersonalInterests(), result.getPersonalInterests());
         verifyEntities(demoEntity.getProfessionalExperiences(), result.getProfessionalExperiences());
         verifyEntities(demoEntity.getProfessionalInterests(), result.getProfessionalInterests());
@@ -285,7 +303,7 @@ public class MentorControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/mentors?sortColumn=id&sortOrder=ASC")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(content().json(entities, true));
+               .andExpect(content().json(entities));
         SearchResult<Mentor> result1 = getSearchResult
                 ("/mentors?pageNumber=1&pageSize=2&sortColumn=id&sortOrder=ASC", Mentor.class);
         assertEquals(result.getTotal(), result1.getTotal());
@@ -420,14 +438,33 @@ public class MentorControllerTest extends BaseTest {
                .andExpect(jsonPath("$.total").value(3))
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(3)));
-        mockMvc.perform(MockMvcRequestBuilders.get("/mentors?pageNumber=0&pageSize=2&sortColumn=username&sortOrder=DESC&mentorType=MENTEE_PAIRED&institutionId=1&status=ACTIVE&professionalAreas[0]" +
-                ".id=1&minAveragePerformanceScore=0&maxAveragePerformanceScore=0&name=firstname3&companyName=companyName1& mentorRequestStatus=APPROVED&personalInterests[0].id=1&professionalInterests[0].id=1&assignedToInstitution=true")
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentors?pageNumber=0&pageSize=2&sortColumn=username"
+                 + "&sortOrder=DESC&mentorType=MENTEE_PAIRED&institutionId=1&status=ACTIVE"
+                 + "&professionalAreas[0].id=1&minAveragePerformanceScore=0&maxAveragePerformanceScore=0"
+                 + "&name=firstname3&companyName=companyName1& mentorRequestStatus=APPROVED"
+                + "&personalInterests[0].id=1&professionalInterests[0].id=1&assignedToInstitution=true")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(3));
+
+        // check distance
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/mentors?distance=3&longitude=-73.9617176&latitude=40.6978877")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.total").value(3))
+               .andExpect(jsonPath("$.totalPages").value(1))
+               .andExpect(jsonPath("$.entities", Matchers.hasSize(3)));
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/mentors?distance=2&longitude=-73.9617176&latitude=40.6978877")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.total").value(2))
+               .andExpect(jsonPath("$.totalPages").value(1))
+               .andExpect(jsonPath("$.entities", Matchers.hasSize(2)));
     }
 
     /**
@@ -454,6 +491,7 @@ public class MentorControllerTest extends BaseTest {
         // assigned
         mockMvc.perform(MockMvcRequestBuilders.get("/mentors/3/matchingMentees"))
                .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(3)))
                .andExpect(content().json(readFile("mentor3MatchingMentees.json")));
         // not assigned
         mockMvc.perform(MockMvcRequestBuilders.get("/mentors/5/matchingMentees"))
@@ -461,6 +499,35 @@ public class MentorControllerTest extends BaseTest {
                .andExpect(content().json(readFile("mentor5MatchingMentees.json")));
         mockMvc.perform(MockMvcRequestBuilders.get("/mentors/999/matchingMentees"))
                .andExpect(status().isNotFound());
+        // test match criteria
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentors/3/matchingMentees?distance=10")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(3)));
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentors/3/matchingMentees?distance=6")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(2)));
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentors/3/matchingMentees?maxCount=1")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(1)));
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentors/3/matchingMentees?personalInterests[0].id=1")
+                                                    .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(1)));
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/mentors/3/matchingMentees?professionalInterests[0].id=4")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(1)));
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/mentors/3/matchingMentees?distance=30&maxCount=100"
+                + "&personalInterests[0].id=2"
+                + "&professionalInterests[0].id=4")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(1)));
     }
 
     /**
@@ -472,5 +539,28 @@ public class MentorControllerTest extends BaseTest {
     public void getLinkedInProfessionalExperienceData() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/mentors/linkedInExperience"))
                .andExpect(status().isInternalServerError());
+    }
+
+    /**
+     * Test remoteMatchingMentees method.
+     *
+     * @throws Exception throws if any error happens.
+     */
+    @Test
+    public void remoteMatchingMentees() throws Exception {
+        when(hodClient.getMatchingMentees(any(), any()))
+               .thenReturn(Collections.emptyList());
+        // empty ids
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentors/3/remoteMatchingMentees"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(0)));
+        // fake two ids
+        when(hodClient.getMatchingMentees(any(), any()))
+               .thenReturn(Arrays.asList(4L, 10L));
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentors/3/remoteMatchingMentees"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(2)))
+               .andExpect(jsonPath("$[0].id").value(4))
+               .andExpect(jsonPath("$[1].id").value(10));
     }
 }
