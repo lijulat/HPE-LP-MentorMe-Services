@@ -344,7 +344,7 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
         SearchResult<T> result = new SearchResult<>();
         result.setEntities(listResult);
         result.setTotal(listResult.size());
-        result.setTotalPages(listResult.size() > 0 ? 1 : 0);
+        result.setTotalPages(listResult.isEmpty() ? 0 : 1);
         return result;
     }
 

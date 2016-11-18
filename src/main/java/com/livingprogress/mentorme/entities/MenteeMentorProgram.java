@@ -7,6 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -21,6 +23,7 @@ import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.TemporalType.DATE;
 import static javax.persistence.TemporalType.TIMESTAMP;
+import static javax.persistence.CascadeType.ALL;
 
 /**
  * The mentee-mentor program.
@@ -105,5 +108,23 @@ public class MenteeMentorProgram extends IdentifiableEntity {
      */
     @Enumerated(STRING)
     private MenteeMentorProgramRequestStatus requestStatus;
+    
+    /**
+     * The documents.
+     */
+    @ManyToMany(cascade = ALL)
+    @JoinTable(name = "mentee_mentor_program_document",
+            joinColumns = {@JoinColumn(name = "mentee_mentor_program_id")},
+            inverseJoinColumns = {@JoinColumn(name = "document_id")})
+    private List<Document> documents;
+
+    /**
+     * The useful links.
+     */
+    @ManyToMany(cascade = ALL)
+    @JoinTable(name = "mentee_mentor_program_useful_link",
+            joinColumns = {@JoinColumn(name = "mentee_mentor_program_id")},
+            inverseJoinColumns = {@JoinColumn(name = "useful_link_id")})
+    private List<UsefulLink> usefulLinks;
 }
 

@@ -8,6 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -15,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import static javax.persistence.TemporalType.TIMESTAMP;
+import static javax.persistence.CascadeType.ALL;
 
 /**
  * The mentee mentor goal.
@@ -60,7 +63,24 @@ public class MenteeMentorGoal extends IdentifiableEntity {
     @ManyToOne
     @JoinColumn(name = "mentee_mentor_program_id")
     private MenteeMentorProgram menteeMentorProgram;
+    
+    /**
+     * The useful links.
+     */
+    @ManyToMany(cascade = ALL)
+    @JoinTable(name = "mentee_mentor_goal_useful_link",
+            joinColumns = {@JoinColumn(name = "mentee_mentor_goal_id")},
+            inverseJoinColumns = {@JoinColumn(name = "useful_link_id")})
+    private List<UsefulLink> usefulLinks;
 
+    /**
+     * The documents.
+     */
+    @ManyToMany(cascade = ALL)
+    @JoinTable(name = "mentee_mentor_goal_document",
+            joinColumns = {@JoinColumn(name = "mentee_mentor_goal_id")},
+            inverseJoinColumns = {@JoinColumn(name = "document_id")})
+    private List<Document> documents;
 
 }
 

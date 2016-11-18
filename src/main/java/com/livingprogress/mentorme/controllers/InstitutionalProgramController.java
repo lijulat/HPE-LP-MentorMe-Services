@@ -1,21 +1,30 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.entities.Document;
+import com.livingprogress.mentorme.entities.Goal;
 import com.livingprogress.mentorme.entities.InstitutionalProgram;
 import com.livingprogress.mentorme.entities.InstitutionalProgramSearchCriteria;
 import com.livingprogress.mentorme.entities.Mentee;
+import com.livingprogress.mentorme.entities.MenteeMentorGoal;
 import com.livingprogress.mentorme.entities.MenteeMentorProgram;
+import com.livingprogress.mentorme.entities.MenteeMentorResponsibility;
+import com.livingprogress.mentorme.entities.MenteeMentorTask;
 import com.livingprogress.mentorme.entities.Mentor;
 import com.livingprogress.mentorme.entities.Paging;
+import com.livingprogress.mentorme.entities.Responsibility;
 import com.livingprogress.mentorme.entities.SearchResult;
+import com.livingprogress.mentorme.entities.Task;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.services.InstitutionalProgramService;
+import com.livingprogress.mentorme.services.MenteeMentorProgramService;
 import com.livingprogress.mentorme.services.MenteeService;
 import com.livingprogress.mentorme.services.MentorService;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
+
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +39,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,6 +55,12 @@ public class InstitutionalProgramController extends BaseUploadController {
      */
     @Autowired
     private InstitutionalProgramService institutionalProgramService;
+    
+    /**
+     * The mentee mentor program service used to create mentee mentor program
+     */
+    @Autowired
+    private MenteeMentorProgramService menteeMentorProgramService;
 
     /**
      * The mentor service used to perform operations. Should be non-null after injection.
@@ -194,12 +211,77 @@ public class InstitutionalProgramController extends BaseUploadController {
      * @throws MentorMeException if any other error occurred during operation
      */
     @RequestMapping(value = "{id}/clone", method = RequestMethod.POST)
+    @Transactional
     public MenteeMentorProgram clone(@PathVariable long id) throws MentorMeException {
         // make sure exist valid program
-        institutionalProgramService.get(id);
-        //TODO implmement
-        // need to create MentorMenteeDocuments and MentorMenteeLinks related endpoints and etc
-        throw new MentorMeException("Not implemented!");
+        InstitutionalProgram instProgram = institutionalProgramService.get(id);
+        
+        // create MenteeMentorProgram
+        LocalDate date = LocalDate.now();
+        
+        MenteeMentorProgram mmProgram = new MenteeMentorProgram();
+        mmProgram.setInstitutionalProgram(instProgram);
+        mmProgram.setDocuments(instProgram.getDocuments());
+        mmProgram.setUsefulLinks(instProgram.getUsefulLinks());        
+        mmProgram.setStartDate(date.toDate());
+        
+        // clone goals
+        if (instProgram.getGoals() != null && !instProgram.getGoals().isEmpty()) {
+            List<MenteeMentorGoal> goals = new ArrayList<>();
+            for (Goal goal : instProgram.getGoals()) {
+                MenteeMentorGoal mmGoal = new MenteeMentorGoal();
+                
+                mmGoal.setGoal(goal);
+                mmGoal.setMenteeMentorProgram(mmProgram);
+                mmGoal.setDocuments(goal.getDocuments());
+                mmGoal.setUsefulLinks(goal.getUsefulLinks());
+                
+                // clone tasks
+                if (goal.getTasks() != null) {
+                    List<MenteeMentorTask> tasks = new ArrayList<>();
+                    for (Task task : goal.getTasks()) {
+                        MenteeMentorTask mmTask = new MenteeMentorTask();
+                        mmTask.setTask(task);
+                        mmTask.setMenteeMentorGoal(mmGoal);
+                        mmTask.setStartDate(date.toDate());                        
+                        date = date.plusDays(task.getDurationInDays());
+                        mmTask.setEndDate(date.toDate());
+                        
+                        tasks.add(mmTask);
+                    }                    
+                    mmGoal.setTasks(tasks);
+                }
+                
+                goals.add(mmGoal);
+            }
+            mmProgram.setEndDate(date.toDate());
+            mmProgram.setGoals(goals);            
+        }
+        
+        // clone responsibilities
+        if (instProgram.getResponsibilities() != null && !instProgram.getResponsibilities().isEmpty()) {
+            List<MenteeMentorResponsibility> responsibilities = new ArrayList<>();
+        
+            for (Responsibility resp : instProgram.getResponsibilities()) {
+                MenteeMentorResponsibility mmResp = new MenteeMentorResponsibility();
+                
+                mmResp.setDate(resp.getDate());
+                mmResp.setMenteeMentorProgram(mmProgram);
+                mmResp.setMenteeResponsibility(resp.getMenteeResponsibility());
+                mmResp.setMentorResponsibility(resp.getMentorResponsibility());
+                mmResp.setNumber(resp.getNumber());
+                mmResp.setTitle(resp.getTitle());
+                mmResp.setResponsibilityId(resp.getId());
+                
+                responsibilities.add(mmResp);
+            }
+            mmProgram.setResponsibilities(responsibilities);
+        }
+        
+        // save to database
+        menteeMentorProgramService.create(mmProgram);
+        
+        return mmProgram;
     }
 }
 

@@ -1126,4 +1126,87 @@ ON DELETE CASCADE
 ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `mentee_mentor_program_useful_link`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mentee_mentor_program_useful_link` (
+  `mentee_mentor_program_id` BIGINT NOT NULL,
+  `useful_link_id` BIGINT NOT NULL,
+  PRIMARY KEY (`mentee_mentor_program_id`, `useful_link_id`),
+  INDEX `mmpul_ul_fk_idx` (`useful_link_id` ASC),
+  CONSTRAINT `mmpul_p_fk`
+    FOREIGN KEY (`mentee_mentor_program_id`)
+    REFERENCES mentee_mentor_program (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `mmpul_ul_fk`
+    FOREIGN KEY (`useful_link_id`)
+    REFERENCES `useful_link` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mentee_mentor_program_document`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mentee_mentor_program_document` (
+  `mentee_mentor_program_id` BIGINT NOT NULL,
+  `document_id` BIGINT NOT NULL,
+  PRIMARY KEY (`mentee_mentor_program_id`, `document_id`),
+  INDEX `mmpd_d_fk0_idx` (`document_id` ASC),
+  CONSTRAINT `mmpd_p_fk`
+    FOREIGN KEY (`mentee_mentor_program_id`)
+    REFERENCES `mentee_mentor_program` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `mmpd_d_fk0`
+    FOREIGN KEY (`document_id`)
+    REFERENCES `document` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mentee_mentor_goal_useful_link`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mentee_mentor_goal_useful_link` (
+  `mentee_mentor_goal_id` BIGINT NOT NULL,
+  `useful_link_id` BIGINT NOT NULL,
+  PRIMARY KEY (`mentee_mentor_goal_id`, `useful_link_id`),
+  INDEX `mmpul_ul_fk_idx` (`useful_link_id` ASC),
+  CONSTRAINT `mmgul_g_fk0`
+    FOREIGN KEY (`mentee_mentor_goal_id`)
+    REFERENCES `mentee_mentor_goal` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `mmpul_ul_fk0`
+    FOREIGN KEY (`useful_link_id`)
+    REFERENCES `useful_link` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `mentee_mentor_goal_document`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mentee_mentor_goal_document` (
+  `mentee_mentor_goal_id` BIGINT NOT NULL,
+  `document_id` BIGINT NOT NULL,
+  PRIMARY KEY (`mentee_mentor_goal_id`, `document_id`),
+  INDEX `mmpd_d_fk0_idx` (`document_id` ASC),
+  CONSTRAINT `mmgd_g_fk0`
+    FOREIGN KEY (`mentee_mentor_goal_id`)
+    REFERENCES `mentee_mentor_goal` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `mmgd_d_fk00`
+    FOREIGN KEY (`document_id`)
+    REFERENCES `document` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 CREATE FUNCTION `calculate_distance` (`longitude1` DECIMAL (16, 8),  `latitude1` DECIMAL (16, 8),`longitude2` DECIMAL (16, 8),  `latitude2` DECIMAL (16, 8)) RETURNS DECIMAL(16, 8) RETURN ST_Distance_Sphere(Point(longitude1, latitude1), Point(longitude2, latitude2));

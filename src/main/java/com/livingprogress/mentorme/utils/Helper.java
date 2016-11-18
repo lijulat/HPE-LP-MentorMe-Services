@@ -3,6 +3,7 @@ package com.livingprogress.mentorme.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.livingprogress.mentorme.aop.LogAspect;
 import com.livingprogress.mentorme.entities.Activity;
 import com.livingprogress.mentorme.entities.ActivityType;
 import com.livingprogress.mentorme.entities.AuditableUserEntity;
@@ -343,6 +344,9 @@ public class Helper {
                 result = MAPPER.writeValueAsString(obj);
             }
         } catch (JsonProcessingException e) {
+            Helper.logException(LogAspect.LOGGER, "com.livingprogress.mentorme.utils"
+                    + ".Helper#toString", e);
+            
             result = CustomMessageSource.getMessage("json.error", e.getMessage());
         }
         return result;
@@ -390,8 +394,9 @@ public class Helper {
     buildInPredicate(List<T> val, Predicate pd, Path<?> path, CriteriaBuilder cb) {
         if (val != null && !val.isEmpty()) {
             List<Long> ids = val.stream().map(IdentifiableEntity::getId).collect(Collectors.toList());
-            pd = cb.and(pd, path.in(ids));
+            return cb.and(pd, path.in(ids));
         }
+        
         return pd;
     }
 
@@ -408,7 +413,7 @@ public class Helper {
     public static <Y extends Comparable<? super Y>> Predicate
     buildGreaterThanOrEqualToPredicate(Y val, Predicate pd, Path<? extends Y> path, CriteriaBuilder cb) {
         if (val != null) {
-            pd = cb.and(pd, cb.greaterThanOrEqualTo(path, val));
+            return cb.and(pd, cb.greaterThanOrEqualTo(path, val));
         }
         return pd;
     }
@@ -426,7 +431,7 @@ public class Helper {
     public static <Y extends Comparable<? super Y>> Predicate
     buildLessThanOrEqualToPredicate(Y val, Predicate pd, Path<? extends Y> path, CriteriaBuilder cb) {
         if (val != null) {
-            pd = cb.and(pd, cb.lessThanOrEqualTo(path, val));
+            return cb.and(pd, cb.lessThanOrEqualTo(path, val));
         }
         return pd;
     }
@@ -442,7 +447,7 @@ public class Helper {
      */
     public static Predicate buildEqualPredicate(Object val, Predicate pd, Path<?> path, CriteriaBuilder cb) {
         if (val != null) {
-            pd = cb.and(pd, cb.equal(path, val));
+            return cb.and(pd, cb.equal(path, val));
         }
         return pd;
     }
@@ -458,7 +463,7 @@ public class Helper {
      */
     public static Predicate buildEqualPredicate(String val, Predicate pd, Path<?> path, CriteriaBuilder cb) {
         if (!isNullOrEmpty(val)) {
-            pd = cb.and(pd, cb.equal(path, val));
+            return cb.and(pd, cb.equal(path, val));
         }
         return pd;
     }
@@ -474,7 +479,7 @@ public class Helper {
      */
     public static Predicate buildLikePredicate(String val, Predicate pd, Path<String> path, CriteriaBuilder cb) {
         if (!isNullOrEmpty(val)) {
-            pd = cb.and(pd, buildLike(val, path, cb));
+            return cb.and(pd, buildLike(val, path, cb));
         }
         return pd;
     }
@@ -502,7 +507,7 @@ public class Helper {
      */
     public static Predicate buildNamePredicate(String name, Predicate pd, Root<?> root, CriteriaBuilder cb) {
         if (!isNullOrEmpty(name)) {
-            pd = cb.and(pd, cb.or(Helper.buildLike(name,
+            return cb.and(pd, cb.or(Helper.buildLike(name,
                     root.get("firstName"), cb), Helper.buildLike(name, root.get("lastName"), cb)));
         }
         return pd;
@@ -519,31 +524,31 @@ public class Helper {
      */
     public static Predicate
     buildPredicate(InstitutionUserSearchCriteria criteria, Predicate pd, Root<?> root, CriteriaBuilder cb) {
-        pd = Helper.buildEqualPredicate(criteria.getInstitutionId(), pd, root.get("institution").get("id"), cb);
-        pd = Helper.buildEqualPredicate(criteria.getStatus(), pd, root.get("status"), cb);
-        pd = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinAveragePerformanceScore(),
-                pd, root.get("averagePerformanceScore"), cb);
-        pd = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxAveragePerformanceScore(),
-                pd, root.get("averagePerformanceScore"), cb);
-        pd = Helper.buildNamePredicate(criteria.getName(), pd, root, cb);
-        pd = Helper.buildInPredicate(criteria.getPersonalInterests(), pd,
+        Predicate resultPD = Helper.buildEqualPredicate(criteria.getInstitutionId(), pd, root.get("institution").get("id"), cb);
+        resultPD = Helper.buildEqualPredicate(criteria.getStatus(), resultPD, root.get("status"), cb);
+        resultPD = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinAveragePerformanceScore(),
+                resultPD, root.get("averagePerformanceScore"), cb);
+        resultPD = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxAveragePerformanceScore(),
+                resultPD, root.get("averagePerformanceScore"), cb);
+        resultPD = Helper.buildNamePredicate(criteria.getName(), resultPD, root, cb);
+        resultPD = Helper.buildInPredicate(criteria.getPersonalInterests(), resultPD,
                 root.join("personalInterests", JoinType.LEFT).get("personalInterest").get("id"), cb);
-        pd = Helper.buildInPredicate(criteria.getProfessionalInterests(), pd,
+        resultPD = Helper.buildInPredicate(criteria.getProfessionalInterests(), resultPD,
                 root.join("professionalInterests", JoinType.LEFT).get("professionalInterest").get("id"), cb);
-        pd = Helper.buildEqualPredicate(criteria.getAssignedToInstitution(), pd,
+        resultPD = Helper.buildEqualPredicate(criteria.getAssignedToInstitution(), resultPD,
                 root.get("assignedToInstitution"), cb);
-        pd = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinLastModifiedOn(),
-                pd, root.get("lastModifiedOn"), cb);
-        pd = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxLastModifiedOn(),
-                pd, root.get("lastModifiedOn"), cb);
+        resultPD = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinLastModifiedOn(),
+                resultPD, root.get("lastModifiedOn"), cb);
+        resultPD = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxLastModifiedOn(),
+                resultPD, root.get("lastModifiedOn"), cb);
         if (criteria.getIds() != null && !criteria.getIds().isEmpty()) {
-            pd = cb.and(pd, root.get("id")
+            resultPD = cb.and(resultPD, root.get("id")
                                 .in(criteria.getIds()));
         }
         if (criteria.getDistance() != null
                 && criteria.getLatitude() != null
                 && criteria.getLongitude() != null) {
-            pd = cb.and(pd, cb.or(cb.equal(root.get("isVirtualUser"), true),
+            resultPD = cb.and(resultPD, cb.or(cb.equal(root.get("isVirtualUser"), true),
                     cb.lessThanOrEqualTo(cb.function(CALCULATE_DISTANCE,
                                     BigDecimal.class,
                                     root.get("longitude"),
@@ -553,7 +558,7 @@ public class Helper {
                             criteria.getDistance()
                                     .multiply(new BigDecimal(KILOMETERS)))));
         }
-        return pd;
+        return resultPD;
     }
 
     /**

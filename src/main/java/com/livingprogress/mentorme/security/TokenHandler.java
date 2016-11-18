@@ -152,13 +152,13 @@ public class TokenHandler {
      * @return bytes from base64 string
      */
     private byte[] fromBase64(String val) {
-        val = val.replace('-', '+')
+        String text = val.replace('-', '+')
                  .replace('_', '/');
-        final int rest = val.length() % 4;
+        final int rest = text.length() % 4;
         if (rest != 0) {
-            val += rest == 3 ? "=" : "==";
+            text += rest == 3 ? "=" : "==";
         }
-        return DatatypeConverter.parseBase64Binary(val);
+        return DatatypeConverter.parseBase64Binary(text);
     }
 
     /**
