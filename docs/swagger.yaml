@@ -613,6 +613,11 @@ paths:
           description: The id
           type: string
           required: true
+        - name: body
+          in: body
+          description: The mentee mentor ids
+          schema:
+            $ref: '#/definitions/MenteeMentorIds'
       responses:
         200:
           description: The response containing the MenteeMentorProgram
@@ -5648,6 +5653,16 @@ paths:
 
 
 definitions:
+  MenteeMentorIds:
+    type: object
+    properties:
+      menteeId:
+        type: number
+        description: the mentee user id
+      mentorId:
+        type: number
+        description: the mentor user id
+
   UserCreateBody:
     type: object
     properties:
