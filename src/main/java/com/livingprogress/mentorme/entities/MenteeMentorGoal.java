@@ -67,7 +67,7 @@ public class MenteeMentorGoal extends IdentifiableEntity {
     /**
      * The useful links.
      */
-    @ManyToMany(cascade = ALL)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "mentee_mentor_goal_useful_link",
             joinColumns = {@JoinColumn(name = "mentee_mentor_goal_id")},
             inverseJoinColumns = {@JoinColumn(name = "useful_link_id")})
@@ -76,7 +76,7 @@ public class MenteeMentorGoal extends IdentifiableEntity {
     /**
      * The documents.
      */
-    @ManyToMany(cascade = ALL)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "mentee_mentor_goal_document",
             joinColumns = {@JoinColumn(name = "mentee_mentor_goal_id")},
             inverseJoinColumns = {@JoinColumn(name = "document_id")})

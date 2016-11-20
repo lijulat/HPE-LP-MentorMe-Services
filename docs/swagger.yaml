@@ -598,6 +598,50 @@ paths:
           description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
+  
+  /institutionalPrograms/{id}/clone:
+    post:
+      tags:
+        - InstitutionalProgram
+      summary: clone institutionalProgram as menteeMentorProgram
+      description: This endpoint is responsible for cloning the institutionalProgram and create a menteeMentorProgram instance.
+      security:
+      - basicAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id
+          type: string
+          required: true
+      responses:
+        200:
+          description: The response containing the MenteeMentorProgram
+          schema:
+            $ref: '#/definitions/MenteeMentorProgram'
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
 
   /institutionalPrograms:
     get:
@@ -845,6 +889,322 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
+  /documents/{entityType}/{entityId}:
+    post:
+      tags:
+        - Document
+      summary: add documents to the entity
+      description: Add documents to the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+        - name: files
+          in: formData
+          description: The uploaded documents
+          required: true
+          type: file
+      responses:
+        200:
+          description: The response containing the added documents
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Document'
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      tags:
+        - Document
+      summary: get documents associated to the entity
+      description: Get documents associated to the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+      responses:
+        200:
+          description: The response containing the associated documents
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Document'
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+
+  /documents/{entityType}/{entityId}/document/{documentId}:
+    delete:
+      tags:
+        - Document
+      summary: remove the document from the entity
+      description: Remove the document from the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+        - name: documentId
+          in: path
+          description: The document id.
+          type: string
+          required: true
+      responses:
+        200:
+          description: The response containing the associated documents
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+
+  /usefulLinks/{entityType}/{entityId}:
+    post:
+      tags:
+        - UsefulLink
+      summary: add usefulLinks to the entity
+      description: Add usefulLinks to the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+        - name: usefulLink
+          in: body
+          description: The usefulLink to add
+          required: true
+          schema:
+            $ref: '#/definitions/UsefulLink'
+      responses:
+        200:
+          description: The response containing the added usefulLinks
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UsefulLink'
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      tags:
+        - UsefulLink
+      summary: get usefulLinks associated to the entity
+      description: Get usefulLinks associated to the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+      responses:
+        200:
+          description: The response containing the associated usefulLinks
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UsefulLink'
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+
+  /usefulLinks/{entityType}/{entityId}/link/{linkId}:
+    delete:
+      tags:
+        - UsefulLink
+      summary: remove the link from the entity
+      description: Remove the link from the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+        - name: linkId
+          in: path
+          description: The link id.
+          type: string
+          required: true
+      responses:
+        200:
+          description: The response containing the associated usefulLinks
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
 
   /goals/{id}:
     get:
@@ -1956,7 +2316,7 @@ paths:
             type: number
             required: false
           - name: professionalInterests[].id
-            in: number
+            in: query
             description: The personal interests
             type: string
             required: false
@@ -6459,6 +6819,14 @@ definitions:
         type: array
         items:
          $ref: '#/definitions/MenteeMentorResponsibility'
+      documents:
+        type: array
+        items:
+          $ref: '#/definitions/Document'
+      usefulLinks:
+        type: array
+        items:
+          $ref: '#/definitions/UsefulLink'
 
   MenteeFeedback:
     type: object
@@ -6646,6 +7014,14 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/MenteeMentorTask'
+      documents:
+        type: array
+        items:
+          $ref: '#/definitions/Document'
+      usefulLinks:
+        type: array
+        items:
+          $ref: '#/definitions/UsefulLink'
 
   GoalSearchResult:
     type: object

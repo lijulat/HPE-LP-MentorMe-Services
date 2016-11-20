@@ -3,6 +3,7 @@ package com.livingprogress.mentorme.entities;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -71,7 +72,7 @@ public class InstitutionalProgram extends AuditableEntity {
     /**
      * The documents.
      */
-    @ManyToMany(cascade = ALL)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "institutional_program_document",
             joinColumns = {@JoinColumn(name = "institutional_program_id")},
             inverseJoinColumns = {@JoinColumn(name = "document_id")})
@@ -80,7 +81,7 @@ public class InstitutionalProgram extends AuditableEntity {
     /**
      * The useful links.
      */
-    @ManyToMany(cascade = ALL)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "institutional_program_link",
             joinColumns = {@JoinColumn(name = "institutional_program_id")},
             inverseJoinColumns = {@JoinColumn(name = "useful_link_id")})

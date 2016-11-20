@@ -112,7 +112,7 @@ public class MenteeMentorProgram extends IdentifiableEntity {
     /**
      * The documents.
      */
-    @ManyToMany(cascade = ALL)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "mentee_mentor_program_document",
             joinColumns = {@JoinColumn(name = "mentee_mentor_program_id")},
             inverseJoinColumns = {@JoinColumn(name = "document_id")})
@@ -121,7 +121,7 @@ public class MenteeMentorProgram extends IdentifiableEntity {
     /**
      * The useful links.
      */
-    @ManyToMany(cascade = ALL)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "mentee_mentor_program_useful_link",
             joinColumns = {@JoinColumn(name = "mentee_mentor_program_id")},
             inverseJoinColumns = {@JoinColumn(name = "useful_link_id")})

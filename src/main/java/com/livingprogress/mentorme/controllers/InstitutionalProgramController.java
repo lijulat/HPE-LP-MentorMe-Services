@@ -6,6 +6,7 @@ import com.livingprogress.mentorme.entities.InstitutionalProgram;
 import com.livingprogress.mentorme.entities.InstitutionalProgramSearchCriteria;
 import com.livingprogress.mentorme.entities.Mentee;
 import com.livingprogress.mentorme.entities.MenteeMentorGoal;
+import com.livingprogress.mentorme.entities.MenteeMentorIds;
 import com.livingprogress.mentorme.entities.MenteeMentorProgram;
 import com.livingprogress.mentorme.entities.MenteeMentorResponsibility;
 import com.livingprogress.mentorme.entities.MenteeMentorTask;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -204,15 +206,18 @@ public class InstitutionalProgramController extends BaseUploadController {
 
     /**
      * This method is used to clone program requested by mentor.
+     * 
      * @param id the id of the entity to retrieve
+     * @param meteeMentorIds the mentee and mentor ids
      * @return the cloned mentee mentor program
+     * 
      * @throws IllegalArgumentException if id is not positive
      * @throws EntityNotFoundException if the entity does not exist
      * @throws MentorMeException if any other error occurred during operation
      */
     @RequestMapping(value = "{id}/clone", method = RequestMethod.POST)
     @Transactional
-    public MenteeMentorProgram clone(@PathVariable long id) throws MentorMeException {
+    public MenteeMentorProgram clone(@PathVariable long id, @RequestBody MenteeMentorIds meteeMentorIds) throws MentorMeException {
         // make sure exist valid program
         InstitutionalProgram instProgram = institutionalProgramService.get(id);
         
@@ -221,9 +226,17 @@ public class InstitutionalProgramController extends BaseUploadController {
         
         MenteeMentorProgram mmProgram = new MenteeMentorProgram();
         mmProgram.setInstitutionalProgram(instProgram);
-        mmProgram.setDocuments(instProgram.getDocuments());
-        mmProgram.setUsefulLinks(instProgram.getUsefulLinks());        
+        mmProgram.setDocuments(new ArrayList<>(instProgram.getDocuments()));
+        mmProgram.setUsefulLinks(new ArrayList<>(instProgram.getUsefulLinks()));
         mmProgram.setStartDate(date.toDate());
+        
+        Mentee mentee = new Mentee();
+        mentee.setId(meteeMentorIds.getMenteeId());
+        mmProgram.setMentee(mentee);
+        
+        Mentor mentor = new Mentor();
+        mentor.setId(meteeMentorIds.getMentorId());
+        mmProgram.setMentor(mentor);
         
         // clone goals
         if (instProgram.getGoals() != null && !instProgram.getGoals().isEmpty()) {
@@ -233,11 +246,11 @@ public class InstitutionalProgramController extends BaseUploadController {
                 
                 mmGoal.setGoal(goal);
                 mmGoal.setMenteeMentorProgram(mmProgram);
-                mmGoal.setDocuments(goal.getDocuments());
-                mmGoal.setUsefulLinks(goal.getUsefulLinks());
+                mmGoal.setDocuments(new ArrayList<>(goal.getDocuments()));
+                mmGoal.setUsefulLinks(new ArrayList<>(goal.getUsefulLinks()));
                 
                 // clone tasks
-                if (goal.getTasks() != null) {
+                if (goal.getTasks() != null && !goal.getTasks().isEmpty()) {
                     List<MenteeMentorTask> tasks = new ArrayList<>();
                     for (Task task : goal.getTasks()) {
                         MenteeMentorTask mmTask = new MenteeMentorTask();
@@ -248,7 +261,7 @@ public class InstitutionalProgramController extends BaseUploadController {
                         mmTask.setEndDate(date.toDate());
                         
                         tasks.add(mmTask);
-                    }                    
+                    }
                     mmGoal.setTasks(tasks);
                 }
                 
