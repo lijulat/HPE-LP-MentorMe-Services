@@ -4,7 +4,14 @@ import com.livingprogress.mentorme.BaseTest;
 import com.livingprogress.mentorme.entities.Goal;
 import com.livingprogress.mentorme.entities.IdentifiableEntity;
 import com.livingprogress.mentorme.entities.InstitutionalProgram;
+import com.livingprogress.mentorme.entities.MenteeMentorGoal;
+import com.livingprogress.mentorme.entities.MenteeMentorProgram;
+import com.livingprogress.mentorme.entities.MenteeMentorResponsibility;
+import com.livingprogress.mentorme.entities.MenteeMentorTask;
+import com.livingprogress.mentorme.entities.Responsibility;
 import com.livingprogress.mentorme.entities.SearchResult;
+import com.livingprogress.mentorme.entities.Task;
+
 import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -393,7 +400,53 @@ public class InstitutionalProgramControllerTest extends BaseTest {
      */
     @Test
     public void cloneTest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/institutionalPrograms/1/clone"))
-               .andExpect(status().isInternalServerError());
+        final String menteeMentorIds = "{ \"menteeId\": 4 , \"mentorId\": 5 }";
+        String res = mockMvc.perform(MockMvcRequestBuilders.post("/institutionalPrograms/1/clone")
+                                                           .contentType(MediaType.APPLICATION_JSON)
+                                                           .content(menteeMentorIds))
+                            .andExpect(status().isOk())
+                            .andReturn()
+                            .getResponse()
+                            .getContentAsString();
+        
+        InstitutionalProgram sampleEntity = objectMapper.readValue(sample, InstitutionalProgram.class);
+        MenteeMentorProgram result = objectMapper.readValue(res, MenteeMentorProgram.class);
+        
+        verifyEntities(sampleEntity.getDocuments(), result.getDocuments());
+        verifyEntities(sampleEntity.getUsefulLinks(), result.getUsefulLinks());
+        verifyEntity(sampleEntity, result.getInstitutionalProgram());
+        assertEquals(4L, result.getMentee().getId());
+        assertEquals(5L, result.getMentor().getId());
+        
+        IntStream.range(0, sampleEntity.getGoals().size()).forEach(idx -> {
+            Goal goal1 = sampleEntity.getGoals().get(idx);
+            MenteeMentorGoal goal2 = result.getGoals().get(idx);
+            
+            verifyEntity(goal1, goal2.getGoal());
+            
+            IntStream.range(0, goal1.getTasks().size()).forEach(idy -> {
+                Task task1 = goal1.getTasks().get(idy);
+                MenteeMentorTask task2 = goal2.getTasks().get(idy);
+                
+                verifyEntity(task1, task2.getTask());
+            });
+        });
+        
+        
+        IntStream.range(0, sampleEntity.getResponsibilities().size()).forEach(idx -> {
+            Responsibility resp1 = sampleEntity.getResponsibilities().get(idx);
+            MenteeMentorResponsibility resp2 = result.getResponsibilities().get(idx);
+            
+            assertEquals(resp1.getDate(), resp2.getDate());
+            assertEquals(resp1.getMenteeResponsibility(), resp2.getMenteeResponsibility());
+            assertEquals(resp1.getMentorResponsibility(), resp2.getMentorResponsibility());
+            assertEquals(resp1.getNumber(), resp2.getNumber());
+            assertEquals(resp1.getTitle(), resp2.getTitle());
+        });
+        
+        mockMvc.perform(MockMvcRequestBuilders.post("/institutionalPrograms/999/clone")
+                                              .contentType(MediaType.APPLICATION_JSON)
+                                              .content(menteeMentorIds))
+               .andExpect(status().isNotFound());
     }
 }
