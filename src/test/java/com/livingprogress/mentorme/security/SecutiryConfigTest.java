@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Locale;
+
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -312,5 +314,25 @@ public class SecutiryConfigTest extends BaseTest {
                                                   .with(httpBasic(newUserName, newPassword)))
                                                   .andExpect(status().isUnauthorized());
 
+    }
+
+    /**
+     * Test locale by accept language header.
+     * @throws Exception throws if any error happen
+     */
+    @Test
+    public void localeTest() throws Exception {
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/activities/1111")
+                                                 .accept(MediaType.APPLICATION_JSON)
+                                                 .with(httpBasic("test3", "password")))
+                    .andExpect(status().isNotFound())
+                    .andExpect(jsonPath("$.message").value("Entity with ID=1111 can not be found"));
+        mockAuthMvc.perform(MockMvcRequestBuilders.get("/activities/1111")
+                                                                .header("Accept-Language","en_US")
+                                                                .locale(Locale.US)
+                                                                .accept(MediaType.APPLICATION_JSON)
+                                                                .with(httpBasic("test3", "password")))
+                     .andExpect(status().isNotFound())
+                     .andExpect(jsonPath("$.message").value("en us Entity with ID=1111 can not be found"));
     }
 }

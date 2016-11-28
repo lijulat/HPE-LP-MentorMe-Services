@@ -84,6 +84,7 @@ public class UserControllerTest extends BaseTest {
         User demoEntity = objectMapper.readValue(demo, User.class);
         assertNotNull(demoEntity.getPassword());
         assertNull(demoEntity.getCreatedOn());
+        assertNull(demoEntity.getLastModifiedOn());
         demoEntity.setPassword(null);
         String res = mockMvc.perform(MockMvcRequestBuilders.post("/users")
                                                            .contentType(MediaType.APPLICATION_JSON)
@@ -92,12 +93,14 @@ public class UserControllerTest extends BaseTest {
                             .andExpect(jsonPath("$.password").doesNotExist())
                             .andExpect(jsonPath("$.id").isNumber())
                             .andExpect(jsonPath("$.createdOn").exists())
+                            .andExpect(jsonPath("$.lastModifiedOn").exists())
                             .andReturn()
                             .getResponse()
                             .getContentAsString();
         User result = objectMapper.readValue(res, User.class);
         demoEntity.setId(result.getId());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
     }
 
@@ -119,6 +122,7 @@ public class UserControllerTest extends BaseTest {
         BeanUtils.copyProperties(demoEntity, sampleEntity);
         // try to update created on
         demoEntity.setCreatedOn(sampleFutureDate);
+        demoEntity.setLastModifiedOn(sampleFutureDate);
         demoEntity.setId(1);
         String json = objectMapper.writeValueAsString(demoEntity);
         String res = mockMvc.perform(MockMvcRequestBuilders.put("/users/1")
@@ -134,7 +138,9 @@ public class UserControllerTest extends BaseTest {
         User result = objectMapper.readValue(res, User.class);
         // will not update created on during updating
         assertNotEquals(sampleFutureDate, result.getCreatedOn());
+        assertNotEquals(sampleFutureDate, result.getLastModifiedOn());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
         // test nested properties
         demoEntity.setRoles(null);
@@ -195,7 +201,7 @@ public class UserControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/users?sortColumn=id&sortOrder=ASC")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(content().json(entities, true));
+               .andExpect(content().json(entities));
         SearchResult<User> result1 = getSearchResult("/users?pageNumber=1&pageSize=2&sortColumn=id&sortOrder=ASC",
                 User.class);
         assertEquals(result.getTotal(), result1.getTotal());

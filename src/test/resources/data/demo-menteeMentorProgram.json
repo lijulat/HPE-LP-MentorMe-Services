@@ -2,6 +2,7 @@
   "mentor": {
     "id": 3,
     "createdOn": "2016-10-03T00:00:00",
+    "lastModifiedOn" : "2016-10-03T00:00:00",
     "username": "test3",
     "firstName": "firstname3",
     "lastName": "lastname3",
@@ -14,9 +15,23 @@
     "email": "email3@test.com",
     "profilePicturePath": "profilePicturePath3",
     "status": "ACTIVE",
+    "streetAddress" : "261 Moore St",
+    "city" : "Brooklyn",
+    "state": {
+      "id": 32,
+      "value": "New York"
+    },
+    "country": {
+      "id": 230,
+      "value": "United States"
+    },
+    "postalCode" : "11206",
+    "longitude" : -73.93358660,
+    "latitude" : 40.70506220,
     "institution": {
       "id": 1,
       "createdOn": "2016-10-01T00:00:00",
+      "lastModifiedOn" : "2016-10-01T00:00:00",
       "institutionName": "institutionName1",
       "parentOrganization": "parentOrganization1",
       "streetAddress": "streetAddress1",
@@ -159,11 +174,13 @@
       }
     ],
     "companyName": "companyName1",
-    "linkedInUrl": "linkedInUrl1"
+    "linkedInUrl": "linkedInUrl1",
+    "virtualUser" : false
   },
   "mentee": {
     "id": 4,
     "createdOn": "2016-10-04T00:00:00",
+    "lastModifiedOn" : "2016-10-04T00:00:00",
     "username": "test4",
     "firstName": "firstname4",
     "lastName": "lastname4",
@@ -176,9 +193,24 @@
     "email": "email4@test.com",
     "profilePicturePath": "profilePicturePath4",
     "status": "ACTIVE",
+    "streetAddress" : "54-29 Metropolitan Ave",
+    "city" : "Ridgewood",
+    "state": {
+      "id": 32,
+      "value": "New York"
+    },
+    "country": {
+      "id": 230,
+      "value": "United States"
+    },
+    "postalCode" : "11385",
+    "longitude" : -73.90954940,
+    "latitude" : 40.71311970,
+    "virtualUser" : true,
     "institution": {
       "id": 1,
       "createdOn": "2016-10-01T00:00:00",
+      "lastModifiedOn" : "2016-10-01T00:00:00",
       "institutionName": "institutionName1",
       "parentOrganization": "parentOrganization1",
       "streetAddress": "streetAddress1",

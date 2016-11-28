@@ -28,4 +28,14 @@ public class CustomMessageSource extends ResourceBundleMessageSource {
     public static String getMessage(String name) {
         return ACCESSOR.getMessage(name);
     }
+
+    /**
+     * Get message with arguments.
+     * @param name the message name.
+     * @param args the message arguments
+     * @return the match message by name
+     */
+    public static String getMessage(String name, Object...args) {
+        return ACCESSOR.getMessage(name, args);
+    }
 }

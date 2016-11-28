@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -75,7 +76,7 @@ public class Goal extends IdentifiableEntity {
     /**
      * The useful links.
      */
-    @ManyToMany(cascade = ALL)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "goal_useful_link",
             joinColumns = {@JoinColumn(name = "goal_id")},
             inverseJoinColumns = {@JoinColumn(name = "useful_link_id")})
@@ -84,7 +85,7 @@ public class Goal extends IdentifiableEntity {
     /**
      * The documents.
      */
-    @ManyToMany(cascade = ALL)
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "goal_document",
             joinColumns = {@JoinColumn(name = "goal_id")},
             inverseJoinColumns = {@JoinColumn(name = "document_id")})

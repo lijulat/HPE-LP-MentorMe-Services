@@ -13,6 +13,8 @@ import com.livingprogress.mentorme.entities.WeightedProfessionalInterest;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
+import com.livingprogress.mentorme.entities.MatchSearchCriteria;
+import com.livingprogress.mentorme.remote.services.HODClient;
 import com.livingprogress.mentorme.services.MenteeService;
 import com.livingprogress.mentorme.services.MentorService;
 import com.livingprogress.mentorme.utils.Helper;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +59,12 @@ public class MentorController {
      */
     @Autowired
     private MenteeService menteeService;
+
+    /**
+     * The hod client used to perform operations. Should be non-null after injection.
+     */
+    @Autowired
+    private HODClient hodClient;
 
     /**
      * The amount of points if there is a direct matching of the interests.
@@ -102,6 +111,7 @@ public class MentorController {
     protected void checkConfiguration() {
         Helper.checkConfigNotNull(menteeService, "menteeService");
         Helper.checkConfigNotNull(mentorService, "mentorService");
+        Helper.checkConfigNotNull(hodClient, "hodClient");
         Helper.checkPositive(directMatchingPoints, "directMatchingPoints");
         Helper.checkPositive(parentCategoryMatchingPoints, "parentCategoryMatchingPoints");
         Helper.checkPositive(professionalInterestsCoefficient, "professionalInterestsCoefficient");
@@ -207,33 +217,29 @@ public class MentorController {
      * This method is used to get the matching mentees.
      *
      * @param id the id of the entity to retrieve
+     * @param matchSearchCriteria the match criteria
      * @return the matching mentees.
      * @throws IllegalArgumentException if id is not positive
      * @throws EntityNotFoundException if the entity does not exist
      * @throws MentorMeException if any other error occurred during operation
      */
     @RequestMapping(value = "{id}/matchingMentees", method = RequestMethod.GET)
-    public List<Mentee> getMatchingMentees(@PathVariable long id) throws MentorMeException {
+    public List<Mentee> getMatchingMentees(@PathVariable long id,
+            @ModelAttribute MatchSearchCriteria matchSearchCriteria) throws MentorMeException {
         Mentor mentor = mentorService.get(id);
-        // get all institution mentors or all unassigned mentors
-        MenteeSearchCriteria criteria = new MenteeSearchCriteria();
-        if (mentor.isAssignedToInstitution()) {
-            criteria.setInstitutionId(mentor.getInstitution().getId());
-        } else {
-            criteria.setAssignedToInstitution(false);
-        }
-        List<Mentee> mentees = menteeService.search(criteria, null).getEntities();
+        List<Mentee> mentees = Helper.searchMatchEntities(mentor,
+                new MenteeSearchCriteria(), matchSearchCriteria, menteeService);
         Map<Mentee, Integer> menteeScores = new HashMap<>();
         for (Mentee mentee : mentees) {
             int professionalScore = Helper.getScore(directMatchingPoints, parentCategoryMatchingPoints,
-                    new ArrayList<>(mentee.getProfessionalInterests()),
+                    new ArrayList<>(mentor.getProfessionalInterests()),
                     new ArrayList<>(mentee.getProfessionalInterests()),
                     WeightedProfessionalInterest::getWeight,
                     WeightedProfessionalInterest::getProfessionalInterest,
                     Helper::getParentCategoryFromWeightedProfessionalInterest);
             int personalScore = Helper.getScore(directMatchingPoints,
                     parentCategoryMatchingPoints,
-                    new ArrayList<>(mentee.getPersonalInterests()),
+                    new ArrayList<>(mentor.getPersonalInterests()),
                     new ArrayList<>(mentee.getPersonalInterests()),
                     WeightedPersonalInterest::getWeight,
                     WeightedPersonalInterest::getPersonalInterest,
@@ -245,10 +251,15 @@ public class MentorController {
         // comment below if do not want to show score in log
         menteeScores.entrySet().forEach(k ->
                 Helper.logDebugMessage(LogAspect.LOGGER, k.getKey().getId() + "," + k.getValue()));
+        // could custom max count to return
+        int limit = matchSearchCriteria.getMaxCount() != null
+                ? matchSearchCriteria.getMaxCount() : topMatchingAmount;
         // sort the mentorScores by scores and return the top <topMatchingAmount> mentees;
         return menteeScores.entrySet().stream() // reverse means desc order
-                .sorted(Comparator.comparing(Map.Entry<Mentee, Integer>::getValue).reversed())
-                .map(Map.Entry::getKey).limit(topMatchingAmount).collect(Collectors.toList());
+                .filter(c -> c.getValue() > 0) // must match or weight >0
+                .sorted(Comparator.comparing(Map.Entry<Mentee, Integer>::getValue)
+                                  .reversed())
+                .map(Map.Entry::getKey).limit(limit).collect(Collectors.toList());
     }
 
     /**
@@ -262,6 +273,29 @@ public class MentorController {
     public List<ProfessionalExperienceData> getLinkedInProfessionalExperienceData() throws MentorMeException {
         //TODO fix this if implemented linkedin
         throw new MentorMeException("Not implemented!");
+    }
+
+    /**
+     * This method is used to get the matching mentees using havenondemand api.
+     *
+     * @param id the id of the entity to retrieve
+     * @param criteria the remote criteria
+     * @return the matching mentees.
+     * @throws IllegalArgumentException if id is not positive
+     * @throws EntityNotFoundException if the entity does not exist
+     * @throws MentorMeException if any other error occurred during operation
+     */
+    @RequestMapping(value = "{id}/remoteMatchingMentees")
+    public List<Mentee> remoteMatchingMentees(@PathVariable long id,
+            @ModelAttribute MatchSearchCriteria criteria) throws MentorMeException {
+        List<Long> ids = hodClient.getMatchingMentees(mentorService.get(id), criteria);
+        if (ids.isEmpty()) {
+            return Collections.emptyList();
+        } else {
+            MenteeSearchCriteria menteeSearchCriteria = new MenteeSearchCriteria();
+            menteeSearchCriteria.setIds(ids);
+            return menteeService.search(menteeSearchCriteria, null).getEntities();
+        }
     }
 }
 

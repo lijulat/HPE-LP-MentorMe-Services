@@ -54,6 +54,7 @@ DROP TABLE IF EXISTS `institutional_program_document`;
 DROP TABLE IF EXISTS `institutional_program_link`;
 DROP TABLE IF EXISTS `mentor_professional_area`;
 DROP TABLE IF EXISTS `mentee_mentor_responsibility`;
+DROP FUNCTION if EXISTS `calculate_distance`;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

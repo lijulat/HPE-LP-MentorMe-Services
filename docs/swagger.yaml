@@ -598,6 +598,55 @@ paths:
           description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
+  
+  /institutionalPrograms/{id}/clone:
+    post:
+      tags:
+        - InstitutionalProgram
+      summary: clone institutionalProgram as menteeMentorProgram
+      description: This endpoint is responsible for cloning the institutionalProgram and create a menteeMentorProgram instance.
+      security:
+      - basicAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The id
+          type: string
+          required: true
+        - name: body
+          in: body
+          description: The mentee mentor ids
+          schema:
+            $ref: '#/definitions/MenteeMentorIds'
+      responses:
+        200:
+          description: The response containing the MenteeMentorProgram
+          schema:
+            $ref: '#/definitions/MenteeMentorProgram'
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
 
   /institutionalPrograms:
     get:
@@ -845,6 +894,322 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
+  /documents/{entityType}/{entityId}:
+    post:
+      tags:
+        - Document
+      summary: add documents to the entity
+      description: Add documents to the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+        - name: files
+          in: formData
+          description: The uploaded documents
+          required: true
+          type: file
+      responses:
+        200:
+          description: The response containing the added documents
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Document'
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      tags:
+        - Document
+      summary: get documents associated to the entity
+      description: Get documents associated to the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+      responses:
+        200:
+          description: The response containing the associated documents
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Document'
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+
+  /documents/{entityType}/{entityId}/document/{documentId}:
+    delete:
+      tags:
+        - Document
+      summary: remove the document from the entity
+      description: Remove the document from the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+        - name: documentId
+          in: path
+          description: The document id.
+          type: string
+          required: true
+      responses:
+        200:
+          description: The response containing the associated documents
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+
+  /usefulLinks/{entityType}/{entityId}:
+    post:
+      tags:
+        - UsefulLink
+      summary: add usefulLinks to the entity
+      description: Add usefulLinks to the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+        - name: usefulLink
+          in: body
+          description: The usefulLink to add
+          required: true
+          schema:
+            $ref: '#/definitions/UsefulLink'
+      responses:
+        200:
+          description: The response containing the added usefulLinks
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UsefulLink'
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+
+    get:
+      tags:
+        - UsefulLink
+      summary: get usefulLinks associated to the entity
+      description: Get usefulLinks associated to the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+      responses:
+        200:
+          description: The response containing the associated usefulLinks
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UsefulLink'
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
+
+  /usefulLinks/{entityType}/{entityId}/link/{linkId}:
+    delete:
+      tags:
+        - UsefulLink
+      summary: remove the link from the entity
+      description: Remove the link from the entity
+      security:
+        - basicAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          type: string
+          required: true
+        - name: entityId
+          in: path
+          description: The entity id.
+          type: string
+          required: true
+        - name: linkId
+          in: path
+          description: The link id.
+          type: string
+          required: true
+      responses:
+        200:
+          description: The response containing the associated usefulLinks
+        400:
+          description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+          schema:
+            $ref: '#/definitions/Error'
+        401:
+          description: Authentication Error - ien is missing or invalid
+          schema:
+            $ref: '#/definitions/Error'
+        403:
+          description: Access Denied Error - if forbidden to access
+          schema:
+            $ref: '#/definitions/Error'
+        404:
+          description: Not Found - if match entity not found
+          schema:
+            $ref: '#/definitions/Error'
+        500:
+          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+          schema:
+            $ref: '#/definitions/Error'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/Error'
 
   /goals/{id}:
     get:
@@ -1940,6 +2305,92 @@ paths:
             description: The id
             type: number
             required: true
+          - name: maxCount
+            in: query
+            description: The max count
+            type: number
+            required: false
+          - name: distance
+            in: query
+            description: The distance
+            type: number
+            required: false
+          - name: personalInterests[].id
+            in: query
+            description: The personal interests
+            type: number
+            required: false
+          - name: professionalInterests[].id
+            in: query
+            description: The personal interests
+            type: string
+            required: false
+        responses:
+          200:
+            description: The response containing the match mentors
+            schema:
+              type: array
+              items:
+                 $ref: '#/definitions/Mentor'
+          400:
+            description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+            schema:
+              $ref: '#/definitions/Error'
+          401:
+            description: Authentication Error - ien is missing or invalid
+            schema:
+              $ref: '#/definitions/Error'
+          403:
+            description: Access Denied Error - if forbidden to access
+            schema:
+              $ref: '#/definitions/Error'
+          404:
+            description: Not Found - if match entity not found
+            schema:
+              $ref: '#/definitions/Error'
+          500:
+            description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+            schema:
+              $ref: '#/definitions/Error'
+          default:
+            description: Unexpected error.
+            schema:
+              $ref: '#/definitions/Error'
+
+  /mentees/{id}/remoteMatchingMentors:
+      get:
+        tags:
+          - Mentee
+        summary: get Mentee match mentors
+        description: This endpoint is responsible for getting match mentors Mentee using Haven OnDemand API
+        security:
+          - basicAuth: []
+        parameters:
+          - name: id
+            in: path
+            description: The id
+            type: number
+            required: true
+          - name: maxCount
+            in: query
+            description: The max count
+            type: number
+            required: false
+          - name: distance
+            in: query
+            description: The distance
+            type: number
+            required: false
+          - name: personalInterests[].value
+            in: query
+            description: The personal interests
+            type: string
+            required: false
+          - name: professionalInterests[].value
+            in: query
+            description: The personal interests
+            type: string
+            required: false
         responses:
           200:
             description: The response containing the match mentors
@@ -2350,6 +2801,92 @@ paths:
             description: The id
             type: number
             required: true
+          - name: maxCount
+            in: query
+            description: The max count
+            type: number
+            required: false
+          - name: distance
+            in: query
+            description: The distance
+            type: number
+            required: false
+          - name: personalInterests[].id
+            in: query
+            description: The personal interests
+            type: number
+            required: false
+          - name: professionalInterests[].id
+            in: query
+            description: The personal interests
+            type: number
+            required: false
+        responses:
+          200:
+            description: The response containing the  match mentees
+            schema:
+              type: array
+              items:
+                 $ref: '#/definitions/Mentee'
+          400:
+            description: Bad Request - if there was problem with the request (e.g. malformed or some parameters are missing)
+            schema:
+              $ref: '#/definitions/Error'
+          401:
+            description: Authentication Error - ien is missing or invalid
+            schema:
+              $ref: '#/definitions/Error'
+          403:
+            description: Access Denied Error - if forbidden to access
+            schema:
+              $ref: '#/definitions/Error'
+          404:
+            description: Not Found - if match entity not found
+            schema:
+              $ref: '#/definitions/Error'
+          500:
+            description: Internal server error - if the request was properly formatted, but the operation failed on the server side
+            schema:
+              $ref: '#/definitions/Error'
+          default:
+            description: Unexpected error.
+            schema:
+              $ref: '#/definitions/Error'
+
+  /mentors/{id}/remoteMatchingMentees:
+      get:
+        tags:
+          - Mentor
+        summary: get Mentor match mentees
+        description: This endpoint is responsible for getting match mentees Mentees using Haven OnDemand API
+        security:
+          - basicAuth: []
+        parameters:
+          - name: id
+            in: path
+            description: The id
+            type: number
+            required: true
+          - name: maxCount
+            in: query
+            description: The max count
+            type: number
+            required: false
+          - name: distance
+            in: query
+            description: The distance
+            type: number
+            required: false
+          - name: personalInterests[].value
+            in: query
+            description: The personal interests
+            type: string
+            required: false
+          - name: professionalInterests[].value
+            in: query
+            description: The personal interests
+            type: string
+            required: false
         responses:
           200:
             description: The response containing the  match mentees
@@ -5116,6 +5653,16 @@ paths:
 
 
 definitions:
+  MenteeMentorIds:
+    type: object
+    properties:
+      menteeId:
+        type: number
+        description: the mentee user id
+      mentorId:
+        type: number
+        description: the mentor user id
+
   UserCreateBody:
     type: object
     properties:
@@ -5173,6 +5720,28 @@ definitions:
       lastName:
         type: string
         description: The last name.
+      isVirtualUser:
+        type: boolean
+        description: The is virtual user flag.
+      streetAddress:
+        type: string
+        description: The street address.
+      city:
+        type: string
+        description: The city.
+      postalCode:
+        type: string
+        description: The postal code.
+      longitude:
+        type: string
+        description: The longitude.
+      latitude:
+        type: string
+        description: The latitude.
+      country:
+         $ref: '#/definitions/Country'
+      state:
+        $ref: '#/definitions/State'
       roles:
         type: array
         items:
@@ -5467,6 +6036,10 @@ definitions:
         type: integer
         format: int32
         description: The created on datetime with unix epoch format.
+      lastModifiedOn:
+        type: integer
+        format: int32
+        description: The last modified on time
       institutionName:
         type: string
         description: The name.
@@ -5798,6 +6371,28 @@ definitions:
       linkedInUrl:
         type: string
         description: The linkedIn url.
+      isVirtualUser:
+        type: boolean
+        description: The is virtual user flag.
+      streetAddress:
+        type: string
+        description: The street address.
+      city:
+        type: string
+        description: The city.
+      postalCode:
+        type: string
+        description: The postal code.
+      longitude:
+        type: string
+        description: The longitude.
+      latitude:
+        type: string
+        description: The latitude.
+      country:
+         $ref: '#/definitions/Country'
+      state:
+        $ref: '#/definitions/State'
       roles:
         type: array
         items:
@@ -5828,6 +6423,10 @@ definitions:
         type: integer
         format: int32
         description: The created on datetime with unix epoch format.
+      lastModifiedOn:
+        type: integer
+        format: int32
+        description: The last modified on time
       username:
         type: string
         description: The username.
@@ -5876,6 +6475,28 @@ definitions:
       linkedInUrl:
         type: string
         description: The linkedIn url.
+      isVirtualUser:
+        type: boolean
+        description: The is virtual user flag.
+      streetAddress:
+        type: string
+        description: The street address.
+      city:
+        type: string
+        description: The city.
+      postalCode:
+        type: string
+        description: The postal code.
+      longitude:
+        type: string
+        description: The longitude.
+      latitude:
+        type: string
+        description: The latitude.
+      country:
+         $ref: '#/definitions/Country'
+      state:
+        $ref: '#/definitions/State'
       roles:
         type: array
         items:
@@ -5962,6 +6583,28 @@ definitions:
       facebookUrl:
         type: string
         description: The facebook url.
+      isVirtualUser:
+        type: boolean
+        description: The is virtual user flag.
+      streetAddress:
+        type: string
+        description: The street address.
+      city:
+        type: string
+        description: The city.
+      postalCode:
+        type: string
+        description: The postal code.
+      longitude:
+        type: string
+        description: The longitude.
+      latitude:
+        type: string
+        description: The latitude.
+      country:
+         $ref: '#/definitions/Country'
+      state:
+        $ref: '#/definitions/State'
       roles:
         type: array
         items:
@@ -5992,6 +6635,10 @@ definitions:
         type: integer
         format: int32
         description: The created on datetime with unix epoch format.
+      lastModifiedOn:
+        type: integer
+        format: int32
+        description: The last modified on time
       username:
         type: string
         description: The username.
@@ -6040,6 +6687,28 @@ definitions:
       facebookUrl:
         type: string
         description: The facebook url.
+      isVirtualUser:
+        type: boolean
+        description: The is virtual user flag.
+      streetAddress:
+        type: string
+        description: The street address.
+      city:
+        type: string
+        description: The city.
+      postalCode:
+        type: string
+        description: The postal code.
+      longitude:
+        type: string
+        description: The longitude.
+      latitude:
+        type: string
+        description: The latitude.
+      country:
+         $ref: '#/definitions/Country'
+      state:
+        $ref: '#/definitions/State'
       roles:
         type: array
         items:
@@ -6165,6 +6834,14 @@ definitions:
         type: array
         items:
          $ref: '#/definitions/MenteeMentorResponsibility'
+      documents:
+        type: array
+        items:
+          $ref: '#/definitions/Document'
+      usefulLinks:
+        type: array
+        items:
+          $ref: '#/definitions/UsefulLink'
 
   MenteeFeedback:
     type: object
@@ -6272,7 +6949,12 @@ definitions:
         createdBy:
           type: number
           description: The created by user id.
-
+        lastModifiedOn:
+          type: number
+          description: The last modified on time
+        lastModifiedBy:
+          type: number
+          description: The last modified by user id.
   CustomAssignedGoalData:
       type: object
       properties:
@@ -6347,6 +7029,14 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/MenteeMentorTask'
+      documents:
+        type: array
+        items:
+          $ref: '#/definitions/Document'
+      usefulLinks:
+        type: array
+        items:
+          $ref: '#/definitions/UsefulLink'
 
   GoalSearchResult:
     type: object
@@ -6461,7 +7151,12 @@ definitions:
         createdBy:
           type: number
           description: The created by user id.
-
+        lastModifiedOn:
+          type: number
+          description: The last modified on time
+        lastModifiedBy:
+          type: number
+          description: The last modified by user id.
   ActivitySearchResult:
       type: object
       properties:

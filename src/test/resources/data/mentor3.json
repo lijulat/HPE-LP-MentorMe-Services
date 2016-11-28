@@ -1,6 +1,7 @@
 {
   "id": 3,
   "createdOn": "2016-10-03T00:00:00",
+  "lastModifiedOn": "2016-10-03T00:00:00",
   "username": "test3",
   "firstName": "firstname3",
   "lastName": "lastname3",
@@ -16,6 +17,7 @@
   "institution": {
     "id": 1,
     "createdOn": "2016-10-01T00:00:00",
+    "lastModifiedOn": "2016-10-01T00:00:00",
     "institutionName": "institutionName1",
     "parentOrganization": "parentOrganization1",
     "streetAddress": "streetAddress1",
@@ -158,5 +160,19 @@
     }
   ],
   "companyName": "companyName1",
-  "linkedInUrl": "linkedInUrl1"
+  "linkedInUrl": "linkedInUrl1",
+  "streetAddress": "261 Moore St",
+  "city": "Brooklyn",
+  "state": {
+    "id": 32,
+    "value": "New York"
+  },
+  "country": {
+    "id": 230,
+    "value": "United States"
+  },
+  "postalCode": "11206",
+  "longitude": -73.93358660,
+  "latitude": 40.70506220,
+  "virtualUser": false
 }

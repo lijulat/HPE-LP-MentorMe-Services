@@ -3,6 +3,7 @@ package com.livingprogress.mentorme.security;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.livingprogress.mentorme.aop.LogAspect;
 import com.livingprogress.mentorme.entities.User;
+import com.livingprogress.mentorme.utils.CustomMessageSource;
 import com.livingprogress.mentorme.utils.Helper;
 
 import javax.crypto.Mac;
@@ -51,7 +52,8 @@ public class TokenHandler {
             hmac = Mac.getInstance(HMAC_ALGO);
             hmac.init(new SecretKeySpec(secretKey, HMAC_ALGO));
         } catch (NoSuchAlgorithmException | InvalidKeyException e) {
-            throw new IllegalStateException("failed to initialize HMAC: " + e.getMessage(), e);
+            throw new IllegalStateException(
+                    CustomMessageSource.getMessage("tokenHandler.error", e.getMessage()), e);
         }
     }
 
@@ -150,13 +152,13 @@ public class TokenHandler {
      * @return bytes from base64 string
      */
     private byte[] fromBase64(String val) {
-        val = val.replace('-', '+')
+        String text = val.replace('-', '+')
                  .replace('_', '/');
-        final int rest = val.length() % 4;
+        final int rest = text.length() % 4;
         if (rest != 0) {
-            val += rest == 3 ? "=" : "==";
+            text += rest == 3 ? "=" : "==";
         }
-        return DatatypeConverter.parseBase64Binary(val);
+        return DatatypeConverter.parseBase64Binary(text);
     }
 
     /**

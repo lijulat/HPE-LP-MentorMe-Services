@@ -79,5 +79,13 @@
     "parentEmail": "parentEmail1@test.com",
     "token": "token1"
   },
-  "facebookUrl": "demoMentee1FacebookUrl4"
+  "facebookUrl": "demoMentee1FacebookUrl4",
+  "state": {
+    "id": 2,
+    "value": "State2"
+  },
+  "country": {
+    "id": 2,
+    "value": "Country2"
+  }
 }

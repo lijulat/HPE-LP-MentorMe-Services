@@ -1,6 +1,7 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
+import com.livingprogress.mentorme.utils.CustomMessageSource;
 import com.livingprogress.mentorme.utils.Helper;
 import com.livingprogress.mentorme.entities.EventSearchCriteria;
 import com.livingprogress.mentorme.entities.Institution;
@@ -243,8 +244,8 @@ public class InstitutionController {
             ac.setUsed(true);
             institutionAffiliationCodeService.update(ac.getId(), ac);
         } else {
-            throw new EntityNotFoundException("AffiliationCode with code="
-                    + affiliationCode + " can not be found.");
+            throw new EntityNotFoundException(
+                    CustomMessageSource.getMessage("affiliationCode.notFound.error", affiliationCode));
         }
     }
 

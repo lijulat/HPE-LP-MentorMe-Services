@@ -80,6 +80,19 @@ public class UserServiceImpl extends BaseService<User, UserSearchCriteria> imple
     }
 
     /**
+     * This method is used to handle nested properties.
+     *
+     * @param entity the entity
+     * @throws IllegalArgumentException if entity is invalid
+     * @throws MentorMeException if any error occurred during operation
+     */
+    @Override
+    protected void handleNestedProperties(User entity) throws MentorMeException {
+        super.handleNestedProperties(entity);
+        super.handleUserNestedProperties(entity);
+    }
+
+    /**
      * This method is used to create an entity.
      *
      * @param entity the entity to create

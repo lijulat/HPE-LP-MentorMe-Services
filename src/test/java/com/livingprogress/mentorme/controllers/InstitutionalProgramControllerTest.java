@@ -4,7 +4,14 @@ import com.livingprogress.mentorme.BaseTest;
 import com.livingprogress.mentorme.entities.Goal;
 import com.livingprogress.mentorme.entities.IdentifiableEntity;
 import com.livingprogress.mentorme.entities.InstitutionalProgram;
+import com.livingprogress.mentorme.entities.MenteeMentorGoal;
+import com.livingprogress.mentorme.entities.MenteeMentorProgram;
+import com.livingprogress.mentorme.entities.MenteeMentorResponsibility;
+import com.livingprogress.mentorme.entities.MenteeMentorTask;
+import com.livingprogress.mentorme.entities.Responsibility;
 import com.livingprogress.mentorme.entities.SearchResult;
+import com.livingprogress.mentorme.entities.Task;
+
 import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -76,6 +83,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
     public void create() throws Exception {
         InstitutionalProgram demoEntity = objectMapper.readValue(demo, InstitutionalProgram.class);
         assertNull(demoEntity.getCreatedOn());
+        assertNull(demoEntity.getLastModifiedOn());
         checkEntities(demoEntity.getUsefulLinks());
         checkEntities(demoEntity.getResponsibilities());
         checkEntities(demoEntity.getGoals());
@@ -93,6 +101,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
                             .andExpect(status().isCreated())
                             .andExpect(jsonPath("$.id").isNumber())
                             .andExpect(jsonPath("$.createdOn").exists())
+                            .andExpect(jsonPath("$.lastModifiedOn").exists())
                             .andExpect(jsonPath("$.documents", Matchers.hasSize(0)))
                             .andReturn()
                             .getResponse()
@@ -100,6 +109,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         final InstitutionalProgram result = objectMapper.readValue(res, InstitutionalProgram.class);
         demoEntity.setId(result.getId());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         verifyEntities(demoEntity.getUsefulLinks(), result.getUsefulLinks());
         verifyEntities(demoEntity.getResponsibilities(), result.getResponsibilities());
         verifyEntities(demoEntity.getGoals(), result.getGoals());
@@ -174,6 +184,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         });
         // try to update created on
         demoEntity.setCreatedOn(sampleFutureDate);
+        demoEntity.setLastModifiedOn(sampleFutureDate);
         demoEntity.setId(1);
         // update without documents
         String res = mockMvc.perform(MockMvcRequestBuilders.post("/institutionalPrograms/1")
@@ -187,6 +198,8 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         // will not update created on during updating
         assertNotEquals(sampleFutureDate, result.getCreatedOn());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        assertNotEquals(sampleFutureDate, result.getLastModifiedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         verifyEntities(demoEntity.getUsefulLinks(), result.getUsefulLinks());
         verifyEntities(demoEntity.getResponsibilities(), result.getResponsibilities());
         verifyEntities(demoEntity.getGoals(), result.getGoals());
@@ -252,7 +265,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/institutionalPrograms?sortColumn=id&sortOrder=ASC")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(content().json(entities, true));
+               .andExpect(content().json(entities));
         SearchResult<InstitutionalProgram> result1 = getSearchResult
                 ("/institutionalPrograms?pageNumber=1&pageSize=2&sortColumn=id&sortOrder=ASC", InstitutionalProgram
                         .class);
@@ -377,6 +390,63 @@ public class InstitutionalProgramControllerTest extends BaseTest {
                .andExpect(content().json(readFile("getProgramMentors.json")));
         mockMvc.perform(MockMvcRequestBuilders.get("/institutionalPrograms/999/mentors")
                                               .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isNotFound());
+    }
+
+    /**
+     * Test clone method.
+     *
+     * @throws Exception throws if any error happens.
+     */
+    @Test
+    public void cloneTest() throws Exception {
+        final String menteeMentorIds = "{ \"menteeId\": 4 , \"mentorId\": 5 }";
+        String res = mockMvc.perform(MockMvcRequestBuilders.post("/institutionalPrograms/1/clone")
+                                                           .contentType(MediaType.APPLICATION_JSON)
+                                                           .content(menteeMentorIds))
+                            .andExpect(status().isOk())
+                            .andReturn()
+                            .getResponse()
+                            .getContentAsString();
+        
+        InstitutionalProgram sampleEntity = objectMapper.readValue(sample, InstitutionalProgram.class);
+        MenteeMentorProgram result = objectMapper.readValue(res, MenteeMentorProgram.class);
+        
+        verifyEntities(sampleEntity.getDocuments(), result.getDocuments());
+        verifyEntities(sampleEntity.getUsefulLinks(), result.getUsefulLinks());
+        verifyEntity(sampleEntity, result.getInstitutionalProgram());
+        assertEquals(4L, result.getMentee().getId());
+        assertEquals(5L, result.getMentor().getId());
+        
+        IntStream.range(0, sampleEntity.getGoals().size()).forEach(idx -> {
+            Goal goal1 = sampleEntity.getGoals().get(idx);
+            MenteeMentorGoal goal2 = result.getGoals().get(idx);
+            
+            verifyEntity(goal1, goal2.getGoal());
+            
+            IntStream.range(0, goal1.getTasks().size()).forEach(idy -> {
+                Task task1 = goal1.getTasks().get(idy);
+                MenteeMentorTask task2 = goal2.getTasks().get(idy);
+                
+                verifyEntity(task1, task2.getTask());
+            });
+        });
+        
+        
+        IntStream.range(0, sampleEntity.getResponsibilities().size()).forEach(idx -> {
+            Responsibility resp1 = sampleEntity.getResponsibilities().get(idx);
+            MenteeMentorResponsibility resp2 = result.getResponsibilities().get(idx);
+            
+            assertEquals(resp1.getDate(), resp2.getDate());
+            assertEquals(resp1.getMenteeResponsibility(), resp2.getMenteeResponsibility());
+            assertEquals(resp1.getMentorResponsibility(), resp2.getMentorResponsibility());
+            assertEquals(resp1.getNumber(), resp2.getNumber());
+            assertEquals(resp1.getTitle(), resp2.getTitle());
+        });
+        
+        mockMvc.perform(MockMvcRequestBuilders.post("/institutionalPrograms/999/clone")
+                                              .contentType(MediaType.APPLICATION_JSON)
+                                              .content(menteeMentorIds))
                .andExpect(status().isNotFound());
     }
 }

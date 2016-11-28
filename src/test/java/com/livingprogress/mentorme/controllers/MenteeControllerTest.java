@@ -11,12 +11,16 @@ import com.livingprogress.mentorme.entities.SearchResult;
 import com.livingprogress.mentorme.entities.UserStatus;
 import com.livingprogress.mentorme.entities.WeightedPersonalInterest;
 import com.livingprogress.mentorme.entities.WeightedProfessionalInterest;
+import com.livingprogress.mentorme.remote.services.HODClient;
 import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +31,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,6 +55,12 @@ public class MenteeControllerTest extends BaseTest {
      * All entities json.
      */
     private static String entities;
+
+    /**
+     * The mock HOD client.
+     */
+    @Autowired
+    private HODClient hodClient;
 
     /**
      * Read related json.
@@ -85,6 +97,7 @@ public class MenteeControllerTest extends BaseTest {
         Mentee demoEntity = objectMapper.readValue(demo, Mentee.class);
         assertNotNull(demoEntity.getPassword());
         assertNull(demoEntity.getCreatedOn());
+        assertNull(demoEntity.getLastModifiedOn());
         demoEntity.setPassword(null);
         // will create mentee as inactive
         demoEntity.setStatus(UserStatus.ACTIVE);
@@ -99,6 +112,7 @@ public class MenteeControllerTest extends BaseTest {
                             .andExpect(jsonPath("$.password").doesNotExist())
                             .andExpect(jsonPath("$.id").isNumber())
                             .andExpect(jsonPath("$.createdOn").exists())
+                            .andExpect(jsonPath("$.lastModifiedOn").exists())
                             .andExpect(jsonPath("$.status").value("INACTIVE"))
                             .andReturn()
                             .getResponse()
@@ -106,6 +120,7 @@ public class MenteeControllerTest extends BaseTest {
         Mentee result = objectMapper.readValue(res, Mentee.class);
         demoEntity.setId(result.getId());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         demoEntity.setStatus(UserStatus.INACTIVE);
         // will use random value
         assertNotEquals(demoEntity.getParentConsent()
@@ -159,6 +174,7 @@ public class MenteeControllerTest extends BaseTest {
                             .andExpect(jsonPath("$.password").doesNotExist())
                             .andExpect(jsonPath("$.id").isNumber())
                             .andExpect(jsonPath("$.createdOn").exists())
+                            .andExpect(jsonPath("$.lastModifiedOn").exists())
                             .andReturn()
                             .getResponse()
                             .getContentAsString();
@@ -177,6 +193,7 @@ public class MenteeControllerTest extends BaseTest {
         // will not update created on during updating
         assertNotEquals(sampleFutureDate, result.getCreatedOn());
         demoEntity.setCreatedOn(result.getCreatedOn());
+        demoEntity.setLastModifiedOn(result.getLastModifiedOn());
         verifyEntities(demoEntity.getPersonalInterests(), result.getPersonalInterests());
         verifyEntities(demoEntity.getProfessionalInterests(), result.getProfessionalInterests());
         verifyEntity(demoEntity.getParentConsent(), result.getParentConsent());
@@ -269,7 +286,7 @@ public class MenteeControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees?sortColumn=id&sortOrder=ASC")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(content().json(entities, true));
+               .andExpect(content().json(entities));
         SearchResult<Mentee> result1 = getSearchResult
                 ("/mentees?pageNumber=1&pageSize=2&sortColumn=id&sortOrder=ASC", Mentee.class);
         assertEquals(result.getTotal(), result1.getTotal());
@@ -397,6 +414,21 @@ public class MenteeControllerTest extends BaseTest {
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(4));
+
+        // check distance
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentees?distance=1&longitude=-73.9095494&latitude=40.7131197")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.total").value(4))
+               .andExpect(jsonPath("$.totalPages").value(1))
+               .andExpect(jsonPath("$.entities", Matchers.hasSize(4)));
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentees?distance=0.4&longitude=-73.9095494&latitude=40.7131197")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.total").value(3))
+               .andExpect(jsonPath("$.totalPages").value(1))
+               .andExpect(jsonPath("$.entities", Matchers.hasSize(3)));
     }
 
     /**
@@ -423,6 +455,7 @@ public class MenteeControllerTest extends BaseTest {
         // assigned
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/matchingMentors"))
                .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(3)))
                .andExpect(content().json(readFile("mentee4MatchingMentors.json")));
         // not assigned
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees/10/matchingMentors"))
@@ -430,6 +463,36 @@ public class MenteeControllerTest extends BaseTest {
                .andExpect(content().json(readFile("mentee10MatchingMentors.json")));
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees/999/matchingMentors"))
                .andExpect(status().isNotFound());
+
+        // test match criteria
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/matchingMentors?distance=10")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(3)));
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/matchingMentors?distance=2")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(2)));
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/matchingMentors?maxCount=1")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(1)));
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/matchingMentors?personalInterests[0].id=1")
+                                              .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(1)));
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/mentees/4/matchingMentors?professionalInterests[0].id=1")
+                .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(1)));
+        mockMvc.perform(MockMvcRequestBuilders
+                .get("/mentees/4/matchingMentors?distance=30&maxCount=100"
+                        + "&personalInterests[0].id=2"
+                        + "&professionalInterests[0].id=1")
+                .accept(MediaType.APPLICATION_JSON))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(1)));
     }
 
     /**
@@ -463,5 +526,28 @@ public class MenteeControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.put("/mentees/confirmParentConsent?token=" + token))
                .andExpect(status().isOk())
                .andExpect(content().string("false"));
+    }
+
+    /**
+     * Test remoteMatchingMentors method.
+     *
+     * @throws Exception throws if any error happens.
+     */
+    @Test
+    public void remoteMatchingMentors() throws Exception {
+        when(hodClient.getMatchingMentors(any(), any()))
+                .thenReturn(Collections.emptyList());
+        // empty ids
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/remoteMatchingMentors"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(0)));
+        // fake two ids
+        when(hodClient.getMatchingMentors(any(), any()))
+                .thenReturn(Arrays.asList(3L, 5L));
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/remoteMatchingMentors"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$", Matchers.hasSize(2)))
+               .andExpect(jsonPath("$[0].id").value(3))
+               .andExpect(jsonPath("$[1].id").value(5));
     }
 }

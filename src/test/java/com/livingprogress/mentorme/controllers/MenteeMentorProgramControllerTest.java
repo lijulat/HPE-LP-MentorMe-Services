@@ -235,7 +235,7 @@ public class MenteeMentorProgramControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/menteeMentorPrograms?sortColumn=id&sortOrder=ASC")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(content().json(entities, true));
+               .andExpect(content().json(entities));
         SearchResult<MenteeMentorProgram> result1 = getSearchResult
                 ("/menteeMentorPrograms?pageNumber=1&pageSize=2&sortColumn=id&sortOrder=ASC", MenteeMentorProgram
                         .class);

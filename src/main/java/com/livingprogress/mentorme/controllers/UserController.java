@@ -11,6 +11,7 @@ import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.services.UserService;
+import com.livingprogress.mentorme.utils.CustomMessageSource;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,7 +147,7 @@ public class UserController extends BaseEmailController {
         criteria.setEmail(email);
         SearchResult<User> users = userService.search(criteria, null);
         if (users.getTotal() == 0) {
-            throw new EntityNotFoundException("No user found with email " + email);
+            throw new EntityNotFoundException(CustomMessageSource.getMessage("user.notFound.byEmail", email));
         }
         User user = users.getEntities().get(0);
         long userId = user.getId();
