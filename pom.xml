@@ -21,6 +21,9 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring.datasource.url>${env.DB_URL}</spring.datasource.url>
+        <spring.datasource.username>${env.DB_USERNAME}</spring.datasource.username>
+        <spring.datasource.password>${env.DB_PASSWORD}</spring.datasource.password>
     </properties>
 
     <dependencies>
