@@ -24,6 +24,8 @@
         <spring.datasource.url>${env.DB_URL}</spring.datasource.url>
         <spring.datasource.username>${env.DB_USERNAME}</spring.datasource.username>
         <spring.datasource.password>${env.DB_PASSWORD}</spring.datasource.password>
+        <uploadDirectory>${env.UPLOAD_DIR}</uploadDirectory>
+        <server.port>${env.PORT}</server.port>
     </properties>
 
     <dependencies>
