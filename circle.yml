@@ -1,7 +1,6 @@
 database:
   override:
     - mysql -u ubuntu -e "create database mentorme"
-    - mysql -u ubuntu mentorme < sqls/schema.sql
     - mysql -u ubuntu mentorme < sqls/ddl.sql
     - mysql -u ubuntu mentorme < sqls/country.sql
     - mysql -u ubuntu mentorme < sqls/state.sql
