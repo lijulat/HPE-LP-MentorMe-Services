@@ -11,3 +11,9 @@ database:
 test:
   override:
     - mvn clean test
+deployment:
+  production:
+    branch: master
+    codedeploy:
+      MentorMe-API:
+        deployment_group: mentorme-api-group
