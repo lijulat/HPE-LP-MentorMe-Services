@@ -1,0 +1,13 @@
+database:
+  override:
+    - mysql -u ubuntu mentorme < sqls/schema.sql
+    - mysql -u ubuntu mentorme < sqls/ddl.sql
+    - mysql -u ubuntu mentorme < sqls/country.sql
+    - mysql -u ubuntu mentorme < sqls/state.sql
+    - mysql -u ubuntu mentorme < sqls/lookup.sql
+    - mysql -u ubuntu mentorme < sqls/personal_interest.sql
+    - mysql -u ubuntu mentorme < sqls/professional_interest.sql
+    - mysql -u ubuntu mentorme < sqls/remote.sql
+test:
+  override:
+    - mvn clean test
