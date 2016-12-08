@@ -99,8 +99,8 @@ files:
 
 # During the AfterInstall deployment lifecycle event, run the commands
 #   in the script specified in "location".
-#   AfterInstall:
-#     - location:
+   AfterInstall:
+     - location: /home/ubuntu/HPE-LP-MentorMe-Services/scripts/build.sh
 #       timeout:
 #       runas:
 #     - location:
@@ -109,8 +109,8 @@ files:
 
 # During the ApplicationInstall deployment lifecycle event, run the commands
 #   in the script specified in "location".
-#   ApplicationStart:
-#     - location:
+   ApplicationStart:
+     - location: /home/ubuntu/HPE-LP-MentorMe-Services/scripts/run.sh
 #       timeout:
 #       runas:
 #     - location:
