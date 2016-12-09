@@ -122,6 +122,11 @@ public class MenteeMentorProgramController {
     @RequestMapping(method = RequestMethod.GET)
     public SearchResult<MenteeMentorProgram> search(@ModelAttribute MenteeMentorProgramSearchCriteria criteria,
             @ModelAttribute Paging paging) throws MentorMeException {
+        if (Helper.isMentee()) {
+            criteria.setMenteeId(Helper.getAuthUser().getId());
+        } else if (Helper.isMentor()) {
+            criteria.setMentorId(Helper.getAuthUser().getId());
+        }
         return menteeMentorProgramService.search(criteria, paging);
     }
 

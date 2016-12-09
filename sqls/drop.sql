@@ -54,6 +54,11 @@ DROP TABLE IF EXISTS `institutional_program_document`;
 DROP TABLE IF EXISTS `institutional_program_link`;
 DROP TABLE IF EXISTS `mentor_professional_area`;
 DROP TABLE IF EXISTS `mentee_mentor_responsibility`;
+DROP TABLE IF EXISTS `image`;
+DROP TABLE IF EXISTS `mentee_skill`;
+DROP TABLE IF EXISTS `program_skill`;
+DROP TABLE IF EXISTS `skill`;
+
 DROP FUNCTION if EXISTS `calculate_distance`;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

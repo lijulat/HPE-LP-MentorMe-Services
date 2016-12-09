@@ -1,5 +1,6 @@
 package com.livingprogress.mentorme.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.livingprogress.mentorme.entities.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,18 +15,19 @@ public class CustomUserDetails extends org.springframework.security.core.userdet
      * The user.
      */
     @Getter
+    @JsonIgnore
     private User user;
 
     /**
      * Custom user details constructor.
      * @param entity the user
-     * @param username the username.
+     * @param email the email of the user.
      * @param password the password
      * @param authorities the authorities
      */
-    public CustomUserDetails(User entity, String username,
+    public CustomUserDetails(User entity, String email,
             String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
+        super(email, password, authorities);
         this.user = entity;
     }
 
@@ -40,7 +42,7 @@ public class CustomUserDetails extends org.springframework.security.core.userdet
      */
     public CustomUserDetails(User entity, boolean enabled, boolean accountNonExpired, boolean
             credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-        super(entity.getUsername(), entity.getPassword(), enabled,
+        super(entity.getEmail(), entity.getPassword(), enabled,
                 accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.user = entity;
     }

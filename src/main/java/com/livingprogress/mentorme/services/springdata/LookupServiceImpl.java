@@ -1,14 +1,6 @@
 package com.livingprogress.mentorme.services.springdata;
 
-import com.livingprogress.mentorme.entities.Country;
-import com.livingprogress.mentorme.entities.DocumentType;
-import com.livingprogress.mentorme.entities.GoalCategory;
-import com.livingprogress.mentorme.entities.PersonalInterest;
-import com.livingprogress.mentorme.entities.ProfessionalConsultantArea;
-import com.livingprogress.mentorme.entities.ProfessionalInterest;
-import com.livingprogress.mentorme.entities.ProgramCategory;
-import com.livingprogress.mentorme.entities.State;
-import com.livingprogress.mentorme.entities.UserRole;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.services.LookupService;
@@ -80,6 +72,9 @@ public class LookupServiceImpl implements LookupService {
      */
     @Autowired
     private UserRoleRepository userRoleRepository;
+
+    @Autowired
+    private SkillRepository skillRepository;
 
     /**
      * Check if all required fields are initialized properly.
@@ -187,6 +182,11 @@ public class LookupServiceImpl implements LookupService {
      */
     public List<DocumentType> getDocumentTypes() throws MentorMeException {
         return documentTypeRepository.findAll();
+    }
+
+    @Override
+    public List<Skill> getSkills() throws MentorMeException {
+        return skillRepository.findAll();
     }
 }
 

@@ -1,5 +1,6 @@
 package com.livingprogress.mentorme.services;
 
+import com.livingprogress.mentorme.entities.InstitutionAffiliationCode;
 import com.livingprogress.mentorme.entities.Mentee;
 import com.livingprogress.mentorme.entities.MenteeSearchCriteria;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
@@ -41,5 +42,13 @@ public interface MenteeService extends GenericService<Mentee, MenteeSearchCriter
      * @throws MentorMeException if any other error occurred during operation
      */
     boolean confirmParentConsent(String token) throws MentorMeException;
+
+    /**
+     * Finds the institution affliliation code.
+     * @param code the code.
+     * @return the institution code instance.
+     * @throws MentorMeException if there are any errors.
+     */
+    InstitutionAffiliationCode findInstitutionAffiliationCode(String code) throws MentorMeException;
 }
 

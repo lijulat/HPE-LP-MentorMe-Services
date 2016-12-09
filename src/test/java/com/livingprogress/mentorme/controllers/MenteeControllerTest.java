@@ -319,12 +319,12 @@ public class MenteeControllerTest extends BaseTest {
                        .toArray());
 
         SearchResult<Mentee> result3 = getSearchResult
-                ("/mentees?pageNumber=1&pageSize=2&sortColumn=username&sortOrder=DESC", Mentee.class);
+                ("/mentees?pageNumber=1&pageSize=2&sortColumn=email&sortOrder=DESC", Mentee.class);
         assertEquals(result.getTotal(), result2.getTotal());
         assertEquals(getTotalPages(result.getTotal(), 2), result2.getTotalPages());
         assertArrayEquals(result.getEntities()
                                 .stream()
-                                .sorted(Comparator.comparing(Mentee::getUsername)
+                                .sorted(Comparator.comparing(Mentee::getEmail)
                                                   .reversed())
                                 .skip(2)
                                 .limit(2)
@@ -405,7 +405,7 @@ public class MenteeControllerTest extends BaseTest {
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(3)));
         mockMvc.perform(MockMvcRequestBuilders.get
-                ("/mentees?pageNumber=0&pageSize=2&sortColumn=username&sortOrder=DESC&institutionId=1&status=ACTIVE" +
+                ("/mentees?pageNumber=0&pageSize=2&sortColumn=email&sortOrder=DESC&institutionId=1&status=ACTIVE" +
                         "&minAveragePerformanceScore=0&maxAveragePerformanceScore=0&name=firstname4&schoolName" +
                 "=school1&personalInterests[0].id=1&professionalInterests[0].id=1&assignedToInstitution=true")
                                               .accept(MediaType.APPLICATION_JSON))

@@ -6,11 +6,10 @@ import com.livingprogress.mentorme.entities.UserSearchCriteria;
 import com.livingprogress.mentorme.exceptions.AccessDeniedException;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
-import com.livingprogress.mentorme.security.TokenHandler;
 import com.livingprogress.mentorme.services.UserService;
 import com.livingprogress.mentorme.utils.Helper;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import javax.xml.bind.DatatypeConverter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The login REST controller. Is effectively thread safe.
  */
 @RestController
 @RequestMapping("/login")
+@NoArgsConstructor
 public class LoginController {
 
     /**
@@ -33,26 +34,6 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    /**
-     * The token expires milliseconds for 10 days.
-     */
-    @Value("${token.expirationTimeInMillis}")
-    private long tokenExpirationTimeInMillis;
-
-
-    /**
-     * The token handler.
-     */
-    private final TokenHandler tokenHandler;
-
-    /**
-     * The login controller constructor.
-     * @param secret the secret
-     */
-    @Autowired
-    public LoginController(@Value("${token.secret}") String secret) {
-        tokenHandler = new TokenHandler(DatatypeConverter.parseBase64Binary(secret));
-    }
 
     /**
      * Check if all required fields are initialized properly.
@@ -62,8 +43,6 @@ public class LoginController {
     @PostConstruct
     protected void checkConfiguration() {
         Helper.checkConfigNotNull(userService, "userService");
-        Helper.checkConfigNotNull(tokenHandler, "tokenHandler");
-        Helper.checkConfigPositive(tokenExpirationTimeInMillis, "tokenExpirationTimeInMillis");
     }
 
     /**
@@ -74,16 +53,17 @@ public class LoginController {
      * @throws MentorMeException if any other error occurred during operation
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String login() throws MentorMeException {
+    public Map<String, String> login() throws MentorMeException {
         Authentication authentication = SecurityContextHolder.getContext()
                                                              .getAuthentication();
         UserSearchCriteria criteria = new UserSearchCriteria();
-        criteria.setUsername(authentication.getName());
+        criteria.setEmail(authentication.getName());
         SearchResult<User>  users = userService.search(criteria, null);
         // validate valid user exists in SimpleUserDetailsService already
         User user = users.getEntities().get(0);
-        long expires = System.currentTimeMillis() + tokenExpirationTimeInMillis;
-        user.setExpires(expires);
-        return tokenHandler.createTokenForUser(user);
+        String token = userService.createTokenForUser(user);
+        Map<String, String> result = new HashMap<>();
+        result.put("token", token);
+        return result;
     }
 }
