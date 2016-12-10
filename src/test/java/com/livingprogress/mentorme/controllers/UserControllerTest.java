@@ -1,18 +1,11 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.BaseTest;
-import com.livingprogress.mentorme.entities.ForgotPassword;
-import com.livingprogress.mentorme.entities.IdentifiableEntity;
-import com.livingprogress.mentorme.entities.NewPassword;
-import com.livingprogress.mentorme.entities.SearchResult;
-import com.livingprogress.mentorme.entities.User;
-import com.livingprogress.mentorme.entities.UserRole;
-import com.livingprogress.mentorme.services.LookupService;
+import com.livingprogress.mentorme.entities.*;
 import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -20,15 +13,8 @@ import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * The test cases for <code>UserController</code>
@@ -234,12 +220,12 @@ public class UserControllerTest extends BaseTest {
                        .toArray());
 
         SearchResult<User> result3 = getSearchResult
-                ("/users?pageNumber=1&pageSize=2&sortColumn=username&sortOrder=DESC", User.class);
+                ("/users?pageNumber=1&pageSize=2&sortColumn=email&sortOrder=DESC", User.class);
         assertEquals(result.getTotal(), result2.getTotal());
         assertEquals(getTotalPages(result.getTotal(), 2), result2.getTotalPages());
         assertArrayEquals(result.getEntities()
                                 .stream()
-                                .sorted(Comparator.comparing(User::getUsername)
+                                .sorted(Comparator.comparing(User::getEmail)
                                                   .reversed())
                                 .skip(2)
                                 .limit(2)
@@ -285,7 +271,7 @@ public class UserControllerTest extends BaseTest {
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(2));
         mockMvc.perform(MockMvcRequestBuilders.get
-                ("/users?pageNumber=0&pageSize=2&sortColumn=username&sortOrder=DESC&name=firstname1&email=email1@test" +
+                ("/users?pageNumber=0&pageSize=2&sortColumn=email&sortOrder=DESC&name=firstname1&email=email1@test" +
                         ".com&username=test1&role.id=1")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())

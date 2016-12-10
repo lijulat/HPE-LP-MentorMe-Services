@@ -32,6 +32,16 @@ public enum  ActivityType {
     /**
      * The event updated type.
      */
-    EVENT_UPDATED;
+    EVENT_UPDATED,
+
+    /**
+     * The link added activity type.
+     */
+    LINK_ADDED,
+
+    /**
+     * The document added activity type.
+     */
+    DOCUMENT_ADDED
 }
 

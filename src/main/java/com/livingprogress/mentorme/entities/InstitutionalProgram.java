@@ -70,6 +70,12 @@ public class InstitutionalProgram extends AuditableEntity {
     private List<Responsibility> responsibilities;
 
     /**
+     * The responsibilities.
+     */
+    @OneToMany(mappedBy = "institutionalProgram", cascade = ALL)
+    private List<ProgramSkill> skills;
+
+    /**
      * The documents.
      */
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })

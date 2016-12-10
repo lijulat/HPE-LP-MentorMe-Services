@@ -1,44 +1,26 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.aop.LogAspect;
-import com.livingprogress.mentorme.entities.Mentee;
-import com.livingprogress.mentorme.entities.MenteeSearchCriteria;
-import com.livingprogress.mentorme.entities.Mentor;
-import com.livingprogress.mentorme.entities.MentorSearchCriteria;
-import com.livingprogress.mentorme.entities.Paging;
-import com.livingprogress.mentorme.entities.ProfessionalExperienceData;
-import com.livingprogress.mentorme.entities.SearchResult;
-import com.livingprogress.mentorme.entities.WeightedPersonalInterest;
-import com.livingprogress.mentorme.entities.WeightedProfessionalInterest;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
-import com.livingprogress.mentorme.entities.MatchSearchCriteria;
 import com.livingprogress.mentorme.remote.services.HODClient;
+import com.livingprogress.mentorme.services.LookupService;
 import com.livingprogress.mentorme.services.MenteeService;
 import com.livingprogress.mentorme.services.MentorService;
+import com.livingprogress.mentorme.services.UserService;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.social.linkedin.api.LinkedIn;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -54,11 +36,17 @@ public class MentorController {
     @Autowired
     private MentorService mentorService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * The mentee service used to perform operations. Should be non-null after injection.
      */
     @Autowired
     private MenteeService menteeService;
+
+    @Autowired
+    private LookupService lookupService;
 
     /**
      * The hod client used to perform operations. Should be non-null after injection.
@@ -151,6 +139,47 @@ public class MentorController {
     @ResponseStatus(HttpStatus.CREATED)
     public Mentor create(@RequestBody Mentor entity) throws MentorMeException {
         return mentorService.create(entity);
+    }
+
+    /**
+     * Registers a mentor.
+     * @param entity the entity.
+     * @return the token.
+     * @throws MentorMeException if there are any errors.
+     */
+    @Transactional
+    @RequestMapping(method = RequestMethod.POST, value = "register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Map<String, String> register(@RequestBody Mentor entity) throws MentorMeException {
+        // set the user roles
+        List<UserRole> roles = lookupService.getUserRoles();
+        for (UserRole role : roles) {
+            if ("mentor".equalsIgnoreCase(role.getValue())) {
+                entity.setRoles(Arrays.asList(role));
+                break;
+            }
+        }
+
+        // set the status
+        entity.setStatus(UserStatus.ACTIVE);
+
+        // check if the email already exists
+        UserSearchCriteria criteria = new UserSearchCriteria();
+        criteria.setEmail(entity.getEmail());
+        SearchResult<User> result = userService.search(criteria, null);
+        if (result.getTotal() > 0) {
+            // user already register
+            throw new IllegalArgumentException("This email already registered");
+        }
+
+
+        // create the entity
+        Mentor mentor = mentorService.create(entity);
+
+        String token = userService.createTokenForUser(mentor);
+        Map<String, String> json = new HashMap<>();
+        json.put("token", token);
+        return json;
     }
 
     /**

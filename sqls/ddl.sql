@@ -21,10 +21,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(256) NOT NULL,
   `password` VARCHAR(256) NOT NULL,
-  `first_name` VARCHAR(256) NOT NULL,
-  `last_name` VARCHAR(256) NOT NULL,
+  `first_name` VARCHAR(256) NULL,
+  `last_name` VARCHAR(256) NULL,
   `email` VARCHAR(256) NOT NULL,
   `profile_picture_path` VARCHAR(512) NULL,
   `created_on` DATETIME NOT NULL,
@@ -33,16 +32,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `provider_user_id` VARCHAR(256) NULL,
   `access_token` VARCHAR(256) NULL,
   `is_virtual_user` TINYINT(1) NOT NULL,
+  `is_agreed_agreement` TINYINT(1) NOT NULL,
   `street_address` VARCHAR (512),
   `city` VARCHAR(128),
-  `state_id` BIGINT NOT NULL,
-  `country_id` BIGINT NOT NULL,
+  `state_id` BIGINT NULL,
+  `country_id` BIGINT NULL,
   `postal_code` VARCHAR(25),
   `longitude` DECIMAL (16, 8),
   `latitude` DECIMAL (16, 8),
   `last_modified_on` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_user_username` (`username`),
   UNIQUE KEY `UK_user_email` (`email`),
   CONSTRAINT `user_state_id_fk`
     FOREIGN KEY (`state_id`)
@@ -238,13 +237,13 @@ CREATE TABLE IF NOT EXISTS `mentee` (
   `institution_id` BIGINT NOT NULL,
   `assigned_to_institution` TINYINT(1) NOT NULL,
   `birth_date` DATE NOT NULL,
-  `phone` VARCHAR(45) NOT NULL,
+  `phone` VARCHAR(45) NULL,
   `skype_username` VARCHAR(45) NULL,
   `intro_video_link` VARCHAR(512) NULL,
   `description` VARCHAR(1024) NULL,
   `average_performance_score` INT NULL,
   `family_income` DECIMAL(19,2) NULL,
-  `school` VARCHAR(1028) NOT NULL,
+  `school` VARCHAR(1028) NULL,
   `institution_affiliation_code_id` BIGINT NOT NULL,
   `parent_consent_id` BIGINT NULL,
   `facebook_url` VARCHAR(256) NULL,
@@ -286,14 +285,14 @@ CREATE TABLE IF NOT EXISTS `mentor` (
   `id` BIGINT NOT NULL,
   `institution_id` BIGINT NOT NULL,
   `assigned_to_institution` TINYINT(1) NOT NULL,
-  `birth_date` DATE NOT NULL,
-  `phone` VARCHAR(45) NOT NULL,
+  `birth_date` DATE NULL,
+  `phone` VARCHAR(45) NULL,
   `skype_username` VARCHAR(45) NULL,
   `intro_video_link` VARCHAR(512) NULL,
   `description` VARCHAR(1024) NULL,
   `average_performance_score` INT NULL,
   `mentor_type` VARCHAR(45) NULL,
-  `company_name` VARCHAR(45) NOT NULL,
+  `company_name` VARCHAR(45) NULL,
   `linked_in_url` VARCHAR(256) NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `m_id_fk`
@@ -709,6 +708,62 @@ CREATE TABLE IF NOT EXISTS `weighted_professional_interest` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `skill`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `skill` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `value` VARCHAR(256) NOT NULL,
+  `description` VARCHAR(1024) NULL,
+  `image_path` VARCHAR(1024) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `mentee_skill`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `mentee_skill` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT NOT NULL,
+  `skill_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `ms_u_fk_idx` (`user_id` ASC),
+  INDEX `ms_s_fk_idx` (`skill_id` ASC),
+    CONSTRAINT `ms_u_fk0`
+        FOREIGN KEY (`user_id`)
+        REFERENCES `user` (`id`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
+      CONSTRAINT `ms_s_fk1`
+        FOREIGN KEY (`skill_id`)
+        REFERENCES `skill` (`id`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `program_skill`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `program_skill` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `institutional_program_id` BIGINT NOT NULL,
+  `skill_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `ps_ipi_fk_idx` (`institutional_program_id` ASC),
+  INDEX `ps_s_fk_idx` (`skill_id` ASC),
+    CONSTRAINT `ps_ipi_fk0`
+        FOREIGN KEY (`institutional_program_id`)
+        REFERENCES `institutional_program` (`id`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
+      CONSTRAINT `ps_s_fk1`
+        FOREIGN KEY (`skill_id`)
+        REFERENCES `skill` (`id`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 
 
 -- -----------------------------------------------------
@@ -1206,6 +1261,21 @@ CREATE TABLE IF NOT EXISTS `mentee_mentor_goal_document` (
     REFERENCES `document` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `Image`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `image` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `url` VARCHAR(1024) NOT NULL,
+  `path` VARCHAR(1024) NOT NULL,
+  `created_by` BIGINT NOT NULL,
+  `created_on` DATETIME NOT NULL,
+  `last_modified_by` BIGINT NOT NULL,
+  `last_modified_on` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `img_url_idx` (`url` ASC))
 ENGINE = InnoDB;
 
 

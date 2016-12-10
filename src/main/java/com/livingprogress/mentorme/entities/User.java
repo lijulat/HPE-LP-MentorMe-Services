@@ -34,11 +34,6 @@ import static javax.persistence.InheritanceType.JOINED;
 @Inheritance(strategy = JOINED)
 public class User extends AuditableEntity {
     /**
-     * An username.
-     */
-    private String username;
-
-    /**
      * The password (hashed).
      */
     @JsonProperty(access = WRITE_ONLY)
@@ -108,6 +103,11 @@ public class User extends AuditableEntity {
      * The is virtual user flag.
      */
     private boolean isVirtualUser;
+
+    /**
+     * If the user already agreed the agreement.
+     */
+    private boolean isAgreedAgreement;
 
     /**
      * The street address.

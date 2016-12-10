@@ -1,14 +1,6 @@
 package com.livingprogress.mentorme.controllers;
 
-import com.livingprogress.mentorme.entities.Country;
-import com.livingprogress.mentorme.entities.DocumentType;
-import com.livingprogress.mentorme.entities.GoalCategory;
-import com.livingprogress.mentorme.entities.PersonalInterest;
-import com.livingprogress.mentorme.entities.ProfessionalConsultantArea;
-import com.livingprogress.mentorme.entities.ProfessionalInterest;
-import com.livingprogress.mentorme.entities.ProgramCategory;
-import com.livingprogress.mentorme.entities.State;
-import com.livingprogress.mentorme.entities.UserRole;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.services.LookupService;
@@ -134,6 +126,7 @@ public class LookupController {
         return lookupService.getProfessionalInterests();
     }
 
+
     /**
      * This method is used to document type lookups.
      *
@@ -143,6 +136,17 @@ public class LookupController {
     @RequestMapping(value = "/documentTypes", method = RequestMethod.GET)
     public List<DocumentType> getDocumentTypes() throws MentorMeException {
         return lookupService.getDocumentTypes();
+    }
+
+    /**
+     * This method is used to skill lookups.
+     *
+     * @return the lookups for skill
+     * @throws MentorMeException if any other error occurred during operation
+     */
+    @RequestMapping(value = "/skills", method = RequestMethod.GET)
+    public List<Skill> getSkills() throws MentorMeException {
+        return lookupService.getSkills();
     }
 }
 

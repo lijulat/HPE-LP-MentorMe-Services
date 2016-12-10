@@ -336,12 +336,12 @@ public class MentorControllerTest extends BaseTest {
                        .toArray());
 
         SearchResult<Mentor> result3 = getSearchResult
-                ("/mentors?pageNumber=1&pageSize=2&sortColumn=username&sortOrder=DESC", Mentor.class);
+                ("/mentors?pageNumber=1&pageSize=2&sortColumn=email&sortOrder=DESC", Mentor.class);
         assertEquals(result.getTotal(), result2.getTotal());
         assertEquals(getTotalPages(result.getTotal(), 2), result2.getTotalPages());
         assertArrayEquals(result.getEntities()
                                 .stream()
-                                .sorted(Comparator.comparing(Mentor::getUsername)
+                                .sorted(Comparator.comparing(Mentor::getEmail)
                                                   .reversed())
                                 .skip(2)
                                 .limit(2)
@@ -438,7 +438,7 @@ public class MentorControllerTest extends BaseTest {
                .andExpect(jsonPath("$.total").value(3))
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(3)));
-        mockMvc.perform(MockMvcRequestBuilders.get("/mentors?pageNumber=0&pageSize=2&sortColumn=username"
+        mockMvc.perform(MockMvcRequestBuilders.get("/mentors?pageNumber=0&pageSize=2&sortColumn=email"
                  + "&sortOrder=DESC&mentorType=MENTEE_PAIRED&institutionId=1&status=ACTIVE"
                  + "&professionalAreas[0].id=1&minAveragePerformanceScore=0&maxAveragePerformanceScore=0"
                  + "&name=firstname3&companyName=companyName1& mentorRequestStatus=APPROVED"

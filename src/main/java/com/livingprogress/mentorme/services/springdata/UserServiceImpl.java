@@ -8,9 +8,9 @@ import com.livingprogress.mentorme.exceptions.AccessDeniedException;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
+import com.livingprogress.mentorme.security.TokenHandler;
 import com.livingprogress.mentorme.services.UserService;
 import com.livingprogress.mentorme.utils.Helper;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.domain.Specification;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import javax.xml.bind.DatatypeConverter;
 import java.util.Date;
 import java.util.UUID;
 
@@ -26,7 +27,6 @@ import java.util.UUID;
  * extends BaseService<User,UserSearchCriteria>. Effectively thread safe after configuration.
  */
 @Service
-@NoArgsConstructor
 public class UserServiceImpl extends BaseService<User, UserSearchCriteria> implements UserService {
     /**
      * The expiration time in millis.
@@ -40,6 +40,16 @@ public class UserServiceImpl extends BaseService<User, UserSearchCriteria> imple
     @Value("${forgotPassword.maxTimes}")
     private long forgotPasswordMaxTimes;
 
+    /**
+     * The token expires milliseconds for 10 days.
+     */
+    @Value("${token.expirationTimeInMillis}")
+    private long tokenExpirationTimeInMillis;
+
+    /**
+     * The token handler.
+     */
+    private final TokenHandler tokenHandler;
 
     /**
      * The forgot password repository for CRUD operations. Should be non-null after injection.
@@ -52,6 +62,11 @@ public class UserServiceImpl extends BaseService<User, UserSearchCriteria> imple
      */
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public UserServiceImpl(@Value("${token.secret}") String secret) {
+        tokenHandler = new TokenHandler(DatatypeConverter.parseBase64Binary(secret));
+    }
 
     /**
      * Check if all required fields are initialized properly.
@@ -66,6 +81,8 @@ public class UserServiceImpl extends BaseService<User, UserSearchCriteria> imple
         Helper.checkConfigPositive(forgotPasswordExpirationTimeInMillis,
                 "forgotPasswordExpirationTimeInMillis");
         Helper.checkConfigPositive(forgotPasswordMaxTimes, "forgotPasswordMaxTimes");
+        Helper.checkConfigNotNull(tokenHandler, "tokenHandler");
+        Helper.checkConfigPositive(tokenExpirationTimeInMillis, "tokenExpirationTimeInMillis");
     }
 
     /**
@@ -187,13 +204,34 @@ public class UserServiceImpl extends BaseService<User, UserSearchCriteria> imple
             Date currentDate = new Date();
             if (currentDate.before(forgotPassword.getExpiredOn())) {
                 User user = get(forgotPassword.getUserId());
+                user.setPassword(newPass);
                 Helper.encodePassword(user, false);
                 getRepository().save(user);
                 forgotPasswordRepository.deleteByUserId(forgotPassword.getUserId());
                 return true;
             }
+        } else {
+            throw new IllegalArgumentException("Token is not correct");
         }
         return false;
+    }
+
+
+    @Override
+    public User getMe() throws MentorMeException {
+        // get the user from the tokens
+        User user = Helper.getAuthUser();
+        // update the user info in db
+        user = super.get(user.getId());
+
+        return user;
+    }
+
+    @Override
+    public String createTokenForUser(User user) {
+        long expires = System.currentTimeMillis() + tokenExpirationTimeInMillis;
+        user.setExpires(expires);
+        return tokenHandler.createTokenForUser(user);
     }
 }
 

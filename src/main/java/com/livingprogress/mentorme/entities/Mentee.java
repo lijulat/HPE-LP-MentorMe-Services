@@ -3,12 +3,9 @@ package com.livingprogress.mentorme.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * The mentee.
@@ -45,5 +42,11 @@ public class Mentee extends InstitutionUser {
      * The facebook url.
      */
     private String facebookUrl;
+
+    /**
+     * The skills.
+     */
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MenteeSkill> skills;
 }
 

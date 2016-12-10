@@ -303,7 +303,6 @@ public class SecutiryConfigTest extends BaseTest {
         String newUserName = "newUsername";
         String newPassword = "newPassword";
         demoEntity.setPassword(newPassword);
-        demoEntity.setUsername(newUserName);
         mockMvc.perform(MockMvcRequestBuilders.put("/users/1")
                                               .contentType(MediaType.APPLICATION_JSON)
                                               .content(objectMapper.writeValueAsString(demoEntity)))

@@ -4,27 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.livingprogress.mentorme.aop.LogAspect;
-import com.livingprogress.mentorme.entities.Activity;
-import com.livingprogress.mentorme.entities.ActivityType;
-import com.livingprogress.mentorme.entities.AuditableUserEntity;
-import com.livingprogress.mentorme.entities.Document;
-import com.livingprogress.mentorme.entities.IdentifiableEntity;
-import com.livingprogress.mentorme.entities.InstitutionAffiliationCode;
-import com.livingprogress.mentorme.entities.InstitutionUser;
-import com.livingprogress.mentorme.entities.InstitutionUserSearchCriteria;
-import com.livingprogress.mentorme.entities.MatchSearchCriteria;
-import com.livingprogress.mentorme.entities.Mentee;
-import com.livingprogress.mentorme.entities.MenteeMentorProgram;
-import com.livingprogress.mentorme.entities.Mentor;
-import com.livingprogress.mentorme.entities.NewPassword;
-import com.livingprogress.mentorme.entities.Paging;
-import com.livingprogress.mentorme.entities.ParentConsent;
-import com.livingprogress.mentorme.entities.PersonalInterest;
-import com.livingprogress.mentorme.entities.ProfessionalExperienceData;
-import com.livingprogress.mentorme.entities.ProfessionalInterest;
-import com.livingprogress.mentorme.entities.User;
-import com.livingprogress.mentorme.entities.WeightedPersonalInterest;
-import com.livingprogress.mentorme.entities.WeightedProfessionalInterest;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.security.CustomUserDetails;
@@ -36,6 +16,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,26 +25,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Path;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -86,7 +54,7 @@ public class Helper {
      * Represents the classes that there is no need to log.
      */
     private static final List<Class> NOLOGS = Arrays.asList(HttpServletRequest.class,
-            HttpServletResponse.class, ModelAndView.class, NewPassword.class, MultipartFile[].class);
+            HttpServletResponse.class, ModelAndView.class, NewPassword.class, MultipartFile[].class, ResponseEntity.class);
 
     /**
      * The object mapper.
@@ -373,8 +341,10 @@ public class Helper {
         boolean checkPassword = !isUpdating || rawPassword != null;
         if (checkPassword) {
             Helper.checkNullOrEmpty(rawPassword, "user.password");
+            System.out.println("The raw password is: " + rawPassword);
             PasswordEncoder encoder = getPasswordEncoder();
             user.setPassword(encoder.encode(rawPassword));
+            System.out.println("The encoded password is: " + user.getPassword());
         }
         return user;
     }
@@ -660,6 +630,14 @@ public class Helper {
         });
     }
 
+    public static <T extends MenteeSkill> boolean
+    isUpdatedSkills(List<T> oldValues, List<T> newValues) {
+        return isUpdated(oldValues, newValues) || oldValues.stream().anyMatch(w -> {
+            T match = newValues.stream().filter(n -> n.getId() == w.getId()).findFirst().get();
+            return isUpdated(w.getSkill().getId(), match.getSkill().getId());
+        });
+    }
+
     /**
      * Check whether user entity has been updated.
      *
@@ -673,10 +651,6 @@ public class Helper {
             return false;
         }
         boolean updated = false;
-        if (isUpdated(oldEntity.getUsername(), newEntity.getUsername())) {
-            updated = true;
-            oldEntity.setUsername(newEntity.getUsername());
-        }
         if (newEntity.getPassword() != null) {
             updated = true;
             User encodedUser = Helper.encodePassword(newEntity, true);
@@ -710,6 +684,10 @@ public class Helper {
         if (isUpdated(oldEntity.isVirtualUser(), newEntity.isVirtualUser())) {
             updated = true;
             oldEntity.setVirtualUser(newEntity.isVirtualUser());
+        }
+        if (isUpdated(oldEntity.isAgreedAgreement(), newEntity.isAgreedAgreement())) {
+            updated = true;
+            oldEntity.setAgreedAgreement(newEntity.isAgreedAgreement());
         }
         if (isUpdated(oldEntity.getStreetAddress(), newEntity.getStreetAddress())) {
             updated = true;
@@ -928,6 +906,14 @@ public class Helper {
             updated = true;
             oldEntity.setSchool(newEntity.getSchool());
         }
+        if (isUpdatedSkills(oldEntity.getSkills(), newEntity.getSkills())) {
+            updated = true;
+            oldEntity.getSkills().clear();
+            if (newEntity.getSkills() != null) {
+                oldEntity.getSkills().addAll(newEntity.getSkills());
+                oldEntity.getSkills().forEach(c -> c.setUser(oldEntity));
+            }
+        }
         if (isUpdatedInstitutionAffiliationCode(oldEntity.getInstitutionAffiliationCode(),
                 newEntity.getInstitutionAffiliationCode())) {
             updated = true;
@@ -1046,6 +1032,32 @@ public class Helper {
             user = userDetails.getUser();
         }
         return user;
+    }
+
+    public static boolean isMentor() {
+        User user = getAuthUser();
+        if (user == null || user.getRoles() == null) {
+            return false;
+        }
+        for (UserRole r : user.getRoles()) {
+            if ("mentor".equalsIgnoreCase(r.getValue())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isMentee() {
+        User user = getAuthUser();
+        if (user == null || user.getRoles() == null) {
+            return false;
+        }
+        for (UserRole r : user.getRoles()) {
+            if ("mentee".equalsIgnoreCase(r.getValue())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

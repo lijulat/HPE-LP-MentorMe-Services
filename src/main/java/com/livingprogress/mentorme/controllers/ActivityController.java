@@ -119,6 +119,11 @@ public class ActivityController {
     @RequestMapping(method = RequestMethod.GET)
     public SearchResult<Activity> search(@ModelAttribute ActivitySearchCriteria criteria,
             @ModelAttribute Paging paging) throws MentorMeException  {
+        if (Helper.isMentee()) {
+            criteria.setMenteeId(Helper.getAuthUser().getId());
+        } else if (Helper.isMentor()) {
+            criteria.setMentorId(Helper.getAuthUser().getId());
+        }
         return activityService.search(criteria, paging);
     }
 }
