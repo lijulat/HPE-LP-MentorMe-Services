@@ -30,6 +30,8 @@ public class InstitutionalProgram extends AuditableEntity {
      */
     private String programName;
 
+    private String description;
+
     /**
      * The start date.
      */

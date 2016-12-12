@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import java.util.Date;
 
 /**
  * The useful link.
@@ -21,5 +24,11 @@ public class UsefulLink extends IdentifiableEntity {
      * The link address.
      */
     private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    private User author;
+
+    private Date createdOn;
 }
 
