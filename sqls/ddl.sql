@@ -153,6 +153,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `institutional_program` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `program_name` VARCHAR(128) NOT NULL,
+  `description` VARCHAR(4096) NULL,
   `start_date` DATE NOT NULL,
   `end_date` DATE NOT NULL,
   `institution_id` BIGINT NOT NULL,
@@ -320,6 +321,7 @@ CREATE TABLE IF NOT EXISTS `mentee_feedback` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `mentor_score` INT NULL,
   `comment` VARCHAR(45) NULL,
+  `created_on` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -331,6 +333,7 @@ CREATE TABLE IF NOT EXISTS `mentor_feedback` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `mentee_score` INT NULL,
   `comment` VARCHAR(45) NULL,
+  `created_on` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -799,6 +802,8 @@ CREATE TABLE IF NOT EXISTS `useful_link` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(128)NOT NULL,
   `address` VARCHAR(512) NOT NULL,
+  `created_by` BIGINT NOT NULL,
+  `created_on` DATETIME NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
