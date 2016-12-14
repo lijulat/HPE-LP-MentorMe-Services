@@ -3,10 +3,9 @@ package com.livingprogress.mentorme.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
+
+import static javax.persistence.FetchType.EAGER;
 
 /**
  * The activity.
@@ -40,18 +39,23 @@ public class Activity extends AuditableUserEntity {
     /**
      * Mentee id.
      */
-    @JoinColumn(name = "mentee_id")
+    @Column(name = "mentee_id")
     private Long menteeId;
 
     /**
      * Mentor id.
      */
-    @JoinColumn(name = "mentor_id")
+    @Column(name = "mentor_id")
     private Long mentorId;
+
 
     /**
      * The global flag.
      */
     private boolean global;
+
+    @ManyToOne(fetch = EAGER)
+    @JoinColumn(name = "created_by", insertable = false, updatable = false)
+    private User author;
 }
 

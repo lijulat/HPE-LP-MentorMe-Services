@@ -110,6 +110,6 @@ public class UserAuthentication implements Authentication {
      */
     @Override
     public String getName() {
-        return user.getUsername();
+        return user.getEmail();
     }
 }

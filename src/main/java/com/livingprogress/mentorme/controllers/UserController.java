@@ -1,11 +1,6 @@
 package com.livingprogress.mentorme.controllers;
 
-import com.livingprogress.mentorme.entities.ForgotPassword;
-import com.livingprogress.mentorme.entities.NewPassword;
-import com.livingprogress.mentorme.entities.Paging;
-import com.livingprogress.mentorme.entities.SearchResult;
-import com.livingprogress.mentorme.entities.User;
-import com.livingprogress.mentorme.entities.UserSearchCriteria;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.AccessDeniedException;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
@@ -14,6 +9,7 @@ import com.livingprogress.mentorme.services.UserService;
 import com.livingprogress.mentorme.utils.CustomMessageSource;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -130,6 +126,11 @@ public class UserController extends BaseEmailController {
         return userService.search(criteria, paging);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "me")
+    public User getMe() throws MentorMeException {
+        return userService.getMe();
+    }
+
     /**
      * This method is used to start the forgot password process.
      *
@@ -172,5 +173,17 @@ public class UserController extends BaseEmailController {
     public boolean updatePassword(@RequestBody NewPassword newPassword) throws MentorMeException {
         return userService.updatePassword(newPassword);
     }
+
+    @Transactional
+    @RequestMapping(value = "agreeAgreement", method = RequestMethod.PUT)
+    public void agreeAgreement() throws MentorMeException {
+        User user = userService.getMe();
+        User target = new User();
+        BeanUtils.copyProperties(user, target);
+        target.setAgreedAgreement(true);
+        target.setPassword(null);
+        userService.update(user.getId(), target);
+    }
+
 }
 

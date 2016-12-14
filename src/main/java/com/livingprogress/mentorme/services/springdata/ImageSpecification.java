@@ -1,8 +1,8 @@
 package com.livingprogress.mentorme.services.springdata;
 
+import com.livingprogress.mentorme.entities.Image;
+import com.livingprogress.mentorme.entities.ImageSearchCriteria;
 import com.livingprogress.mentorme.utils.Helper;
-import com.livingprogress.mentorme.entities.User;
-import com.livingprogress.mentorme.entities.UserSearchCriteria;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -12,14 +12,14 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
- * The specification used to query User by criteria.
+ * The specification used to query mentee mentor goal by criteria.
  */
 @AllArgsConstructor
-public class UserSpecification implements Specification<User> {
+public class ImageSpecification implements Specification<Image> {
     /**
      * The criteria. Final.
      */
-    private final UserSearchCriteria criteria;
+    private final ImageSearchCriteria criteria;
 
 
     /**
@@ -30,14 +30,10 @@ public class UserSpecification implements Specification<User> {
      * @param cb the query builder
      * @return the predicate
      */
-    public Predicate toPredicate(Root<User> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+    public Predicate toPredicate(Root<Image> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
         Predicate pd = cb.and();
-        pd = Helper.buildLikePredicate(criteria.getEmail(), pd, root.get("email"), cb);
-        pd = Helper.buildNamePredicate(criteria.getName(), pd, root, cb);
-        if (criteria.getRole() != null) {
-            pd = cb.and(pd, cb.equal(root.join("roles").get("id"),
-                    criteria.getRole().getId()));
-        }
+        pd = Helper.buildEqualPredicate(criteria.getUrl(), pd,
+                root.get("url"), cb);
         return pd;
     }
 }

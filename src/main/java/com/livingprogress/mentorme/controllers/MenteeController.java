@@ -1,45 +1,26 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.aop.LogAspect;
-import com.livingprogress.mentorme.entities.MatchSearchCriteria;
-import com.livingprogress.mentorme.entities.Mentee;
-import com.livingprogress.mentorme.entities.MenteeSearchCriteria;
-import com.livingprogress.mentorme.entities.Mentor;
-import com.livingprogress.mentorme.entities.MentorSearchCriteria;
-import com.livingprogress.mentorme.entities.Paging;
-import com.livingprogress.mentorme.entities.ParentConsent;
-import com.livingprogress.mentorme.entities.SearchResult;
-import com.livingprogress.mentorme.entities.UserStatus;
-import com.livingprogress.mentorme.entities.WeightedPersonalInterest;
-import com.livingprogress.mentorme.entities.WeightedProfessionalInterest;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.remote.services.HODClient;
+import com.livingprogress.mentorme.services.LookupService;
 import com.livingprogress.mentorme.services.MenteeService;
 import com.livingprogress.mentorme.services.MentorService;
+import com.livingprogress.mentorme.services.UserService;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -60,6 +41,19 @@ public class MenteeController extends BaseEmailController {
      */
     @Autowired
     private MentorService mentorService;
+
+    /**
+     * Represents the user service.
+     */
+    @Autowired
+    private UserService userService;
+
+    /**
+     * Reprseents the lookup service.
+     */
+    @Autowired
+    private LookupService lookupService;
+
 
     /**
      * The hod client used to perform operations. Should be non-null after injection.
@@ -162,6 +156,62 @@ public class MenteeController extends BaseEmailController {
             sendEmail(mentee.getParentConsent().getParentEmail(), "createMentee", model);
         }
         return mentee;
+    }
+
+
+    @Transactional
+    @RequestMapping(method = RequestMethod.POST, value = "register")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Map<String, String> register(@RequestBody Mentee entity) throws MentorMeException {
+        // set the user roles
+        List<UserRole> roles = lookupService.getUserRoles();
+        for (UserRole role : roles) {
+            if ("mentee".equalsIgnoreCase(role.getValue())) {
+                entity.setRoles(Arrays.asList(role));
+                break;
+            }
+        }
+
+        // set the status
+        entity.setStatus(UserStatus.ACTIVE);
+
+        // get the institution code
+        if (entity.getInstitutionAffiliationCode() == null
+                || entity.getInstitutionAffiliationCode().getCode() == null) {
+            throw new IllegalArgumentException("Institution affiliation code is required.");
+        }
+
+        // set the institution code and institution
+        InstitutionAffiliationCode institutionAffiliationCode = menteeService.findInstitutionAffiliationCode(
+                entity.getInstitutionAffiliationCode().getCode());
+        if (institutionAffiliationCode == null) {
+            throw new IllegalArgumentException(
+                    "Code: " + entity.getInstitutionAffiliationCode().getCode() + " Not found");
+        }
+
+        // check if the email already exists
+        UserSearchCriteria criteria = new UserSearchCriteria();
+        criteria.setEmail(entity.getEmail());
+        SearchResult<User> result = userService.search(criteria, null);
+        if (result.getTotal() > 0) {
+            // user already register
+            throw new IllegalArgumentException("Email already registered");
+        }
+
+        entity.setInstitutionAffiliationCode(institutionAffiliationCode);
+        Institution institution = new Institution();
+        institution.setId(institutionAffiliationCode.getInstitutionId());
+
+        entity.setInstitution(institution);
+        entity.setAssignedToInstitution(true);
+
+        // create the entity
+        Mentee mentee = menteeService.create(entity);
+
+        String token = userService.createTokenForUser(mentee);
+        Map<String, String> json = new HashMap<>();
+        json.put("token", token);
+        return json;
     }
 
     /**
@@ -285,6 +335,21 @@ public class MenteeController extends BaseEmailController {
     @RequestMapping(value = "confirmParentConsent", method = RequestMethod.PUT)
     public boolean confirmParentConsent(String token) throws MentorMeException {
         return menteeService.confirmParentConsent(token);
+    }
+
+    @Transactional
+    @RequestMapping(value = "addParentConsent", method = RequestMethod.PUT)
+    public void addParentConsent(@RequestBody ParentConsent parentConsent) throws MentorMeException {
+        Mentee mentee = menteeService.get(Helper.getAuthUser().getId());
+        if (mentee == null) {
+            throw new IllegalArgumentException("Mentee not found");
+        }
+        Mentee target = new Mentee();
+        BeanUtils.copyProperties(mentee, target);
+        target.setParentConsent(parentConsent);
+        target.setPassword(null);
+        menteeService.update(mentee.getId(), target);
+
     }
 
     /**

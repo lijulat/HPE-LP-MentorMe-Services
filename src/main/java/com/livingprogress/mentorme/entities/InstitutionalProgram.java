@@ -30,6 +30,8 @@ public class InstitutionalProgram extends AuditableEntity {
      */
     private String programName;
 
+    private String description;
+
     /**
      * The start date.
      */
@@ -68,6 +70,12 @@ public class InstitutionalProgram extends AuditableEntity {
      */
     @OneToMany(mappedBy = "institutionalProgram", cascade = ALL)
     private List<Responsibility> responsibilities;
+
+    /**
+     * The responsibilities.
+     */
+    @OneToMany(mappedBy = "institutionalProgram", cascade = ALL)
+    private List<ProgramSkill> skills;
 
     /**
      * The documents.

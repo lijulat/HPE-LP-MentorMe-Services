@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.JoinColumn;
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 /**
@@ -19,13 +19,13 @@ public abstract class AuditableUserEntity extends AuditableEntity {
     /**
      * The created by.
      */
-    @JoinColumn(name = "created_by", insertable = true, updatable = false)
+    @Column(name = "created_by", insertable = true, updatable = false)
     private long createdBy;
 
     /**
      * The last modified by.
      */
-    @JoinColumn(name = "last_modified_by")
+    @Column(name = "last_modified_by")
     private long lastModifiedBy;
 }
 

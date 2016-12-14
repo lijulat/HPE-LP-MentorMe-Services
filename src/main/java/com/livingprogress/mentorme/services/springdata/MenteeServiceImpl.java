@@ -1,5 +1,6 @@
 package com.livingprogress.mentorme.services.springdata;
 
+import com.livingprogress.mentorme.entities.InstitutionAffiliationCode;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.utils.Helper;
 import com.livingprogress.mentorme.entities.Mentee;
@@ -34,6 +35,9 @@ public class MenteeServiceImpl extends BaseService<Mentee, MenteeSearchCriteria>
      */
     @Autowired
     private MenteeRepository menteeRepository;
+
+    @Autowired
+    private InstitutionAffiliationCodeRepository institutionAffiliationCodeRepository;
 
     /**
      * Check if all required fields are initialized properly.
@@ -148,6 +152,11 @@ public class MenteeServiceImpl extends BaseService<Mentee, MenteeSearchCriteria>
             return true;
         }
         return false;
+    }
+
+    @Override
+    public InstitutionAffiliationCode findInstitutionAffiliationCode(String code) throws MentorMeException {
+        return institutionAffiliationCodeRepository.findByCode(code);
     }
 }
 

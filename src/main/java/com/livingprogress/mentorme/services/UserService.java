@@ -44,5 +44,20 @@ public interface UserService extends GenericService<User, UserSearchCriteria> {
      * @throws MentorMeException if any other error occurred during operation
      */
     boolean updatePassword(NewPassword newPassword) throws MentorMeException;
+
+
+    /**
+     * Gets my profile.
+     * @return my profile content.
+     * @throws MentorMeException if there are any errors.
+     */
+    User getMe() throws MentorMeException;
+
+    /**
+     * Creates the token for user.
+     * @param user the user.
+     * @return the token.
+     */
+    String createTokenForUser(User user);
 }
 

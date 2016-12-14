@@ -1,14 +1,6 @@
 package com.livingprogress.mentorme.services;
 
-import com.livingprogress.mentorme.entities.Country;
-import com.livingprogress.mentorme.entities.DocumentType;
-import com.livingprogress.mentorme.entities.GoalCategory;
-import com.livingprogress.mentorme.entities.PersonalInterest;
-import com.livingprogress.mentorme.entities.ProfessionalConsultantArea;
-import com.livingprogress.mentorme.entities.ProfessionalInterest;
-import com.livingprogress.mentorme.entities.ProgramCategory;
-import com.livingprogress.mentorme.entities.State;
-import com.livingprogress.mentorme.entities.UserRole;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 
 import java.util.List;
@@ -88,5 +80,12 @@ public interface LookupService {
      * @throws MentorMeException if any other error occurred during operation
      */
     List<DocumentType> getDocumentTypes() throws MentorMeException;
+
+ /**
+  * Gets all the skills.
+  * @return the skills.
+  * @throws MentorMeException if there are any errors.
+     */
+    List<Skill> getSkills() throws MentorMeException;
 }
 

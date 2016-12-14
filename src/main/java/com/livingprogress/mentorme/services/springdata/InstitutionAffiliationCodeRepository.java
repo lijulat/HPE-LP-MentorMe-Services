@@ -9,6 +9,11 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  */
 public interface InstitutionAffiliationCodeRepository extends JpaRepository<InstitutionAffiliationCode, Long>,
         JpaSpecificationExecutor<InstitutionAffiliationCode> {
-
+    /**
+     * Find by the code.
+     * @param code the code
+     * @return the instance.
+     */
+    InstitutionAffiliationCode findByCode(String code);
 }
 

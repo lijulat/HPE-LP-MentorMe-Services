@@ -21,11 +21,6 @@ public class UserSearchCriteria {
     private String email;
 
     /**
-     * The username.
-     */
-    private String username;
-
-    /**
      * The role.
      */
     private UserRole role;

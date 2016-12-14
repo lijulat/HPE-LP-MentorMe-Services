@@ -5038,7 +5038,7 @@
 		{
 			"id": "f28da822-ee65-e685-ba19-6012f5e37090",
 			"headers": "{{AUTH_HEADER}}: {{SYSTEM_ADMIN_TOKEN}}\n",
-			"url": "{{URL}}/users?pageNumber=0&pageSize=2&sortColumn=username&sortOrder=DESC&email=email1@test.com&name=lastname1&username=test1&role.id=1",
+			"url": "{{URL}}/users?pageNumber=0&pageSize=2&sortColumn=email&sortOrder=DESC&email=email1@test.com&name=lastname1&username=test1&role.id=1",
 			"preRequestScript": null,
 			"pathVariables": {},
 			"method": "GET",

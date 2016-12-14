@@ -241,7 +241,7 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
      * @param <T> the entity that extends institution user
      */
     protected <T extends InstitutionUser> void handleInstitutionUserNestedProperties(T entity) {
-        handleUserNestedProperties(entity);
+
         if (entity.getPersonalInterests() != null) {
             entity.getPersonalInterests().forEach(p -> p.setUser(entity));
         } else {

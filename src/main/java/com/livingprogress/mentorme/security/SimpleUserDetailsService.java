@@ -48,29 +48,29 @@ public class SimpleUserDetailsService implements UserDetailsService {
     /**
      * Locates the user based on the username.
      *
-     * @param username the username
+     * @param email the user email.
      * @return the UserDetails
      * @throws UsernameNotFoundException if there is no match or invalid user found.
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         try {
             UserSearchCriteria criteria = new com.livingprogress.mentorme
                     .entities.UserSearchCriteria();
-            criteria.setUsername(username);
+            criteria.setEmail(email);
             SearchResult<User> users =
                     userService.search(criteria, null);
             if (users.getEntities()
                      .isEmpty()) {
                 throw new UsernameNotFoundException(
-                        CustomMessageSource.getMessage("user.notFound.byUsername", username));
+                        CustomMessageSource.getMessage("user.notFound.byUsername", email));
             }
             User user = users.getEntities()
                              .get(0);
             if (user.getRoles()
                     .isEmpty()) {
                 throw new UsernameNotFoundException(
-                        CustomMessageSource.getMessage("user.noRoles.error", username));
+                        CustomMessageSource.getMessage("user.noRoles.error", email));
             }
             List<GrantedAuthority> authorities = buildUserAuthority(user.getRoles());
             return buildUserForAuthentication(user, authorities);
