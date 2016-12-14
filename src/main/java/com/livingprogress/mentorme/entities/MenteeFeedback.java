@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import java.util.Date;
 
 /**
  * The mentee feedback.
@@ -21,5 +22,7 @@ public class MenteeFeedback extends IdentifiableEntity {
      * The comment.
      */
     private String comment;
+
+    private Date createdOn;
 }
 
