@@ -1,0 +1,19 @@
+database:
+  override:
+    - mysql -u ubuntu -e "create database mentorme"
+    - mysql -u ubuntu mentorme < sqls/ddl.sql
+    - mysql -u ubuntu mentorme < sqls/country.sql
+    - mysql -u ubuntu mentorme < sqls/state.sql
+    - mysql -u ubuntu mentorme < sqls/lookup.sql
+    - mysql -u ubuntu mentorme < sqls/personal_interest.sql
+    - mysql -u ubuntu mentorme < sqls/professional_interest.sql
+    - mysql -u ubuntu mentorme < sqls/remote.sql
+test:
+  override:
+    - mvn clean test
+deployment:
+  production:
+    branch: master
+    codedeploy:
+      MentorMe-API:
+        deployment_group: mentorme-api-group
