@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import java.util.Date;
 
 /**
  * The mentor feedback.
@@ -21,5 +22,7 @@ public class MentorFeedback extends IdentifiableEntity {
      * The comment.
      */
     private String comment;
+
+    private Date createdOn;
 }
 
