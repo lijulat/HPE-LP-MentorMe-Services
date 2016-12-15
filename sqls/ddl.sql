@@ -758,12 +758,12 @@ CREATE TABLE IF NOT EXISTS `program_skill` (
     CONSTRAINT `ps_ipi_fk0`
         FOREIGN KEY (`institutional_program_id`)
         REFERENCES `institutional_program` (`id`)
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
         ON UPDATE NO ACTION,
       CONSTRAINT `ps_s_fk1`
         FOREIGN KEY (`skill_id`)
         REFERENCES `skill` (`id`)
-        ON DELETE NO ACTION
+        ON DELETE CASCADE
         ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

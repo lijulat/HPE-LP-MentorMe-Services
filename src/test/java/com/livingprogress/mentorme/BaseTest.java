@@ -2,14 +2,7 @@ package com.livingprogress.mentorme;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.livingprogress.mentorme.entities.Activity;
-import com.livingprogress.mentorme.entities.ActivityType;
-import com.livingprogress.mentorme.entities.Document;
-import com.livingprogress.mentorme.entities.Goal;
-import com.livingprogress.mentorme.entities.IdentifiableEntity;
-import com.livingprogress.mentorme.entities.InstitutionalProgram;
-import com.livingprogress.mentorme.entities.SearchResult;
-import com.livingprogress.mentorme.entities.Task;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.services.LookupService;
 import com.livingprogress.mentorme.utils.Helper;
 import org.apache.commons.beanutils.BeanUtils;
@@ -46,12 +39,7 @@ import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -452,6 +440,8 @@ public abstract class BaseTest {
             IntStream.range(0, entity.getUsefulLinks().size()).forEach(idx -> {
                 args.add("usefulLinks[" + idx + "].title");
                 args.add("usefulLinks[" + idx + "].address");
+                args.add("usefulLinks[" + idx + "].author.id");
+                args.add("usefulLinks[" + idx + "].createdOn");
             });
         }
         if(entity.getResponsibilities() != null){
@@ -478,6 +468,8 @@ public abstract class BaseTest {
                     IntStream.range(0, entity.getUsefulLinks().size()).forEach(idy -> {
                         args.add("goals[" + idx + "].usefulLinks[" + idy + "].title");
                         args.add("goals[" + idx + "].usefulLinks[" + idy + "].address");
+                        args.add("goals[" + idx + "].usefulLinks[" + idy + "].author.id");
+                        args.add("goals[" + idx + "].usefulLinks[" + idy + "].createdOn");
                     });
                 }
                 if(entity.getGoals().get(idx).getTasks() != null){
@@ -515,6 +507,8 @@ public abstract class BaseTest {
             IntStream.range(0, entity.getUsefulLinks().size()).forEach(idx -> {
                 args.add("usefulLinks[" + idx + "].title");
                 args.add("usefulLinks[" + idx + "].address");
+                args.add("usefulLinks[" + idx + "].author.id");
+                args.add("usefulLinks[" + idx + "].createdOn");
             });
         }
         if(entity.getTasks() != null){
@@ -552,6 +546,8 @@ public abstract class BaseTest {
             IntStream.range(0, entity.getUsefulLinks().size()).forEach(idx -> {
                 args.add("usefulLinks[" + idx + "].title");
                 args.add("usefulLinks[" + idx + "].address");
+                args.add("usefulLinks[" + idx + "].author.id");
+                args.add("usefulLinks[" + idx + "].createdOn");
             });
         }
         if(entity.getCustomData() != null){

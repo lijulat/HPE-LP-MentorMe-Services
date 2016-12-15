@@ -7,8 +7,6 @@ database:
     - mysql -u ubuntu mentorme < sqls/lookup.sql
     - mysql -u ubuntu mentorme < sqls/personal_interest.sql
     - mysql -u ubuntu mentorme < sqls/professional_interest.sql
-    - mysql -u ubuntu -e "create database mentorme-test"
-    - mysql -u ubuntu mentorme-test < sqls/ddl.sql
 test:
   override:
     - mvn clean test
