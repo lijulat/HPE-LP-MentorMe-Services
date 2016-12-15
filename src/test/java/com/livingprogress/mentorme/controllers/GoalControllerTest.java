@@ -15,9 +15,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * The test cases for <code>GoalController</code>
@@ -34,6 +32,11 @@ public class GoalControllerTest extends BaseTest {
     private static String demo;
 
     /**
+     * The demo entity json.
+     */
+    private static String demoCreate;
+
+    /**
      * All entities json.
      */
     private static String entities;
@@ -47,6 +50,7 @@ public class GoalControllerTest extends BaseTest {
     public static void setupClass() throws Exception {
         sample = readFile("goal1.json");
         demo = readFile("demo-goal.json");
+        demoCreate = readFile("demo-goal-create.json");
         entities = readFile("goals.json");
     }
 
@@ -70,7 +74,7 @@ public class GoalControllerTest extends BaseTest {
      */
     @Test
     public void create() throws Exception {
-        Goal demoEntity = objectMapper.readValue(demo, Goal.class);
+        Goal demoEntity = objectMapper.readValue(demoCreate, Goal.class);
         checkEntities(demoEntity.getUsefulLinks());
         checkEntity(demoEntity.getCustomData());
         checkEntities(demoEntity.getTasks());

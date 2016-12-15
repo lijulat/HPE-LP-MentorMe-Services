@@ -19,6 +19,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -102,7 +103,7 @@ public class MenteeMentorGoalControllerTest extends BaseTest {
         demoEntity.setTasks(null);
         long mentorId = 6L;
         res = mockAuthMvc.perform(MockMvcRequestBuilders.post("/menteeMentorGoals")
-                                                  .with(httpBasic("test" + mentorId, "password"))
+                                                  .with(httpBasic("email" + mentorId + "@test.com", "password"))
                                                           .contentType(MediaType.APPLICATION_JSON)
                                                           .content(objectMapper.writeValueAsString(demoEntity)))
                                                   .andExpect(status().isCreated())

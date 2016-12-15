@@ -8,11 +8,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Locale;
+import java.util.Map;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * The test cases for <code>SecurityConfig</code>
@@ -43,8 +43,7 @@ public class SecutiryConfigTest extends BaseTest {
         mockAuthMvc.perform(MockMvcRequestBuilders.put("/users/updatePassword")
                                               .contentType(MediaType.APPLICATION_JSON)
                                               .content(objectMapper.writeValueAsString(entity)))
-               .andExpect(status().isOk())
-               .andExpect(content().string("false"));
+               .andExpect(status().isBadRequest());
     }
 
     /**
@@ -125,7 +124,7 @@ public class SecutiryConfigTest extends BaseTest {
     @Test
     public void basicTest() throws Exception {
         mockAuthMvc.perform(MockMvcRequestBuilders.get("/users/1")
-                                              .accept(MediaType.APPLICATION_JSON).with(httpBasic("test1", "password")))
+                                              .accept(MediaType.APPLICATION_JSON).with(httpBasic("email1@test.com", "password")))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("user1.json")));
     }
@@ -214,15 +213,15 @@ public class SecutiryConfigTest extends BaseTest {
     public void loginAsSytemAdminTest() throws Exception {
         String json = mockAuthMvc.perform(MockMvcRequestBuilders.post("/login")
                                               .accept(MediaType.APPLICATION_JSON)
-                                              .with(httpBasic("test1", "password")))
+                                              .with(httpBasic("email1@test.com", "password")))
                .andExpect(status().isOk())
                .andReturn()
                .getResponse()
                .getContentAsString();
-        String token = objectMapper.readValue(json, String.class);
+        Map<String, String> token = (Map<String, String>) objectMapper.readValue(json, Map.class);
         mockAuthMvc.perform(MockMvcRequestBuilders.get("/users/1")
                                               .accept(MediaType.APPLICATION_JSON)
-                                              .header(AUTH_HEADER_NAME, token))
+                                              .header(AUTH_HEADER_NAME, token.get("token")))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("user1.json")));
     }
@@ -235,15 +234,15 @@ public class SecutiryConfigTest extends BaseTest {
     public void loginAsInstitutionAdminTest() throws Exception {
         String json = mockAuthMvc.perform(MockMvcRequestBuilders.post("/login")
                                                             .accept(MediaType.APPLICATION_JSON)
-                                                            .with(httpBasic("test2", "password")))
+                                                            .with(httpBasic("email2@test.com", "password")))
                              .andExpect(status().isOk())
                              .andReturn()
                              .getResponse()
                              .getContentAsString();
-        String token = objectMapper.readValue(json, String.class);
+        Map<String, String> token = (Map<String, String>) objectMapper.readValue(json, Map.class);
         mockAuthMvc.perform(MockMvcRequestBuilders.get("/institutions/1")
                                               .accept(MediaType.APPLICATION_JSON)
-                                              .header(AUTH_HEADER_NAME, token))
+                                              .header(AUTH_HEADER_NAME, token.get("token")))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("institution1.json")));
     }
@@ -256,15 +255,15 @@ public class SecutiryConfigTest extends BaseTest {
     public void loginAsMentorTest() throws Exception {
         String json = mockAuthMvc.perform(MockMvcRequestBuilders.post("/login")
                                                             .accept(MediaType.APPLICATION_JSON)
-                                                            .with(httpBasic("test3", "password")))
+                                                            .with(httpBasic("email3@test.com", "password")))
                              .andExpect(status().isOk())
                              .andReturn()
                              .getResponse()
                              .getContentAsString();
-        String token = objectMapper.readValue(json, String.class);
+        Map<String, String> token = (Map<String, String>) objectMapper.readValue(json, Map.class);
         mockAuthMvc.perform(MockMvcRequestBuilders.get("/mentors/3")
                                               .accept(MediaType.APPLICATION_JSON)
-                                              .header(AUTH_HEADER_NAME, token))
+                                              .header(AUTH_HEADER_NAME, token.get("token")))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("mentor3.json")));
     }
@@ -278,15 +277,15 @@ public class SecutiryConfigTest extends BaseTest {
     public void loginAsMenteeTest() throws Exception {
         String json = mockAuthMvc.perform(MockMvcRequestBuilders.post("/login")
                                                             .accept(MediaType.APPLICATION_JSON)
-                                                            .with(httpBasic("test4", "password")))
+                                                            .with(httpBasic("email4@test.com", "password")))
                              .andExpect(status().isOk())
                              .andReturn()
                              .getResponse()
                              .getContentAsString();
-        String token = objectMapper.readValue(json, String.class);
+        Map<String, String> token = (Map<String, String>) objectMapper.readValue(json, Map.class);
         mockAuthMvc.perform(MockMvcRequestBuilders.get("/mentees/4")
                                               .accept(MediaType.APPLICATION_JSON)
-                                              .header(AUTH_HEADER_NAME, token))
+                                              .header(AUTH_HEADER_NAME, token.get("token")))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("mentee4.json")));
     }
@@ -323,14 +322,14 @@ public class SecutiryConfigTest extends BaseTest {
     public void localeTest() throws Exception {
         mockAuthMvc.perform(MockMvcRequestBuilders.get("/activities/1111")
                                                  .accept(MediaType.APPLICATION_JSON)
-                                                 .with(httpBasic("test3", "password")))
+                                                 .with(httpBasic("email3@test.com", "password")))
                     .andExpect(status().isNotFound())
                     .andExpect(jsonPath("$.message").value("Entity with ID=1111 can not be found"));
         mockAuthMvc.perform(MockMvcRequestBuilders.get("/activities/1111")
                                                                 .header("Accept-Language","en_US")
                                                                 .locale(Locale.US)
                                                                 .accept(MediaType.APPLICATION_JSON)
-                                                                .with(httpBasic("test3", "password")))
+                                                                .with(httpBasic("email3@test.com", "password")))
                      .andExpect(status().isNotFound())
                      .andExpect(jsonPath("$.message").value("en us Entity with ID=1111 can not be found"));
     }

@@ -1,31 +1,29 @@
 {
-  "id": 1,
-  "createdOn": "2016-10-01T00:00:00",
-  "lastModifiedOn": "2016-10-01T00:00:00",
-  "username": "test1",
-  "firstName": "firstname1",
-  "lastName": "lastname1",
-  "roles": [
-    {
-      "id": 1,
-      "value": "SYSTEM_ADMIN"
-    }
-  ],
-  "email": "email1@test.com",
-  "profilePicturePath": "profilePicturePath1",
-  "status": "ACTIVE",
-  "streetAddress": "7583 Classon Avenue",
-  "city": "Brooklyn",
-  "state": {
-    "id": 32,
-    "value": "New York"
+  "id" : 1,
+  "createdOn" : "2016-10-01T00:00:00",
+  "lastModifiedOn" : "2016-10-01T00:00:00",
+  "firstName" : "firstname1",
+  "lastName" : "lastname1",
+  "roles" : [ {
+    "id" : 1,
+    "value" : "SYSTEM_ADMIN"
+  } ],
+  "email" : "email1@test.com",
+  "profilePicturePath" : "http://img4.imgtn.bdimg.com/it/u=3514646889,3827435585&fm=23&gp=0.jpg",
+  "status" : "ACTIVE",
+  "streetAddress" : "7583 Classon Avenue",
+  "city" : "Brooklyn",
+  "state" : {
+    "id" : 32,
+    "value" : "New York"
   },
-  "country": {
-    "id": 230,
-    "value": "United States"
+  "country" : {
+    "id" : 230,
+    "value" : "United States"
   },
-  "postalCode": "11205",
-  "longitude": -73.96171760,
-  "latitude": 40.69788770,
-  "virtualUser": false
+  "postalCode" : "11205",
+  "longitude" : -73.96171760,
+  "latitude" : 40.69788770,
+  "virtualUser" : false,
+  "agreedAgreement" : true
 }

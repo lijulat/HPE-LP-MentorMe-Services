@@ -38,11 +38,19 @@
       "usefulLinks": [
         {
           "title": "title1",
-          "address": "address1"
+          "address": "address1",
+          "author": {
+            "id":1
+          },
+          "createdOn": "2016-12-08"
         },
         {
           "title": "title2",
-          "address": "address2"
+          "address": "address2",
+          "author": {
+            "id":1
+          },
+          "createdOn": "2016-12-08"
         }
       ],
       "custom": true,
@@ -69,11 +77,19 @@
   "usefulLinks": [
     {
       "title": "title1",
-      "address": "address1"
+      "address": "address1",
+      "author": {
+        "id":1
+      },
+      "createdOn": "2016-12-08"
     },
     {
       "title": "title2",
-      "address": "address2"
+      "address": "address2",
+      "author": {
+        "id":1
+      },
+      "createdOn": "2016-12-08"
     }
   ],
   "durationInDays": 30,

@@ -33,6 +33,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -133,6 +134,7 @@ public class MenteeControllerTest extends BaseTest {
         verifyEntities(demoEntity.getProfessionalInterests(), result.getProfessionalInterests());
         verifyEntity(demoEntity.getParentConsent(), result.getParentConsent());
         verifyEntity(demoEntity.getInstitutionAffiliationCode(), result.getInstitutionAffiliationCode());
+        result.setInstitution(demoEntity.getInstitution());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
         ParentConsent parentConsent = result.getParentConsent();
         verifyEmail("New Mentee", parentConsent.getToken(), parentConsent.getParentEmail());
@@ -455,7 +457,7 @@ public class MenteeControllerTest extends BaseTest {
         // assigned
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/matchingMentors"))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$", Matchers.hasSize(3)))
+               .andExpect(jsonPath("$", Matchers.hasSize(2)))
                .andExpect(content().json(readFile("mentee4MatchingMentors.json")));
         // not assigned
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees/10/matchingMentors"))
@@ -468,11 +470,11 @@ public class MenteeControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/matchingMentors?distance=10")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$", Matchers.hasSize(3)));
+               .andExpect(jsonPath("$", Matchers.hasSize(2)));
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/matchingMentors?distance=2")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
-               .andExpect(jsonPath("$", Matchers.hasSize(2)));
+               .andExpect(jsonPath("$", Matchers.hasSize(1)));
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/matchingMentors?maxCount=1")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
