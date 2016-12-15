@@ -18,7 +18,7 @@ insert into state values(17,'Kentucky');
 insert into state values(18,'Louisiana');
 insert into state values(19,'Maine');
 insert into state values(20,'Maryland');
-insert into state values(21,'Massachusetts');
+insert into state values(21,'Massachusetts');	
 insert into state values(22,'Michigan');
 insert into state values(23,'Minnesota');
 insert into state values(24,'Mississippi');
