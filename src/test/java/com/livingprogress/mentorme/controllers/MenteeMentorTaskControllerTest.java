@@ -19,6 +19,7 @@ import java.util.Comparator;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -77,7 +78,7 @@ public class MenteeMentorTaskControllerTest extends BaseTest {
         long mentorId = 6L;
         MenteeMentorTask demoEntity = objectMapper.readValue(demo, MenteeMentorTask.class);
         String res = mockAuthMvc.perform(MockMvcRequestBuilders.post("/menteeMentorTasks")
-                                                               .with(httpBasic("test" + mentorId, "password"))
+                                                               .with(httpBasic("email" + mentorId + "@test.com", "password"))
                                                                .contentType(MediaType.APPLICATION_JSON)
                                                                .content(demo))
                                 .andExpect(status().isCreated())
@@ -113,7 +114,7 @@ public class MenteeMentorTaskControllerTest extends BaseTest {
         demoEntity.setId(1);
         String json = objectMapper.writeValueAsString(demoEntity);
         String res = mockAuthMvc.perform(MockMvcRequestBuilders.put("/menteeMentorTasks/1")
-                                                               .with(httpBasic("test" + mentorId, "password"))
+                                                               .with(httpBasic("email" + mentorId + "@test.com", "password"))
                                                                .contentType(MediaType.APPLICATION_JSON)
                                                                .content(json))
                                 .andExpect(status().isOk())
@@ -252,21 +253,21 @@ public class MenteeMentorTaskControllerTest extends BaseTest {
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(5));
-        mockMvc.perform(MockMvcRequestBuilders.get("/menteeMentorTasks?startDate=2016/10/06")
+        mockMvc.perform(MockMvcRequestBuilders.get("/menteeMentorTasks?startDate=2016/12/06")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(6));
-        mockMvc.perform(MockMvcRequestBuilders.get("/menteeMentorTasks?endDate=2016/10/26")
+        mockMvc.perform(MockMvcRequestBuilders.get("/menteeMentorTasks?endDate=2016/12/26")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(6));
-        mockMvc.perform(MockMvcRequestBuilders.get("/menteeMentorTasks?completedOn=2016/10/31")
+        mockMvc.perform(MockMvcRequestBuilders.get("/menteeMentorTasks?completedOn=2016/12/31")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))
@@ -277,7 +278,7 @@ public class MenteeMentorTaskControllerTest extends BaseTest {
                 ("/menteeMentorTasks?pageNumber=0&pageSize=2&sortColumn=completedOn&sortOrder=DESC" +
                         "&menteeMentorProgramId=1&menteeId=4&completed=true" +
                         "&mentorAssignment=true&menteeAssignment=true&menteeMentorGoalId=1" +
-                        "&startDate=2016/10/01&endDate=2016/10/31&completedOn=2016/10/31")
+                        "&startDate=2016/12/01&endDate=2016/12/31&completedOn=2016/12/31")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))

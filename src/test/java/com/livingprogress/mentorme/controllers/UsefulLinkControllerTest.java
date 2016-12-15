@@ -1,24 +1,21 @@
 package com.livingprogress.mentorme.controllers;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.List;
-
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.livingprogress.mentorme.BaseTest;
+import com.livingprogress.mentorme.entities.MenteeMentorGoal;
+import com.livingprogress.mentorme.entities.MenteeMentorProgram;
+import com.livingprogress.mentorme.entities.UsefulLink;
+import com.livingprogress.mentorme.utils.EntityTypes;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.livingprogress.mentorme.BaseTest;
-import com.livingprogress.mentorme.entities.UsefulLink;
-import com.livingprogress.mentorme.entities.MenteeMentorGoal;
-import com.livingprogress.mentorme.entities.MenteeMentorProgram;
-import com.livingprogress.mentorme.utils.EntityTypes;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * The test cases for <code>UsefulLinkController</code>
@@ -38,7 +35,8 @@ public class UsefulLinkControllerTest extends BaseTest {
     /**
      * Useful link template
      */
-    private static String LINK_TEMPLATE = "{ \"title\": \"test-title%s\", \"address\": \"test-address%s\" }";
+    private static String LINK_TEMPLATE = "{ \"title\": \"test-title%s\", \"address\": \"test-address%s\", " +
+            "\"author\": {\"id\": 1}, \"createdOn\":\"2016-12-02\" }";
     
     /**
      * Read related json.

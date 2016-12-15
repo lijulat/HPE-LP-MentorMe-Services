@@ -1,17 +1,7 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.BaseTest;
-import com.livingprogress.mentorme.entities.Goal;
-import com.livingprogress.mentorme.entities.IdentifiableEntity;
-import com.livingprogress.mentorme.entities.InstitutionalProgram;
-import com.livingprogress.mentorme.entities.MenteeMentorGoal;
-import com.livingprogress.mentorme.entities.MenteeMentorProgram;
-import com.livingprogress.mentorme.entities.MenteeMentorResponsibility;
-import com.livingprogress.mentorme.entities.MenteeMentorTask;
-import com.livingprogress.mentorme.entities.Responsibility;
-import com.livingprogress.mentorme.entities.SearchResult;
-import com.livingprogress.mentorme.entities.Task;
-
+import com.livingprogress.mentorme.entities.*;
 import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -21,14 +11,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.Comparator;
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * The test cases for <code>InstitutionalProgramController</code>
@@ -97,7 +82,6 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         String res = mockMvc.perform(MockMvcRequestBuilders.post("/institutionalPrograms")
                                                            .params(getInstitutionalProgramParams(demoEntity))
                                                            .contentType(MediaType.MULTIPART_FORM_DATA))
-                            .andDo(print())
                             .andExpect(status().isCreated())
                             .andExpect(jsonPath("$.id").isNumber())
                             .andExpect(jsonPath("$.createdOn").exists())
@@ -220,6 +204,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         });
         demoEntity.setInstitution(result.getInstitution());
         demoEntity.setGoals(result.getGoals());
+        demoEntity.setUsefulLinks(result.getUsefulLinks());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
         // upload file
         mockAuthMvc.perform(MockMvcRequestBuilders.fileUpload("/institutionalPrograms/1")

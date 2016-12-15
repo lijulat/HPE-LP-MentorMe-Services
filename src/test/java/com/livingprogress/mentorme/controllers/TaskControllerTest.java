@@ -14,6 +14,7 @@ import java.util.Comparator;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -145,6 +146,7 @@ public class TaskControllerTest extends BaseTest {
         demoEntity.getCustomData()
                   .setMentor(result.getCustomData()
                                    .getMentor());
+        demoEntity.setUsefulLinks(result.getUsefulLinks());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
         // upload file
         mockAuthMvc.perform(MockMvcRequestBuilders.fileUpload("/tasks/1")

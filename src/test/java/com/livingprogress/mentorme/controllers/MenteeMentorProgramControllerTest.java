@@ -23,6 +23,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -160,6 +161,7 @@ public class MenteeMentorProgramControllerTest extends BaseTest {
         verifyEntities(demoEntity.getGoals(), result.getGoals());
         demoEntity.setInstitutionalProgram(result.getInstitutionalProgram());
         demoEntity.setGoals(result.getGoals());
+        demoEntity.setUsefulLinks(result.getUsefulLinks());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
         // test nested properties
         demoEntity.setResponsibilities(null);
@@ -307,14 +309,14 @@ public class MenteeMentorProgramControllerTest extends BaseTest {
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(4));
-        mockMvc.perform(MockMvcRequestBuilders.get("/menteeMentorPrograms?startDate=2016/10/06")
+        mockMvc.perform(MockMvcRequestBuilders.get("/menteeMentorPrograms?startDate=2016/12/06")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(6));
-        mockMvc.perform(MockMvcRequestBuilders.get("/menteeMentorPrograms?endDate=2016/10/26")
+        mockMvc.perform(MockMvcRequestBuilders.get("/menteeMentorPrograms?endDate=2016/12/26")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))
@@ -337,7 +339,7 @@ public class MenteeMentorProgramControllerTest extends BaseTest {
                .andExpect(jsonPath("$.entities[0].id").value(2));
         mockMvc.perform(MockMvcRequestBuilders.get
                 ("/menteeMentorPrograms?pageNumber=0&pageSize=2&sortColumn=startDate&sortOrder=DESC&mentorId=3" +
-                        "&menteeId=4&institutionalProgramId=1&startDate=2016/10/01&endDate=2016/10/31&completed=true" +
+                        "&menteeId=4&institutionalProgramId=1&startDate=2016/12/01&endDate=2016/12/31&completed=true" +
                         "&requestStatus=APPROVED")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
@@ -355,6 +357,7 @@ public class MenteeMentorProgramControllerTest extends BaseTest {
     @Test
     public void submitMenteeFeedback() throws Exception {
         MenteeFeedback data = new MenteeFeedback();
+        data.setCreatedOn(new Date());
         data.setMentorScore(3);
         data.setComment("test mentee feedback");
         mockMvc.perform(MockMvcRequestBuilders.put("/menteeMentorPrograms/6/menteeFeedback")
@@ -386,6 +389,7 @@ public class MenteeMentorProgramControllerTest extends BaseTest {
     public void submitMentorFeedback() throws Exception {
         MentorFeedback data = new MentorFeedback();
         data.setMenteeScore(2);
+        data.setCreatedOn(new Date());
         data.setComment("test mentor feedback");
         mockMvc.perform(MockMvcRequestBuilders.put("/menteeMentorPrograms/6/mentorFeedback")
                                               .contentType(MediaType.APPLICATION_JSON)

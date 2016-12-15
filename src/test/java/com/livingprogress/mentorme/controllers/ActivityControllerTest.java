@@ -17,6 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -230,14 +231,14 @@ public class ActivityControllerTest extends BaseTest {
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(3));
-        mockMvc.perform(MockMvcRequestBuilders.get("/activities?startDate=2016/10/06")
+        mockMvc.perform(MockMvcRequestBuilders.get("/activities?startDate=2016/12/06")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(6));
-        mockMvc.perform(MockMvcRequestBuilders.get("/activities?endDate=2016/10/01")
+        mockMvc.perform(MockMvcRequestBuilders.get("/activities?endDate=2016/12/01")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))
@@ -273,7 +274,7 @@ public class ActivityControllerTest extends BaseTest {
                .andExpect(jsonPath("$.entities", Matchers.hasSize(2)));
         mockMvc.perform(MockMvcRequestBuilders.get
                 ("/activities?pageNumber=0&pageSize=2&sortColumn=description&sortOrder=DESC&institutionalProgramId=3" +
-                        "&description=description3&startDate=2016/10/03&endDate=2016/10/31&menteeId=11&mentorId=6" +
+                        "&description=description3&startDate=2016/12/03&endDate=2016/12/31&menteeId=11&mentorId=6" +
                         "&global=true&activityTypes[0]=TASK_UPDATED&activityTypes[1]=TASK_CREATED")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())

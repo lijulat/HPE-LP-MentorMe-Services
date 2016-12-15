@@ -57,6 +57,7 @@ DELETE FROM `mentee_mentor_program_useful_link`;
 DELETE FROM `mentee_mentor_program_document`;
 DELETE FROM `mentee_mentor_goal_useful_link`;
 DELETE FROM `mentee_mentor_goal_document`;
+DELETE FROM `image`;
 DELETE FROM `mentee_skill`;
 DELETE FROM `program_skill`;
 DELETE FROM `skill`;

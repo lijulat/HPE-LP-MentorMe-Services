@@ -14,6 +14,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -256,7 +257,7 @@ public class UserControllerTest extends BaseTest {
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(3));
-        mockMvc.perform(MockMvcRequestBuilders.get("/users?username=test4")
+        mockMvc.perform(MockMvcRequestBuilders.get("/users?email=email4@test.com")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))
@@ -343,8 +344,7 @@ public class UserControllerTest extends BaseTest {
         mockMvc.perform(MockMvcRequestBuilders.put("/users/updatePassword")
                                               .contentType(MediaType.APPLICATION_JSON)
                                               .content(objectMapper.writeValueAsString(entity)))
-               .andExpect(status().isOk())
-               .andExpect(content().string("false"));
+               .andExpect(status().isBadRequest());
     }
 
     /**
