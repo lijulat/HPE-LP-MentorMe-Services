@@ -20,7 +20,7 @@ echo "inserting personal_interest records"
 mysql -u $DB_USERNAME -p$DB_PASSWORD $DBNAME < ../sqls/personal_interest.sql
 echo "inserting professional_interest records"
 mysql -u $DB_USERNAME -p$DB_PASSWORD $DBNAME < ../sqls/professional_interest.sql
-echo "inserting remote records"
-mysql -u $DB_USERNAME -p$DB_PASSWORD $DBNAME < ../sqls/remote.sql
+#echo "inserting remote records"
+#mysql -u $DB_USERNAME -p$DB_PASSWORD $DBNAME < ../sqls/remote.sql
 # echo "inserting testdata records"
 # mysql -u $DB_USERNAME -p$DB_PASSWORD $DBNAME < ../sqls/testdata.sql
