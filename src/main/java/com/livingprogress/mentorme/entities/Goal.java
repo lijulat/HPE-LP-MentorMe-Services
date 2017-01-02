@@ -63,7 +63,7 @@ public class Goal extends IdentifiableEntity {
      * The institutional program id.
      */
     @Column(name = "institutional_program_id", insertable = false, updatable = false)
-    private long institutionalProgramId;
+    private Long institutionalProgramId;
 
     /**
      * The institutional program.

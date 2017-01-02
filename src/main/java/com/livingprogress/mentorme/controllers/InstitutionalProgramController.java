@@ -243,8 +243,17 @@ public class InstitutionalProgramController extends BaseUploadController {
             List<MenteeMentorGoal> goals = new ArrayList<>();
             for (Goal goal : instProgram.getGoals()) {
                 MenteeMentorGoal mmGoal = new MenteeMentorGoal();
-                
-                mmGoal.setGoal(goal);
+
+                // clone the goaled
+                Goal clonedGoal = new Goal();
+                clonedGoal.setDescription(goal.getDescription());
+                clonedGoal.setDurationInDays(goal.getDurationInDays());
+                clonedGoal.setGoalCategory(goal.getGoalCategory());
+                clonedGoal.setNumber(goal.getNumber());
+                clonedGoal.setSubject(goal.getSubject());
+                clonedGoal.setCustom(goal.isCustom());
+
+                mmGoal.setGoal(clonedGoal);
                 mmGoal.setMenteeMentorProgram(mmProgram);
                 mmGoal.setDocuments(new ArrayList<>(goal.getDocuments()));
                 mmGoal.setUsefulLinks(new ArrayList<>(goal.getUsefulLinks()));
@@ -254,7 +263,18 @@ public class InstitutionalProgramController extends BaseUploadController {
                     List<MenteeMentorTask> tasks = new ArrayList<>();
                     for (Task task : goal.getTasks()) {
                         MenteeMentorTask mmTask = new MenteeMentorTask();
-                        mmTask.setTask(task);
+                        Task clonedTask = new Task();
+                        clonedTask.setCustom(task.isCustom());
+                        clonedTask.setNumber(task.getNumber());
+                        clonedTask.setDurationInDays(task.getDurationInDays());
+                        clonedTask.setGoal(clonedGoal);
+                        clonedTask.setGoalId(clonedGoal.getId());
+                        clonedTask.setCustomData(task.getCustomData());
+                        clonedTask.setMenteeAssignment(task.getMenteeAssignment());
+                        clonedTask.setMentorAssignment(task.getMentorAssignment());
+                        clonedTask.setDescription(task.getDescription());
+
+                        mmTask.setTask(clonedTask);
                         mmTask.setMenteeMentorGoal(mmGoal);
                         mmTask.setStartDate(date.toDate());                        
                         date = date.plusDays(task.getDurationInDays());

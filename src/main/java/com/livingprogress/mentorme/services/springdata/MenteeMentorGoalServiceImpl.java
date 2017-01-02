@@ -75,9 +75,6 @@ public class MenteeMentorGoalServiceImpl extends BaseService<MenteeMentorGoal, M
     @Override
     protected void handleNestedProperties(MenteeMentorGoal entity) throws MentorMeException {
         super.handleNestedProperties(entity);
-        if (entity.getGoal() != null) {
-            Helper.checkEntity(entity.getGoal(), "entity.goal");
-        }
         Helper.checkPositive(entity.getMenteeMentorProgramId(), "entity.menteeMentorProgramId");
         entity.setMenteeMentorProgram(new MenteeMentorProgram());
         entity.getMenteeMentorProgram()

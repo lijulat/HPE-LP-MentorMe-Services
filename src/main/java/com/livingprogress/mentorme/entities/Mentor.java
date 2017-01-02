@@ -59,5 +59,10 @@ public class Mentor extends InstitutionUser {
      * The linkedin url.
      */
     private String linkedInUrl;
+
+    /**
+     * The whats app user name.
+     */
+    private String whatsAppName;
 }
 
