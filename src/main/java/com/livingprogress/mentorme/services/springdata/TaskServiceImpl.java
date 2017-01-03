@@ -73,7 +73,6 @@ public class TaskServiceImpl extends BaseService<Task, TaskSearchCriteria> imple
         super.handleNestedProperties(entity);
         if (entity.getCustomData() != null) {
             entity.getCustomData().setTask(entity);
-            entity.getCustomData().setTaskId(entity.getId());
         }
         Helper.checkPositive(entity.getNumber(), "entity.number");
         Helper.checkPositive(entity.getGoalId(), "entity.goalId");

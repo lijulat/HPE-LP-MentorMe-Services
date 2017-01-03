@@ -80,6 +80,11 @@ public class MenteeMentorGoalControllerTest extends BaseTest {
         verifyEntities(demoEntity.getTasks(), result.getTasks());
         long newId = result.getId();
         demoEntity.setId(newId);
+        demoEntity.getGoal().setId(result.getGoal().getId());
+        for (int i = 0; i < demoEntity.getTasks().size(); i++) {
+            result.getTasks().get(i).getTask().setId(demoEntity.getTasks().get(i).getTask().getId());
+
+        }
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
         MenteeMentorProgram program = entityManager.find(MenteeMentorProgram.class, result.getMenteeMentorProgramId());
         verifyActivity(ActivityType.GOAL_CREATED, newId,
@@ -128,6 +133,7 @@ public class MenteeMentorGoalControllerTest extends BaseTest {
         demoEntity.getTasks()
                   .get(0)
                   .setId(1L);
+        demoEntity.getTasks().get(0).getTask().setId(2);
         String json = objectMapper.writeValueAsString(demoEntity);
         String res = mockAuthMvc.perform(MockMvcRequestBuilders.put("/menteeMentorGoals/1")
                                                                .header(AUTH_HEADER_NAME, mentorToken)
@@ -139,6 +145,7 @@ public class MenteeMentorGoalControllerTest extends BaseTest {
                             .getResponse()
                             .getContentAsString();
         MenteeMentorGoal result = objectMapper.readValue(res, MenteeMentorGoal.class);
+        demoEntity.getGoal().setId(result.getGoal().getId());
         // same id entity just updates
         assertEquals(1, result.getTasks()
                               .get(0)

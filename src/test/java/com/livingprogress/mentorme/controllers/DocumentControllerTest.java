@@ -1,24 +1,22 @@
 package com.livingprogress.mentorme.controllers;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.List;
-
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.livingprogress.mentorme.BaseTest;
 import com.livingprogress.mentorme.entities.Document;
 import com.livingprogress.mentorme.entities.MenteeMentorGoal;
 import com.livingprogress.mentorme.entities.MenteeMentorProgram;
 import com.livingprogress.mentorme.utils.EntityTypes;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * The test cases for <code>DocumentController</code>
@@ -43,7 +41,7 @@ public class DocumentControllerTest extends BaseTest {
     @BeforeClass
     public static void setupClass() throws Exception {
         demoMenteeMentorProgram = readFile("demo-menteeMentorProgram.json");
-        demoMenteeMentorGoal = readFile("demo-menteeMentorGoal.json");
+        demoMenteeMentorGoal = readFile("demo-menteeMentorGoal-document.json");
     }
 
     /**

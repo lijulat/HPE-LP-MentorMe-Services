@@ -9,7 +9,7 @@
     },
     "durationInDays": 2,
     "tasks": null,
-    "institutionalProgramId": 2,
+    "institutionalProgramId": null,
     "usefulLinks": [],
     "documents": [],
     "custom": false,
@@ -17,23 +17,7 @@
   },
   "completed": false,
   "completedOn": null,
-  "tasks": [
-    {
-      "task": {
-        "number": 2,
-        "description": "description2",
-        "durationInDays": 2,
-        "mentorAssignment": true,
-        "menteeAssignment": false,
-        "documents": [],
-        "usefulLinks": [],
-        "custom": false,
-        "customData": null,
-        "goalId": 2
-      },
-      "completed": false
-    }
-  ],
+  "tasks": null,
   "startDate": "2016-11-01",
   "endDate": "2016-11-31",
   "menteeMentorProgramId": 2
