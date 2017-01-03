@@ -270,12 +270,10 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
             entity.getTasks()
                   .forEach(t -> {
                       t.setGoal(entity);
-                      if (t.getCustomData() != null) {
-                          t.getCustomData()
-                           .setTask(t);
-                      }
+                      t.setGoalId(entity.getId());
                       if (t.getCustomData() != null) {
                           t.getCustomData().setTask(t);
+                          t.getCustomData().setTaskId(t.getId());
                       }
                   });
         } else {

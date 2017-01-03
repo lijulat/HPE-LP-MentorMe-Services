@@ -58,6 +58,12 @@ DROP TABLE IF EXISTS `image`;
 DROP TABLE IF EXISTS `mentee_skill`;
 DROP TABLE IF EXISTS `program_skill`;
 DROP TABLE IF EXISTS `skill`;
+DROP TABLE IF EXISTS `mentee_mentor_program_request`;
+
+DROP TABLE IF EXISTS `mentee_mentor_program_useful_link`;
+DROP TABLE IF EXISTS `mentee_mentor_program_document`;
+DROP TABLE IF EXISTS `mentee_mentor_goal_useful_link`;
+DROP TABLE IF EXISTS `mentee_mentor_goal_document`;
 
 DROP FUNCTION if EXISTS `calculate_distance`;
 SET SQL_MODE=@OLD_SQL_MODE;

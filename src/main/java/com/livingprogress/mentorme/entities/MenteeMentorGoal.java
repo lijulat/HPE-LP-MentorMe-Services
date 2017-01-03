@@ -4,20 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 import static javax.persistence.TemporalType.TIMESTAMP;
-import static javax.persistence.CascadeType.ALL;
 
 /**
  * The mentee mentor goal.
@@ -29,7 +20,7 @@ public class MenteeMentorGoal extends IdentifiableEntity {
     /**
      * The goal.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "goal_id")
     private Goal goal;
 

@@ -1,14 +1,7 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.BaseTest;
-import com.livingprogress.mentorme.entities.Goal;
-import com.livingprogress.mentorme.entities.IdentifiableEntity;
-import com.livingprogress.mentorme.entities.MenteeFeedback;
-import com.livingprogress.mentorme.entities.MenteeMentorGoal;
-import com.livingprogress.mentorme.entities.MenteeMentorProgram;
-import com.livingprogress.mentorme.entities.MenteeMentorResponsibility;
-import com.livingprogress.mentorme.entities.MentorFeedback;
-import com.livingprogress.mentorme.entities.SearchResult;
+import com.livingprogress.mentorme.entities.*;
 import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,10 +16,7 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * The test cases for <code>MenteeMentorProgramController</code>
