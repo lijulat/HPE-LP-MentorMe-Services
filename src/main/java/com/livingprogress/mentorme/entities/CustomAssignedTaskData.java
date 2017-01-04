@@ -17,15 +17,15 @@ import javax.persistence.OneToOne;
 @Entity
 public class CustomAssignedTaskData extends CustomAssignedData {
 
-    @Column(name = "task_id")
-    private long taskId;
+    @Column(name = "task_id", insertable = false, updatable = false)
+    private Long taskId;
 
     /**
      * The task.
      */
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "task_id", insertable = false, updatable = false)
+    @JoinColumn(name = "task_id")
     private Task task;
 }
 
