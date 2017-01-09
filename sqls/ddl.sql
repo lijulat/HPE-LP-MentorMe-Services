@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `goal` (
   `description` VARCHAR(1024) NULL,
   `goal_category_id` BIGINT NOT NULL,
   `duration_in_days` INT NOT NULL,
-  `institutional_program_id` BIGINT NOT NULL,
+  `institutional_program_id` BIGINT NULL,
   `custom` TINYINT(1) NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `g_gc_fk`
@@ -295,6 +295,7 @@ CREATE TABLE IF NOT EXISTS `mentor` (
   `mentor_type` VARCHAR(45) NULL,
   `company_name` VARCHAR(45) NULL,
   `linked_in_url` VARCHAR(256) NULL,
+  `whats_app_name` VARCHAR(256) NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `m_id_fk`
     FOREIGN KEY (`id`)
@@ -1282,6 +1283,27 @@ CREATE TABLE IF NOT EXISTS `image` (
   PRIMARY KEY (`id`),
   INDEX `img_url_idx` (`url` ASC))
 ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `mentee_mentor_program_request` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT,
+    `mentor_id` BIGINT NOT NULL,
+    `mentee_id` BIGINT NOT NULL,
+    `request_time` DATETIME NOT NULL,
+    `status` VARCHAR(45) NULL,
+    `approved_or_rejected_time` DATETIME NULL,
+    PRIMARY KEY (`id`),
+    CONSTRAINT `mmpr_me_fk0`
+        FOREIGN KEY (`mentee_id`)
+        REFERENCES `mentee` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION,
+    CONSTRAINT `mmpr_m_fk0`
+        FOREIGN KEY (`mentor_id`)
+        REFERENCES `mentor` (`id`)
+        ON DELETE CASCADE
+        ON UPDATE NO ACTION
+
+) ENGINE = InnoDB;
 
 
 CREATE FUNCTION `calculate_distance` (`longitude1` DECIMAL (16, 8),  `latitude1` DECIMAL (16, 8),`longitude2` DECIMAL (16, 8),  `latitude2` DECIMAL (16, 8)) RETURNS DECIMAL(16, 8) RETURN ST_Distance_Sphere(Point(longitude1, latitude1), Point(longitude2, latitude2));

@@ -1,11 +1,7 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.BaseTest;
-import com.livingprogress.mentorme.entities.ActivityType;
-import com.livingprogress.mentorme.entities.IdentifiableEntity;
-import com.livingprogress.mentorme.entities.MenteeMentorGoal;
-import com.livingprogress.mentorme.entities.MenteeMentorProgram;
-import com.livingprogress.mentorme.entities.SearchResult;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.utils.CustomMessageSource;
 import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
@@ -15,14 +11,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Comparator;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 /**
  * The test cases for <code>MenteeMentorGoalController</code>
  */
@@ -89,6 +80,11 @@ public class MenteeMentorGoalControllerTest extends BaseTest {
         verifyEntities(demoEntity.getTasks(), result.getTasks());
         long newId = result.getId();
         demoEntity.setId(newId);
+        demoEntity.getGoal().setId(result.getGoal().getId());
+        for (int i = 0; i < demoEntity.getTasks().size(); i++) {
+            result.getTasks().get(i).getTask().setId(demoEntity.getTasks().get(i).getTask().getId());
+
+        }
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
         MenteeMentorProgram program = entityManager.find(MenteeMentorProgram.class, result.getMenteeMentorProgramId());
         verifyActivity(ActivityType.GOAL_CREATED, newId,
@@ -137,6 +133,7 @@ public class MenteeMentorGoalControllerTest extends BaseTest {
         demoEntity.getTasks()
                   .get(0)
                   .setId(1L);
+        demoEntity.getTasks().get(0).getTask().setId(2);
         String json = objectMapper.writeValueAsString(demoEntity);
         String res = mockAuthMvc.perform(MockMvcRequestBuilders.put("/menteeMentorGoals/1")
                                                                .header(AUTH_HEADER_NAME, mentorToken)
@@ -148,6 +145,7 @@ public class MenteeMentorGoalControllerTest extends BaseTest {
                             .getResponse()
                             .getContentAsString();
         MenteeMentorGoal result = objectMapper.readValue(res, MenteeMentorGoal.class);
+        demoEntity.getGoal().setId(result.getGoal().getId());
         // same id entity just updates
         assertEquals(1, result.getTasks()
                               .get(0)

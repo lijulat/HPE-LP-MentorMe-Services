@@ -1,12 +1,7 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.BaseTest;
-import com.livingprogress.mentorme.entities.Event;
-import com.livingprogress.mentorme.entities.IdentifiableEntity;
-import com.livingprogress.mentorme.entities.Institution;
-import com.livingprogress.mentorme.entities.InstitutionAffiliationCode;
-import com.livingprogress.mentorme.entities.InstitutionContact;
-import com.livingprogress.mentorme.entities.SearchResult;
+import com.livingprogress.mentorme.entities.*;
 import org.hamcrest.Matchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,15 +21,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * The test cases for <code>InstitutionController</code>

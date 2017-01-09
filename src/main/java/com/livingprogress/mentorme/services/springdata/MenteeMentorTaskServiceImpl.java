@@ -1,9 +1,6 @@
 package com.livingprogress.mentorme.services.springdata;
 
-import com.livingprogress.mentorme.entities.ActivityType;
-import com.livingprogress.mentorme.entities.MenteeMentorGoal;
-import com.livingprogress.mentorme.entities.MenteeMentorTask;
-import com.livingprogress.mentorme.entities.MenteeMentorTaskSearchCriteria;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
@@ -80,7 +77,7 @@ public class MenteeMentorTaskServiceImpl extends BaseService<MenteeMentorTask, M
     @Override
     protected void handleNestedProperties(MenteeMentorTask entity) throws MentorMeException {
         super.handleNestedProperties(entity);
-        Helper.checkEntity(entity.getTask(), "entity.task");
+
         Helper.checkPositive(entity.getMenteeMentorGoalId(), "entity.menteeMentorGoalId");
         entity.setMenteeMentorGoal(new MenteeMentorGoal());
         entity.getMenteeMentorGoal().setId(entity.getMenteeMentorGoalId());
@@ -96,6 +93,10 @@ public class MenteeMentorTaskServiceImpl extends BaseService<MenteeMentorTask, M
      */
     @Transactional
     public MenteeMentorTask create(MenteeMentorTask entity) throws MentorMeException {
+        if (entity.getTask().getGoal() == null) {
+            entity.getTask().setGoal(new Goal());
+        }
+        entity.getTask().getGoal().setId(entity.getTask().getGoalId());
         MenteeMentorTask created = super.create(entity);
         MenteeMentorGoal goal = menteeMentorGoalRepository.findOne(created.getMenteeMentorGoalId());
         Helper.audit(activityRepository, menteeMentorProgramRepository,
@@ -118,6 +119,10 @@ public class MenteeMentorTaskServiceImpl extends BaseService<MenteeMentorTask, M
      */
     @Transactional
     public MenteeMentorTask update(long id, MenteeMentorTask entity) throws MentorMeException {
+        if (entity.getTask().getGoal() == null) {
+            entity.getTask().setGoal(new Goal());
+        }
+        entity.getTask().getGoal().setId(entity.getTask().getGoalId());
         MenteeMentorTask updated = super.update(id, entity);
         MenteeMentorGoal goal = menteeMentorGoalRepository.findOne(updated.getMenteeMentorGoalId());
         Helper.audit(activityRepository, menteeMentorProgramRepository, ActivityType.TASK_UPDATED,
