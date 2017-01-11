@@ -123,6 +123,10 @@ public class MenteeMentorTaskServiceImpl extends BaseService<MenteeMentorTask, M
             entity.getTask().setGoal(new Goal());
         }
         entity.getTask().getGoal().setId(entity.getTask().getGoalId());
+        if (entity.getTask() != null && entity.getTask().getCustomData() != null) {
+            entity.getTask().getCustomData().setTask(entity.getTask());
+            entity.getTask().getCustomData().setTaskId(entity.getTask().getId());
+        }
         MenteeMentorTask updated = super.update(id, entity);
         MenteeMentorGoal goal = menteeMentorGoalRepository.findOne(updated.getMenteeMentorGoalId());
         Helper.audit(activityRepository, menteeMentorProgramRepository, ActivityType.TASK_UPDATED,
