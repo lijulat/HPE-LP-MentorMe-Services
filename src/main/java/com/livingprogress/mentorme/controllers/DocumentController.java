@@ -1,33 +1,25 @@
 package com.livingprogress.mentorme.controllers;
 
-import java.util.Iterator;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.livingprogress.mentorme.entities.Document;
 import com.livingprogress.mentorme.entities.MenteeMentorGoal;
 import com.livingprogress.mentorme.entities.MenteeMentorProgram;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
-import com.livingprogress.mentorme.services.MenteeMentorProgramService;
 import com.livingprogress.mentorme.services.MenteeMentorGoalService;
+import com.livingprogress.mentorme.services.MenteeMentorProgramService;
 import com.livingprogress.mentorme.utils.EntityTypes;
 import com.livingprogress.mentorme.utils.Helper;
-
-
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * The Document REST controller. Is effectively thread safe.
@@ -100,7 +92,7 @@ public class DocumentController extends BaseUploadController {
     @RequestMapping(value = "{entityType}/{entityId}/document/{documentId}", method = RequestMethod.DELETE)
     @Transactional
     public void delete(@PathVariable String entityType, @PathVariable long entityId, @PathVariable long documentId) throws MentorMeException {
-        List<Document> docs = null;
+        List<Document> docs;
         
         if (EntityTypes.MENTEE_MENTOR_PROGRAM.equalsIgnoreCase(entityType)) {
             docs = menteeMentorProgramService.get(entityId).getDocuments();

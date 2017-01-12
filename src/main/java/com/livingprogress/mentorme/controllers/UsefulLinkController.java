@@ -90,7 +90,7 @@ public class UsefulLinkController {
     @RequestMapping(value = "{entityType}/{entityId}/link/{linkId}", method = RequestMethod.DELETE)
     @Transactional
     public void delete(@PathVariable String entityType, @PathVariable long entityId, @PathVariable long linkId) throws MentorMeException {
-        List<UsefulLink> links = null;
+        List<UsefulLink> links;
         
         if (EntityTypes.MENTEE_MENTOR_PROGRAM.equalsIgnoreCase(entityType)) {
             links = menteeMentorProgramService.get(entityId).getUsefulLinks();
