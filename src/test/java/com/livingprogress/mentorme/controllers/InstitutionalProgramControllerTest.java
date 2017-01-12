@@ -12,7 +12,6 @@ import java.util.Comparator;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -247,6 +246,7 @@ public class InstitutionalProgramControllerTest extends BaseTest {
     @Test
     public void search() throws Exception {
         SearchResult<InstitutionalProgram> result = readSearchResult(entities, InstitutionalProgram.class);
+
         mockMvc.perform(MockMvcRequestBuilders.get("/institutionalPrograms?sortColumn=id&sortOrder=ASC")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
