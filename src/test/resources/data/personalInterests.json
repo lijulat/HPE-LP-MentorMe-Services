@@ -3583,8 +3583,8 @@
   "value" : "Contests & Freebies",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 21,
-    "value" : "Real Estate",
+    "id" : 22,
+    "value" : "Shopping",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3593,28 +3593,18 @@
   "value" : "Couponing",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 21,
-    "value" : "Real Estate",
+    "id" : 22,
+    "value" : "Shopping",
     "picturePath" : null,
     "parentCategory" : null
   }
 }, {
   "id" : 373,
-  "value" : "Comparison",
+  "value" : "Comparison Engines",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 21,
-    "value" : "Real Estate",
-    "picturePath" : null,
-    "parentCategory" : null
-  }
-}, {
-  "id" : 374,
-  "value" : "Engines",
-  "picturePath" : null,
-  "parentCategory" : {
-    "id" : 21,
-    "value" : "Real Estate",
+    "id" : 22,
+    "value" : "Shopping",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3623,8 +3613,8 @@
   "value" : "Alternative Religions",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 22,
-    "value" : "Shopping",
+    "id" : 23,
+    "value" : "Religion & Spirituality",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3633,8 +3623,8 @@
   "value" : "Atheism/Agnosticism",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 22,
-    "value" : "Shopping",
+    "id" : 23,
+    "value" : "Religion & Spirituality",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3643,8 +3633,8 @@
   "value" : "Buddhism",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 22,
-    "value" : "Shopping",
+    "id" : 23,
+    "value" : "Religion & Spirituality",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3653,8 +3643,8 @@
   "value" : "Catholicism",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 22,
-    "value" : "Shopping",
+    "id" : 23,
+    "value" : "Religion & Spirituality",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3663,8 +3653,8 @@
   "value" : "Christianity",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 22,
-    "value" : "Shopping",
+    "id" : 23,
+    "value" : "Religion & Spirituality",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3673,8 +3663,8 @@
   "value" : "Hinduism",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 22,
-    "value" : "Shopping",
+    "id" : 23,
+    "value" : "Religion & Spirituality",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3683,8 +3673,8 @@
   "value" : "Islam",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 22,
-    "value" : "Shopping",
+    "id" : 23,
+    "value" : "Religion & Spirituality",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3693,8 +3683,8 @@
   "value" : "Judaism",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 22,
-    "value" : "Shopping",
+    "id" : 23,
+    "value" : "Religion & Spirituality",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3703,8 +3693,8 @@
   "value" : "Latter-Day Saints",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 22,
-    "value" : "Shopping",
+    "id" : 23,
+    "value" : "Religion & Spirituality",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3713,8 +3703,8 @@
   "value" : "Pagan/Wiccan",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 22,
-    "value" : "Shopping",
+    "id" : 23,
+    "value" : "Religion & Spirituality",
     "picturePath" : null,
     "parentCategory" : null
   }
@@ -3723,8 +3713,8 @@
   "value" : "Social Media",
   "picturePath" : null,
   "parentCategory" : {
-    "id" : 23,
-    "value" : "Religion & Spirituality",
+    "id" : 24,
+    "value" : "Uncategorized",
     "picturePath" : null,
     "parentCategory" : null
   }
