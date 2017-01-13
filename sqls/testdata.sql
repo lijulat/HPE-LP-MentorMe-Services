@@ -395,21 +395,20 @@ insert into personal_interest(id, value, parent_category_id) values(367,'United 
 insert into personal_interest(id, value, parent_category_id) values(368,'Apartments', 21);
 insert into personal_interest(id, value, parent_category_id) values(369,'Architects', 21);
 insert into personal_interest(id, value, parent_category_id) values(370,'Buying/Selling Homes', 21);
-insert into personal_interest(id, value, parent_category_id) values(371,'Contests & Freebies', 21);
-insert into personal_interest(id, value, parent_category_id) values(372,'Couponing', 21);
-insert into personal_interest(id, value, parent_category_id) values(373,'Comparison', 21);
-insert into personal_interest(id, value, parent_category_id) values(374,'Engines', 21);
-insert into personal_interest(id, value, parent_category_id) values(375,'Alternative Religions', 22);
-insert into personal_interest(id, value, parent_category_id) values(376,'Atheism/Agnosticism', 22);
-insert into personal_interest(id, value, parent_category_id) values(377,'Buddhism', 22);
-insert into personal_interest(id, value, parent_category_id) values(378,'Catholicism', 22);
-insert into personal_interest(id, value, parent_category_id) values(379,'Christianity', 22);
-insert into personal_interest(id, value, parent_category_id) values(380,'Hinduism', 22);
-insert into personal_interest(id, value, parent_category_id) values(381,'Islam', 22);
-insert into personal_interest(id, value, parent_category_id) values(382,'Judaism', 22);
-insert into personal_interest(id, value, parent_category_id) values(383,'Latter-Day Saints', 22);
-insert into personal_interest(id, value, parent_category_id) values(384,'Pagan/Wiccan', 22);
-insert into personal_interest(id, value, parent_category_id) values(385,'Social Media', 23);
+insert into personal_interest(id, value, parent_category_id) values(371,'Contests & Freebies', 22);
+insert into personal_interest(id, value, parent_category_id) values(372,'Couponing', 22);
+insert into personal_interest(id, value, parent_category_id) values(373,'Comparison Engines', 22);
+insert into personal_interest(id, value, parent_category_id) values(375,'Alternative Religions', 23);
+insert into personal_interest(id, value, parent_category_id) values(376,'Atheism/Agnosticism', 23);
+insert into personal_interest(id, value, parent_category_id) values(377,'Buddhism', 23);
+insert into personal_interest(id, value, parent_category_id) values(378,'Catholicism', 23);
+insert into personal_interest(id, value, parent_category_id) values(379,'Christianity', 23);
+insert into personal_interest(id, value, parent_category_id) values(380,'Hinduism', 23);
+insert into personal_interest(id, value, parent_category_id) values(381,'Islam', 23);
+insert into personal_interest(id, value, parent_category_id) values(382,'Judaism', 23);
+insert into personal_interest(id, value, parent_category_id) values(383,'Latter-Day Saints', 23);
+insert into personal_interest(id, value, parent_category_id) values(384,'Pagan/Wiccan', 23);
+insert into personal_interest(id, value, parent_category_id) values(385,'Social Media', 24);
 
 insert into professional_interest(id, value) values(1,'Arts & Entertainment');
 insert into professional_interest(id, value) values(2,'Automotive');
@@ -781,21 +780,20 @@ insert into professional_interest(id, value, parent_category_id) values(367,'Uni
 insert into professional_interest(id, value, parent_category_id) values(368,'Apartments', 21);
 insert into professional_interest(id, value, parent_category_id) values(369,'Architects', 21);
 insert into professional_interest(id, value, parent_category_id) values(370,'Buying/Selling Homes', 21);
-insert into professional_interest(id, value, parent_category_id) values(371,'Contests & Freebies', 21);
-insert into professional_interest(id, value, parent_category_id) values(372,'Couponing', 21);
-insert into professional_interest(id, value, parent_category_id) values(373,'Comparison', 21);
-insert into professional_interest(id, value, parent_category_id) values(374,'Engines', 21);
-insert into professional_interest(id, value, parent_category_id) values(375,'Alternative Religions', 22);
-insert into professional_interest(id, value, parent_category_id) values(376,'Atheism/Agnosticism', 22);
-insert into professional_interest(id, value, parent_category_id) values(377,'Buddhism', 22);
-insert into professional_interest(id, value, parent_category_id) values(378,'Catholicism', 22);
-insert into professional_interest(id, value, parent_category_id) values(379,'Christianity', 22);
-insert into professional_interest(id, value, parent_category_id) values(380,'Hinduism', 22);
-insert into professional_interest(id, value, parent_category_id) values(381,'Islam', 22);
-insert into professional_interest(id, value, parent_category_id) values(382,'Judaism', 22);
-insert into professional_interest(id, value, parent_category_id) values(383,'Latter-Day Saints', 22);
-insert into professional_interest(id, value, parent_category_id) values(384,'Pagan/Wiccan', 22);
-insert into professional_interest(id, value, parent_category_id) values(385,'Social Media', 23);
+insert into professional_interest(id, value, parent_category_id) values(371,'Contests & Freebies', 22);
+insert into professional_interest(id, value, parent_category_id) values(372,'Couponing', 22);
+insert into professional_interest(id, value, parent_category_id) values(373,'Comparison Engines', 22);
+insert into professional_interest(id, value, parent_category_id) values(375,'Alternative Religions', 23);
+insert into professional_interest(id, value, parent_category_id) values(376,'Atheism/Agnosticism', 23);
+insert into professional_interest(id, value, parent_category_id) values(377,'Buddhism', 23);
+insert into professional_interest(id, value, parent_category_id) values(378,'Catholicism', 23);
+insert into professional_interest(id, value, parent_category_id) values(379,'Christianity', 23);
+insert into professional_interest(id, value, parent_category_id) values(380,'Hinduism', 23);
+insert into professional_interest(id, value, parent_category_id) values(381,'Islam', 23);
+insert into professional_interest(id, value, parent_category_id) values(382,'Judaism', 23);
+insert into professional_interest(id, value, parent_category_id) values(383,'Latter-Day Saints', 23);
+insert into professional_interest(id, value, parent_category_id) values(384,'Pagan/Wiccan', 23);
+insert into professional_interest(id, value, parent_category_id) values(385,'Social Media', 24);
 
 insert into document_type values(1,'DocumentType1', 'iconPath1');
 insert into document_type values(2,'DocumentType2', 'iconPath2');
@@ -842,14 +840,14 @@ insert into institution_contact values(1, 'title1', 'firstName1', 'lastName1', '
 insert into institution_contact values(2, 'title2', 'firstName2', 'lastName2', 'institutionContact2@test.com', 'phoneNumber2', false, 1);
 insert into institution_contact values(3, 'title3', 'firstName3', 'lastName3', 'institutionContact3@test.com', 'phoneNumber3', true, 2);
 
-insert into mentor values(3, 1, true, '1988-08-01', 'phone1', 'skypeUsername1','introVideoLink1','description1',0,'MENTEE_PAIRED', 'companyName1','linkedInUrl1');
-insert into mentor values(5, 2, false, '1988-08-02', 'phone2', 'skypeUsername2','introVideoLink2','description2',1,'PROFESSIONAL_CONSULTANT', 'companyName2','linkedInUrl2');
+insert into mentor values(3, 1, true, '1988-08-01', 'phone1', 'skypeUsername1','introVideoLink1','description1',0,'MENTEE_PAIRED', 'companyName1','linkedInUrl1', 'whatsapp1');
+insert into mentor values(5, 2, false, '1988-08-02', 'phone2', 'skypeUsername2','introVideoLink2','description2',1,'PROFESSIONAL_CONSULTANT', 'companyName2','linkedInUrl2', 'whatsapp2');
 -- must use institution_id=1 for matching
-insert into mentor values(6, 1, true, '1988-08-03', 'phone3', 'skypeUsername3','introVideoLink3','description3',2,'MENTEE_PAIRED', 'companyName3','linkedInUrl3');
-insert into mentor values(7, 4, false, '1988-08-04', 'phone4', 'skypeUsername4','introVideoLink4','description4',3,'PROFESSIONAL_CONSULTANT', 'companyName4','linkedInUrl4');
+insert into mentor values(6, 1, true, '1988-08-03', 'phone3', 'skypeUsername3','introVideoLink3','description3',2,'MENTEE_PAIRED', 'companyName3','linkedInUrl3', 'whatsapp3');
+insert into mentor values(7, 4, false, '1988-08-04', 'phone4', 'skypeUsername4','introVideoLink4','description4',3,'PROFESSIONAL_CONSULTANT', 'companyName4','linkedInUrl4', 'whatsapp4');
 -- must use institution_id=1 for matching
-insert into mentor values(8, 1, true, '1988-08-05', 'phone5', 'skypeUsername5','introVideoLink5','description5',4,'MENTEE_PAIRED', 'companyName5','linkedInUrl5');
-insert into mentor values(9, 6, false, '1988-08-06', 'phone6', 'skypeUsername6','introVideoLink5','description6',5,'PROFESSIONAL_CONSULTANT', 'companyName6','linkedInUrl6');
+insert into mentor values(8, 1, true, '1988-08-05', 'phone5', 'skypeUsername5','introVideoLink5','description5',4,'MENTEE_PAIRED', 'companyName5','linkedInUrl5', 'whatsapp5');
+insert into mentor values(9, 6, false, '1988-08-06', 'phone6', 'skypeUsername6','introVideoLink5','description6',5,'PROFESSIONAL_CONSULTANT', 'companyName6','linkedInUrl6', 'whatsapp6');
 
 insert into mentor_professional_area values(3,1);
 insert into mentor_professional_area values(3,2);
@@ -928,8 +926,8 @@ insert into mentor_feedback values(1, 12, 'mentor_feedback_comment1', '2016-12-0
 
 insert into mentee_feedback values(1, 12, 'mentee_feedback_comment1', '2016-12-02');
 
-insert into mentee_mentor_program values(1, 4, 3, 1, 'APPROVED', 1, 1, '2016-12-01','2016-12-31',true,'2016-12-31');
-insert into mentee_mentor_program values(2, 10, 5, 2, 'REJECTED', 1, 1, '2016-12-02','2016-12-30',false, NULL);
+insert into mentee_mentor_program values(1, 4, 3, 1, 'APPROVED', 1, 1, '2016-12-01','2017-01-31',true,'2016-12-31');
+insert into mentee_mentor_program values(2, 10, 5, 2, 'REJECTED', 1, 1, '2016-12-02','2017-01-30',false, NULL);
 insert into mentee_mentor_program values(3, 11, 6, 3, 'REQUESTED_BY_MENTOR', 1, 1, '2016-12-03','2016-12-29',false, NULL);
 insert into mentee_mentor_program values(4, 12, 7, 4, 'REQUESTED_BY_MENTEE', 1, 1, '2016-12-04','2016-12-28',false, NULL);
 insert into mentee_mentor_program values(5, 13, 8, 5, 'APPROVED', 1, 1, '2016-12-05','2016-12-27',false, NULL);
@@ -1038,18 +1036,20 @@ insert into mentee_mentor_responsibility values(5, 5, 'title5', '2016-12-05', tr
 insert into mentee_mentor_responsibility values(6, 6, 'title6', '2016-12-06', false, false, 6,6);
 
 
-insert into skill value(1, 'Leadership Training', 'Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.', 'http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg');
-insert into skill value(2, 'Management Skills', 'Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.', 'http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg');
-insert into skill value(3, 'Time Management', 'Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.', 'http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg');
-insert into skill value(4, 'Entrepreneurship', 'Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.', 'http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg');
+insert into skill values(1, 'Leadership Training', 'Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.', 'http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg');
+insert into skill values(2, 'Management Skills', 'Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.', 'http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg');
+insert into skill values(3, 'Time Management', 'Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.', 'http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg');
+insert into skill values(4, 'Entrepreneurship', 'Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.', 'http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg');
 
-insert into mentee_skill value(1, 4, 1);
-insert into mentee_skill value(2, 4, 3);
+insert into mentee_skill values(1, 4, 1);
+insert into mentee_skill values(2, 4, 3);
 
-insert into program_skill value(1, 1, 1);
-insert into program_skill value(2, 1, 2);
-insert into program_skill value(3, 2, 2);
-insert into program_skill value(4, 3, 3);
-insert into program_skill value(5, 4, 4);
-insert into program_skill value(6, 5, 1);
-insert into program_skill value(7, 6, 2);
+insert into program_skill values(1, 1, 1);
+insert into program_skill values(2, 1, 2);
+insert into program_skill values(3, 2, 2);
+insert into program_skill values(4, 3, 3);
+insert into program_skill values(5, 4, 4);
+insert into program_skill values(6, 5, 1);
+insert into program_skill values(7, 6, 2);
+
+insert into mentee_mentor_program_request values(1, 3, 4, '2016-12-26', 'REQUESTED_BY_MENTEE', null);

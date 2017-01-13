@@ -1,11 +1,6 @@
 package com.livingprogress.mentorme.controllers;
 
-import com.livingprogress.mentorme.entities.MenteeFeedback;
-import com.livingprogress.mentorme.entities.MenteeMentorProgram;
-import com.livingprogress.mentorme.entities.MenteeMentorProgramSearchCriteria;
-import com.livingprogress.mentorme.entities.MentorFeedback;
-import com.livingprogress.mentorme.entities.Paging;
-import com.livingprogress.mentorme.entities.SearchResult;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
@@ -14,16 +9,11 @@ import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.util.Date;
 
 /**
  * The MenteeMentorProgram REST controller. Is effectively thread safe.
@@ -145,6 +135,7 @@ public class MenteeMentorProgramController {
             MentorMeException {
         Helper.checkNull(feedback, "feedback");
         MenteeMentorProgram program = menteeMentorProgramService.get(id);
+        feedback.setCreatedOn(new Date());
         program.setMenteeFeedback(feedback);
         menteeMentorProgramService.update(id, program);
     }
@@ -164,6 +155,7 @@ public class MenteeMentorProgramController {
             MentorMeException {
         Helper.checkNull(feedback, "feedback");
         MenteeMentorProgram program = menteeMentorProgramService.get(id);
+        feedback.setCreatedOn(new Date());
         program.setMentorFeedback(feedback);
         menteeMentorProgramService.update(id, program);
     }

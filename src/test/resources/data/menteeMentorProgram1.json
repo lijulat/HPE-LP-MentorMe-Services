@@ -152,6 +152,7 @@
     } ],
     "companyName" : "companyName1",
     "linkedInUrl" : "linkedInUrl1",
+    "whatsAppName" : "whatsapp1",
     "virtualUser" : false,
     "agreedAgreement" : true
   },
@@ -728,6 +729,7 @@
             } ],
             "companyName" : "companyName1",
             "linkedInUrl" : "linkedInUrl1",
+            "whatsAppName" : "whatsapp1",
             "virtualUser" : false,
             "agreedAgreement" : true
           },
@@ -888,6 +890,7 @@
             } ],
             "companyName" : "companyName1",
             "linkedInUrl" : "linkedInUrl1",
+            "whatsAppName" : "whatsapp1",
             "virtualUser" : false,
             "agreedAgreement" : true
           },
@@ -1053,7 +1056,8 @@
             } ],
             "virtualUser" : true,
             "agreedAgreement" : true
-          }
+          },
+          "taskId" : 1
         },
         "goalId" : 1
       } ],
@@ -1299,6 +1303,7 @@
           } ],
           "companyName" : "companyName1",
           "linkedInUrl" : "linkedInUrl1",
+          "whatsAppName" : "whatsapp1",
           "virtualUser" : false,
           "agreedAgreement" : true
         },
@@ -1608,6 +1613,7 @@
         "professionalAreas" : [ ],
         "companyName" : "companyName2",
         "linkedInUrl" : "linkedInUrl2",
+        "whatsAppName" : "whatsapp2",
         "virtualUser" : false,
         "agreedAgreement" : true
       },
@@ -1706,6 +1712,7 @@
         "professionalAreas" : [ ],
         "companyName" : "companyName3",
         "linkedInUrl" : "linkedInUrl3",
+        "whatsAppName" : "whatsapp3",
         "virtualUser" : true,
         "agreedAgreement" : true
       },
@@ -1727,7 +1734,7 @@
     "createdOn" : "2016-12-02T00:00:00"
   },
   "startDate" : "2016-12-01",
-  "endDate" : "2016-12-31",
+  "endDate" : "2017-01-31",
   "goals" : [ {
     "id" : 1,
     "goal" : {
@@ -2088,6 +2095,7 @@
             } ],
             "companyName" : "companyName1",
             "linkedInUrl" : "linkedInUrl1",
+            "whatsAppName" : "whatsapp1",
             "virtualUser" : false,
             "agreedAgreement" : true
           },
@@ -2248,6 +2256,7 @@
             } ],
             "companyName" : "companyName1",
             "linkedInUrl" : "linkedInUrl1",
+            "whatsAppName" : "whatsapp1",
             "virtualUser" : false,
             "agreedAgreement" : true
           },
@@ -2413,7 +2422,8 @@
             } ],
             "virtualUser" : true,
             "agreedAgreement" : true
-          }
+          },
+          "taskId" : 1
         },
         "goalId" : 1
       } ],
@@ -2659,6 +2669,7 @@
           } ],
           "companyName" : "companyName1",
           "linkedInUrl" : "linkedInUrl1",
+          "whatsAppName" : "whatsapp1",
           "virtualUser" : false,
           "agreedAgreement" : true
         },
@@ -3179,6 +3190,7 @@
             } ],
             "companyName" : "companyName1",
             "linkedInUrl" : "linkedInUrl1",
+            "whatsAppName" : "whatsapp1",
             "virtualUser" : false,
             "agreedAgreement" : true
           },
@@ -3339,6 +3351,7 @@
             } ],
             "companyName" : "companyName1",
             "linkedInUrl" : "linkedInUrl1",
+            "whatsAppName" : "whatsapp1",
             "virtualUser" : false,
             "agreedAgreement" : true
           },
@@ -3504,7 +3517,8 @@
             } ],
             "virtualUser" : true,
             "agreedAgreement" : true
-          }
+          },
+          "taskId" : 1
         },
         "goalId" : 1
       },

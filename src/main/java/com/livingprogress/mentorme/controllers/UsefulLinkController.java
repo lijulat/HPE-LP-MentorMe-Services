@@ -1,19 +1,5 @@
 package com.livingprogress.mentorme.controllers;
 
-import java.util.Iterator;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.livingprogress.mentorme.entities.MenteeMentorGoal;
 import com.livingprogress.mentorme.entities.MenteeMentorProgram;
 import com.livingprogress.mentorme.entities.UsefulLink;
@@ -24,8 +10,15 @@ import com.livingprogress.mentorme.services.MenteeMentorGoalService;
 import com.livingprogress.mentorme.services.MenteeMentorProgramService;
 import com.livingprogress.mentorme.utils.EntityTypes;
 import com.livingprogress.mentorme.utils.Helper;
-
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * The UsefulLink REST controller. Is effectively thread safe.
@@ -70,9 +63,11 @@ public class UsefulLinkController {
     @Transactional
     public UsefulLink create(@PathVariable String entityType, @PathVariable long entityId,
             @RequestBody UsefulLink usefulLink) throws MentorMeException {
-
+        usefulLink.setCreatedOn(new Date());
+        usefulLink.setAuthor(Helper.getAuthUser());
         if (EntityTypes.MENTEE_MENTOR_PROGRAM.equalsIgnoreCase(entityType)) {
             MenteeMentorProgram program = menteeMentorProgramService.get(entityId);
+
             program.getUsefulLinks().add(usefulLink);
         } else if (EntityTypes.MENTEE_MENTOR_GOAL.equalsIgnoreCase(entityType)) {
             MenteeMentorGoal goal = menteeMentorGoalService.get(entityId);
@@ -95,7 +90,7 @@ public class UsefulLinkController {
     @RequestMapping(value = "{entityType}/{entityId}/link/{linkId}", method = RequestMethod.DELETE)
     @Transactional
     public void delete(@PathVariable String entityType, @PathVariable long entityId, @PathVariable long linkId) throws MentorMeException {
-        List<UsefulLink> links = null;
+        List<UsefulLink> links;
         
         if (EntityTypes.MENTEE_MENTOR_PROGRAM.equalsIgnoreCase(entityType)) {
             links = menteeMentorProgramService.get(entityId).getUsefulLinks();

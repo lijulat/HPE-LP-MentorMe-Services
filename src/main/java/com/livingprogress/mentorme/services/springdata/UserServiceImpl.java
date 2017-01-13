@@ -221,6 +221,10 @@ public class UserServiceImpl extends BaseService<User, UserSearchCriteria> imple
     public User getMe() throws MentorMeException {
         // get the user from the tokens
         User user = Helper.getAuthUser();
+        if (user == null) {
+            return null;
+        }
+
         // update the user info in db
         user = super.get(user.getId());
 

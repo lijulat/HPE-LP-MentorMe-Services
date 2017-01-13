@@ -79,7 +79,15 @@ public class MenteeMentorProgramServiceImpl extends BaseService<MenteeMentorProg
                       c.setMenteeMentorProgram(entity);
                       if (c.getTasks() != null) {
                           c.getTasks()
-                           .forEach(t -> t.setMenteeMentorGoal(c));
+                           .forEach(t -> {
+                               t.setMenteeMentorGoal(c);
+                               if (t.getTask() != null) {
+                                   t.getTask().setGoal(c.getGoal());
+                               }
+                           });
+                      }
+                      if (c.getGoal() != null && c.getGoal().getTasks() != null) {
+                          c.getGoal().getTasks().forEach(t -> t.setGoal(c.getGoal()));
                       }
                   });
         } else {

@@ -2,6 +2,7 @@ package com.livingprogress.mentorme.exceptions;
 
 import com.livingprogress.mentorme.aop.LogAspect;
 import com.livingprogress.mentorme.utils.Helper;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,8 +33,10 @@ public class ServiceExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleControllerException(Throwable exception) {        
         Helper.logException(LogAspect.LOGGER, "com.livingprogress.mentorme.exceptions"
                 + ".ServiceExceptionHandler#handleControllerException", exception);
-        
-        exception.printStackTrace();
+
+        String stackTrace = ExceptionUtils.getStackTrace(exception);
+        LogAspect.LOGGER.error(stackTrace, exception);
+
         HttpStatus status;
         if (exception instanceof IllegalArgumentException) {
             status = HttpStatus.BAD_REQUEST;

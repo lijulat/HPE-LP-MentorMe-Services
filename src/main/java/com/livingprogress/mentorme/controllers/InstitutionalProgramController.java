@@ -1,47 +1,21 @@
 package com.livingprogress.mentorme.controllers;
 
-import com.livingprogress.mentorme.entities.Document;
-import com.livingprogress.mentorme.entities.Goal;
-import com.livingprogress.mentorme.entities.InstitutionalProgram;
-import com.livingprogress.mentorme.entities.InstitutionalProgramSearchCriteria;
-import com.livingprogress.mentorme.entities.Mentee;
-import com.livingprogress.mentorme.entities.MenteeMentorGoal;
-import com.livingprogress.mentorme.entities.MenteeMentorIds;
-import com.livingprogress.mentorme.entities.MenteeMentorProgram;
-import com.livingprogress.mentorme.entities.MenteeMentorResponsibility;
-import com.livingprogress.mentorme.entities.MenteeMentorTask;
-import com.livingprogress.mentorme.entities.Mentor;
-import com.livingprogress.mentorme.entities.Paging;
-import com.livingprogress.mentorme.entities.Responsibility;
-import com.livingprogress.mentorme.entities.SearchResult;
-import com.livingprogress.mentorme.entities.Task;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
-import com.livingprogress.mentorme.services.InstitutionalProgramService;
-import com.livingprogress.mentorme.services.MenteeMentorProgramService;
-import com.livingprogress.mentorme.services.MenteeService;
-import com.livingprogress.mentorme.services.MentorService;
+import com.livingprogress.mentorme.services.*;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
-
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +49,9 @@ public class InstitutionalProgramController extends BaseUploadController {
      */
     @Autowired
     private MenteeService menteeService;
+
+    @Autowired
+    private UserService userService;
 
 
     /**
@@ -171,6 +148,13 @@ public class InstitutionalProgramController extends BaseUploadController {
     @RequestMapping(method = RequestMethod.GET)
     public SearchResult<InstitutionalProgram> search(@ModelAttribute InstitutionalProgramSearchCriteria criteria,
             @ModelAttribute Paging paging) throws MentorMeException {
+        User currentUser = userService.getMe();
+        if (currentUser instanceof InstitutionUser) {
+            InstitutionUser iUser = (InstitutionUser) currentUser;
+            if (iUser.getInstitution() != null) {
+                criteria.setInstitutionId(iUser.getInstitution().getId());
+            }
+        }
         return institutionalProgramService.search(criteria, paging);
     }
 
@@ -243,8 +227,17 @@ public class InstitutionalProgramController extends BaseUploadController {
             List<MenteeMentorGoal> goals = new ArrayList<>();
             for (Goal goal : instProgram.getGoals()) {
                 MenteeMentorGoal mmGoal = new MenteeMentorGoal();
-                
-                mmGoal.setGoal(goal);
+
+                // clone the goaled
+                Goal clonedGoal = new Goal();
+                clonedGoal.setDescription(goal.getDescription());
+                clonedGoal.setDurationInDays(goal.getDurationInDays());
+                clonedGoal.setGoalCategory(goal.getGoalCategory());
+                clonedGoal.setNumber(goal.getNumber());
+                clonedGoal.setSubject(goal.getSubject());
+                clonedGoal.setCustom(goal.isCustom());
+
+                mmGoal.setGoal(clonedGoal);
                 mmGoal.setMenteeMentorProgram(mmProgram);
                 mmGoal.setDocuments(new ArrayList<>(goal.getDocuments()));
                 mmGoal.setUsefulLinks(new ArrayList<>(goal.getUsefulLinks()));
@@ -254,7 +247,18 @@ public class InstitutionalProgramController extends BaseUploadController {
                     List<MenteeMentorTask> tasks = new ArrayList<>();
                     for (Task task : goal.getTasks()) {
                         MenteeMentorTask mmTask = new MenteeMentorTask();
-                        mmTask.setTask(task);
+                        Task clonedTask = new Task();
+                        clonedTask.setCustom(task.isCustom());
+                        clonedTask.setNumber(task.getNumber());
+                        clonedTask.setDurationInDays(task.getDurationInDays());
+                        clonedTask.setGoal(clonedGoal);
+                        clonedTask.setGoalId(clonedGoal.getId());
+                        clonedTask.setCustomData(task.getCustomData());
+                        clonedTask.setMenteeAssignment(task.getMenteeAssignment());
+                        clonedTask.setMentorAssignment(task.getMentorAssignment());
+                        clonedTask.setDescription(task.getDescription());
+
+                        mmTask.setTask(clonedTask);
                         mmTask.setMenteeMentorGoal(mmGoal);
                         mmTask.setStartDate(date.toDate());                        
                         date = date.plusDays(task.getDurationInDays());
