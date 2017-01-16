@@ -206,7 +206,8 @@ CREATE TABLE IF NOT EXISTS `parent_consent` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `parent_name` VARCHAR(1024) NOT NULL,
   `signature_file_path` VARCHAR(1024) NOT NULL,
-  `parent_email` VARCHAR(64) NOT NULL,
+  `parent_email` VARCHAR(64) NULL,
+  `parent_phone` VARCHAR(64) NULL,
   `token` VARCHAR(128) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;

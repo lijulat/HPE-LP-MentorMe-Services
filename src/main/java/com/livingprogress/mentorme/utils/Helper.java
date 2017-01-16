@@ -864,10 +864,11 @@ public class Helper {
             return false;
         }
         return isUpdated(oldEntity, newEntity)
-                || isUpdated(oldEntity.getParentName(), newEntity.getParentEmail())
-                || isUpdated(oldEntity.getSignatureFilePath(), oldEntity.getSignatureFilePath())
-                || isUpdated(oldEntity.getParentEmail(), oldEntity.getParentEmail())
-                || isUpdated(oldEntity.getToken(), oldEntity.getToken());
+                || isUpdated(oldEntity.getParentName(), newEntity.getParentName())
+                || isUpdated(oldEntity.getSignatureFilePath(), newEntity.getSignatureFilePath())
+                || isUpdated(oldEntity.getParentEmail(), newEntity.getParentEmail())
+                || isUpdated(oldEntity.getParentPhone(), newEntity.getParentPhone())
+                || isUpdated(oldEntity.getToken(), newEntity.getToken());
 
     }
 
