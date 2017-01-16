@@ -28,6 +28,11 @@ public class ParentConsent extends IdentifiableEntity {
     private String parentEmail;
 
     /**
+     * The parent phone.
+     */
+    private String parentPhone;
+
+    /**
      * The confirmation token.
      */
     private String token;
