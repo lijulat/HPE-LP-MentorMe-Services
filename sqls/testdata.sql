@@ -909,8 +909,8 @@ insert into institution_affiliation_code values(4, 'code4', 4, true);
 insert into institution_affiliation_code values(5, 'code5', 5, true);
 insert into institution_affiliation_code values(6, 'code6', 6, true);
 
-insert into parent_consent values(1, 'parentName1', 'signatureFilePath1', 'parentEmail1@test.com','token1');
-insert into parent_consent values(2, 'parentName2', 'signatureFilePath2', 'parentEmail2@test.com','token2');
+insert into parent_consent values(1, 'parentName1', 'signatureFilePath1', 'parentEmail1@test.com', null, 'token1');
+insert into parent_consent values(2, 'parentName2', 'signatureFilePath2', 'parentEmail2@test.com', null, 'token2');
 
 
 insert into mentee values(4, 1, true, '1988-08-01', 'phone1', 'skypeUsername1','introVideoLink1','description1',0,101.91,'school1',1,1,'facebookUrl1');
