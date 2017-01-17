@@ -20,7 +20,4 @@ upload
 .project
 .classpath
 *.iml
-
-
-
-
+*.rdb
