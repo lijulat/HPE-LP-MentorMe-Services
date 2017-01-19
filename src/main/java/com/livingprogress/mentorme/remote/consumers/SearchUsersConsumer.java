@@ -151,11 +151,8 @@ public class SearchUsersConsumer extends BaseConsumer implements Consumer<Event<
             Document document = new Document();
             // cache address/result to avoid to send same requests
             String address = RemoteHelper.getAddress(entity);
-            GeocodingResult geocodingResult = null;
-            if (address != null) {
-                geocodingResult = cache.containsKey(address) ? cache.get(address)
-                        : geocodingService.geocode(address);
-            }
+            GeocodingResult geocodingResult = cache.containsKey(address) ? cache.get(address)
+                    : geocodingService.geocode(address);
             BigDecimal lat = null;
             BigDecimal lng  = null;
             if (geocodingResult != null) {
