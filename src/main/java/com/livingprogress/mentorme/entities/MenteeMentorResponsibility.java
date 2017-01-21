@@ -50,7 +50,7 @@ public class MenteeMentorResponsibility extends IdentifiableEntity {
      * The responsibility id.
      */
     @JoinColumn(name = "responsibility_id")
-    private long responsibilityId;
+    private Long responsibilityId;
 
     /**
      * The mentee-mentor program id.
