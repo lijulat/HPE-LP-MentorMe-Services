@@ -1114,40 +1114,40 @@ INSERT INTO professional_interest(id, value, parent_category_id) VALUES (383,'La
 INSERT INTO professional_interest(id, value, parent_category_id) VALUES (384,'Pagan/Wiccan', 23);
 INSERT INTO professional_interest(id, value, parent_category_id) VALUES (385,'Social Media', 24);
 
-INSERT INTO institution VALUES (1, 'Pupilo', 'GTC Consulting' , 'Bahia de Acapulco #2988', 'Tlaquepaque', 63, '45609', 142,'52 133-1221-6072', 'pupilo@gtc.com', 'PUPILO is an innovative no profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', 'ACTIVE','http://pupilov1/img/logotipos/pupilo-logotipo.svg', '2016-12-13', '2016-12-13');
-INSERT INTO institution VALUES (2, 'Lideres del Mañana', 'ITESM' , 'Av. Eugenio Garza Sada 2501 Sur', 'Monterrey', 68, '64849', 142,'52 81-8358-2000', 'paulina.martinez@itesm.mx', 'Líderes del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', 'ACTIVE','http://sites/all/themes/lideres/images/logo_lideres.png', '2016-12-13', '2016-12-13');
-INSERT INTO institution VALUES (3, 'Incubación de Empresas CIETT', 'UANL' , 'Av. Lázaro Cárdenas 4600 Oriente', 'Monterrey', 68, '64930', 142,'52 81-8329-4000', 'ciett@uanl.mx', 'The main objective of the Business Incubator area is to create and develop micro and small businesses so they are profitable and innovative.  This is done through counseling, training, profesional consulting in any of the business areas as well as follow through to facilitate access to financial sources', 'ACTIVE','http://ciett.uanl.mx/wp-content/uploads/2016/05/pleca-pags2.jpg', '2016-12-13', '2016-12-13');
+INSERT INTO institution VALUES (1, 'Pupilo', 'GTC Consulting' , 'Bahia de Acapulco #2988', 'Tlaquepaque', 63, '45609', 142,'52 133-1221-6072', 'pupilo@gtc.com', 'PUPILO es una innovadora iniciativa sin fines de lucro que crece continuamente gracias al voluntariado de empresarios y profesionales compremetidos con la sociedad.', 'ACTIVE','http://pupilov1/img/logotipos/pupilo-logotipo.svg', '2016-12-13', '2016-12-13');
+INSERT INTO institution VALUES (2, 'Lideres del Mañana', 'ITESM' , 'Av. Eugenio Garza Sada 2501 Sur', 'Monterrey', 68, '64849', 142,'52 81-8358-2000', 'paulina.martinez@itesm.mx', ' Líderes del Mañana busca potenciar la formación y el desarrollo de jóvenes mexicanos brillantes y talentosos que, por su condición económica y social, requieren de un apoyo del cien por ciento de beca para estudiar en el Tec.', 'ACTIVE','http://sites/all/themes/lideres/images/logo_lideres.png', '2016-12-13', '2016-12-13');
+INSERT INTO institution VALUES (3, 'Incubación de Empresas CIETT', 'UANL' , 'Av. Lázaro Cárdenas 4600 Oriente', 'Monterrey', 68, '64930', 142,'52 81-8329-4000', 'ciett@uanl.mx', 'El objetivo primordial del área de Incubación de Empresas crear y desarrollar micro y pequeñas empresas rentables e innovadoras a través de la asesoría, capacitación, consultoría profesional en cualquier ámbito del quehacer empresarial, así como brindar acompañamiento para facilitar el acceso  a fuentes de financiamiento.', 'ACTIVE','http://ciett.uanl.mx/wp-content/uploads/2016/05/pleca-pags2.jpg', '2016-12-13', '2016-12-13');
 
-INSERT INTO institutional_program VALUES (1, 'Pupilo', 'PUPILO is an innovative no profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', '2016-10-11','2017-10-31',1,1,20, '2016-10-10','http://pupilov1/img/logotipos/pupilo-logotipo.svg', '2016-10-10');
-INSERT INTO institutional_program VALUES (2, 'Lideres del Mañana', 'Líderes del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', '2016-10-11','2017-10-31',2,1,20, '2016-10-10','http://sites/all/themes/lideres/images/logo_lideres.png', '2016-10-10');
-INSERT INTO institutional_program VALUES (3, 'Incubación de Empresas CIETT', 'The main objective of the Business Incubator area is to create and develop micro and small businesses so they are profitable and innovative.  This is done through counseling, training, profesional consulting in any of the business areas as well as follow through to facilitate access to financial sources', '2016-10-11','2017-10-31',3,1,20, '2016-10-10','http://ciett.uanl.mx/wp-content/uploads/2016/05/pleca-pags2.jpg', '2016-10-10');
+INSERT INTO institutional_program VALUES (1, 'Pupilo', 'PUPILO es una  iniciativa innovadora sin fines de lucro que crece continuamente gracias al voluntariado de empresarios y profesionistas compremetidos con la sociedad.', '2016-10-11','2017-10-31',1,1,20, '2016-10-10','http://pupilov1/img/logotipos/pupilo-logotipo.svg', '2016-10-10');
+INSERT INTO institutional_program VALUES (2, 'Lideres del Mañana', ' Líderes del Mañana es un programa del Tec de Monterrey que brinda becas del 100% y acompañamiento de mentores exalumnos para guiar a los alumnos en el desarrollo académico, profesional y personal.', '2016-10-11','2017-10-31',2,1,20, '2016-10-10','http://sites/all/themes/lideres/images/logo_lideres.png', '2016-10-10');
+INSERT INTO institutional_program VALUES (3, 'Incubación de Empresas CIETT', 'El objetivo primordial del Centro de Innovación y Emprendimiento de Alto Impacto de la UANL es crear y desarrollar micro y pequeñas empresas rentables e innovadoras a través de la asesoría, capacitación y consultoría profesional en cualquier ámbito del quehacer empresarial, así como brindar acompañamiento para facilitar el acceso  a fuentes de financiamiento.', '2016-10-11','2017-10-31',3,1,20, '2016-10-10','http://ciett.uanl.mx/wp-content/uploads/2016/05/pleca-pags2.jpg', '2016-10-10');
 
-INSERT INTO skill(id, value) VALUES (1, 'Leadership');
-INSERT INTO skill(id, value) VALUES (2, 'Productivity and Time Management');
-INSERT INTO skill(id, value) VALUES (3, 'Enterpreneurship');
-INSERT INTO skill(id, value) VALUES (4, 'Communication Skills');
+INSERT INTO skill(id, value) VALUES (1, 'Liderazgo');
+INSERT INTO skill(id, value) VALUES (2, 'Productividad y Administración del tiempo');
+INSERT INTO skill(id, value) VALUES (3, 'Emprendimiento');
+INSERT INTO skill(id, value) VALUES (4, 'Habilidades de comunicación');
 
-INSERT INTO responsibility VALUES (1, 1, 'Book meetings', '2016-12-01', true, true, 1);
-INSERT INTO responsibility VALUES (2, 2, 'Followup on activities', '2016-12-01', false, true, 1);
-INSERT INTO responsibility VALUES (3, 3, 'Report progress', '2016-12-01', false, true, 1);
-INSERT INTO responsibility VALUES (4, 4, 'Evaluate mentor', '2016-12-01', true, false, 1);
-INSERT INTO responsibility VALUES (5, 5, 'Evaluate mentee', '2016-12-01', false, true, 1);
+INSERT INTO responsibility VALUES (1, 1, 'Agendar juntas', '2016-12-01', true, true, 1);
+INSERT INTO responsibility VALUES (2, 2, 'Dar seguimiento a actividades', '2016-12-01', false, true, 1);
+INSERT INTO responsibility VALUES (3, 3, 'Reportar progreso', '2016-12-01', false, true, 1);
+INSERT INTO responsibility VALUES (4, 4, 'Evaluar al mentor', '2016-12-01', true, false, 1);
+INSERT INTO responsibility VALUES (5, 5, 'Evaluar al mentee', '2016-12-01', false, true, 1);
 
-INSERT INTO goal VALUES (1, 1, 'Study a University Degree','Research scope and knowledge areas as well as work opportunities for the degree of Chemical and Food Engineering', 4, 1, 1, true);
-INSERT INTO goal VALUES (2, 2, 'Taking Decisions','Improve the decision taking process to make it more effective', 1, 1, 1, true);
-INSERT INTO goal VALUES (3, 3, 'English proficiency','Improve the current written and spoken English', 1, 1, 1, true);
-INSERT INTO goal VALUES (4, 4, 'Improve grade average','Improve current grade average to be able to apply for a university scholarship', 1, 1, 1, true);
+INSERT INTO goal VALUES (1, 1, 'Estudio de Carrera Universitaria','Investigar sobre el alcance y áreas de conocimiento y oportunidades laborales en las carreras de Ingeniería Química y de Alimentos.', 4, 1, 1, true);
+INSERT INTO goal VALUES (2, 2, 'Toma de decisiones','Mejorar el proceso de tomas de decisiones para ser más efectivo.', 1, 1, 1, true);
+INSERT INTO goal VALUES (3, 3, 'Nivel de Inglés','Mejorar el nivel actual de inglés escrito y hablado.', 1, 1, 1, true);
+INSERT INTO goal VALUES (4, 4, 'Mejorar promedio de calificaciones','Mejorar el promedio actual para poder solicitar becas de universidad.', 1, 1, 1, true);
 
-INSERT INTO task VALUES (1, 'Research scope and knowledge areas as well as work opportunities for the degree of Chemical and Food Engineering', 5, true, false, true, 1, 1);
-INSERT INTO task VALUES (2, 'Visit University which specializes in Chemical or Food Engineering', 5, true, false, true, 1, 2);
-INSERT INTO task VALUES (3, 'Review and explain Mentorship program and material.  Discuss career opportunties in Chemical and Food Engineering', 4, false, true, true, 1, 3);
-INSERT INTO task VALUES (4, 'Recommend Books and Articles about Career Planning and Decision Making', 7, false, true, true, 2, 4);
-INSERT INTO task VALUES (5, 'Read articles and recommended books suggested by Mentors', 21, true, false, true, 2, 5);
-INSERT INTO task VALUES (6, 'Research English Language Schools and Programs', 14, true, false, true, 3, 6);
-INSERT INTO task VALUES (7, 'Review English Language Schools identified by Mentees', 7, false, true, true, 3, 7);
-INSERT INTO task VALUES (8, 'Explain how to create a study strategy', 14, false, true, true, 4, 8);
-INSERT INTO task VALUES (9, 'Suggest sample study guides and strategies', 7, false, true, true, 4, 9);
-INSERT INTO task VALUES (10, 'Plan a study strategy', 14, true, false, true, 4, 10);
+INSERT INTO task VALUES (1, 'Investigar las áreas de estudio y las oportunidades laborales de las carreras de Ingeniería Química y de Alimentos', 5, true, false, true, 1, 1);
+INSERT INTO task VALUES (2, 'Visitar universidades locales que se especialicen en ingenierías Química y de Alimentos', 5, true, false, true, 1, 2);
+INSERT INTO task VALUES (3, 'Revisar y explicar el programa de mentoría y sus materiales. Platicar sobre las oportunidades en Ingeniería Química y de Alimentos', 4, false, true, true, 1, 3);
+INSERT INTO task VALUES (4, 'Recomendar libros y artículos de planeación de carrera y toma de decisiones.', 7, false, true, true, 2, 4);
+INSERT INTO task VALUES (5, 'Leer artículos y recomendar libros sugeridos por el mentor.', 21, true, false, true, 2, 5);
+INSERT INTO task VALUES (6, 'Investigar escuelas de inglés y programas', 14, true, false, true, 3, 6);
+INSERT INTO task VALUES (7, 'Revisar las escuelas de inglés ique el estudiante haya investigado.', 7, false, true, true, 3, 7);
+INSERT INTO task VALUES (8, 'Explicar cómo crear un estrategia de estudio.', 14, false, true, true, 4, 8);
+INSERT INTO task VALUES (9, 'Sugerir guías de estudio y estrategias', 7, false, true, true, 4, 9);
+INSERT INTO task VALUES (10, 'Sugerir guías de estudio y estrategias', 14, true, false, true, 4, 10);
 
 INSERT INTO useful_link VALUES (1, 'GTC', 'http://gtcconsult.com/', 1, '2016-01-03');
 INSERT INTO useful_link VALUES (2, 'ITESM', 'http://tec.mx/', 1, '2016-01-03');
