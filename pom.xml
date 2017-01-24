@@ -27,6 +27,14 @@
         <spring.datasource.maxActive>${env.DB_POOLSIZE}</spring.datasource.maxActive>
         <uploadDirectory>${env.UPLOAD_DIR}</uploadDirectory>
         <server.port>${env.PORT}</server.port>
+        <spring.mail.host>${env.MAIL_SMTP_HOST}</spring.mail.host>
+        <spring.mail.port>${env.MAIL_SMTP_PORT}</spring.mail.port>
+        <spring.mail.username>${env.MAIL_SMTP_USERNAME}</spring.mail.username>
+        <spring.mail.password>${env.MAIL_SMTP_PASSWORD}</spring.mail.password>
+        <spring.mail.properties.mail.smtp.auth>${env.MAIL_SMTP_AUTH_REQUIRED}e</spring.mail.properties.mail.smtp.auth>
+        <spring.mail.properties.mail.smtp.starttls.enable>${env.MAIL_SMTP_STARTTLS_ENABLED}</spring.mail.properties.mail.smtp.starttls.enable>
+        <spring.mail.properties.mail.smtp.starttls.required>${env.MAIL_SMTP_STARTTLS_REQUIRED}</spring.mail.properties.mail.smtp.starttls.required>
+        <mail.from>${env.MAIL_FROM_ADDRESS}</mail.from>
     </properties>
 
     <dependencies>
