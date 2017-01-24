@@ -89,8 +89,8 @@ files:
 
 # During the BeforeInstall deployment lifecycle event, run the commands
 #   in the script specified in "location".
-#   BeforeInstall:
-#     - location:
+BeforeInstall:
+     - location: scripts/clearAWSTarget.sh
 #       timeout:
 #       runas:
 #     - location:
@@ -100,7 +100,7 @@ files:
 # During the AfterInstall deployment lifecycle event, run the commands
 #   in the script specified in "location".
 AfterInstall:
-     - location: /home/ubuntu/HPE-LP-MentorMe-Services/scripts/build.sh
+     - location: scripts/build.sh
 #       timeout:
 #       runas:
 #     - location:
@@ -110,7 +110,7 @@ AfterInstall:
 # During the ApplicationInstall deployment lifecycle event, run the commands
 #   in the script specified in "location".
 ApplicationStart:
-    - location: /home/ubuntu/HPE-LP-MentorMe-Services/scripts/run.sh
+    - location: scripts/svcRestart.sh
 #       timeout:
 #       runas:
 #     - location:
