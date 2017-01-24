@@ -17,12 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
-import javax.servlet.http.HttpServletResponse;
-
-import static org.springframework.http.HttpMethod.DELETE;
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
-import static org.springframework.http.HttpMethod.PUT;
+import static org.springframework.http.HttpMethod.*;
 
 /**
  * The application security config.
@@ -37,6 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Autowired
     private UserDetailsService userDetailsService;
+
+
 
     /**
      * The stateless auth filter.
@@ -88,6 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @throws Exception if there is any error
      */
     protected void configure(HttpSecurity http) throws Exception {
+        CustomAuthenticationEntryPoint entryPoint = new CustomAuthenticationEntryPoint();
         http.csrf()
             .disable()
             .sessionManagement()
@@ -95,9 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .addFilterBefore(statelessAuthenticationFilter, AbstractPreAuthenticatedProcessingFilter.class)
             .exceptionHandling()
-            .authenticationEntryPoint((request, response, e) -> {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, e.getMessage());
-            })
+            .authenticationEntryPoint(entryPoint)
             .and()
             .anonymous()
             .and()
@@ -235,7 +231,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();
+                .httpBasic().authenticationEntryPoint(entryPoint);
     }
 }
 
