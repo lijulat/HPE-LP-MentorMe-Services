@@ -81,9 +81,8 @@ public class RemoteHelper {
      */
     public static String getAddress(User user) {
         Helper.checkNull(user, "user");
-        if (user.getCountry() == null || user.getState() == null) {
-            return null;
-        }
+        Helper.checkNull(user.getCountry(), "user.country");
+        Helper.checkNull(user.getState(), "user.state");
         List<String> addressInfos = new ArrayList<>();
         if (user.getStreetAddress() != null) {
             addressInfos.add(user.getStreetAddress());
