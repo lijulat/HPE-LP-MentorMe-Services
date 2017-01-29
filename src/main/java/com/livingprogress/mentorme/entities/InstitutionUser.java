@@ -53,6 +53,11 @@ public abstract class InstitutionUser extends User {
     private String skypeUsername;
 
     /**
+     * The whats app user name.
+     */
+    private String whatsAppName;
+
+    /**
      * The intro video link.
      */
     private String introVideoLink;

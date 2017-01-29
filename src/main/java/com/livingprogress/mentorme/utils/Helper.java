@@ -755,6 +755,11 @@ public class Helper {
             oldEntity.setSkypeUsername(newEntity.getSkypeUsername());
         }
 
+        if (isUpdated(oldEntity.getWhatsAppName(), newEntity.getWhatsAppName())) {
+            updated = true;
+            oldEntity.setWhatsAppName(newEntity.getWhatsAppName());
+        }
+
         if (isUpdated(oldEntity.getIntroVideoLink(), newEntity.getIntroVideoLink())) {
             updated = true;
             oldEntity.setIntroVideoLink(newEntity.getIntroVideoLink());
@@ -841,10 +846,7 @@ public class Helper {
             updated = true;
             oldEntity.setCompanyName(newEntity.getCompanyName());
         }
-        if (isUpdated(oldEntity.getWhatsAppName(), newEntity.getCompanyName())) {
-            updated = true;
-            oldEntity.setWhatsAppName(newEntity.getWhatsAppName());
-        }
+
         if (isUpdated(oldEntity.getLinkedInUrl(), newEntity.getLinkedInUrl())) {
             updated = true;
             oldEntity.setLinkedInUrl(newEntity.getLinkedInUrl());

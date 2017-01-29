@@ -249,6 +249,7 @@ CREATE TABLE IF NOT EXISTS `mentee` (
   `institution_affiliation_code_id` BIGINT NOT NULL,
   `parent_consent_id` BIGINT NULL,
   `facebook_url` VARCHAR(256) NULL,
+  `whats_app_name` VARCHAR(256) NULL,
   PRIMARY KEY (`id`),
   INDEX `me_pk_fk_idx` (`parent_consent_id` ASC),
   INDEX `me_iac_fk_idx` (`institution_affiliation_code_id` ASC),
