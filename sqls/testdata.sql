@@ -8,10 +8,10 @@ insert into country values(2,'Country2');
 insert into country values(3,'Country3');
 insert into country VALUES (230,'United States');
 
-insert into state values(1,'State1');
-insert into state values(2,'State2');
-insert into state values(3,'State3');
-insert into state values(32,'New York');
+insert into state values(1,'State1', 1);
+insert into state values(2,'State2', 2);
+insert into state values(3,'State3', 3);
+insert into state values(32,'New York', 230);
 
 insert into professional_consultant_area values(1,'ProfessionalConsultantArea1');
 insert into professional_consultant_area values(2,'ProfessionalConsultantArea2');

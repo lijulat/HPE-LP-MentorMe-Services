@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
@@ -67,8 +68,8 @@ public class LookupController {
      * @throws MentorMeException if any other error occurred during operation
      */
     @RequestMapping(value = "/states", method = RequestMethod.GET)
-    public List<State> getStates() throws MentorMeException {
-        return lookupService.getStates();
+    public List<State> getStates(@RequestParam(required = false) Long countryId) throws MentorMeException {
+        return lookupService.getStates(countryId);
     }
 
     /**

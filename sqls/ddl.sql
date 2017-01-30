@@ -1,11 +1,3 @@
--- -----------------------------------------------------
--- Table `state`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `state` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `value` VARCHAR(256) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `country`
@@ -15,6 +7,23 @@ CREATE TABLE IF NOT EXISTS `country` (
   `value` VARCHAR(256) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `state`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `state` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `value` VARCHAR(256) NOT NULL,
+  `country_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`),
+   CONSTRAINT `start_country_id_fk`
+      FOREIGN KEY (`country_id`)
+      REFERENCES `country` (`id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 
 -- -----------------------------------------------------
 -- Table `user`
