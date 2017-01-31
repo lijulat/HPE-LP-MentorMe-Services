@@ -31,7 +31,7 @@ public interface LookupService {
      * @return the lookups for state.
      * @throws MentorMeException if any other error occurred during operation
      */
-    List<State> getStates() throws MentorMeException;
+    List<State> getStates(Long countryId) throws MentorMeException;
 
     /**
      * This method is used to get professional consultant area lookups.

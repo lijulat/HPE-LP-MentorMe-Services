@@ -120,8 +120,12 @@ public class LookupServiceImpl implements LookupService {
      * @return the lookups for state.
      * @throws MentorMeException if any other error occurred during operation
      */
-    public List<State> getStates() throws MentorMeException {
-        return stateRepository.findAll();
+    public List<State> getStates(Long countryId) throws MentorMeException {
+        if (countryId == null || countryId == 0) {
+            return stateRepository.findAll();
+        } else {
+            return stateRepository.findByCountryId(countryId);
+        }
     }
 
     /**

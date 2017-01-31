@@ -12,5 +12,6 @@ import javax.persistence.Entity;
 @Setter
 @Entity
 public class State extends LookupEntity {
+    Long countryId;
 }
 
