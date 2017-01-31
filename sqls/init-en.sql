@@ -1122,6 +1122,10 @@ INSERT INTO institutional_program VALUES (1, 'Pupilo', 'PUPILO is an innovative 
 INSERT INTO institutional_program VALUES (2, 'Lideres del Mañana', 'Líderes del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', '2016-10-11','2017-10-31',2,1,20, '2016-10-10','http://sites/all/themes/lideres/images/logo_lideres.png', '2016-10-10');
 INSERT INTO institutional_program VALUES (3, 'Incubación de Empresas CIETT', 'The main objective of the Business Incubator area is to create and develop micro and small businesses so they are profitable and innovative.  This is done through counseling, training, profesional consulting in any of the business areas as well as follow through to facilitate access to financial sources', '2016-10-11','2017-10-31',3,1,20, '2016-10-10','http://ciett.uanl.mx/wp-content/uploads/2016/05/pleca-pags2.jpg', '2016-10-10');
 
+insert into institution_affliation_code values (1, 'pupilo', 1, true);
+insert into institution_affliation_code values (2, 'lideres', 2, true);
+insert into institution_affliation_code values (3, 'biz', 3, true);
+
 INSERT INTO skill(id, value) VALUES (1, 'Leadership');
 INSERT INTO skill(id, value) VALUES (2, 'Productivity and Time Management');
 INSERT INTO skill(id, value) VALUES (3, 'Enterpreneurship');
