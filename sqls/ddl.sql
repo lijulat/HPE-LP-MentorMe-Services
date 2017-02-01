@@ -1,11 +1,3 @@
--- -----------------------------------------------------
--- Table `state`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `state` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `value` VARCHAR(256) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `country`
@@ -15,6 +7,23 @@ CREATE TABLE IF NOT EXISTS `country` (
   `value` VARCHAR(256) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `state`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `state` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `value` VARCHAR(256) NOT NULL,
+  `country_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`),
+   CONSTRAINT `start_country_id_fk`
+      FOREIGN KEY (`country_id`)
+      REFERENCES `country` (`id`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 
 -- -----------------------------------------------------
 -- Table `user`
@@ -249,6 +258,7 @@ CREATE TABLE IF NOT EXISTS `mentee` (
   `institution_affiliation_code_id` BIGINT NOT NULL,
   `parent_consent_id` BIGINT NULL,
   `facebook_url` VARCHAR(256) NULL,
+  `whats_app_name` VARCHAR(256) NULL,
   PRIMARY KEY (`id`),
   INDEX `me_pk_fk_idx` (`parent_consent_id` ASC),
   INDEX `me_iac_fk_idx` (`institution_affiliation_code_id` ASC),
