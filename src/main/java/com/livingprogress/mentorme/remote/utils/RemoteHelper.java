@@ -81,7 +81,7 @@ public class RemoteHelper {
      */
     public static String getAddress(User user) {
         Helper.checkNull(user, "user");
-        if (user.getCountry() == null || user.getState() == null) {
+        if (user.getCountry() == null) {
             return null;
         }
         List<String> addressInfos = new ArrayList<>();
@@ -91,8 +91,12 @@ public class RemoteHelper {
         if (user.getCity() != null) {
             addressInfos.add(user.getCity());
         }
-        addressInfos.add(user.getState()
-                             .getValue() + (user.getPostalCode() == null ? "" : " " + user.getPostalCode()));
+        if (user.getState() != null) {
+            addressInfos.add(user.getState()
+                    .getValue() + (user.getPostalCode() == null ? "" : " " + user.getPostalCode()));
+        } else if (user.getPostalCode() != null) {
+            addressInfos.add(user.getPostalCode());
+        }
         addressInfos.add(user.getCountry()
                              .getValue());
         return String.join(Constant.COMMA, addressInfos);
