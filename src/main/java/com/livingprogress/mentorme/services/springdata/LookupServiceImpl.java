@@ -111,7 +111,9 @@ public class LookupServiceImpl implements LookupService {
      * @throws MentorMeException if any other error occurred during operation
      */
     public List<Country> getCountries() throws MentorMeException {
-        return countryRepository.findAll();
+        List<Country> result = countryRepository.findAll();
+        result.sort((c1, c2) -> c1.getValue().compareTo(c2.getValue()));
+        return result;
     }
 
     /**
@@ -121,11 +123,14 @@ public class LookupServiceImpl implements LookupService {
      * @throws MentorMeException if any other error occurred during operation
      */
     public List<State> getStates(Long countryId) throws MentorMeException {
+        List<State> result;
         if (countryId == null || countryId == 0) {
-            return stateRepository.findAll();
+            result = stateRepository.findAll();
         } else {
-            return stateRepository.findByCountryId(countryId);
+            result = stateRepository.findByCountryId(countryId);
         }
+        result.sort((c1, c2) -> c1.getValue().compareTo(c2.getValue()));
+        return result;
     }
 
     /**
