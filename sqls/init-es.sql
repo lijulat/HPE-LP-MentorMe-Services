@@ -1124,10 +1124,20 @@ insert into institution_affiliation_code values (1, 'pupilo', 1, true);
 insert into institution_affiliation_code values (2, 'lideres', 2, true);
 insert into institution_affiliation_code values (3, 'biz', 3, true);
 
-INSERT INTO skill(id, value) VALUES (1, 'Liderazgo');
-INSERT INTO skill(id, value) VALUES (2, 'Productividad y Administración del tiempo');
+INSERT INTO skill(id, value) VALUES (1, 'Liderazgo y Toma de Decisiones');
+INSERT INTO skill(id, value) VALUES (2, 'Productividad y Administración de Tiempo');
 INSERT INTO skill(id, value) VALUES (3, 'Emprendimiento');
-INSERT INTO skill(id, value) VALUES (4, 'Habilidades de comunicación');
+INSERT INTO skill(id, value) VALUES (4, 'Habilidades de Comunicación e Idiomas');
+INSERT INTO skill(id, value) VALUES (5, 'Orientación de Carrera Universitaria');
+INSERT INTO skill(id, value) VALUES (6, 'Actividades Extracurriculares y Voluntariado');
+INSERT INTO skill(id, value) VALUES (7, 'Networking');
+INSERT INTO skill(id, value) VALUES (8, 'Apoyo Académico');
+INSERT INTO skill(id, value) VALUES (9, 'Becas');
+INSERT INTO skill(id, value) VALUES (10, 'Finanzas y Contabilidad');
+INSERT INTO skill(id, value) VALUES (11, 'Administración de Empresas');
+INSERT INTO skill(id, value) VALUES (12, 'Deportes, Fitness y Nutrición');
+INSERT INTO skill(id, value) VALUES (13, 'Empleos y Pasantías');
+INSERT INTO skill(id, value) VALUES (14, 'Innovación');
 
 INSERT INTO responsibility VALUES (1, 1, 'Agendar juntas', '2016-12-01', true, true, 1);
 INSERT INTO responsibility VALUES (2, 2, 'Dar seguimiento a actividades', '2016-12-01', false, true, 1);

@@ -1128,10 +1128,22 @@ insert into institution_affiliation_code values (1, 'pupilo', 1, true);
 insert into institution_affiliation_code values (2, 'lideres', 2, true);
 insert into institution_affiliation_code values (3, 'biz', 3, true);
 
-INSERT INTO skill(id, value) VALUES (1, 'Leadership');
+
+INSERT INTO skill(id, value) VALUES (1, 'Leadership & Decision Making');
 INSERT INTO skill(id, value) VALUES (2, 'Productivity and Time Management');
-INSERT INTO skill(id, value) VALUES (3, 'Enterpreneurship');
-INSERT INTO skill(id, value) VALUES (4, 'Communication Skills');
+INSERT INTO skill(id, value) VALUES (3, 'Entrepreneurship & Start-ups');
+INSERT INTO skill(id, value) VALUES (4, 'Communication Skills & Languages');
+INSERT INTO skill(id, value) VALUES (5, 'College and Vocational  Planning');
+INSERT INTO skill(id, value) VALUES (6, 'Extracurricular Activities & Volunteering');
+INSERT INTO skill(id, value) VALUES (7, 'Networking');
+INSERT INTO skill(id, value) VALUES (8, 'Academic Support');
+INSERT INTO skill(id, value) VALUES (9, 'Scholarships');
+INSERT INTO skill(id, value) VALUES (10, 'Finance & Accounting');
+INSERT INTO skill(id, value) VALUES (11, 'Business Administration');
+INSERT INTO skill(id, value) VALUES (12, 'Sports, Fitness & Nutrition');
+INSERT INTO skill(id, value) VALUES (13, 'Jobs & Interships');
+INSERT INTO skill(id, value) VALUES (14, 'Innovation');
+
 
 INSERT INTO responsibility VALUES (1, 1, 'Book meetings', '2016-12-01', true, true, 1);
 INSERT INTO responsibility VALUES (2, 2, 'Followup on activities', '2016-12-01', false, true, 1);
