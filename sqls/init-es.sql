@@ -472,7 +472,7 @@ insert into personal_interest(id, value, parent_category_id) values(126, 'Dolor 
 insert into personal_interest(id, value, parent_category_id) values(127, 'Enfermedad del Corazón', 7);
 insert into personal_interest(id, value, parent_category_id) values(128, 'Hierbas Medicinales', 7);
 insert into personal_interest(id, value, parent_category_id) values(129, 'Sanación Holística', 7);
-insert into personal_interest(id, value, parent_category_id) values(130  'Síndrome de Intestino Irritable/Enfermedad de Crohn', 7);
+insert into personal_interest(id, value, parent_category_id) values(130, 'Síndrome de Intestino Irritable/Enfermedad de Crohn', 7);
 insert into personal_interest(id, value, parent_category_id) values(131, 'Soporte para Casos de Incesto/Abuso', 7);
 insert into personal_interest(id, value, parent_category_id) values(132, 'Incontinencia', 7);
 insert into personal_interest(id, value, parent_category_id) values(133, 'Infertilidad', 7);
@@ -856,7 +856,7 @@ insert into professional_interest(id, value, parent_category_id) values(126, 'Do
 insert into professional_interest(id, value, parent_category_id) values(127, 'Enfermedad del Corazón', 7);
 insert into professional_interest(id, value, parent_category_id) values(128, 'Hierbas Medicinales', 7);
 insert into professional_interest(id, value, parent_category_id) values(129, 'Sanación Holística', 7);
-insert into professional_interest(id, value, parent_category_id) values(130  'Síndrome de Intestino Irritable/Enfermedad de Crohn', 7);
+insert into professional_interest(id, value, parent_category_id) values(130, 'Síndrome de Intestino Irritable/Enfermedad de Crohn', 7);
 insert into professional_interest(id, value, parent_category_id) values(131, 'Soporte para Casos de Incesto/Abuso', 7);
 insert into professional_interest(id, value, parent_category_id) values(132, 'Incontinencia', 7);
 insert into professional_interest(id, value, parent_category_id) values(133, 'Infertilidad', 7);
