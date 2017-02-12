@@ -28,12 +28,12 @@ insert into user_user_role values(12,4);
 insert into user_user_role values(13,4);
 insert into user_user_role values(14,4);
 
-insert into institution values(1, 'institutionName1', 'parentOrganization1' , 'streetAddress1', 'city1', 1, 'zip1', 1,'phone1', 'institution1@test.com', 'description1', 'ACTIVE','logoPath1', '2016-10-01', '2016-10-01');
-insert into institution values(2, 'institutionName2', NUlL , 'streetAddress2', 'city2', 2, 'zip2', 2,'phone2', 'institution2@test.com', 'description2', 'INACTIVE','logoPath2', '2016-10-02', '2016-10-02');
-insert into institution values(3, 'institutionName3', 'parentOrganization3' , 'streetAddress3', 'city3', 2, 'zip3', 1,'phone3', 'institution3@test.com', 'description3', 'ACTIVE','logoPath2', '2016-10-03', '2016-10-03');
-insert into institution values(4, 'institutionName4', 'parentOrganization4' , 'streetAddress4', 'city4', 2, 'zip4', 2,'phone4', 'institution4@test.com', 'description4', 'ACTIVE','logoPath3', '2016-10-04', '2016-10-04');
-insert into institution values(5, 'institutionName5', 'parentOrganization5' , 'streetAddress5', 'city5', 2, 'zip5', 1,'phone5', 'institution5@test.com', 'description5', 'ACTIVE','logoPath4', '2016-10-05', '2016-10-05');
-insert into institution values(6, 'institutionName6', 'parentOrganization6' , 'streetAddress6', 'city6', 2, 'zip6', 2,'phone6', 'institution6@test.com', 'description6', 'ACTIVE','logoPath5', '2016-10-06', '2016-10-06');
+insert into institution values(1, 'institutionName1', 'parentOrganization1' , 'streetAddress1', 'city1', 1, 'zip1', 1,'phone1', 'institution1@test.com', 'description1', 'ACTIVE','logoPath1', '2016-10-01', '2016-10-01', false);
+insert into institution values(2, 'institutionName2', NUlL , 'streetAddress2', 'city2', 2, 'zip2', 2,'phone2', 'institution2@test.com', 'description2', 'INACTIVE','logoPath2', '2016-10-02', '2016-10-02', false);
+insert into institution values(3, 'institutionName3', 'parentOrganization3' , 'streetAddress3', 'city3', 2, 'zip3', 1,'phone3', 'institution3@test.com', 'description3', 'ACTIVE','logoPath2', '2016-10-03', '2016-10-03', false);
+insert into institution values(4, 'institutionName4', 'parentOrganization4' , 'streetAddress4', 'city4', 2, 'zip4', 2,'phone4', 'institution4@test.com', 'description4', 'ACTIVE','logoPath3', '2016-10-04', '2016-10-04', false);
+insert into institution values(5, 'institutionName5', 'parentOrganization5' , 'streetAddress5', 'city5', 2, 'zip5', 1,'phone5', 'institution5@test.com', 'description5', 'ACTIVE','logoPath4', '2016-10-05', '2016-10-05', false);
+insert into institution values(6, 'institutionName6', 'parentOrganization6' , 'streetAddress6', 'city6', 2, 'zip6', 2,'phone6', 'institution6@test.com', 'description6', 'ACTIVE','logoPath5', '2016-10-06', '2016-10-06', false);
 
 insert into institution_contact values(1, 'title1', 'firstName1', 'lastName1', 'institutionContact1@test.com', 'phoneNumber1', true, 1);
 insert into institution_contact values(2, 'title2', 'firstName2', 'lastName2', 'institutionContact2@test.com', 'phoneNumber2', false, 1);

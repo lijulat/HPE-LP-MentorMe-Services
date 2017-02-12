@@ -176,18 +176,28 @@ public class MenteeController extends BaseEmailController {
         entity.setStatus(UserStatus.ACTIVE);
 
         // get the institution code
-        if (entity.getInstitutionAffiliationCode() == null
-                || entity.getInstitutionAffiliationCode().getCode() == null) {
-            throw new IllegalArgumentException("Institution affiliation code is required.");
+        if ((entity.getInstitutionAffiliationCode() == null
+                || entity.getInstitutionAffiliationCode().getCode() == null)
+                && (entity.getInstitution() == null || entity.getInstitution().getId() <= 0)) {
+            throw new IllegalArgumentException("Institution affiliation code or default institution is required.");
         }
 
-        // set the institution code and institution
-        InstitutionAffiliationCode institutionAffiliationCode = menteeService.findInstitutionAffiliationCode(
-                entity.getInstitutionAffiliationCode().getCode());
-        if (institutionAffiliationCode == null) {
-            throw new IllegalArgumentException(
-                    "Code: " + entity.getInstitutionAffiliationCode().getCode() + " Not found");
+        if (entity.getInstitutionAffiliationCode() != null && entity.getInstitutionAffiliationCode().getCode() != null) {
+            // set the institution code and institution
+            InstitutionAffiliationCode institutionAffiliationCode = menteeService.findInstitutionAffiliationCode(
+                    entity.getInstitutionAffiliationCode().getCode());
+            if (institutionAffiliationCode == null) {
+                throw new IllegalArgumentException(
+                        "Code: " + entity.getInstitutionAffiliationCode().getCode() + " Not found");
+            }
+
+            entity.setInstitutionAffiliationCode(institutionAffiliationCode);
+            Institution institution = new Institution();
+            institution.setId(institutionAffiliationCode.getInstitutionId());
+            entity.setInstitution(institution);
         }
+
+        entity.setAssignedToInstitution(true);
 
         // check if the email already exists
         UserSearchCriteria criteria = new UserSearchCriteria();
@@ -198,12 +208,6 @@ public class MenteeController extends BaseEmailController {
             throw new IllegalArgumentException("Email already registered");
         }
 
-        entity.setInstitutionAffiliationCode(institutionAffiliationCode);
-        Institution institution = new Institution();
-        institution.setId(institutionAffiliationCode.getInstitutionId());
-
-        entity.setInstitution(institution);
-        entity.setAssignedToInstitution(true);
 
         // create the entity
         Mentee mentee = menteeService.create(entity);

@@ -83,5 +83,10 @@ public class Institution extends AuditableEntity {
      * The logo path.
      */
     private String logoPath;
+
+    /**
+     * Represents it is a default institution or not
+     */
+    private boolean defaultInstitution;
 }
 

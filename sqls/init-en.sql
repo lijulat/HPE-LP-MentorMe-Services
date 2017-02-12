@@ -1115,9 +1115,10 @@ INSERT INTO professional_interest(id, value, parent_category_id) VALUES (383,'La
 INSERT INTO professional_interest(id, value, parent_category_id) VALUES (384,'Pagan/Wiccan', 23);
 INSERT INTO professional_interest(id, value, parent_category_id) VALUES (385,'Social Media', 24);
 
-INSERT INTO institution VALUES (1, 'Pupilo', 'GTC Consulting' , 'Bahia de Acapulco #2988', 'Tlaquepaque', 63, '45609', 142,'52 133-1221-6072', 'pupilo@gtc.com', 'PUPILO is an innovative no profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13');
-INSERT INTO institution VALUES (2, 'Lideres del Mañana', 'ITESM' , 'Av. Eugenio Garza Sada 2501 Sur', 'Monterrey', 68, '64849', 142,'52 81-8358-2000', 'paulina.martinez@itesm.mx', 'Líderes del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13');
-INSERT INTO institution VALUES (3, 'Incubación de Empresas CIETT', 'UANL' , 'Av. Lázaro Cárdenas 4600 Oriente', 'Monterrey', 68, '64930', 142,'52 81-8329-4000', 'ciett@uanl.mx', 'The main objective of the Business Incubator area is to create and develop micro and small businesses so they are profitable and innovative.  This is done through counseling, training, profesional consulting in any of the business areas as well as follow through to facilitate access to financial sources', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13');
+INSERT INTO institution VALUES (1, 'Pupilo', 'GTC Consulting' , 'Bahia de Acapulco #2988', 'Tlaquepaque', 63, '45609', 142,'52 133-1221-6072', 'pupilo@gtc.com', 'PUPILO is an innovative no profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', true);
+INSERT INTO institution VALUES (2, 'Lideres del Mañana', 'ITESM' , 'Av. Eugenio Garza Sada 2501 Sur', 'Monterrey', 68, '64849', 142,'52 81-8358-2000', 'paulina.martinez@itesm.mx', 'Líderes del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', false);
+INSERT INTO institution VALUES (3, 'Incubación de Empresas CIETT', 'UANL' , 'Av. Lázaro Cárdenas 4600 Oriente', 'Monterrey', 68, '64930', 142,'52 81-8329-4000', 'ciett@uanl.mx', 'The main objective of the Business Incubator area is to create and develop micro and small businesses so they are profitable and innovative.  This is done through counseling, training, profesional consulting in any of the business areas as well as follow through to facilitate access to financial sources', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', false);
+
 
 INSERT INTO institutional_program VALUES (1, 'Pupilo', 'PUPILO is an innovative no profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', '2016-10-11','2017-10-31',1,1,20, '2016-10-10','/img/program/p2.png', '2016-10-10');
 INSERT INTO institutional_program VALUES (2, 'Lideres del Mañana', 'Líderes del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', '2016-10-11','2017-10-31',2,1,20, '2016-10-10','/img/program/p3.png', '2016-10-10');
@@ -1127,10 +1128,22 @@ insert into institution_affiliation_code values (1, 'pupilo', 1, true);
 insert into institution_affiliation_code values (2, 'lideres', 2, true);
 insert into institution_affiliation_code values (3, 'biz', 3, true);
 
-INSERT INTO skill(id, value) VALUES (1, 'Leadership');
+
+INSERT INTO skill(id, value) VALUES (1, 'Leadership & Decision Making');
 INSERT INTO skill(id, value) VALUES (2, 'Productivity and Time Management');
-INSERT INTO skill(id, value) VALUES (3, 'Enterpreneurship');
-INSERT INTO skill(id, value) VALUES (4, 'Communication Skills');
+INSERT INTO skill(id, value) VALUES (3, 'Entrepreneurship & Start-ups');
+INSERT INTO skill(id, value) VALUES (4, 'Communication Skills & Languages');
+INSERT INTO skill(id, value) VALUES (5, 'College and Vocational  Planning');
+INSERT INTO skill(id, value) VALUES (6, 'Extracurricular Activities & Volunteering');
+INSERT INTO skill(id, value) VALUES (7, 'Networking');
+INSERT INTO skill(id, value) VALUES (8, 'Academic Support');
+INSERT INTO skill(id, value) VALUES (9, 'Scholarships');
+INSERT INTO skill(id, value) VALUES (10, 'Finance & Accounting');
+INSERT INTO skill(id, value) VALUES (11, 'Business Administration');
+INSERT INTO skill(id, value) VALUES (12, 'Sports, Fitness & Nutrition');
+INSERT INTO skill(id, value) VALUES (13, 'Jobs & Interships');
+INSERT INTO skill(id, value) VALUES (14, 'Innovation');
+
 
 INSERT INTO responsibility VALUES (1, 1, 'Book meetings', '2016-12-01', true, true, 1);
 INSERT INTO responsibility VALUES (2, 2, 'Followup on activities', '2016-12-01', false, true, 1);

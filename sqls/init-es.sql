@@ -1112,9 +1112,9 @@ insert into professional_interest(id, value, parent_category_id) values(383, 'Sa
 insert into professional_interest(id, value, parent_category_id) values(384, 'Pagano/Wiccano', 23);
 insert into professional_interest(id, value, parent_category_id) values(385, 'Social Media', 24);
 
-INSERT INTO institution VALUES (1, 'Pupilo', 'GTC Consulting' , 'Bahia de Acapulco #2988', 'Tlaquepaque', 63, '45609', 142,'52 133-1221-6072', 'pupilo@gtc.com', 'PUPILO es una innovadora iniciativa sin fines de lucro que crece continuamente gracias al voluntariado de empresarios y profesionales compremetidos con la sociedad.', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13');
-INSERT INTO institution VALUES (2, 'Lideres del Mañana', 'ITESM' , 'Av. Eugenio Garza Sada 2501 Sur', 'Monterrey', 68, '64849', 142,'52 81-8358-2000', 'paulina.martinez@itesm.mx', ' Líderes del Mañana busca potenciar la formación y el desarrollo de jóvenes mexicanos brillantes y talentosos que, por su condición económica y social, requieren de un apoyo del cien por ciento de beca para estudiar en el Tec.', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13');
-INSERT INTO institution VALUES (3, 'Incubación de Empresas CIETT', 'UANL' , 'Av. Lázaro Cárdenas 4600 Oriente', 'Monterrey', 68, '64930', 142,'52 81-8329-4000', 'ciett@uanl.mx', 'El objetivo primordial del área de Incubación de Empresas crear y desarrollar micro y pequeñas empresas rentables e innovadoras a través de la asesoría, capacitación, consultoría profesional en cualquier ámbito del quehacer empresarial, así como brindar acompañamiento para facilitar el acceso  a fuentes de financiamiento.', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13');
+INSERT INTO institution VALUES (1, 'Pupilo', 'GTC Consulting' , 'Bahia de Acapulco #2988', 'Tlaquepaque', 63, '45609', 142,'52 133-1221-6072', 'pupilo@gtc.com', 'PUPILO es una innovadora iniciativa sin fines de lucro que crece continuamente gracias al voluntariado de empresarios y profesionales compremetidos con la sociedad.', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', true);
+INSERT INTO institution VALUES (2, 'Lideres del Mañana', 'ITESM' , 'Av. Eugenio Garza Sada 2501 Sur', 'Monterrey', 68, '64849', 142,'52 81-8358-2000', 'paulina.martinez@itesm.mx', ' Líderes del Mañana busca potenciar la formación y el desarrollo de jóvenes mexicanos brillantes y talentosos que, por su condición económica y social, requieren de un apoyo del cien por ciento de beca para estudiar en el Tec.', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', false);
+INSERT INTO institution VALUES (3, 'Incubación de Empresas CIETT', 'UANL' , 'Av. Lázaro Cárdenas 4600 Oriente', 'Monterrey', 68, '64930', 142,'52 81-8329-4000', 'ciett@uanl.mx', 'El objetivo primordial del área de Incubación de Empresas crear y desarrollar micro y pequeñas empresas rentables e innovadoras a través de la asesoría, capacitación, consultoría profesional en cualquier ámbito del quehacer empresarial, así como brindar acompañamiento para facilitar el acceso  a fuentes de financiamiento.', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', false);
 
 INSERT INTO institutional_program VALUES (1, 'Pupilo', 'PUPILO es una  iniciativa innovadora sin fines de lucro que crece continuamente gracias al voluntariado de empresarios y profesionistas compremetidos con la sociedad.', '2016-10-11','2017-10-31',1,1,20, '2016-10-10','/img/program/p2.png', '2016-10-10');
 INSERT INTO institutional_program VALUES (2, 'Lideres del Mañana', ' Líderes del Mañana es un programa del Tec de Monterrey que brinda becas del 100% y acompañamiento de mentores exalumnos para guiar a los alumnos en el desarrollo académico, profesional y personal.', '2016-10-11','2017-10-31',2,1,20, '2016-10-10','/img/program/p3.png', '2016-10-10');
@@ -1124,10 +1124,20 @@ insert into institution_affiliation_code values (1, 'pupilo', 1, true);
 insert into institution_affiliation_code values (2, 'lideres', 2, true);
 insert into institution_affiliation_code values (3, 'biz', 3, true);
 
-INSERT INTO skill(id, value) VALUES (1, 'Liderazgo');
-INSERT INTO skill(id, value) VALUES (2, 'Productividad y Administración del tiempo');
+INSERT INTO skill(id, value) VALUES (1, 'Liderazgo y Toma de Decisiones');
+INSERT INTO skill(id, value) VALUES (2, 'Productividad y Administración de Tiempo');
 INSERT INTO skill(id, value) VALUES (3, 'Emprendimiento');
-INSERT INTO skill(id, value) VALUES (4, 'Habilidades de comunicación');
+INSERT INTO skill(id, value) VALUES (4, 'Habilidades de Comunicación e Idiomas');
+INSERT INTO skill(id, value) VALUES (5, 'Orientación de Carrera Universitaria');
+INSERT INTO skill(id, value) VALUES (6, 'Actividades Extracurriculares y Voluntariado');
+INSERT INTO skill(id, value) VALUES (7, 'Networking');
+INSERT INTO skill(id, value) VALUES (8, 'Apoyo Académico');
+INSERT INTO skill(id, value) VALUES (9, 'Becas');
+INSERT INTO skill(id, value) VALUES (10, 'Finanzas y Contabilidad');
+INSERT INTO skill(id, value) VALUES (11, 'Administración de Empresas');
+INSERT INTO skill(id, value) VALUES (12, 'Deportes, Fitness y Nutrición');
+INSERT INTO skill(id, value) VALUES (13, 'Empleos y Pasantías');
+INSERT INTO skill(id, value) VALUES (14, 'Innovación');
 
 INSERT INTO responsibility VALUES (1, 1, 'Agendar juntas', '2016-12-01', true, true, 1);
 INSERT INTO responsibility VALUES (2, 2, 'Dar seguimiento a actividades', '2016-12-01', false, true, 1);
