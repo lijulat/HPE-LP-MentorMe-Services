@@ -10,10 +10,11 @@ This is the deployment guide for the Mentor Me API.
 
 ## MySQL Setup
 - Create database schema with `sqls/schema.sql`.
-- Create tables in above schema with `sqls/ddl.sql`.
-- If you want to drop all tables please run `sqls/drop.sql`.
-- If you want to clean all tables please run `sqls/clear.sql`.
-- If you want to prepare test data please run `sqls/testdata.sql`.
+- Create tables in each schema with `sqls/ddl.sql`.
+- If you want to drop all tables please run `sqls/drop.sql` on each schema.
+- If you want to clean all tables please run `sqls/clear.sql` on each schema.
+- To initialize the basic data required by the application you should execute the `sqls/init-en.sql` on the mentorme-english schema and `sqls/init-es.sql` on the mentorme-spanish schema. 
+- If you want to prepare test data please run `sqls/testdata.sql` into the mentorme-test schema.
 
 ## API Configuration
 ### application configuration
@@ -52,7 +53,7 @@ Do NOT change **spring.mail.host** since since unit tests will listen on **local
 Please check all property keys in `src/main/resources/application.properties`.
 You can customize any of these keys using command line parameters or system variables if you want to.
 
-For example: you can customize server port **-Dserver.port=8087** as command line parameter or use **set server.port=8087** under windows or **export SERVER_PORT=8087** under linux.
+For example: you can customize server port **-Dserver.port=8087** as command line parameter or use **set server.port=8087** under windows or **export SERVER_PORT=8087** under linux.  In the Topcoder development environment weve been running the Mentor Me English Services on port 8080 and the Mentor Me Spanish Services on port 8081.
 
 This can be done for all other parameters too.
 
