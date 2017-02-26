@@ -1,5 +1,6 @@
 package com.livingprogress.mentorme.controllers;
 
+import com.livingprogress.mentorme.entities.ActivityType;
 import com.livingprogress.mentorme.entities.Document;
 import com.livingprogress.mentorme.entities.MenteeMentorGoal;
 import com.livingprogress.mentorme.entities.MenteeMentorProgram;
@@ -8,6 +9,8 @@ import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.services.MenteeMentorGoalService;
 import com.livingprogress.mentorme.services.MenteeMentorProgramService;
+import com.livingprogress.mentorme.services.springdata.ActivityRepository;
+import com.livingprogress.mentorme.services.springdata.MenteeMentorProgramRepository;
 import com.livingprogress.mentorme.utils.EntityTypes;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
@@ -28,12 +31,26 @@ import java.util.List;
 @RequestMapping("/documents")
 @NoArgsConstructor
 public class DocumentController extends BaseUploadController {
-    
+
+    /**
+     * The activity repository to create activity. Should be non-null after injection.
+     */
+    @Autowired
+    private ActivityRepository activityRepository;
+
+
+    /**
+     * The mentee mentor program repository to create activity. Should be non-null after injection.
+     */
+    @Autowired
+    private MenteeMentorProgramRepository menteeMentorProgramRepository;
+
     /**
      * The mentee mentor program service used to perform operations. Should be non-null after injection.
      */
     @Autowired
     private MenteeMentorProgramService menteeMentorProgramService;
+
     
     /**
      * The MenteeMentorGoalService instance
@@ -50,6 +67,8 @@ public class DocumentController extends BaseUploadController {
     protected void checkConfiguration() {
         Helper.checkConfigNotNull(menteeMentorProgramService, "menteeMentorProgramService");
         Helper.checkConfigNotNull(menteeMentorGoalService, "menteeMentorGoalService");
+        Helper.checkConfigNotNull(menteeMentorProgramService, "menteeMentorProgramService");
+        Helper.checkConfigNotNull(menteeMentorProgramRepository, "menteeMentorProgramRepository");
     }
 
     /**
@@ -67,13 +86,29 @@ public class DocumentController extends BaseUploadController {
             @RequestParam("files") MultipartFile[] documents) throws MentorMeException {
 
         List<Document> docs = Helper.uploadDocuments(getUploadDirectory(), documents);
-        
+
         if (EntityTypes.MENTEE_MENTOR_PROGRAM.equalsIgnoreCase(entityType)) {
             MenteeMentorProgram program = menteeMentorProgramService.get(entityId);
             program.getDocuments().addAll(docs);
+            // newly added document
+            for (Document doc : docs) {
+                Helper.audit(activityRepository, menteeMentorProgramRepository,
+                        ActivityType.DOCUMENT_ADDED, doc.getId(),
+                        doc.getName(),
+                        program.getId(),
+                        false);
+            }
         } else if (EntityTypes.MENTEE_MENTOR_GOAL.equalsIgnoreCase(entityType)) {
             MenteeMentorGoal goal = menteeMentorGoalService.get(entityId);
             goal.getDocuments().addAll(docs);
+            // newly added document
+            for (Document doc : docs) {
+                Helper.audit(activityRepository, menteeMentorProgramRepository,
+                        ActivityType.DOCUMENT_ADDED, doc.getId(),
+                        doc.getName(),
+                        Helper.getId(goal.getMenteeMentorProgram()),
+                        false);
+            }
         } else {
             throw new MentorMeException("The provided entityType is unknown.");
         }
