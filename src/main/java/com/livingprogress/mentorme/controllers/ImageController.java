@@ -10,6 +10,7 @@ import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.services.ImageService;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,11 @@ import java.util.UUID;
 @RequestMapping("/images")
 @NoArgsConstructor
 public class ImageController extends BaseUploadController {
+
+    /**
+     * Represents the logger
+     */
+    public static final Logger LOGGER = Logger.getLogger("com.livingprogress.mentorme");
 
     @Autowired
     private ImageService imageService;
@@ -118,13 +124,16 @@ public class ImageController extends BaseUploadController {
      * @return the content type.
      */
     private String getContentType(File file) {
+        final String signature = this.getClass().getCanonicalName() + ".getContentType";
         InputStream is = null;
         try {
             is = new BufferedInputStream(new FileInputStream(file));
             return URLConnection.guessContentTypeFromStream(is);
         } catch (FileNotFoundException e) {
+            Helper.logException(LOGGER, signature, e);
             return null;
         } catch (IOException e) {
+            Helper.logException(LOGGER, signature, e);
             return null;
         } finally {
             if (is != null) {
@@ -132,6 +141,7 @@ public class ImageController extends BaseUploadController {
                     is.close();
                 } catch (IOException e) {
                     // ignore
+                    Helper.logException(LOGGER, signature, e);
                 }
             }
         }

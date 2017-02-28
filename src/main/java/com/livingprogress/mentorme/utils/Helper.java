@@ -341,10 +341,8 @@ public class Helper {
         boolean checkPassword = !isUpdating || rawPassword != null;
         if (checkPassword) {
             Helper.checkNullOrEmpty(rawPassword, "user.password");
-            System.out.println("The raw password is: " + rawPassword);
             PasswordEncoder encoder = getPasswordEncoder();
             user.setPassword(encoder.encode(rawPassword));
-            System.out.println("The encoded password is: " + user.getPassword());
         }
         return user;
     }
