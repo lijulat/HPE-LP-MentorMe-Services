@@ -5,8 +5,6 @@ import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.services.MenteeMentorProgramService;
-import com.livingprogress.mentorme.services.MenteeService;
-import com.livingprogress.mentorme.services.MentorService;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +28,6 @@ public class MenteeMentorProgramController {
     @Autowired
     private MenteeMentorProgramService menteeMentorProgramService;
 
-    @Autowired
-    private MentorService mentorService;
-
-    @Autowired
-    private MenteeService menteeService;
 
     /**
      * Check if all required fields are initialized properly.
@@ -145,24 +138,6 @@ public class MenteeMentorProgramController {
         feedback.setCreatedOn(new Date());
         program.setMenteeFeedback(feedback);
         menteeMentorProgramService.update(id, program);
-
-        // re-calculate the avg rating for that mentee
-        MenteeMentorProgramSearchCriteria critera = new MenteeMentorProgramSearchCriteria();
-        critera.setMenteeId(program.getMentee().getId());
-        SearchResult<MenteeMentorProgram> programs = menteeMentorProgramService.search(critera, null);
-        int c = 0;
-        double sum = 0;
-        for (int i = 0; i < programs.getEntities().size(); i++) {
-            MenteeMentorProgram p = programs.getEntities().get(i);
-            if (p.getMenteeFeedback() != null && p.getMenteeFeedback().getMentorScore() != null) {
-                c++;
-                sum += p.getMenteeFeedback().getMentorScore();
-            }
-        }
-        Mentee mentee = menteeService.get(program.getMentee().getId());
-        mentee.setAveragePerformanceScore((int) (sum / c + 0.5));
-        menteeService.update(mentee.getId(), mentee);
-
     }
 
     /**
@@ -183,22 +158,6 @@ public class MenteeMentorProgramController {
         feedback.setCreatedOn(new Date());
         program.setMentorFeedback(feedback);
         menteeMentorProgramService.update(id, program);
-        // re-calculate the avg rating for that mentor
-        MenteeMentorProgramSearchCriteria critera = new MenteeMentorProgramSearchCriteria();
-        critera.setMentorId(program.getMentor().getId());
-        SearchResult<MenteeMentorProgram> programs = menteeMentorProgramService.search(critera, null);
-        int c = 0;
-        double sum = 0;
-        for (int i = 0; i < programs.getEntities().size(); i++) {
-            MenteeMentorProgram p = programs.getEntities().get(i);
-            if (p.getMentorFeedback() != null && p.getMentorFeedback().getMenteeScore() != null) {
-                c++;
-                sum += p.getMentorFeedback().getMenteeScore();
-            }
-        }
-        Mentor mentor = mentorService.get(program.getMentor().getId());
-        mentor.setAveragePerformanceScore((int) (sum / c + 0.5));
-        mentorService.update(mentor.getId(), mentor);
     }
 }
 
