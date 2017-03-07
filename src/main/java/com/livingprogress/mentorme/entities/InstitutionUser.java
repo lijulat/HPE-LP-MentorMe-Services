@@ -82,6 +82,6 @@ public abstract class InstitutionUser extends User {
     /**
      * The average performance score.
      */
-    private int averagePerformanceScore;
+    private Integer averagePerformanceScore;
 }
 
