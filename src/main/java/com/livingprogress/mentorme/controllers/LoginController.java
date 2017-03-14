@@ -9,6 +9,8 @@ import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.services.UserService;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +65,11 @@ public class LoginController {
         SearchResult<User>  users = userService.search(criteria, null);
         // validate valid user exists in SimpleUserDetailsService already
         User user = users.getEntities().get(0);
+        User target = new User();
+        BeanUtils.copyProperties(user, target);
+        target.setLastLoginOn(new Date());
+        target.setPassword(null);
+        userService.update(user.getId(), target);
         String token = userService.createTokenForUser(user);
         Map<String, String> result = new HashMap<>();
         result.put("token", token);

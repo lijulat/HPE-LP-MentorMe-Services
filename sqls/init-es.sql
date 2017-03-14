@@ -342,7 +342,7 @@ INSERT INTO state VALUES (79,'Veracruz', 141);
 INSERT INTO state VALUES (80,'Yucatán', 141);
 INSERT INTO state VALUES (81,'Zacatecas', 141);
 
-INSERT INTO user VALUES (1, '$2a$10$x89u76j2IgiINI/LzVeXzOEq63VprctUKupS0QtPYGFd6JhzkBgke', 'System', 'Admin', 'admin@mentorme.com', 'http://img4.imgtn.bdimg.com/it/u=3514646889,3827435585&fm=23&gp=0.jpg', '2016-10-01','ACTIVE', NULL, NULL, NULL, false, true, '7583 Classon Avenue', 'Brooklyn',32,65,'11205',-73.9617176,40.6978877, '2016-10-01');
+INSERT INTO user VALUES (1, '$2a$10$x89u76j2IgiINI/LzVeXzOEq63VprctUKupS0QtPYGFd6JhzkBgke', 'System', 'Admin', 'admin@mentorme.com', 'http://img4.imgtn.bdimg.com/it/u=3514646889,3827435585&fm=23&gp=0.jpg', '2016-10-01','ACTIVE', NULL, NULL, NULL, false, true, '7583 Classon Avenue', 'Brooklyn',32,65,'11205',-73.9617176,40.6978877, '2016-10-01', null);
 
 insert into personal_interest(id, value) values(1, 'Artes y Entretenimiento' );                            
 insert into personal_interest(id, value) values(2, 'Automotriz' );                                        

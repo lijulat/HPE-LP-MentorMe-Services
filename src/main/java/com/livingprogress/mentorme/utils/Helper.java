@@ -715,6 +715,10 @@ public class Helper {
             updated = true;
             oldEntity.setLongitude(newEntity.getLongitude());
         }
+        if (isUpdated(oldEntity.getLastLoginOn(), newEntity.getLastLoginOn())) {
+            updated = true;
+            oldEntity.setLastLoginOn(newEntity.getLastLoginOn());
+        }
         return updated;
     }
 
