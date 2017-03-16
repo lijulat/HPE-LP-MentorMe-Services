@@ -7,6 +7,7 @@ import com.livingprogress.mentorme.entities.MenteeMentorProgram;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
+import com.livingprogress.mentorme.services.DocumentService;
 import com.livingprogress.mentorme.services.MenteeMentorGoalService;
 import com.livingprogress.mentorme.services.MenteeMentorProgramService;
 import com.livingprogress.mentorme.services.springdata.ActivityRepository;
@@ -15,12 +16,16 @@ import com.livingprogress.mentorme.utils.EntityTypes;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -59,6 +64,12 @@ public class DocumentController extends BaseUploadController {
     private MenteeMentorGoalService menteeMentorGoalService;
     
     /**
+     * The DocumentService instance
+     */
+    @Autowired
+    private DocumentService documentService;
+    
+    /**
      * Check if all required fields are initialized properly.
      *
      * @throws ConfigurationException if any required field is not initialized properly.
@@ -68,6 +79,7 @@ public class DocumentController extends BaseUploadController {
         Helper.checkConfigNotNull(menteeMentorProgramService, "menteeMentorProgramService");
         Helper.checkConfigNotNull(menteeMentorGoalService, "menteeMentorGoalService");
         Helper.checkConfigNotNull(menteeMentorProgramService, "menteeMentorProgramService");
+        Helper.checkConfigNotNull(documentService, "documentService");
         Helper.checkConfigNotNull(menteeMentorProgramRepository, "menteeMentorProgramRepository");
     }
 
@@ -171,4 +183,23 @@ public class DocumentController extends BaseUploadController {
             throw new MentorMeException("The provided entityType is unknown.");
         }
     }
+    
+    /**
+     * Download document
+     * 
+     * @param documentId the id of the document.
+     * @return the binary data of the document.
+     * @throws MentorMeException if there are any errors.
+     * @throws FileNotFoundException if there are any errors.
+     */
+    @RequestMapping(value = "download/{documentId}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<InputStreamResource> download(@PathVariable Long documentId) throws MentorMeException, FileNotFoundException {
+    	Document document = documentService.get(documentId);
+        if (document == null) {
+            throw new EntityNotFoundException("Document not found for the documentId: " + documentId);
+        }
+        return Helper.downloadFile(document.getPath());
+    }
 }
+
