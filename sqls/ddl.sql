@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `longitude` DECIMAL (16, 8),
   `latitude` DECIMAL (16, 8),
   `last_modified_on` DATETIME NOT NULL,
+  `last_login_on` DATETIME,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_user_email` (`email`),
   CONSTRAINT `user_state_id_fk`
