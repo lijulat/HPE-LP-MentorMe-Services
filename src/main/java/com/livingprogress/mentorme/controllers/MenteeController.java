@@ -208,6 +208,7 @@ public class MenteeController extends BaseEmailController {
             throw new IllegalArgumentException("Email already registered");
         }
 
+        entity.setLastLoginOn(new Date());
 
         // create the entity
         Mentee mentee = menteeService.create(entity);

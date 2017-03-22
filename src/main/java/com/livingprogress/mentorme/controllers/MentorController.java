@@ -172,6 +172,7 @@ public class MentorController {
             throw new IllegalArgumentException("This email already registered");
         }
 
+        entity.setLastLoginOn(new Date());
 
         // create the entity
         Mentor mentor = mentorService.create(entity);
