@@ -119,7 +119,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(GET, "/images/{imageUrl}")
                 .permitAll()
                 .antMatchers(GET, "/documents/download/{documentId}")
-                .hasAnyAuthority("MENTOR,INSTITUTION_ADMIN")
+                .hasAnyAuthority("MENTOR,MENTEE,INSTITUTION_ADMIN")
                 .antMatchers(POST, "/users")
                 .hasAuthority("SYSTEM_ADMIN")
                 .antMatchers(DELETE, "/users/{id}")
