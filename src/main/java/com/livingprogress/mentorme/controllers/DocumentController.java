@@ -112,6 +112,7 @@ public class DocumentController extends BaseUploadController {
             }
         } else if (EntityTypes.MENTEE_MENTOR_GOAL.equalsIgnoreCase(entityType)) {
             MenteeMentorGoal goal = menteeMentorGoalService.get(entityId);
+            goal.getGoal().getDocuments().addAll(docs);
             goal.getDocuments().addAll(docs);
             // newly added document
             for (Document doc : docs) {
