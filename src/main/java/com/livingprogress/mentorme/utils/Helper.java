@@ -513,8 +513,6 @@ public class Helper {
                 root.join("personalInterests", JoinType.LEFT).get("personalInterest").get("id"), cb);
         resultPD = Helper.buildInPredicate(criteria.getProfessionalInterests(), resultPD,
                 root.join("professionalInterests", JoinType.LEFT).get("professionalInterest").get("id"), cb);
-        resultPD = Helper.buildEqualPredicate(criteria.getAssignedToInstitution(), resultPD,
-                root.get("assignedToInstitution"), cb);
         resultPD = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinLastModifiedOn(),
                 resultPD, root.get("lastModifiedOn"), cb);
         resultPD = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxLastModifiedOn(),
@@ -749,10 +747,6 @@ public class Helper {
         if (isUpdated(oldEntity.getInstitution(), newEntity.getInstitution())) {
             updated = true;
             oldEntity.setInstitution(newEntity.getInstitution());
-        }
-        if (isUpdated(oldEntity.isAssignedToInstitution(), newEntity.isAssignedToInstitution())) {
-            updated = true;
-            oldEntity.setAssignedToInstitution(newEntity.isAssignedToInstitution());
         }
         if (isUpdated(oldEntity.getBirthDate(), newEntity.getBirthDate())) {
             updated = true;
@@ -1255,11 +1249,10 @@ public class Helper {
     public static <T extends InstitutionUserSearchCriteria, S extends InstitutionUser, R extends InstitutionUser>
      List<R> searchMatchEntities(S entity, T criteria, MatchSearchCriteria matchSearchCriteria,
             GenericService<R, T> service) throws MentorMeException {
-        if (entity.isAssignedToInstitution()) {
-            criteria.setInstitutionId(entity.getInstitution().getId());
-        } else {
-            criteria.setAssignedToInstitution(false);
-        }
+    	if (entity.getInstitution() != null) {
+    		criteria.setInstitutionId(entity.getInstitution().getId());
+    	}
+    	
         Paging paging = null;
         // copy match criteria properties
         if (matchSearchCriteria != null) {

@@ -69,7 +69,6 @@
         "status" : "ACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : true,
       "birthDate" : "1988-08-01",
       "phone" : "phone1",
       "skypeUsername" : "skypeUsername1",
@@ -225,7 +224,6 @@
         "status" : "ACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : true,
       "birthDate" : "1988-08-01",
       "phone" : "phone1",
       "skypeUsername" : "skypeUsername1",
@@ -478,7 +476,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -646,7 +643,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -807,7 +803,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -963,7 +958,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -1220,7 +1214,6 @@
               "status" : "ACTIVE",
               "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
             },
-            "assignedToInstitution" : true,
             "birthDate" : "1988-08-01",
             "phone" : "phone1",
             "skypeUsername" : "skypeUsername1",
@@ -1376,7 +1369,6 @@
               "status" : "ACTIVE",
               "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
             },
-            "assignedToInstitution" : true,
             "birthDate" : "1988-08-01",
             "phone" : "phone1",
             "skypeUsername" : "skypeUsername1",
@@ -1582,7 +1574,6 @@
             "status" : "INACTIVE",
             "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
           },
-          "assignedToInstitution" : false,
           "birthDate" : "1988-08-02",
           "phone" : "phone2",
           "skypeUsername" : "skypeUsername2",
@@ -1691,7 +1682,6 @@
             "status" : "ACTIVE",
             "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
           },
-          "assignedToInstitution" : true,
           "birthDate" : "1988-08-03",
           "phone" : "phone3",
           "skypeUsername" : "skypeUsername3",
@@ -1844,7 +1834,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -2012,7 +2001,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -2173,7 +2161,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -2329,7 +2316,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -2586,7 +2572,6 @@
               "status" : "ACTIVE",
               "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
             },
-            "assignedToInstitution" : true,
             "birthDate" : "1988-08-01",
             "phone" : "phone1",
             "skypeUsername" : "skypeUsername1",
@@ -2742,7 +2727,6 @@
               "status" : "ACTIVE",
               "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
             },
-            "assignedToInstitution" : true,
             "birthDate" : "1988-08-01",
             "phone" : "phone1",
             "skypeUsername" : "skypeUsername1",
@@ -2939,7 +2923,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -3107,7 +3090,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -3268,7 +3250,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -3424,7 +3405,6 @@
                 "status" : "ACTIVE",
                 "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
               },
-              "assignedToInstitution" : true,
               "birthDate" : "1988-08-01",
               "phone" : "phone1",
               "skypeUsername" : "skypeUsername1",
@@ -3610,7 +3590,6 @@
         "status" : "INACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : false,
       "birthDate" : "1988-08-02",
       "phone" : "phone2",
       "skypeUsername" : "skypeUsername2",
@@ -3706,7 +3685,6 @@
         "status" : "INACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : false,
       "birthDate" : "1988-08-02",
       "phone" : "phone2",
       "skypeUsername" : "skypeUsername2",
@@ -4064,7 +4042,6 @@
         "status" : "ACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : true,
       "birthDate" : "1988-08-03",
       "phone" : "phone3",
       "skypeUsername" : "skypeUsername3",
@@ -4158,7 +4135,6 @@
         "status" : "ACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : true,
       "birthDate" : "1988-08-03",
       "phone" : "phone3",
       "skypeUsername" : "skypeUsername3",
@@ -4419,7 +4395,6 @@
         "status" : "ACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : false,
       "birthDate" : "1988-08-04",
       "phone" : "phone4",
       "skypeUsername" : "skypeUsername4",
@@ -4507,7 +4482,6 @@
         "status" : "ACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : false,
       "birthDate" : "1988-08-04",
       "phone" : "phone4",
       "skypeUsername" : "skypeUsername4",
@@ -4784,7 +4758,6 @@
         "status" : "ACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : true,
       "birthDate" : "1988-08-05",
       "phone" : "phone5",
       "skypeUsername" : "skypeUsername5",
@@ -4878,7 +4851,6 @@
         "status" : "ACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : true,
       "birthDate" : "1988-08-05",
       "phone" : "phone5",
       "skypeUsername" : "skypeUsername5",
@@ -5139,7 +5111,6 @@
         "status" : "ACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : false,
       "birthDate" : "1988-08-06",
       "phone" : "phone6",
       "skypeUsername" : "skypeUsername6",
@@ -5217,7 +5188,6 @@
         "status" : "ACTIVE",
         "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
       },
-      "assignedToInstitution" : false,
       "birthDate" : "1988-08-06",
       "phone" : "phone6",
       "skypeUsername" : "skypeUsername6",

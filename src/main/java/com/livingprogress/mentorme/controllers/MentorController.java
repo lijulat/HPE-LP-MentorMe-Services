@@ -86,6 +86,12 @@ public class MentorController {
     private int topMatchingAmount;
 
     /**
+     * the minimum goal score. Default value = 0.
+     */
+    @Value("${matchingMentees.minimumGoalScore}")
+    private int minimumGoalScore;
+
+    /**
      * Spring social linked in api.
      */
     private LinkedIn linkedIn;
@@ -286,7 +292,7 @@ public class MentorController {
                 ? matchSearchCriteria.getMaxCount() : topMatchingAmount;
         // sort the mentorScores by scores and return the top <topMatchingAmount> mentees;
         return menteeScores.entrySet().stream() // reverse means desc order
-                .filter(c -> c.getValue() > 0) // must match or weight >0
+                .filter(c -> c.getValue() > minimumGoalScore) // must match or weight > minimumGoalScore
                 .sorted(Comparator.comparing(Map.Entry<Mentee, Integer>::getValue)
                                   .reversed())
                 .map(Map.Entry::getKey).limit(limit).collect(Collectors.toList());

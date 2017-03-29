@@ -248,7 +248,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mentee` (
   `id` BIGINT NOT NULL,
   `institution_id` BIGINT NOT NULL,
-  `assigned_to_institution` TINYINT(1) NOT NULL,
   `birth_date` DATE NOT NULL,
   `phone` VARCHAR(45) NULL,
   `skype_username` VARCHAR(45) NULL,
@@ -298,7 +297,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mentor` (
   `id` BIGINT NOT NULL,
   `institution_id` BIGINT NOT NULL,
-  `assigned_to_institution` TINYINT(1) NOT NULL,
   `birth_date` DATE NULL,
   `phone` VARCHAR(45) NULL,
   `skype_username` VARCHAR(45) NULL,

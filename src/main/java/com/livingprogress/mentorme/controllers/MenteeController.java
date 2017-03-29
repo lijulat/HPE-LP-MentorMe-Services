@@ -92,6 +92,12 @@ public class MenteeController extends BaseEmailController {
     @Value("${matchingMentors.topMatchingAmount}")
     private int topMatchingAmount;
 
+    /**
+     * the minimum goal score. Default value = 0.
+     */
+    @Value("${matchingMentors.minimumGoalScore}")
+    private int minimumGoalScore;
+
 
     /**
      * Check if all required fields are initialized properly.
@@ -196,8 +202,6 @@ public class MenteeController extends BaseEmailController {
             institution.setId(institutionAffiliationCode.getInstitutionId());
             entity.setInstitution(institution);
         }
-
-        entity.setAssignedToInstitution(true);
 
         // check if the email already exists
         UserSearchCriteria criteria = new UserSearchCriteria();
@@ -322,7 +326,7 @@ public class MenteeController extends BaseEmailController {
                 ? matchSearchCriteria.getMaxCount() : topMatchingAmount;
         // sort the mentorScores by scores and return the top <topMatchingAmount> mentors
         return mentorScores.entrySet().stream()  // reverse means desc order
-                .filter(c -> c.getValue() > 0) // must match or weight >0
+                .filter(c -> c.getValue() > minimumGoalScore) // must match or weight > minimumGoalScore
                 .sorted(Comparator.comparing(Map.Entry<Mentor, Integer>::getValue)
                                   .reversed())
                 .map(Map.Entry::getKey).limit(limit).collect(Collectors.toList());

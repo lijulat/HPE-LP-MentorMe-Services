@@ -136,7 +136,7 @@ public class HODClientImpl implements HODClient {
         vars.add(Constant.FLAVOR, flavor);
         // have to use parametric_fields for institutionId too
         vars.put("parametric_fields",
-                Arrays.asList("assignedToInstitution", "isVirtualUser",
+                Arrays.asList("isVirtualUser",
                         "institutionId",
                         "interestCategories",
                         "parentInterestCategories"));
@@ -248,11 +248,9 @@ public class HODClientImpl implements HODClient {
                 ? criteria.getMaxCount() : defaultMaxCount));
         List<String> fields = new ArrayList<>();
         fields.add("MATCH{" + category + "}:content_type");
-        if (entity.isAssignedToInstitution()) {
+        if (entity.getInstitution() != null) {
             fields.add("MATCH{" + entity.getInstitution()
                                         .getId() + "}:institutionId");
-        } else {
-            fields.add("MATCH{false}:assignedToInstitution");
         }
         if (!andCategories.isEmpty()) {
             fields.add("MATCHALL{"

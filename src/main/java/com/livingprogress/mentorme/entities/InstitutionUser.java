@@ -32,11 +32,6 @@ public abstract class InstitutionUser extends User {
     private Institution institution;
 
     /**
-     * The assigned to institution flag.
-     */
-    private boolean assignedToInstitution;
-
-    /**
      * The birth date.
      */
     @Temporal(DATE)

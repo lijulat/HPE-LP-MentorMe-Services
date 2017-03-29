@@ -434,17 +434,11 @@ public class MentorControllerTest extends BaseTest {
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(3));
-        mockMvc.perform(MockMvcRequestBuilders.get("/mentors?assignedToInstitution=false")
-                                              .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.total").value(3))
-               .andExpect(jsonPath("$.totalPages").value(1))
-               .andExpect(jsonPath("$.entities", Matchers.hasSize(3)));
         mockMvc.perform(MockMvcRequestBuilders.get("/mentors?pageNumber=0&pageSize=2&sortColumn=email"
                  + "&sortOrder=DESC&mentorType=MENTEE_PAIRED&institutionId=1&status=ACTIVE"
                  + "&professionalAreas[0].id=1&minAveragePerformanceScore=0&maxAveragePerformanceScore=0"
                  + "&name=firstname3&companyName=companyName1& mentorRequestStatus=APPROVED"
-                + "&personalInterests[0].id=1&professionalInterests[0].id=1&assignedToInstitution=true")
+                + "&personalInterests[0].id=1&professionalInterests[0].id=1")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))
