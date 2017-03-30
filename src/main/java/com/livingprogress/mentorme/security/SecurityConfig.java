@@ -182,7 +182,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(DELETE, "/menteeMentorTasks/{id}")
                 .hasAnyAuthority("MENTOR")
                 .antMatchers(POST, "/menteeMentorGoals")
-                .hasAnyAuthority("MENTOR")
+                .hasAnyAuthority("MENTOR,MENTEE")
                 .antMatchers(PUT, "/menteeMentorGoals/{id}")
                 .hasAnyAuthority("MENTOR")
                 .antMatchers(DELETE, "/menteeMentorGoals/{id}")
