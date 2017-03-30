@@ -400,16 +400,10 @@ public class MenteeControllerTest extends BaseTest {
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(4));
-        mockMvc.perform(MockMvcRequestBuilders.get("/mentees?assignedToInstitution=false")
-                                              .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.total").value(3))
-               .andExpect(jsonPath("$.totalPages").value(1))
-               .andExpect(jsonPath("$.entities", Matchers.hasSize(3)));
         mockMvc.perform(MockMvcRequestBuilders.get
                 ("/mentees?pageNumber=0&pageSize=2&sortColumn=email&sortOrder=DESC&institutionId=1&status=ACTIVE" +
                         "&minAveragePerformanceScore=0&maxAveragePerformanceScore=0&name=firstname4&schoolName" +
-                "=school1&personalInterests[0].id=1&professionalInterests[0].id=1&assignedToInstitution=true")
+                "=school1&personalInterests[0].id=1&professionalInterests[0].id=1")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))

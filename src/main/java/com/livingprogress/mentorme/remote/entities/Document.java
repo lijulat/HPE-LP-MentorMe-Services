@@ -46,11 +46,6 @@ public class Document {
     private String isVirtualUser;
 
     /**
-     * The assigned to institution flag.
-     */
-    private String assignedToInstitution;
-
-    /**
      * The institution id.
      */
     private String institutionId;

@@ -92,6 +92,12 @@ public class MenteeController extends BaseEmailController {
     @Value("${matchingMentors.topMatchingAmount}")
     private int topMatchingAmount;
 
+    /**
+     * the minimum goal score. Default value = 0.
+     */
+    @Value("${matchingMentors.minimumGoalScore}")
+    private int minimumGoalScore;
+
 
     /**
      * Check if all required fields are initialized properly.
@@ -176,17 +182,25 @@ public class MenteeController extends BaseEmailController {
         entity.setStatus(UserStatus.ACTIVE);
 
         // get the institution code
-        if (entity.getInstitutionAffiliationCode() == null
-                || entity.getInstitutionAffiliationCode().getCode() == null) {
-            throw new IllegalArgumentException("Institution affiliation code is required.");
+        if ((entity.getInstitutionAffiliationCode() == null
+                || entity.getInstitutionAffiliationCode().getCode() == null)
+                && (entity.getInstitution() == null || entity.getInstitution().getId() <= 0)) {
+            throw new IllegalArgumentException("Institution affiliation code or default institution is required.");
         }
 
-        // set the institution code and institution
-        InstitutionAffiliationCode institutionAffiliationCode = menteeService.findInstitutionAffiliationCode(
-                entity.getInstitutionAffiliationCode().getCode());
-        if (institutionAffiliationCode == null) {
-            throw new IllegalArgumentException(
-                    "Code: " + entity.getInstitutionAffiliationCode().getCode() + " Not found");
+        if (entity.getInstitutionAffiliationCode() != null && entity.getInstitutionAffiliationCode().getCode() != null) {
+            // set the institution code and institution
+            InstitutionAffiliationCode institutionAffiliationCode = menteeService.findInstitutionAffiliationCode(
+                    entity.getInstitutionAffiliationCode().getCode());
+            if (institutionAffiliationCode == null) {
+                throw new IllegalArgumentException(
+                        "Code: " + entity.getInstitutionAffiliationCode().getCode() + " Not found");
+            }
+
+            entity.setInstitutionAffiliationCode(institutionAffiliationCode);
+            Institution institution = new Institution();
+            institution.setId(institutionAffiliationCode.getInstitutionId());
+            entity.setInstitution(institution);
         }
 
         // check if the email already exists
@@ -198,12 +212,7 @@ public class MenteeController extends BaseEmailController {
             throw new IllegalArgumentException("Email already registered");
         }
 
-        entity.setInstitutionAffiliationCode(institutionAffiliationCode);
-        Institution institution = new Institution();
-        institution.setId(institutionAffiliationCode.getInstitutionId());
-
-        entity.setInstitution(institution);
-        entity.setAssignedToInstitution(true);
+        entity.setLastLoginOn(new Date());
 
         // create the entity
         Mentee mentee = menteeService.create(entity);
@@ -317,7 +326,7 @@ public class MenteeController extends BaseEmailController {
                 ? matchSearchCriteria.getMaxCount() : topMatchingAmount;
         // sort the mentorScores by scores and return the top <topMatchingAmount> mentors
         return mentorScores.entrySet().stream()  // reverse means desc order
-                .filter(c -> c.getValue() > 0) // must match or weight >0
+                .filter(c -> c.getValue() > minimumGoalScore) // must match or weight > minimumGoalScore
                 .sorted(Comparator.comparing(Map.Entry<Mentor, Integer>::getValue)
                                   .reversed())
                 .map(Map.Entry::getKey).limit(limit).collect(Collectors.toList());

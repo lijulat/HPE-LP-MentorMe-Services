@@ -54,11 +54,6 @@ public abstract class InstitutionUserSearchCriteria {
     private List<ProfessionalInterest> professionalInterests;
 
     /**
-     * The assigned to institution flag.
-     */
-    private Boolean assignedToInstitution;
-
-    /**
      * The min last modified on.
      */
     private Date minLastModifiedOn;

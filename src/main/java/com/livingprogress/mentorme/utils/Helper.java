@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.livingprogress.mentorme.aop.LogAspect;
 import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
+import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.security.CustomUserDetails;
 import com.livingprogress.mentorme.security.UserAuthentication;
@@ -16,6 +17,9 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.security.core.Authentication;
@@ -28,9 +32,15 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.persistence.criteria.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.net.URLConnection;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -341,10 +351,8 @@ public class Helper {
         boolean checkPassword = !isUpdating || rawPassword != null;
         if (checkPassword) {
             Helper.checkNullOrEmpty(rawPassword, "user.password");
-            System.out.println("The raw password is: " + rawPassword);
             PasswordEncoder encoder = getPasswordEncoder();
             user.setPassword(encoder.encode(rawPassword));
-            System.out.println("The encoded password is: " + user.getPassword());
         }
         return user;
     }
@@ -505,8 +513,6 @@ public class Helper {
                 root.join("personalInterests", JoinType.LEFT).get("personalInterest").get("id"), cb);
         resultPD = Helper.buildInPredicate(criteria.getProfessionalInterests(), resultPD,
                 root.join("professionalInterests", JoinType.LEFT).get("professionalInterest").get("id"), cb);
-        resultPD = Helper.buildEqualPredicate(criteria.getAssignedToInstitution(), resultPD,
-                root.get("assignedToInstitution"), cb);
         resultPD = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinLastModifiedOn(),
                 resultPD, root.get("lastModifiedOn"), cb);
         resultPD = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxLastModifiedOn(),
@@ -717,6 +723,10 @@ public class Helper {
             updated = true;
             oldEntity.setLongitude(newEntity.getLongitude());
         }
+        if (isUpdated(oldEntity.getLastLoginOn(), newEntity.getLastLoginOn())) {
+            updated = true;
+            oldEntity.setLastLoginOn(newEntity.getLastLoginOn());
+        }
         return updated;
     }
 
@@ -737,10 +747,6 @@ public class Helper {
         if (isUpdated(oldEntity.getInstitution(), newEntity.getInstitution())) {
             updated = true;
             oldEntity.setInstitution(newEntity.getInstitution());
-        }
-        if (isUpdated(oldEntity.isAssignedToInstitution(), newEntity.isAssignedToInstitution())) {
-            updated = true;
-            oldEntity.setAssignedToInstitution(newEntity.isAssignedToInstitution());
         }
         if (isUpdated(oldEntity.getBirthDate(), newEntity.getBirthDate())) {
             updated = true;
@@ -1243,11 +1249,10 @@ public class Helper {
     public static <T extends InstitutionUserSearchCriteria, S extends InstitutionUser, R extends InstitutionUser>
      List<R> searchMatchEntities(S entity, T criteria, MatchSearchCriteria matchSearchCriteria,
             GenericService<R, T> service) throws MentorMeException {
-        if (entity.isAssignedToInstitution()) {
-            criteria.setInstitutionId(entity.getInstitution().getId());
-        } else {
-            criteria.setAssignedToInstitution(false);
-        }
+    	if (entity.getInstitution() != null) {
+    		criteria.setInstitutionId(entity.getInstitution().getId());
+    	}
+    	
         Paging paging = null;
         // copy match criteria properties
         if (matchSearchCriteria != null) {
@@ -1266,4 +1271,67 @@ public class Helper {
         }
         return service.search(criteria, paging).getEntities();
     }
+    
+    /**
+     * Downloads a file.
+     * 
+     * @param filePath the path of the file to be downloaded
+     * @return the binary data of the file
+     * @throws EntityNotFoundException if there are any errors
+     * @throws FileNotFoundException if there are any errors
+     */
+    public static ResponseEntity<InputStreamResource> downloadFile(String filePath)
+			throws EntityNotFoundException, FileNotFoundException {
+    	
+		File file = new File(filePath);
+        if (!file.exists() || !file.isFile()) {
+            throw new EntityNotFoundException("File not found in the path: " + filePath);
+        }
+
+        long fileLength = file.length();
+        String contentType = Helper.getContentType(file);
+
+        if (contentType == null) {
+            contentType = "application/octet-stream";
+        }
+        InputStream is = new FileInputStream(file);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("content-disposition", "attachment; filename=" + file.getName());
+        return ResponseEntity.ok()
+        		.headers(headers)
+                .contentLength(fileLength)
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(new InputStreamResource(is));
+	}
+    
+    /**
+     * Gets the content type.
+     * @param file the file.
+     * @return the content type.
+     */
+    private static String getContentType(File file) {
+        final String signature = "com.livingprogress.mentorme.utils.Helper#getContentType";
+        InputStream is = null;
+        try {
+            is = new BufferedInputStream(new FileInputStream(file));
+            return URLConnection.guessContentTypeFromStream(is);
+        } catch (FileNotFoundException e) {
+            Helper.logException(LogAspect.LOGGER, signature, e);
+            return null;
+        } catch (IOException e) {
+            Helper.logException(LogAspect.LOGGER, signature, e);
+            return null;
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    // ignore
+                    Helper.logException(LogAspect.LOGGER, signature, e);
+                }
+            }
+        }
+
+    }
 }
+

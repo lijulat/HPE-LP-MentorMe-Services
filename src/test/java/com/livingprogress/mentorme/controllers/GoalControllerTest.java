@@ -89,7 +89,6 @@ public class GoalControllerTest extends BaseTest {
                             .andReturn()
                             .getResponse()
                             .getContentAsString();
-        System.out.println(res);
         final Goal result = objectMapper.readValue(res, Goal.class);
         demoEntity.setId(result.getId());
         verifyEntities(demoEntity.getUsefulLinks(), result.getUsefulLinks());

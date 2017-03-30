@@ -310,39 +310,40 @@ INSERT INTO state VALUES (47,'Washington',  65);
 INSERT INTO state VALUES (48,'West Virginia',  65);
 INSERT INTO state VALUES (49,'Wisconsin',  65);
 INSERT INTO state VALUES (50,'Wyoming',  65);
-INSERT INTO state VALUES (51,'Aguascalientes',  65);
-INSERT INTO state VALUES (52,'Baja California',  65);
-INSERT INTO state VALUES (53,'Baja California Sur',  65);
-INSERT INTO state VALUES (54,'Campeche',  65);
-INSERT INTO state VALUES (55,'Chiapas',  65);
-INSERT INTO state VALUES (56,'Chihuahua',  65);
-INSERT INTO state VALUES (57,'Coahuila',  65);
-INSERT INTO state VALUES (58,'Colima',  65);
-INSERT INTO state VALUES (59,'Durango',  65);
-INSERT INTO state VALUES (60,'Guanajuato',  65);
-INSERT INTO state VALUES (61,'Guerrero',  65);
-INSERT INTO state VALUES (62,'Hidalgo',  65);
-INSERT INTO state VALUES (63,'Jalisco',  65);
-INSERT INTO state VALUES (64,'México',  65);
-INSERT INTO state VALUES (65,'Michoacán',  65);
-INSERT INTO state VALUES (66,'Morelos',  65);
-INSERT INTO state VALUES (67,'Nayarit',  65);
-INSERT INTO state VALUES (68,'Nuevo León',  65);
-INSERT INTO state VALUES (69,'Oaxaca',  65);
-INSERT INTO state VALUES (70,'Puebla',  65);
-INSERT INTO state VALUES (71,'Querétaro',  65);
-INSERT INTO state VALUES (72,'Quintana Roo',  65);
-INSERT INTO state VALUES (73,'San Luis Potosí',  65);
-INSERT INTO state VALUES (74,'Sinaloa',  65);
-INSERT INTO state VALUES (75,'Sonora',  65);
-INSERT INTO state VALUES (76,'Tabasco',  65);
-INSERT INTO state VALUES (77,'Tamaulipas',  65);
-INSERT INTO state VALUES (78,'Tlaxcala',  65);
-INSERT INTO state VALUES (79,'Veracruz',  65);
-INSERT INTO state VALUES (80,'Yucatán',  65);
-INSERT INTO state VALUES (81,'Zacatecas',  65);
 
-INSERT INTO user VALUES (1, '$2a$10$x89u76j2IgiINI/LzVeXzOEq63VprctUKupS0QtPYGFd6JhzkBgke', 'System', 'Admin', 'admin@mentorme.com', 'http://img4.imgtn.bdimg.com/it/u=3514646889,3827435585&fm=23&gp=0.jpg', '2016-10-01','ACTIVE', NULL, NULL, NULL, false, true, '7583 Classon Avenue', 'Brooklyn',32,65,'11205',-73.9617176,40.6978877, '2016-10-01');
+INSERT INTO state VALUES (51,'Aguascalientes', 141);
+INSERT INTO state VALUES (52,'Baja California', 141);
+INSERT INTO state VALUES (53,'Baja California Sur', 141);
+INSERT INTO state VALUES (54,'Campeche', 141);
+INSERT INTO state VALUES (55,'Chiapas', 141);
+INSERT INTO state VALUES (56,'Chihuahua', 141);
+INSERT INTO state VALUES (57,'Coahuila', 141);
+INSERT INTO state VALUES (58,'Colima', 141);
+INSERT INTO state VALUES (59,'Durango', 141);
+INSERT INTO state VALUES (60,'Guanajuato', 141);
+INSERT INTO state VALUES (61,'Guerrero', 141);
+INSERT INTO state VALUES (62,'Hidalgo', 141);
+INSERT INTO state VALUES (63,'Jalisco', 141);
+INSERT INTO state VALUES (64,'México', 141);
+INSERT INTO state VALUES (65,'Michoacán', 141);
+INSERT INTO state VALUES (66,'Morelos', 141);
+INSERT INTO state VALUES (67,'Nayarit', 141);
+INSERT INTO state VALUES (68,'Nuevo León', 141);
+INSERT INTO state VALUES (69,'Oaxaca', 141);
+INSERT INTO state VALUES (70,'Puebla', 141);
+INSERT INTO state VALUES (71,'Querétaro', 141);
+INSERT INTO state VALUES (72,'Quintana Roo', 141);
+INSERT INTO state VALUES (73,'San Luis Potosí', 141);
+INSERT INTO state VALUES (74,'Sinaloa', 141);
+INSERT INTO state VALUES (75,'Sonora', 141);
+INSERT INTO state VALUES (76,'Tabasco', 141);
+INSERT INTO state VALUES (77,'Tamaulipas', 141);
+INSERT INTO state VALUES (78,'Tlaxcala', 141);
+INSERT INTO state VALUES (79,'Veracruz', 141);
+INSERT INTO state VALUES (80,'Yucatán', 141);
+INSERT INTO state VALUES (81,'Zacatecas', 141);
+
+INSERT INTO user VALUES (1, '$2a$10$x89u76j2IgiINI/LzVeXzOEq63VprctUKupS0QtPYGFd6JhzkBgke', 'System', 'Admin', 'admin@mentorme.com', 'http://img4.imgtn.bdimg.com/it/u=3514646889,3827435585&fm=23&gp=0.jpg', '2016-10-01','ACTIVE', NULL, NULL, NULL, false, true, '7583 Classon Avenue', 'Brooklyn',32,65,'11205',-73.9617176,40.6978877, '2016-10-01', null);
 
 INSERT INTO personal_interest(id, value) VALUES (1,'Arts & Entertainment');
 INSERT INTO personal_interest(id, value) VALUES (2,'Automotive');
@@ -1114,9 +1115,10 @@ INSERT INTO professional_interest(id, value, parent_category_id) VALUES (383,'La
 INSERT INTO professional_interest(id, value, parent_category_id) VALUES (384,'Pagan/Wiccan', 23);
 INSERT INTO professional_interest(id, value, parent_category_id) VALUES (385,'Social Media', 24);
 
-INSERT INTO institution VALUES (1, 'Pupilo', 'GTC Consulting' , 'Bahia de Acapulco #2988', 'Tlaquepaque', 63, '45609', 142,'52 133-1221-6072', 'pupilo@gtc.com', 'PUPILO is an innovative no profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13');
-INSERT INTO institution VALUES (2, 'Lideres del Mañana', 'ITESM' , 'Av. Eugenio Garza Sada 2501 Sur', 'Monterrey', 68, '64849', 142,'52 81-8358-2000', 'paulina.martinez@itesm.mx', 'Líderes del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13');
-INSERT INTO institution VALUES (3, 'Incubación de Empresas CIETT', 'UANL' , 'Av. Lázaro Cárdenas 4600 Oriente', 'Monterrey', 68, '64930', 142,'52 81-8329-4000', 'ciett@uanl.mx', 'The main objective of the Business Incubator area is to create and develop micro and small businesses so they are profitable and innovative.  This is done through counseling, training, profesional consulting in any of the business areas as well as follow through to facilitate access to financial sources', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13');
+INSERT INTO institution VALUES (1, 'Pupilo', 'GTC Consulting' , 'Bahia de Acapulco #2988', 'Tlaquepaque', 63, '45609', 142,'52 133-1221-6072', 'pupilo@gtc.com', 'PUPILO is an innovative no profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', true);
+INSERT INTO institution VALUES (2, 'Lideres del Mañana', 'ITESM' , 'Av. Eugenio Garza Sada 2501 Sur', 'Monterrey', 68, '64849', 142,'52 81-8358-2000', 'paulina.martinez@itesm.mx', 'Líderes del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', false);
+INSERT INTO institution VALUES (3, 'Incubación de Empresas CIETT', 'UANL' , 'Av. Lázaro Cárdenas 4600 Oriente', 'Monterrey', 68, '64930', 142,'52 81-8329-4000', 'ciett@uanl.mx', 'The main objective of the Business Incubator area is to create and develop micro and small businesses so they are profitable and innovative.  This is done through counseling, training, profesional consulting in any of the business areas as well as follow through to facilitate access to financial sources', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', false);
+
 
 INSERT INTO institutional_program VALUES (1, 'Pupilo', 'PUPILO is an innovative no profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', '2016-10-11','2017-10-31',1,1,20, '2016-10-10','/img/program/p2.png', '2016-10-10');
 INSERT INTO institutional_program VALUES (2, 'Lideres del Mañana', 'Líderes del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', '2016-10-11','2017-10-31',2,1,20, '2016-10-10','/img/program/p3.png', '2016-10-10');
@@ -1126,10 +1128,22 @@ insert into institution_affiliation_code values (1, 'pupilo', 1, true);
 insert into institution_affiliation_code values (2, 'lideres', 2, true);
 insert into institution_affiliation_code values (3, 'biz', 3, true);
 
-INSERT INTO skill(id, value) VALUES (1, 'Leadership');
+
+INSERT INTO skill(id, value) VALUES (1, 'Leadership & Decision Making');
 INSERT INTO skill(id, value) VALUES (2, 'Productivity and Time Management');
-INSERT INTO skill(id, value) VALUES (3, 'Enterpreneurship');
-INSERT INTO skill(id, value) VALUES (4, 'Communication Skills');
+INSERT INTO skill(id, value) VALUES (3, 'Entrepreneurship & Start-ups');
+INSERT INTO skill(id, value) VALUES (4, 'Communication Skills & Languages');
+INSERT INTO skill(id, value) VALUES (5, 'College and Vocational  Planning');
+INSERT INTO skill(id, value) VALUES (6, 'Extracurricular Activities & Volunteering');
+INSERT INTO skill(id, value) VALUES (7, 'Networking');
+INSERT INTO skill(id, value) VALUES (8, 'Academic Support');
+INSERT INTO skill(id, value) VALUES (9, 'Scholarships');
+INSERT INTO skill(id, value) VALUES (10, 'Finance & Accounting');
+INSERT INTO skill(id, value) VALUES (11, 'Business Administration');
+INSERT INTO skill(id, value) VALUES (12, 'Sports, Fitness & Nutrition');
+INSERT INTO skill(id, value) VALUES (13, 'Jobs & Interships');
+INSERT INTO skill(id, value) VALUES (14, 'Innovation');
+
 
 INSERT INTO responsibility VALUES (1, 1, 'Book meetings', '2016-12-01', true, true, 1);
 INSERT INTO responsibility VALUES (2, 2, 'Followup on activities', '2016-12-01', false, true, 1);

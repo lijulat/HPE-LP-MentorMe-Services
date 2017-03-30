@@ -44,7 +44,6 @@
     "status" : null,
     "logoPath" : null
   },
-  "assignedToInstitution" : true,
   "birthDate" : "1999-09-08T00:00:00",
   "phone" : "demoMentee1Phone",
   "skypeUsername" : "demoMentee1SkypeUsername4",

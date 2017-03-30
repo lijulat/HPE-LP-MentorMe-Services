@@ -77,7 +77,6 @@ public class TaskServiceImpl extends BaseService<Task, TaskSearchCriteria> imple
         Helper.checkPositive(entity.getNumber(), "entity.number");
         Helper.checkPositive(entity.getGoalId(), "entity.goalId");
         entity.setGoal(new Goal());
-        System.out.println("########### Adding goal id: " + entity.getGoalId());
         entity.getGoal().setId(entity.getGoalId());
     }
 

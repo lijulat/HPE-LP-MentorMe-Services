@@ -180,7 +180,6 @@ public class SearchUsersConsumer extends BaseConsumer implements Consumer<Event<
                 document.setInstitutionId(Long.toString(entity.getInstitution()
                                                 .getId()));
             }
-            document.setAssignedToInstitution(Boolean.toString(entity.isAssignedToInstitution()));
             document.setContentType(type);
             document.setInterestCategories(
                     new HashSet<>(interestCategory.getInterestCategories()));

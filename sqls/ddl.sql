@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `longitude` DECIMAL (16, 8),
   `latitude` DECIMAL (16, 8),
   `last_modified_on` DATETIME NOT NULL,
+  `last_login_on` DATETIME,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_user_email` (`email`),
   CONSTRAINT `user_state_id_fk`
@@ -108,6 +109,7 @@ CREATE TABLE IF NOT EXISTS `institution` (
   `logo_path` VARCHAR(512) NULL,
   `created_on` DATETIME NOT NULL,
   `last_modified_on` DATETIME NOT NULL,
+  `default_institution` TINYINT(1) NOT NULL default 0,
   PRIMARY KEY (`id`),
   INDEX `i_c_idx` (`country_id` ASC),
   INDEX `i_s_idx` (`state_id` ASC),
@@ -246,7 +248,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mentee` (
   `id` BIGINT NOT NULL,
   `institution_id` BIGINT NOT NULL,
-  `assigned_to_institution` TINYINT(1) NOT NULL,
   `birth_date` DATE NOT NULL,
   `phone` VARCHAR(45) NULL,
   `skype_username` VARCHAR(45) NULL,
@@ -255,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `mentee` (
   `average_performance_score` INT NULL,
   `family_income` DECIMAL(19,2) NULL,
   `school` VARCHAR(1028) NULL,
-  `institution_affiliation_code_id` BIGINT NOT NULL,
+  `institution_affiliation_code_id` BIGINT NULL,
   `parent_consent_id` BIGINT NULL,
   `facebook_url` VARCHAR(256) NULL,
   `whats_app_name` VARCHAR(256) NULL,
@@ -296,7 +297,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mentor` (
   `id` BIGINT NOT NULL,
   `institution_id` BIGINT NOT NULL,
-  `assigned_to_institution` TINYINT(1) NOT NULL,
   `birth_date` DATE NULL,
   `phone` VARCHAR(45) NULL,
   `skype_username` VARCHAR(45) NULL,

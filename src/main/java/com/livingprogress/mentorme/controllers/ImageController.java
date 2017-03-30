@@ -10,10 +10,10 @@ import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.services.ImageService;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.io.*;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +32,11 @@ import java.util.UUID;
 @RequestMapping("/images")
 @NoArgsConstructor
 public class ImageController extends BaseUploadController {
+
+    /**
+     * Represents the logger
+     */
+    public static final Logger LOGGER = Logger.getLogger("com.livingprogress.mentorme");
 
     @Autowired
     private ImageService imageService;
@@ -92,51 +96,9 @@ public class ImageController extends BaseUploadController {
         if (result.getEntities() == null | result.getEntities().size() == 0) {
             throw new EntityNotFoundException("Image not found for the imageUrl: " + imageUrl);
         }
-
         Image imageInfo = result.getEntities().get(0);
-        File file = new File(imageInfo.getPath());
-        if (!file.exists() || !file.isFile()) {
-            throw new EntityNotFoundException("Image not found in the path: " + imageInfo.getPath());
-        }
-
-        long fileLength = file.length();
-        String contentType = getContentType(file);
-
-        if (contentType == null) {
-            contentType = "application/octet-stream";
-        }
-        InputStream is = new FileInputStream(file);
-        return ResponseEntity.ok()
-                .contentLength(fileLength)
-                .contentType(MediaType.parseMediaType(contentType))
-                .body(new InputStreamResource(is));
+        return Helper.downloadFile(imageInfo.getPath());
     }
-
-    /**
-     * Gets the content type.
-     * @param file the file.
-     * @return the content type.
-     */
-    private String getContentType(File file) {
-        InputStream is = null;
-        try {
-            is = new BufferedInputStream(new FileInputStream(file));
-            return URLConnection.guessContentTypeFromStream(is);
-        } catch (FileNotFoundException e) {
-            return null;
-        } catch (IOException e) {
-            return null;
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    // ignore
-                }
-            }
-        }
-
-    }
-
 }
+
 
