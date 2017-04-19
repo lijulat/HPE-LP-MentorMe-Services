@@ -1,0 +1,4106 @@
+[
+  {
+    "id": 1,
+    "value": "Artes y Entretenimiento",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 2,
+    "value": "Automotriz",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 3,
+    "value": "Negocios",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 4,
+    "value": "Carreras",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 5,
+    "value": "Educación",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 6,
+    "value": "Familia y Formación de los Hijos",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 7,
+    "value": "Salud y Acondicionamiento Físico",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 8,
+    "value": "Comida y Bebida",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 9,
+    "value": "Pasatiempos e Intereses",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 10,
+    "value": "Hogar y Jardinería",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 11,
+    "value": "Ley, Gobierno y Política",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 12,
+    "value": "Noticias",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 13,
+    "value": "Finanzas Personales",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 14,
+    "value": "Sociedad",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 15,
+    "value": "Ciencias",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 16,
+    "value": "Mascotas",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 17,
+    "value": "Deportes",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 18,
+    "value": "Estilo y Moda",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 19,
+    "value": "Tecnología y Computación",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 20,
+    "value": "Viajes",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 21,
+    "value": "Bienes Inmuebles",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 22,
+    "value": "Compras",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 23,
+    "value": "Religión y Espiritualidad",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 24,
+    "value": "No Categorizado",
+    "picturePath": null,
+    "parentCategory": null
+  },
+  {
+    "id": 25,
+    "value": "Libros y Literatura",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 1,
+      "value": "Artes y Entretenimiento",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 26,
+    "value": "Celebridades",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 1,
+      "value": "Artes y Entretenimiento",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 27,
+    "value": "Bellas Artes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 1,
+      "value": "Artes y Entretenimiento",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 28,
+    "value": "Humor",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 1,
+      "value": "Artes y Entretenimiento",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 29,
+    "value": "Películas",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 1,
+      "value": "Artes y Entretenimiento",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 30,
+    "value": "Música",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 1,
+      "value": "Artes y Entretenimiento",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 31,
+    "value": "Televisión",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 1,
+      "value": "Artes y Entretenimiento",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 32,
+    "value": "Auto Partes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 33,
+    "value": "Reparación Automotriz",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 34,
+    "value": "Compra-Venta de Autos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 35,
+    "value": "Cultura Automotriz",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 36,
+    "value": "Certificado de Pre-Uso",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 37,
+    "value": "Convertible",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 38,
+    "value": "Coupe",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 39,
+    "value": "Crossover",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 40,
+    "value": "Diesel",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 41,
+    "value": "Vehículo Eléctrico",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 42,
+    "value": "Hatchback",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 43,
+    "value": "Híbrido",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 44,
+    "value": "Lujo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 45,
+    "value": "MiniVan",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 46,
+    "value": "Motocicleta",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 47,
+    "value": "Navegación",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 48,
+    "value": "Vehículo Todoterreno",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 49,
+    "value": "Vehículo de Desempeño",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 50,
+    "value": "Pickup",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 51,
+    "value": "Asistencia en el Camino",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 52,
+    "value": "Sedan",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 53,
+    "value": "Camiones y Accesorios",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 54,
+    "value": "Autos Antiguos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 55,
+    "value": "Vagoneta",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 2,
+      "value": "Automotriz",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 56,
+    "value": "Publicidad",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 57,
+    "value": "Agricultura",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 58,
+    "value": "Biotecnología/Biomédico",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 59,
+    "value": "Software de Negocios",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 60,
+    "value": "Construcción",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 61,
+    "value": "Ciencias Forstales",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 62,
+    "value": "Gobierno",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 63,
+    "value": "Soluciones Verdes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 64,
+    "value": "Recursos Humanos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 65,
+    "value": "Logística",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 66,
+    "value": "Mercadotecnia",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 67,
+    "value": "Metales",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 68,
+    "value": "Productividad",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 3,
+      "value": "Negocios",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 69,
+    "value": "Planeación de Carrera",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 4,
+      "value": "Carreras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 70,
+    "value": "Universidad",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 4,
+      "value": "Carreras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 71,
+    "value": "Ayuda Financiera",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 4,
+      "value": "Carreras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 72,
+    "value": "Ferias de Trabajo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 4,
+      "value": "Carreras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 73,
+    "value": "Búsqueda de Trabajo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 4,
+      "value": "Carreras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 74,
+    "value": "Curriculum Escribir/Aconsejar",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 4,
+      "value": "Carreras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 75,
+    "value": "Enfermería",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 4,
+      "value": "Carreras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 76,
+    "value": "Becas",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 4,
+      "value": "Carreras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 77,
+    "value": "Trabajo a Distancia",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 4,
+      "value": "Carreras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 78,
+    "value": "Militar de los Estados Unidos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 4,
+      "value": "Carreras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 79,
+    "value": "Consejo de Carrera",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 4,
+      "value": "Carreras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 80,
+    "value": "Educación Primaria",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 81,
+    "value": "Educación para Adultos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 82,
+    "value": "Historia del Arte",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 83,
+    "value": "Adminitración Universitaria",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 84,
+    "value": "Vida Universitaria",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 85,
+    "value": "Aprendizaje a Distancia",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 86,
+    "value": "Inglés como Segunda Lengua",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 87,
+    "value": "Aprendizaje de Lenguajes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 88,
+    "value": "Escuela de Posgrado",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 89,
+    "value": "Educación en el Hogar",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 90,
+    "value": "Tarea/Consejos de Estudio",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 91,
+    "value": "Educadores de Primaria",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 92,
+    "value": "Escuela Privada",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 93,
+    "value": "Educación Especial",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 94,
+    "value": "Estudiando Negocios",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 5,
+      "value": "Educación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 95,
+    "value": "Adopción",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 6,
+      "value": "Familia y Formación de los Hijos",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 96,
+    "value": "Bebés e Infantes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 6,
+      "value": "Familia y Formación de los Hijos",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 97,
+    "value": "Guardería/Pre escolar",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 6,
+      "value": "Familia y Formación de los Hijos",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 98,
+    "value": "Internet Familiar",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 6,
+      "value": "Familia y Formación de los Hijos",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 99,
+    "value": "Formación de Hijos en Primaria",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 6,
+      "value": "Familia y Formación de los Hijos",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 100,
+    "value": "Formación de Adolescentes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 6,
+      "value": "Familia y Formación de los Hijos",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 101,
+    "value": "Embarazo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 6,
+      "value": "Familia y Formación de los Hijos",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 102,
+    "value": "Niños con Necesidades Especiales",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 6,
+      "value": "Familia y Formación de los Hijos",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 103,
+    "value": "Cuidados a Adultos Mayores",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 6,
+      "value": "Familia y Formación de los Hijos",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 104,
+    "value": "Ejercicio",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 105,
+    "value": "Síndrome de Déficit de Atención",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 106,
+    "value": "SIDA/VIH",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 107,
+    "value": "Alergias",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 108,
+    "value": "Medicina Alternativa",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 109,
+    "value": "Artritis",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 110,
+    "value": "Asma",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 111,
+    "value": "Autismo/Desórden del Desarrollo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 112,
+    "value": "Desorden Bipolar",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 113,
+    "value": "Tumor Cerebral",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 114,
+    "value": "Cáncer",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 115,
+    "value": "Colesterol",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 116,
+    "value": "Síndrome de Fatiga Crónica",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 117,
+    "value": "Dolor Crónico",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 118,
+    "value": "Catarro y Gripe",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 119,
+    "value": "Sordera",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 120,
+    "value": "Cuidado Dental",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 121,
+    "value": "Depresión",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 122,
+    "value": "Dermatología",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 123,
+    "value": "Diabetes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 124,
+    "value": "Epilepsia",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 125,
+    "value": "Gastritis/Reflujo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 126,
+    "value": "Dolor de Cabeza/Migraña",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 127,
+    "value": "Enfermedad del Corazón",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 128,
+    "value": "Hierbas Medicinales",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 129,
+    "value": "Sanación Holística",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 130,
+    "value": "Síndrome de Intestino Irritable/Enfermedad de Crohn",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 131,
+    "value": "Soporte para Casos de Incesto/Abuso",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 132,
+    "value": "Incontinencia",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 133,
+    "value": "Infertilidad",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 134,
+    "value": "Salud Masculina",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 135,
+    "value": "Nutrición",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 136,
+    "value": "Ortopedia",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 137,
+    "value": "Pánico/Ansiedad",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 138,
+    "value": "Desórdenes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 139,
+    "value": "Pediatría",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 140,
+    "value": "Terapia Física",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 141,
+    "value": "Psicología/Psiquiatría",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 142,
+    "value": "Salud del Adulto Mayor",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 143,
+    "value": "Sexualidad",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 144,
+    "value": "Desórdenes del Sueño",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 145,
+    "value": "Dejar de Fumar",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 146,
+    "value": "Abuso de Sustancias",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 147,
+    "value": "Enfermedad de la Tiroides",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 148,
+    "value": "Bajar de Peso",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 149,
+    "value": "Salud Femenina",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 7,
+      "value": "Salud y Acondicionamiento Físico",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 150,
+    "value": "Cocina Americana",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 151,
+    "value": "Parrilla y Plancha",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 152,
+    "value": "Cajun/Creole",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 153,
+    "value": "Cocina China",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 154,
+    "value": "Cocteles/Cerveza",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 155,
+    "value": "Café/Té",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 156,
+    "value": "Cocina Específica",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 157,
+    "value": "Postres y Hornear",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 158,
+    "value": "Cenar Fuera",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 159,
+    "value": "Alergías Alimenticias",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 160,
+    "value": "Cocina Francesa",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 161,
+    "value": "Salud/Cocina Baja en Grsas",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 162,
+    "value": "Cocina Italiana",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 163,
+    "value": "Cocina Japonesa",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 164,
+    "value": "Cocina Mexicana",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 165,
+    "value": "Vegana",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 166,
+    "value": "Vegetariana",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 167,
+    "value": "Vino",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 8,
+      "value": "Comida y Bebida",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 168,
+    "value": "Arte/Tecnología",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 169,
+    "value": "Manualidades",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 170,
+    "value": "Trabajo con cuentas/chaquira",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 171,
+    "value": "Observar Aves",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 172,
+    "value": "Juegos de Mesa/Rompecabezas",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 173,
+    "value": "Hacer Velas/Jabón",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 174,
+    "value": "Juegos de Cartas",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 175,
+    "value": "Ajedrez",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 176,
+    "value": "Cigarros",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 177,
+    "value": "Colleccionar",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 178,
+    "value": "Cómics",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 179,
+    "value": "Dibujar",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 180,
+    "value": "Escribir Freelance",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 181,
+    "value": "Genealogía",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 182,
+    "value": "Publicaciones",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 183,
+    "value": "Guitarra",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 184,
+    "value": "Grabación Casera",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 185,
+    "value": "Inversionistas y Patentes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 186,
+    "value": "Hacer Joyería",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 187,
+    "value": "Magia e Ilusionismo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 188,
+    "value": "Costura/Bordado",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 189,
+    "value": "Pintura",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 190,
+    "value": "Fotografía",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 191,
+    "value": "Radio",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 192,
+    "value": "Juegos de Actuación",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 193,
+    "value": "Ciencia Ficción y Fantasía",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 194,
+    "value": "Scrapbooking",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 195,
+    "value": "Escribir guiones",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 196,
+    "value": "Filatelia y Colección de Monedas",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 197,
+    "value": "Juegos en Computadora",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 198,
+    "value": "Carpintería",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 9,
+      "value": "Pasatiempos e Intereses",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 199,
+    "value": "Electrodoméstico",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 10,
+      "value": "Hogar y Jardinería",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 200,
+    "value": "Entretenimiento",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 10,
+      "value": "Hogar y Jardinería",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 201,
+    "value": "Seguridad Ambiental",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 10,
+      "value": "Hogar y Jardinería",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 202,
+    "value": "Jardinería",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 10,
+      "value": "Hogar y Jardinería",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 203,
+    "value": "Reparaciones en el Hogar",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 10,
+      "value": "Hogar y Jardinería",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 204,
+    "value": "Home Theater",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 10,
+      "value": "Hogar y Jardinería",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 205,
+    "value": "Decoración de Interiores",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 10,
+      "value": "Hogar y Jardinería",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 206,
+    "value": "Paisajista",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 10,
+      "value": "Hogar y Jardinería",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 207,
+    "value": "Remodelación y Construcción",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 10,
+      "value": "Hogar y Jardinería",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 208,
+    "value": "Inmigración",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 11,
+      "value": "Ley, Gobierno y Política",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 209,
+    "value": "Asuntos Legales",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 11,
+      "value": "Ley, Gobierno y Política",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 210,
+    "value": "Recursos del Gobierno de los Estados Unidos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 11,
+      "value": "Ley, Gobierno y Política",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 211,
+    "value": "Política",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 11,
+      "value": "Ley, Gobierno y Política",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 212,
+    "value": "Comentario",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 11,
+      "value": "Ley, Gobierno y Política",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 213,
+    "value": "Noticias Internacionales",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 12,
+      "value": "Noticias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 214,
+    "value": "Noticias Nacionales",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 12,
+      "value": "Noticias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 215,
+    "value": "Noticias Locales",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 12,
+      "value": "Noticias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 216,
+    "value": "Inicación a la Inversión",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 217,
+    "value": "Crédito/Deuda y Préstamos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 218,
+    "value": "Noticias Financieras",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 219,
+    "value": "Planeación Financiera",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 220,
+    "value": "Fondos de Cobertura",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 221,
+    "value": "Seguro",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 222,
+    "value": "Inversión",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 223,
+    "value": "Fondo Mutual de Inversión",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 224,
+    "value": "Opciones",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 225,
+    "value": "Planeación del Retiro",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 226,
+    "value": "Acciones",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 227,
+    "value": "Planeación Tributaria",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 228,
+    "value": "Salir/Andar con",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 229,
+    "value": "Soporte para Divorcio",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 13,
+      "value": "Finanzas Personales",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 230,
+    "value": "Vida Gay",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 14,
+      "value": "Sociedad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 231,
+    "value": "Matrimonio",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 14,
+      "value": "Sociedad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 232,
+    "value": "Vida del Adulto Mayor",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 14,
+      "value": "Sociedad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 233,
+    "value": "Adolescentes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 14,
+      "value": "Sociedad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 234,
+    "value": "Boda",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 14,
+      "value": "Sociedad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 235,
+    "value": "Específico a una Etnia",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 14,
+      "value": "Sociedad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 236,
+    "value": "Astrología",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 14,
+      "value": "Sociedad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 237,
+    "value": "Biología",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 15,
+      "value": "Ciencias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 238,
+    "value": "Química",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 15,
+      "value": "Ciencias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 239,
+    "value": "Geología",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 15,
+      "value": "Ciencias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 240,
+    "value": "Fenómenos Paranormales",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 15,
+      "value": "Ciencias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 241,
+    "value": "Física",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 15,
+      "value": "Ciencias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 242,
+    "value": "Espacio Exterior/Astronomía",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 15,
+      "value": "Ciencias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 243,
+    "value": "Geografía",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 15,
+      "value": "Ciencias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 244,
+    "value": "Botánica",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 15,
+      "value": "Ciencias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 245,
+    "value": "Clima",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 15,
+      "value": "Ciencias",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 246,
+    "value": "Aquarios",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 16,
+      "value": "Mascotas",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 247,
+    "value": "Pájaras",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 16,
+      "value": "Mascotas",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 248,
+    "value": "Gatos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 16,
+      "value": "Mascotas",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 249,
+    "value": "Perros",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 16,
+      "value": "Mascotas",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 250,
+    "value": "Animales Grandes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 16,
+      "value": "Mascotas",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 251,
+    "value": "Reptiles",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 16,
+      "value": "Mascotas",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 252,
+    "value": "Medicina Veterinaria",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 16,
+      "value": "Mascotas",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 253,
+    "value": "Carreras de Auto",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 254,
+    "value": "Baseball",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 255,
+    "value": "Bicicleta",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 256,
+    "value": "Fisicoculturismo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 257,
+    "value": "Boxeo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 258,
+    "value": "Canotaje/Kayak",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 259,
+    "value": "Porrista",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 260,
+    "value": "Escalada",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 261,
+    "value": "Cricket",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 262,
+    "value": "Patinaje en Hielo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 263,
+    "value": "Pesca con Mosca",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 264,
+    "value": "Futbol",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 265,
+    "value": "Pesca en Agua Dulce",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 266,
+    "value": "Cacería y Pesca",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 267,
+    "value": "Golf",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 268,
+    "value": "Carreras de Caballos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 269,
+    "value": "Caballos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 270,
+    "value": "Cacería/Tiro",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 271,
+    "value": "Patinaje Inline",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 272,
+    "value": "Artes Marciales",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 273,
+    "value": "Ciclismo de Montaña",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 274,
+    "value": "Carreras NASCAR",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 275,
+    "value": "Olimpiadas",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 276,
+    "value": "Paintball",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 277,
+    "value": "Poder y Motocicletas",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 278,
+    "value": "Basketball Profesional",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 279,
+    "value": "Hockey Profesional",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 280,
+    "value": "Rodeo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 281,
+    "value": "Rugby",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 282,
+    "value": "Correr/Jogging",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 283,
+    "value": "Veleo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 284,
+    "value": "Pesca en Mar",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 285,
+    "value": "Buceo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 286,
+    "value": "Patineta",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 287,
+    "value": "Esquiar",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 288,
+    "value": "Snowboarding",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 289,
+    "value": "Surfear",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 290,
+    "value": "Natación",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 291,
+    "value": "Tenis de Mesa/Ping-Pong",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 292,
+    "value": "Tenis",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 293,
+    "value": "Volleyball",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 294,
+    "value": "Caminata",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 295,
+    "value": "Esquiar en Agua",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 296,
+    "value": "Soccer Mundial",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 17,
+      "value": "Deportes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 297,
+    "value": "Belleza",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 18,
+      "value": "Estilo y Moda",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 298,
+    "value": "Arte Corporal",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 18,
+      "value": "Estilo y Moda",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 299,
+    "value": "Moda",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 18,
+      "value": "Estilo y Moda",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 300,
+    "value": "Joyería",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 18,
+      "value": "Estilo y Moda",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 301,
+    "value": "Ropa",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 18,
+      "value": "Estilo y Moda",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 302,
+    "value": "Accesorios",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 18,
+      "value": "Estilo y Moda",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 303,
+    "value": "Gráficas en 3D",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 304,
+    "value": "Animación",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 305,
+    "value": "Software Antivirus",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 306,
+    "value": "C/C++",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 307,
+    "value": "Cámaras y Videocámaras",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 308,
+    "value": "Teléfonos celulares",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 309,
+    "value": "Vertificación de Computación",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 310,
+    "value": "Red de Computadoras",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 311,
+    "value": "Periféricos de Computación",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 312,
+    "value": "Revista de Computación",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 313,
+    "value": "Centro de Datos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 314,
+    "value": "Base de Datos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 315,
+    "value": "Publicaciones en Desktop",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 316,
+    "value": "Video en Desktop",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 317,
+    "value": "Correo Electrónico",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 318,
+    "value": "Software Gráfico",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 319,
+    "value": "Video/DVD",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 320,
+    "value": "Tecnología de Internet",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 321,
+    "value": "Java",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 322,
+    "value": "Javascript",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 323,
+    "value": "Linux",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 324,
+    "value": "Mac OS",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 325,
+    "value": "Soporte Mac",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 326,
+    "value": "MP3/MIDI",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 327,
+    "value": "Conferencia en Red",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 328,
+    "value": "Redes para Principiantes",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 329,
+    "value": "Seguridad de la Red",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 330,
+    "value": "Palmtops/PDAs",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 331,
+    "value": "Soporte de PCs",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 332,
+    "value": "Portable",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 333,
+    "value": "Entretenimiento",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 334,
+    "value": "Shareware/Freeware",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 335,
+    "value": "Unix",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 336,
+    "value": "Visual Basic",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 337,
+    "value": "Clip Art de la Web",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 338,
+    "value": "Diseño de Web/HTML",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 339,
+    "value": "Búsqueda en la Web",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 340,
+    "value": "Windows",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 19,
+      "value": "Tecnología y Computación",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 341,
+    "value": "Viajes de Aventura",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 342,
+    "value": "Africa",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 343,
+    "value": "Viaje Aéreo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 344,
+    "value": "Australia y Nueva Zelanda",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 345,
+    "value": "Bed & Breakfasts",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 346,
+    "value": "Viajes Económico",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 347,
+    "value": "Viaje de Negocios",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 348,
+    "value": "By US Locale",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 349,
+    "value": "Campismo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 350,
+    "value": "Canada",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 351,
+    "value": "Caribe",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 352,
+    "value": "Crusero",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 353,
+    "value": "Europa del Este",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 354,
+    "value": "Europa",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 355,
+    "value": "Francia",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 356,
+    "value": "Grecia",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 357,
+    "value": "Luna de Miel",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 358,
+    "value": "Hoteles",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 359,
+    "value": "Italia",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 360,
+    "value": "Japón",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 361,
+    "value": "México y Centroamérica",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 362,
+    "value": "Parques Nacionales",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 363,
+    "value": "Sudamérica",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 364,
+    "value": "Spas",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 365,
+    "value": "Parques Temáticos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 366,
+    "value": "Viajar con Niños",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 367,
+    "value": "Reino Unido",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 20,
+      "value": "Viajes",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 368,
+    "value": "Departamento",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 21,
+      "value": "Bienes Inmuebles",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 369,
+    "value": "Arquitectos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 21,
+      "value": "Bienes Inmuebles",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 370,
+    "value": "Compra/Venta de Casas",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 21,
+      "value": "Bienes Inmuebles",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 371,
+    "value": "Concursos",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 22,
+      "value": "Compras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 372,
+    "value": "Cuponeo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 22,
+      "value": "Compras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 373,
+    "value": "Comparativo Motor",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 22,
+      "value": "Compras",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 375,
+    "value": "Religiones Alternativas",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 23,
+      "value": "Religión y Espiritualidad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 376,
+    "value": "Ateo/Agnóstico",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 23,
+      "value": "Religión y Espiritualidad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 377,
+    "value": "Budismo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 23,
+      "value": "Religión y Espiritualidad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 378,
+    "value": "Catolicismo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 23,
+      "value": "Religión y Espiritualidad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 379,
+    "value": "Christianismo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 23,
+      "value": "Religión y Espiritualidad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 380,
+    "value": "Hinduismo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 23,
+      "value": "Religión y Espiritualidad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 381,
+    "value": "Islam",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 23,
+      "value": "Religión y Espiritualidad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 382,
+    "value": "Judaismo",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 23,
+      "value": "Religión y Espiritualidad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 383,
+    "value": "Santos de los Últimos Días",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 23,
+      "value": "Religión y Espiritualidad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 384,
+    "value": "Pagano/Wiccano",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 23,
+      "value": "Religión y Espiritualidad",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  },
+  {
+    "id": 385,
+    "value": "Social Media",
+    "picturePath": null,
+    "parentCategory": {
+      "id": 24,
+      "value": "No Categorizado",
+      "picturePath": null,
+      "parentCategory": null
+    }
+  }
+]

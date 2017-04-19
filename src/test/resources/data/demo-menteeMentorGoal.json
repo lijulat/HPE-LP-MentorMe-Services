@@ -3,17 +3,11 @@
     "number": 2,
     "subject": "subject2",
     "description": "description2",
-    "goalCategory": {
-      "id": 2,
-      "value": "GoalCategory2"
-    },
     "durationInDays": 2,
     "tasks": null,
     "institutionalProgramId": 2,
     "usefulLinks": [],
-    "documents": [],
-    "custom": false,
-    "customData": null
+    "documents": []
   },
   "completed": false,
   "completedOn": null,
@@ -25,10 +19,6 @@
         "durationInDays": 2,
         "mentorAssignment": true,
         "menteeAssignment": false,
-        "documents": [],
-        "usefulLinks": [],
-        "custom": false,
-        "customData": null,
         "goalId": 2
       },
       "completed": false

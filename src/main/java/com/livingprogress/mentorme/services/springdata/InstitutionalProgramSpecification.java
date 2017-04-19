@@ -34,10 +34,7 @@ public class InstitutionalProgramSpecification implements Specification<Institut
         Predicate pd = cb.and();
         pd = Helper.buildLikePredicate(criteria.getProgramName(), pd, root.get("programName"), cb);
         pd = Helper.buildEqualPredicate(criteria.getInstitutionId(), pd, root.get("institution").get("id"), cb);
-        if (criteria.getProgramCategory() != null) {
-            pd = Helper.buildEqualPredicate(criteria.getProgramCategory().getId(),
-                    pd, root.get("programCategory").get("id"), cb);
-        }
+        pd = Helper.buildEqualPredicate(criteria.getLocale(), pd, root.get("locale").get("value"), cb);
         pd = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinDurationInDays(),
                 pd, root.get("durationInDays"), cb);
         pd = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxDurationInDays(),

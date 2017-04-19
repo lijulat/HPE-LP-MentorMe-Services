@@ -114,13 +114,6 @@ public class MenteeMentorProgramControllerTest extends BaseTest {
                 Task t1 = demoEntity.getGoals().get(i).getTasks().get(j).getTask();
                 Task t2 = result.getGoals().get(i).getTasks().get(j).getTask();
                 t1.setId(t2.getId());
-                for (int k = 0; k < t1.getDocuments().size(); k++) {
-                    t1.getDocuments().get(k).setId(t2.getDocuments().get(k).getId());
-                }
-
-                for (int k = 0; k < t1.getUsefulLinks().size(); k++) {
-                    t1.getUsefulLinks().get(k).setId(t2.getUsefulLinks().get(k).getId());
-                }
             }
         }
 

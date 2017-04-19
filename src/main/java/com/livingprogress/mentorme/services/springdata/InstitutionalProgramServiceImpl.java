@@ -45,7 +45,6 @@ public class InstitutionalProgramServiceImpl
     protected void handleNestedProperties(InstitutionalProgram entity) throws MentorMeException {
         super.handleNestedProperties(entity);
         Helper.checkEntity(entity.getInstitution(), "entity.institution");
-        Helper.checkEntity(entity.getProgramCategory(), "entity.programCategory");
         if (entity.getGoals() != null) {
             entity.getGoals()
                   .forEach(g -> {

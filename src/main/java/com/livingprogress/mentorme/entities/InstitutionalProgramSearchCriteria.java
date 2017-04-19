@@ -21,11 +21,6 @@ public class InstitutionalProgramSearchCriteria {
     private Long institutionId;
 
     /**
-     * Get the program category.
-     */
-    private ProgramCategory programCategory;
-
-    /**
      * The min duration in days.
      */
     private Integer minDurationInDays;
@@ -34,5 +29,10 @@ public class InstitutionalProgramSearchCriteria {
      * The max duration in days.
      */
     private Integer maxDurationInDays;
+
+    /**
+     * The locale;
+     */
+    private String locale;
 }
 

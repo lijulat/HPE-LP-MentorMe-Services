@@ -1,14 +1,11 @@
 package com.livingprogress.mentorme.controllers;
 
-import com.livingprogress.mentorme.entities.Document;
-import com.livingprogress.mentorme.entities.Goal;
-import com.livingprogress.mentorme.entities.GoalSearchCriteria;
-import com.livingprogress.mentorme.entities.Paging;
-import com.livingprogress.mentorme.entities.SearchResult;
+import com.livingprogress.mentorme.entities.*;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
 import com.livingprogress.mentorme.services.GoalService;
+import com.livingprogress.mentorme.services.TaskService;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +35,12 @@ public class GoalController extends BaseUploadController {
      */
     @Autowired
     private GoalService goalService;
+
+    /**
+     * The task service.
+     */
+    @Autowired
+    private TaskService taskService;
 
     /**
      * Check if all required fields are initialized properly.
@@ -102,6 +105,22 @@ public class GoalController extends BaseUploadController {
         Helper.checkUpdate(id, entity);
         List<Document> docs = Helper.uploadDocuments(getUploadDirectory(), documents);
         entity.setDocuments(docs);
+        // remove tasks that do not exists any more
+        if (entity.getTasks() != null) {
+            Goal original = get(id);
+            for (Task task : original.getTasks()) {
+                boolean found = false;
+                for (Task taskEntity : entity.getTasks()) {
+                    if (taskEntity.getId() == task.getId()) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    taskService.delete(task.getId());
+                }
+            }
+        }
         return goalService.update(id, entity);
     }
 

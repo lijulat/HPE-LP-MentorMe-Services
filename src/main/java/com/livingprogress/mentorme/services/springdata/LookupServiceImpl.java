@@ -37,18 +37,6 @@ public class LookupServiceImpl implements LookupService {
     private ProfessionalConsultantAreaRepository professionalConsultantAreaRepository;
 
     /**
-     * The goal category repository for GoalCategory CRUD operations. Should be non-null after injection.
-     */
-    @Autowired
-    private GoalCategoryRepository goalCategoryRepository;
-
-    /**
-     * The program category repository for ProgramCategory CRUD operations. Should be non-null after injection.
-     */
-    @Autowired
-    private ProgramCategoryRepository programCategoryRepository;
-
-    /**
      * The personal interest repository for PersonalInterest CRUD operations. Should be non-null after injection.
      */
     @Autowired
@@ -62,12 +50,6 @@ public class LookupServiceImpl implements LookupService {
     private ProfessionalInterestRepository professionalInterestRepository;
 
     /**
-     * The document type repository for DocumentType CRUD operations. Should be non-null after injection.
-     */
-    @Autowired
-    private DocumentTypeRepository documentTypeRepository;
-
-    /**
      * The user role repository for UserRole CRUD operations. Should be non-null after injection.
      */
     @Autowired
@@ -75,6 +57,12 @@ public class LookupServiceImpl implements LookupService {
 
     @Autowired
     private SkillRepository skillRepository;
+
+    /**
+     * The locale repository.
+     */
+    @Autowired
+    private LocaleRepository localeRepository;
 
     /**
      * Check if all required fields are initialized properly.
@@ -86,12 +74,10 @@ public class LookupServiceImpl implements LookupService {
         Helper.checkConfigNotNull(countryRepository, "countryRepository");
         Helper.checkConfigNotNull(stateRepository, "stateRepository");
         Helper.checkConfigNotNull(professionalConsultantAreaRepository, "professionalConsultantAreaRepository");
-        Helper.checkConfigNotNull(goalCategoryRepository, "goalCategoryRepository");
-        Helper.checkConfigNotNull(programCategoryRepository, "programCategoryRepository");
         Helper.checkConfigNotNull(personalInterestRepository, "personalInterestRepository");
         Helper.checkConfigNotNull(professionalInterestRepository, "professionalInterestRepository");
-        Helper.checkConfigNotNull(documentTypeRepository, "documentTypeRepository");
         Helper.checkConfigNotNull(userRoleRepository, "userRoleRepository");
+        Helper.checkConfigNotNull(localeRepository, "localeRepository");
     }
 
     /**
@@ -144,26 +130,6 @@ public class LookupServiceImpl implements LookupService {
     }
 
     /**
-     * This method is used to get goal category lookups.
-     *
-     * @return the lookups for goal category
-     * @throws MentorMeException if any other error occurred during operation
-     */
-    public List<GoalCategory> getGoalCategories() throws MentorMeException {
-        return goalCategoryRepository.findAll();
-    }
-
-    /**
-     * This method is used to program category lookups.
-     *
-     * @return the lookups for program category
-     * @throws MentorMeException if any other error occurred during operation
-     */
-    public List<ProgramCategory> getProgramCategories() throws MentorMeException {
-        return programCategoryRepository.findAll();
-    }
-
-    /**
      * This method is used to personal interest lookups.
      *
      * @return the lookups for personal interest
@@ -183,19 +149,20 @@ public class LookupServiceImpl implements LookupService {
         return professionalInterestRepository.findAll();
     }
 
-    /**
-     * This method is used to document type lookups.
-     *
-     * @return the lookups for document type
-     * @throws MentorMeException if any other error occurred during operation
-     */
-    public List<DocumentType> getDocumentTypes() throws MentorMeException {
-        return documentTypeRepository.findAll();
-    }
-
     @Override
     public List<Skill> getSkills() throws MentorMeException {
         return skillRepository.findAll();
+    }
+
+    /**
+     * Get all the locales.
+     *
+     * @return the locales
+     * @throws MentorMeException if there are any errors.
+     */
+    @Override
+    public List<Locale> getLocales() throws MentorMeException {
+        return localeRepository.findAll();
     }
 }
 

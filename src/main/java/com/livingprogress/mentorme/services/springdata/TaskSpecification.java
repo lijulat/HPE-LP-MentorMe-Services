@@ -33,7 +33,6 @@ public class TaskSpecification implements Specification<Task> {
         Predicate pd = cb.and();
         pd = Helper.buildEqualPredicate(criteria.getGoalId(), pd, root.get("goalId"), cb);
         pd = Helper.buildLikePredicate(criteria.getDescription(), pd, root.get("description"), cb);
-        pd = Helper.buildEqualPredicate(criteria.getCustom(), pd, root.get("custom"), cb);
         return pd;
     }
 }

@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URLConnection;
 import java.util.*;
+import java.util.Locale;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -1271,6 +1272,31 @@ public class Helper {
         }
         return service.search(criteria, paging).getEntities();
     }
+
+    /**
+     * Get localized representation.
+     * @param entity the entity in the persistence
+     * @param localeEntities the locale entities
+     * @param <T> generic type of the locale entities
+     * @param <S> generic type of the persistence entity
+     * @return the localized representation
+     */
+    public static <T extends LocaleEntity, S extends LookupEntity> String getLocaleString(S entity,
+                                                                                          List<T> localeEntities) {
+        List<Locale> locales = LocaleContext.getCurrentLocales();
+        if (localeEntities == null) {
+            return entity.getValue();
+        }
+        for (Locale locale : locales) {
+            for (T localeEntity : localeEntities) {
+                if (locale.toString().equals(localeEntity.getLocale().getValue())) {
+                    return localeEntity.getValue();
+                }
+            }
+        }
+        return entity.getValue();
+    }
+
     
     /**
      * Downloads a file.

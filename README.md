@@ -13,7 +13,7 @@ This is the deployment guide for the Mentor Me API.
 - Create tables in each schema with `sqls/ddl.sql`.
 - If you want to drop all tables please run `sqls/drop.sql` on each schema.
 - If you want to clean all tables please run `sqls/clear.sql` on each schema.
-- To initialize the basic data required by the application you should execute the `sqls/init-en.sql` on the mentorme-english schema and `sqls/init-es.sql` on the mentorme-spanish schema. 
+- To initialize the basic data required by the application you should execute the `sqls/init.sql` on the mentorme schema. 
 - If you want to prepare test data please run `sqls/testdata.sql` into the mentorme-test schema.
 
 ## API Configuration

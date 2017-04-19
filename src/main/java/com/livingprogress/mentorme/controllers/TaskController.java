@@ -79,7 +79,6 @@ public class TaskController extends BaseUploadController {
     public Task create(Task entity, @RequestParam("files") MultipartFile[] documents) throws MentorMeException  {
         Helper.checkNull(entity, "entity");
         List<Document> docs = Helper.uploadDocuments(getUploadDirectory(), documents);
-        entity.setDocuments(docs);
         return taskService.create(entity);
     }
 
@@ -101,7 +100,6 @@ public class TaskController extends BaseUploadController {
             @RequestParam("files") MultipartFile[] documents) throws MentorMeException  {
         Helper.checkUpdate(id, entity);
         List<Document> docs = Helper.uploadDocuments(getUploadDirectory(), documents);
-        entity.setDocuments(docs);
         return taskService.update(id, entity);
     }
 
