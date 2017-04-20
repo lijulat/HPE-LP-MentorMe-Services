@@ -184,7 +184,7 @@ public abstract class BaseTest {
     /**
      * The default locale.
     */
-    private Locale defaultLocale;
+    private java.util.Locale defaultLocale;
 
     /**
      * Setup test.
@@ -209,10 +209,11 @@ public abstract class BaseTest {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, 2);
         sampleFutureDate = calendar.getTime();
-        defaultLocale = Locale.getDefault();
+        defaultLocale = java.util.Locale.getDefault();
         // use english as default locale during test
-        Locale.setDefault(Locale.ENGLISH);
+        java.util.Locale.setDefault(java.util.Locale.ENGLISH);
         cleanupUploadDirectory();
+        LocaleContext.setCurrentLocales(Arrays.asList(java.util.Locale.ENGLISH));
     }
 
     /**
@@ -224,7 +225,7 @@ public abstract class BaseTest {
     public void tearDown() throws Exception {
         wiser.stop();
         if (defaultLocale != null) {
-            Locale.setDefault(defaultLocale);
+            java.util.Locale.setDefault(defaultLocale);
         }
         cleanupUploadDirectory();
     }
@@ -434,8 +435,7 @@ public abstract class BaseTest {
     protected MultiValueMap<String, String> getInstitutionalProgramParams(InstitutionalProgram entity) throws Exception{
         List<String> args = new ArrayList<>();
         args.addAll(Arrays.asList("programName", "startDate", "endDate",
-                "institution.id", "programCategory.id",
-                 "programCategory.value","durationInDays", "programImageUrl"));
+                "institution.id","durationInDays", "programImageUrl"));
         if(entity.getUsefulLinks() != null){
             IntStream.range(0, entity.getUsefulLinks().size()).forEach(idx -> {
                 args.add("usefulLinks[" + idx + "].title");
@@ -458,12 +458,7 @@ public abstract class BaseTest {
                 args.add("goals[" + idx + "].number");
                 args.add("goals[" + idx + "].subject");
                 args.add("goals[" + idx + "].description");
-                args.add("goals[" + idx + "].goalCategory.id");
-                args.add("goals[" + idx + "].goalCategory.value");
                 args.add("goals[" + idx + "].durationInDays");
-                args.add("goals[" + idx + "].custom");
-                args.add("goals[" + idx + "].customData.mentor.id");
-                args.add("goals[" + idx + "].customData.mentee.id");
                 if(entity.getGoals().get(idx).getUsefulLinks() != null){
                     IntStream.range(0, entity.getUsefulLinks().size()).forEach(idy -> {
                         args.add("goals[" + idx + "].usefulLinks[" + idy + "].title");
@@ -480,10 +475,6 @@ public abstract class BaseTest {
                         args.add("goals[" + idx + "].tasks[" + idy + "].mentorAssignment");
                         args.add("goals[" + idx + "].tasks[" + idy + "].menteeAssignment");
                         args.add("goals[" + idx + "].tasks[" + idy + "].menteeAssignment");
-                        args.add("goals[" + idx + "].tasks[" + idy + "].custom");
-                        args.add("goals[" + idx + "].tasks[" + idy + "].custom");
-                        args.add("goals[" + idx + "].tasks[" + idy + "].customData.mentee.id");
-                        args.add("goals[" + idx + "].tasks[" + idy + "].customData.mentor.id");
                     });
                 }
             });
@@ -500,9 +491,8 @@ public abstract class BaseTest {
     protected MultiValueMap<String, String> getGoalParams(Goal entity) throws Exception{
         List<String> args = new ArrayList<>();
         args.addAll(Arrays.asList("subject", "description",
-                "goalCategory.id","goalCategory.value",
                 "durationInDays", "institutionalProgramId",
-                "custom", "number"));
+                "number"));
         if(entity.getUsefulLinks() != null){
             IntStream.range(0, entity.getUsefulLinks().size()).forEach(idx -> {
                 args.add("usefulLinks[" + idx + "].title");
@@ -519,15 +509,7 @@ public abstract class BaseTest {
                 args.add("tasks[" + idx + "].mentorAssignment");
                 args.add("tasks[" + idx + "].menteeAssignment");
                 args.add("tasks[" + idx + "].menteeAssignment");
-                args.add("tasks[" + idx + "].custom");
-                args.add("tasks[" + idx + "].custom");
-                args.add("tasks[" + idx + "].customData.mentee.id");
-                args.add("tasks[" + idx + "].customData.mentor.id");
             });
-        }
-        if(entity.getCustomData() != null){
-            args.add("customData.mentor.id");
-            args.add("customData.mentee.id");
         }
         return postForm(entity, args);
     }
@@ -541,19 +523,7 @@ public abstract class BaseTest {
     protected MultiValueMap<String, String> getTaskParams(Task entity) throws Exception{
         List<String> args = new ArrayList<>();
         args.addAll(Arrays.asList("description","durationInDays",
-                "custom", "mentorAssignment", "menteeAssignment", "goalId", "number"));
-        if(entity.getUsefulLinks() != null){
-            IntStream.range(0, entity.getUsefulLinks().size()).forEach(idx -> {
-                args.add("usefulLinks[" + idx + "].title");
-                args.add("usefulLinks[" + idx + "].address");
-                args.add("usefulLinks[" + idx + "].author.id");
-                args.add("usefulLinks[" + idx + "].createdOn");
-            });
-        }
-        if(entity.getCustomData() != null){
-            args.add("customData.mentor.id");
-            args.add("customData.mentee.id");
-        }
+                "mentorAssignment", "menteeAssignment", "goalId", "number"));
         return postForm(entity, args);
     }
 

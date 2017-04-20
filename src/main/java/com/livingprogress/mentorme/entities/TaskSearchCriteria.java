@@ -19,10 +19,5 @@ public class TaskSearchCriteria {
      * The description.
      */
     private String description;
-
-    /**
-     * The custom flag.
-     */
-    private Boolean custom;
 }
 

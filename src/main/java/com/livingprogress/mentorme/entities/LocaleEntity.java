@@ -10,25 +10,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 /**
- * The custom assigned data.
+ * Base locale entity.
  */
 @Getter
 @Setter
-@MappedSuperclass
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class CustomAssignedData extends IdentifiableEntity {
-    /**
-     * The mentor.
-     */
-    @ManyToOne
-    @JoinColumn(name = "mentor_id")
-    private Mentor mentor;
+@MappedSuperclass
+public abstract class LocaleEntity extends LookupEntity {
 
     /**
-     * The mentee.
+     * The locale.
      */
     @ManyToOne
-    @JoinColumn(name = "mentee_id")
-    private Mentee mentee;
+    private Locale locale;
 }
 

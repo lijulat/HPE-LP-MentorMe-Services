@@ -708,6 +708,11 @@ paths:
           description: The sort order
           type: string
           required: false
+        - name: locale
+          in: query
+          description: the locale of the programs
+          type: string
+          required: false
       responses:
         200:
           description: The response containing the InstitutionalPrograms
@@ -905,7 +910,7 @@ paths:
       parameters:
         - name: entityType
           in: path
-          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal.
           type: string
           required: true
         - name: entityId
@@ -960,7 +965,7 @@ paths:
       parameters:
         - name: entityType
           in: path
-          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal.
           type: string
           required: true
         - name: entityId
@@ -1011,7 +1016,7 @@ paths:
       parameters:
         - name: entityType
           in: path
-          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal.
           type: string
           required: true
         - name: entityId
@@ -1063,7 +1068,7 @@ paths:
       parameters:
         - name: entityType
           in: path
-          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal.
           type: string
           required: true
         - name: entityId
@@ -1119,7 +1124,7 @@ paths:
       parameters:
         - name: entityType
           in: path
-          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal.
           type: string
           required: true
         - name: entityId
@@ -1170,7 +1175,7 @@ paths:
       parameters:
         - name: entityType
           in: path
-          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal. 
+          description: The entity type. Can be MenteeMentorProgram or MenteeMentorGoal.
           type: string
           required: true
         - name: entityId
@@ -5530,54 +5535,6 @@ paths:
             schema:
               $ref: '#/definitions/Error'
 
-  /lookups/goalCategories:
-    get:
-      tags:
-        - Lookups
-      summary: get goalCategories
-      description: This endpoint is responsible for getting lookups
-      security:
-        - basicAuth: []
-      responses:
-        200:
-          description: The response containing the lookups
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/GoalCategory'
-        500:
-          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
-          schema:
-            $ref: '#/definitions/Error'
-        default:
-          description: Unexpected error.
-          schema:
-            $ref: '#/definitions/Error'
-
-  /lookups/programCategories:
-      get:
-        tags:
-          - Lookups
-        summary: get programCategories
-        description: This endpoint is responsible for getting lookups
-        security:
-          - basicAuth: []
-        responses:
-          200:
-            description: The response containing the lookups
-            schema:
-              type: array
-              items:
-                $ref: '#/definitions/ProgramCategory'
-          500:
-            description: Internal server error - if the request was properly formatted, but the operation failed on the server side
-            schema:
-              $ref: '#/definitions/Error'
-          default:
-            description: Unexpected error.
-            schema:
-              $ref: '#/definitions/Error'
-
   /lookups/personalInterests:
     get:
       tags:
@@ -5625,31 +5582,6 @@ paths:
           description: Unexpected error.
           schema:
             $ref: '#/definitions/Error'
-
-  /lookups/documentCategories:
-    get:
-      tags:
-        - Lookups
-      summary: get DocumentCategories
-      description: This endpoint is responsible for getting lookups
-      security:
-        - basicAuth: []
-      responses:
-        200:
-          description: The response containing the lookups
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/DocumentCategory'
-        500:
-          description: Internal server error - if the request was properly formatted, but the operation failed on the server side
-          schema:
-            $ref: '#/definitions/Error'
-        default:
-          description: Unexpected error.
-          schema:
-            $ref: '#/definitions/Error'
-
 
 
 definitions:
@@ -5807,42 +5739,6 @@ definitions:
       value:
         type: string
         description: The value.
-
-  DocumentCategory:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int32
-        description: The id.
-      value:
-        type: string
-        description: The value.
-      iconPath:
-        type: string
-        description: The icon path.
-
-  ProgramCategory:
-    type: object
-    properties:
-      id:
-        type: integer
-        format: int32
-        description: The id.
-      value:
-        type: string
-        description: The value.
-
-  GoalCategory:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-          description: The id.
-        value:
-          type: string
-          description: The value.
 
   ProfessionalConsultantArea:
       type: object
@@ -6168,8 +6064,6 @@ definitions:
         description: The program image url.
       institution:
         $ref: '#/definitions/Institution'
-      programCategory:
-        $ref: '#/definitions/ProgramCategory'
       goals:
          type: array
          items:
@@ -6955,13 +6849,6 @@ definitions:
         lastModifiedBy:
           type: number
           description: The last modified by user id.
-  CustomAssignedGoalData:
-      type: object
-      properties:
-        mentor:
-          $ref: '#/definitions/Mentor'
-        mentee:
-          $ref: '#/definitions/Mentee'
 
   Goal:
     type: object
@@ -6982,16 +6869,9 @@ definitions:
       durationInDays:
         type: integer
         description: The duration in days.
-      custom:
-        type: boolean
-        description: The custom flag.
       institutionalProgramId:
         type: integer
         description: The institutional program id.
-      goalCategory:
-        $ref: '#/definitions/GoalCategory'
-      customData:
-        $ref: '#/definitions/CustomAssignedGoalData'
       tasks:
         type: array
         items:
@@ -7054,14 +6934,6 @@ definitions:
         items:
           $ref: '#/definitions/Goal'
 
-  CustomAssignedTaskData:
-    type: object
-    properties:
-      mentor:
-        $ref: '#/definitions/Mentor'
-      mentee:
-        $ref: '#/definitions/Mentee'
-
   Task:
     type: object
     properties:
@@ -7078,9 +6950,6 @@ definitions:
       durationInDays:
         type: integer
         description: The duration in days.
-      custom:
-        type: boolean
-        description: The custom flag.
       mentorAssignment:
         type: boolean
         description: The mentor assignment flag.
@@ -7090,16 +6959,6 @@ definitions:
       goalId:
         type: integer
         description: The goal id.
-      customData:
-        $ref: '#/definitions/CustomAssignedTaskData'
-      usefulLinks:
-        type: array
-        items:
-         $ref: '#/definitions/UsefulLink'
-      documents:
-        type: array
-        items:
-          $ref: '#/definitions/Document'
 
   TaskSearchResult:
       type: object

@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @Entity
-public class ProgramSkill extends IdentifiableEntity {
+public class InstitutionalProgramSkill extends IdentifiableEntity {
     /**
      * The user id.
      */

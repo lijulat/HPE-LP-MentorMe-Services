@@ -71,45 +71,18 @@ public class TaskControllerTest extends BaseTest {
     @Test
     public void create() throws Exception {
         Task demoEntity = objectMapper.readValue(demo, Task.class);
-        checkEntities(demoEntity.getUsefulLinks());
-        checkEntity(demoEntity.getCustomData());
         // create without documents
         String res = mockMvc.perform(MockMvcRequestBuilders.post("/tasks")
                                                            .params(getTaskParams(demoEntity))
                                                            .contentType(MediaType.MULTIPART_FORM_DATA))
                             .andExpect(status().isCreated())
                             .andExpect(jsonPath("$.id").isNumber())
-                            .andExpect(jsonPath("$.documents", Matchers.hasSize(0)))
                             .andReturn()
                             .getResponse()
                             .getContentAsString();
         Task result = objectMapper.readValue(res, Task.class);
         demoEntity.setId(result.getId());
-        verifyEntities(demoEntity.getUsefulLinks(), result.getUsefulLinks());
-        verifyEntity(demoEntity.getCustomData(), result.getCustomData());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
-        verifyDocuments(0);
-        // upload file
-        demoEntity.setId(0);
-        demoEntity.setDocuments(null);
-        res = mockAuthMvc.perform(MockMvcRequestBuilders.fileUpload("/tasks")
-                                                    .file(FILE1)
-                                                    .file(FILE2)
-                                                    .header(AUTH_HEADER_NAME, mentorToken)
-                                                    .params(getTaskParams(demoEntity))
-                                                    .contentType(MediaType.MULTIPART_FORM_DATA))
-                     .andExpect(status().isCreated())
-                     .andExpect(jsonPath("$.id").isNumber())
-                     .andExpect(jsonPath("$.documents", Matchers.hasSize(2)))
-                     .andReturn()
-                     .getResponse()
-                     .getContentAsString();
-        result = objectMapper.readValue(res, Task.class);
-        verifyDocuments(2);
-        mockMvc.perform(MockMvcRequestBuilders.get("/tasks/" + result.getId())
-                                              .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.documents", Matchers.hasSize(2)));
     }
 
     /**
@@ -120,49 +93,16 @@ public class TaskControllerTest extends BaseTest {
     @Test
     public void update() throws Exception {
         Task demoEntity = objectMapper.readValue(demo, Task.class);
-        checkEntities(demoEntity.getUsefulLinks());
-        checkEntity(demoEntity.getCustomData());
-        demoEntity.setId(1);
         // update without documents
         String res = mockMvc.perform(MockMvcRequestBuilders.post("/tasks/1")
                                                            .params(getTaskParams(demoEntity))
                                                            .contentType(MediaType.MULTIPART_FORM_DATA))
                             .andExpect(status().isOk())
-                            .andExpect(jsonPath("$.customData.mentee.id").value((int) demoEntity.getCustomData()
-                                                                                                .getMentee()
-                                                                                                .getId()))
-                            .andExpect(jsonPath("$.customData.mentor.id").value((int) demoEntity.getCustomData()
-                                                                                                .getMentor()
-                                                                                                .getId()))
                             .andReturn()
                             .getResponse()
                             .getContentAsString();
         Task result = objectMapper.readValue(res, Task.class);
-        verifyEntities(demoEntity.getUsefulLinks(), result.getUsefulLinks());
-        verifyEntity(demoEntity.getCustomData(), result.getCustomData());
-        demoEntity.getCustomData()
-                  .setMentee(result.getCustomData()
-                                   .getMentee());
-        demoEntity.getCustomData()
-                  .setMentor(result.getCustomData()
-                                   .getMentor());
-        demoEntity.setUsefulLinks(result.getUsefulLinks());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
-        // upload file
-        mockAuthMvc.perform(MockMvcRequestBuilders.fileUpload("/tasks/1")
-                                              .file(FILE1)
-                                              .file(FILE2)
-                                              .header(AUTH_HEADER_NAME, mentorToken)
-                                              .params(getTaskParams(demoEntity))
-                                              .contentType(MediaType.MULTIPART_FORM_DATA))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.id").isNumber())
-               .andExpect(jsonPath("$.documents", Matchers.hasSize(2)));
-        verifyDocuments(2);
-        mockMvc.perform(MockMvcRequestBuilders.get("/tasks/1")
-                                              .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.documents", Matchers.hasSize(2)));
     }
 
     /**
@@ -256,15 +196,9 @@ public class TaskControllerTest extends BaseTest {
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(3));
-        mockMvc.perform(MockMvcRequestBuilders.get("/tasks?custom=true")
-                                              .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.total").value(4))
-               .andExpect(jsonPath("$.totalPages").value(1))
-               .andExpect(jsonPath("$.entities", Matchers.hasSize(4)));
         mockMvc.perform(MockMvcRequestBuilders.get
                 ("/tasks?pageNumber=0&pageSize=2&sortColumn=description&sortOrder=DESC&goalId=1" +
-                        "&description=description1&custom=true")
+                        "&description=description1")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))

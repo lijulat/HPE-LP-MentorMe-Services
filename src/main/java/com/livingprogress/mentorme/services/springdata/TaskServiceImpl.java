@@ -71,9 +71,6 @@ public class TaskServiceImpl extends BaseService<Task, TaskSearchCriteria> imple
     @Override
     protected void handleNestedProperties(Task entity) throws MentorMeException {
         super.handleNestedProperties(entity);
-        if (entity.getCustomData() != null) {
-            entity.getCustomData().setTask(entity);
-        }
         Helper.checkPositive(entity.getNumber(), "entity.number");
         Helper.checkPositive(entity.getGoalId(), "entity.goalId");
         entity.setGoal(new Goal());

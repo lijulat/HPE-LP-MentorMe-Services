@@ -261,19 +261,12 @@ public abstract class BaseService<T extends IdentifiableEntity, S> {
      * @param entity the entity
      */
     protected  void handleGoalNestedProperties(Goal entity) {
-        Helper.checkEntity(entity.getGoalCategory(), "entity.goalCategory");
         Helper.checkPositive(entity.getNumber(), "entity.number");
-        if (entity.getCustomData() != null) {
-            entity.getCustomData().setGoal(entity);
-        }
         if (entity.getTasks() != null) {
             entity.getTasks()
                   .forEach(t -> {
                       t.setGoal(entity);
                       t.setGoalId(entity.getId());
-                      if (t.getCustomData() != null) {
-                          t.getCustomData().setTask(t);
-                      }
                   });
         } else {
             entity.setTasks(Collections.emptyList());

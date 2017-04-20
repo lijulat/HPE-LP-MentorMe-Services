@@ -1,3 +1,11 @@
+-- -----------------------------------------------------
+-- Table `locale`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `locale` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
 
 -- -----------------------------------------------------
 -- Table `country`
@@ -22,8 +30,6 @@ CREATE TABLE IF NOT EXISTS `state` (
       ON DELETE NO ACTION
       ON UPDATE NO ACTION)
 ENGINE = InnoDB;
-
-
 
 -- -----------------------------------------------------
 -- Table `user`
@@ -63,15 +69,6 @@ CREATE TABLE IF NOT EXISTS `user` (
     REFERENCES `country` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
--- -----------------------------------------------------
--- Table `goal_category`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `goal_category` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `value` VARCHAR(256) NOT NULL,
-  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
@@ -125,17 +122,6 @@ CREATE TABLE IF NOT EXISTS `institution` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `program_category`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `program_category` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `value` VARCHAR(256) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `institution_contact`
 -- -----------------------------------------------------
@@ -168,23 +154,23 @@ CREATE TABLE IF NOT EXISTS `institutional_program` (
   `start_date` DATE NOT NULL,
   `end_date` DATE NOT NULL,
   `institution_id` BIGINT NOT NULL,
-  `program_category_id` BIGINT NOT NULL,
   `duration_in_days` INT NOT NULL,
   `created_on` DATETIME NOT NULL,
   `program_image_url` VARCHAR(256) NULL,
   `last_modified_on` DATETIME NOT NULL,
+  `locale_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `ip_i_fk_idx` (`institution_id` ASC),
-  INDEX `ip_pc_idx` (`program_category_id` ASC),
-  CONSTRAINT `ip_i_fk`
+  INDEX `ip_l_fk_idx` (`locale_id` ASC),
+    CONSTRAINT `ip_l_fk`
+    FOREIGN KEY (`locale_id`)
+    REFERENCES `locale` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+    CONSTRAINT `ip_i_fk`
     FOREIGN KEY (`institution_id`)
     REFERENCES `institution` (`id`)
     ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `ip_pc`
-    FOREIGN KEY (`program_category_id`)
-    REFERENCES `program_category` (`id`)
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -197,16 +183,9 @@ CREATE TABLE IF NOT EXISTS `goal` (
   `number` INT NOT NULL,
   `subject` VARCHAR(256) NULL,
   `description` VARCHAR(1024) NULL,
-  `goal_category_id` BIGINT NOT NULL,
   `duration_in_days` INT NOT NULL,
   `institutional_program_id` BIGINT NULL,
-  `custom` TINYINT(1) NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `g_gc_fk`
-    FOREIGN KEY (`goal_category_id`)
-    REFERENCES `goal_category` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -433,7 +412,6 @@ CREATE TABLE IF NOT EXISTS `task` (
   `duration_in_days` INT NULL,
   `mentee_assignment` TINYINT(1) NULL,
   `mentor_assignment` TINYINT(1) NULL,
-  `custom` TINYINT(1) NULL,
   `goal_id` BIGINT NOT NULL,
   `number` INTEGER NOT NULL,
   PRIMARY KEY (`id`),
@@ -758,9 +736,9 @@ CREATE TABLE IF NOT EXISTS `mentee_skill` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `program_skill`
+-- Table `institutional_program_skill`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `program_skill` (
+CREATE TABLE IF NOT EXISTS `institutional_program_skill` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `institutional_program_id` BIGINT NOT NULL,
   `skill_id` BIGINT NOT NULL,
@@ -777,18 +755,6 @@ CREATE TABLE IF NOT EXISTS `program_skill` (
         REFERENCES `skill` (`id`)
         ON DELETE CASCADE
         ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
-
--- -----------------------------------------------------
--- Table `document_type`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `document_type` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `value` VARCHAR(256) NOT NULL,
-  `icon_path` VARCHAR(256) NOT NULL,
-  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -840,49 +806,6 @@ CREATE TABLE IF NOT EXISTS `responsibility` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `program_useful_link`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `program_useful_link` (
-  `institutional_program_id` BIGINT NOT NULL,
-  `useful_link_id` BIGINT NOT NULL,
-  PRIMARY KEY (`institutional_program_id`, `useful_link_id`),
-  INDEX `pul_ul_fk_idx` (`useful_link_id` ASC),
-  CONSTRAINT `pul_p_fk`
-    FOREIGN KEY (`institutional_program_id`)
-    REFERENCES `institutional_program` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `pul_ul_fk`
-    FOREIGN KEY (`useful_link_id`)
-    REFERENCES `useful_link` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `program_document`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `program_document` (
-  `institutional_program_id` BIGINT NOT NULL,
-  `document_id` BIGINT NOT NULL,
-  PRIMARY KEY (`institutional_program_id`, `document_id`),
-  INDEX `pd_d_fk0_idx` (`document_id` ASC),
-  CONSTRAINT `pd_p_fk`
-    FOREIGN KEY (`institutional_program_id`)
-    REFERENCES `institutional_program` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `pd_d_fk0`
-    FOREIGN KEY (`document_id`)
-    REFERENCES `document` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `goal_useful_link`
 -- -----------------------------------------------------
@@ -903,28 +826,6 @@ CREATE TABLE IF NOT EXISTS `goal_useful_link` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `task_useful_link`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `task_useful_link` (
-  `task_id` BIGINT NOT NULL,
-  `useful_link_id` BIGINT NOT NULL,
-  PRIMARY KEY (`task_id`, `useful_link_id`),
-  INDEX `tul_ul_fk1_idx` (`useful_link_id` ASC),
-  CONSTRAINT `tul_t_fk0`
-    FOREIGN KEY (`task_id`)
-    REFERENCES `task` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `tul_ul_fk1`
-    FOREIGN KEY (`useful_link_id`)
-    REFERENCES `useful_link` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `goal_document`
 -- -----------------------------------------------------
@@ -941,87 +842,6 @@ CREATE TABLE IF NOT EXISTS `goal_document` (
   CONSTRAINT `gd_d_fk00`
     FOREIGN KEY (`document_id`)
     REFERENCES `document` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `task_document`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `task_document` (
-  `task_id` BIGINT NOT NULL,
-  `document_id` BIGINT NOT NULL,
-  PRIMARY KEY (`task_id`, `document_id`),
-  INDEX `pd_d_fk0_idx` (`document_id` ASC),
-  CONSTRAINT `td_t_fk00`
-    FOREIGN KEY (`task_id`)
-    REFERENCES `task` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `td_d_fk000`
-    FOREIGN KEY (`document_id`)
-    REFERENCES `document` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `custom_assigned_goal_data`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `custom_assigned_goal_data` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `mentor_id` BIGINT NOT NULL,
-  `mentee_id` BIGINT NOT NULL,
-  `goal_id` BIGINT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `cagd_me_fk_idx` (`mentee_id` ASC),
-  INDEX `cagd_m_fk_idx` (`mentor_id` ASC),
-  INDEX `cagd_g_fk_idx` (`goal_id` ASC),
-  CONSTRAINT `cagd_me_fk`
-    FOREIGN KEY (`mentee_id`)
-    REFERENCES `mentee` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `cagd_m_fk`
-    FOREIGN KEY (`mentor_id`)
-    REFERENCES `mentor` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `cagd_g_fk`
-    FOREIGN KEY (`goal_id`)
-    REFERENCES `goal` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `custom_assigned_task_data`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `custom_assigned_task_data` (
-  `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `mentor_id` BIGINT NOT NULL,
-  `mentee_id` BIGINT NOT NULL,
-  `task_id` BIGINT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `cagd_me_fk_idx` (`mentee_id` ASC),
-  INDEX `cagd_m_fk_idx` (`mentor_id` ASC),
-  INDEX `catd_t_fk0_idx` (`task_id` ASC),
-  CONSTRAINT `catd_me_fk0`
-    FOREIGN KEY (`mentee_id`)
-    REFERENCES `mentee` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `catd_m_fk0`
-    FOREIGN KEY (`mentor_id`)
-    REFERENCES `mentor` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `catd_t_fk0`
-    FOREIGN KEY (`task_id`)
-    REFERENCES `task` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -1281,7 +1101,7 @@ CREATE TABLE IF NOT EXISTS `mentee_mentor_goal_document` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `Image`
+-- Table `image`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `image` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
@@ -1295,6 +1115,9 @@ CREATE TABLE IF NOT EXISTS `image` (
   INDEX `img_url_idx` (`url` ASC))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `mentee_mentor_program_request`
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mentee_mentor_program_request` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `mentor_id` BIGINT NOT NULL,
@@ -1316,5 +1139,148 @@ CREATE TABLE IF NOT EXISTS `mentee_mentor_program_request` (
 
 ) ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Table `country_locale`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `country_locale` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `value` varchar(256) NOT NULL,
+  `locale_id` bigint(20) NOT NULL,
+  `country_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_country_locale_lc` (`locale_id`, `country_id`),
+  INDEX `cl_lo_fk_idx` (`locale_id`),
+  INDEX `cl_co_fk_idx` (`country_id`),
+  CONSTRAINT `cl_lo_fk`
+      FOREIGN KEY (`locale_id`)
+      REFERENCES `locale` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION,
+  CONSTRAINT `cl_co_fk`
+      FOREIGN KEY (`country_id`)
+      REFERENCES `country` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Table `personal_interest_locale`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `personal_interest_locale` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `value` varchar(256) NOT NULL,
+  `locale_id` bigint(20) NOT NULL,
+  `personal_interest_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_personal_interest_locale_lc` (`locale_id`, `personal_interest_id`),
+  INDEX `pil_lo_fk_idx` (`locale_id`),
+  INDEX `pil_pei_fk_idx` (`personal_interest_id`),
+  CONSTRAINT `pil_lo_fk`
+      FOREIGN KEY (`locale_id`)
+      REFERENCES `locale` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION,
+  CONSTRAINT `pil_pei_fk`
+      FOREIGN KEY (`personal_interest_id`)
+      REFERENCES `personal_interest` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Table `professional_consultant_area_locale`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `professional_consultant_area_locale` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `value` varchar(256) NOT NULL,
+  `locale_id` bigint(20) NOT NULL,
+  `professional_consultant_area_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_professional_consultant_area_locale_lc` (`locale_id`, `professional_consultant_area_id`),
+  INDEX `pcal_l_fk_idx` (`locale_id`),
+  INDEX `pcal_pca_fk_idx` (`professional_consultant_area_id`),
+  CONSTRAINT `pcal_l_fk`
+      FOREIGN KEY (`locale_id`)
+      REFERENCES `locale` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION,
+  CONSTRAINT `pcal_pca_fk`
+      FOREIGN KEY (`professional_consultant_area_id`)
+      REFERENCES `professional_consultant_area` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Table `professional_interest_locale`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `professional_interest_locale` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `value` varchar(256) NOT NULL,
+  `locale_id` bigint(20) NOT NULL,
+  `professional_interest_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_professional_interest_locale_lc` (`locale_id`, `professional_interest_id`),
+  INDEX `pil_l_fk_idx` (`locale_id`),
+  INDEX `pil_pi_fk_idx` (`professional_interest_id`),
+  CONSTRAINT `pil_l_fk`
+      FOREIGN KEY (`locale_id`)
+      REFERENCES `locale` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION,
+  CONSTRAINT `pil_pi_fk`
+      FOREIGN KEY (`professional_interest_id`)
+      REFERENCES `professional_interest` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Table `skill_locale`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `skill_locale` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `value` varchar(256) NOT NULL,
+  `locale_id` bigint(20) NOT NULL,
+  `skill_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_skill_locale_lc` (`locale_id`, `skill_id`),
+  INDEX `skl_l_fk_idx` (`locale_id`),
+  INDEX `skl_s_fk_idx` (`skill_id`),
+  CONSTRAINT `skl_l_fk`
+      FOREIGN KEY (`locale_id`)
+      REFERENCES `locale` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION,
+  CONSTRAINT `skl_s_fk`
+      FOREIGN KEY (`skill_id`)
+      REFERENCES `skill` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Table `state_locale`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `state_locale` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `value` varchar(256) NOT NULL,
+  `locale_id` bigint(20) NOT NULL,
+  `state_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_state_locale_lc` (`locale_id`, `state_id`),
+  INDEX `stl_l_fk_idx` (`locale_id`),
+  INDEX `stl_s_fk_idx` (`state_id`),
+  CONSTRAINT `stl_l_fk`
+      FOREIGN KEY (`locale_id`)
+      REFERENCES `locale` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION,
+  CONSTRAINT `stl_s_fk`
+      FOREIGN KEY (`state_id`)
+      REFERENCES `state` (`id`)
+      ON DELETE CASCADE
+      ON UPDATE NO ACTION
+) ENGINE=InnoDB;
 
 CREATE FUNCTION `calculate_distance` (`longitude1` DECIMAL (16, 8),  `latitude1` DECIMAL (16, 8),`longitude2` DECIMAL (16, 8),  `latitude2` DECIMAL (16, 8)) RETURNS DECIMAL(16, 8) RETURN ST_Distance_Sphere(Point(longitude1, latitude1), Point(longitude2, latitude2));

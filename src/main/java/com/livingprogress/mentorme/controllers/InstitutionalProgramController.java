@@ -53,6 +53,24 @@ public class InstitutionalProgramController extends BaseUploadController {
     @Autowired
     private UserService userService;
 
+    /**
+     * The lookup service.
+     */
+    @Autowired
+    private LookupService lookupService;
+
+    /**
+     * The goal service.
+     */
+    @Autowired
+    private GoalService goalService;
+
+    /**
+     * The responsibility service.
+     */
+    @Autowired
+    private ResponsibilityService responsibilityService;
+
 
     /**
      * Check if all required fields are initialized properly.
@@ -97,7 +115,28 @@ public class InstitutionalProgramController extends BaseUploadController {
         Helper.checkNull(entity, "entity");
         List<Document> docs = Helper.uploadDocuments(getUploadDirectory(), documents);
         entity.setDocuments(docs);
+        entity.setLocale(getLocale());
         return institutionalProgramService.create(entity);
+    }
+
+    /**
+     * Get the locale.
+     * @return the locale
+     * @throws MentorMeException if there is any error
+     */
+    private Locale getLocale() throws MentorMeException {
+        List<Locale> locales = lookupService.getLocales();
+        if (locales.isEmpty()) {
+            throw new IllegalArgumentException("You don't have locales defined.");
+        }
+        for (java.util.Locale locale : LocaleContext.getCurrentLocales()) {
+            for (Locale localeEntity : locales) {
+                if (localeEntity.getValue().equals(locale.toString())) {
+                    return localeEntity;
+                }
+            }
+        }
+        return locales.get(0);
     }
 
     /**
@@ -119,6 +158,38 @@ public class InstitutionalProgramController extends BaseUploadController {
         Helper.checkUpdate(id, entity);
         List<Document> docs = Helper.uploadDocuments(getUploadDirectory(), documents);
         entity.setDocuments(docs);
+        entity.setLocale(getLocale());
+        InstitutionalProgram original = get(id);
+        // clear goals that do not exist anymore
+        if (entity.getGoals() != null) {
+            for (Goal goal : original.getGoals()) {
+                boolean found = false;
+                for (Goal goalEntity : entity.getGoals()) {
+                    if (goal.getId() == goalEntity.getId()) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    goalService.delete(goal.getId());
+                }
+            }
+        }
+        // clear responsibilities that do not exist anymore
+        if (entity.getResponsibilities() != null) {
+            for (Responsibility res : original.getResponsibilities()) {
+                boolean found = false;
+                for (Responsibility resEntity : entity.getResponsibilities()) {
+                    if (res.getId() == resEntity.getId()) {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    responsibilityService.delete(res.getId());
+                }
+            }
+        }
         return institutionalProgramService.update(id, entity);
     }
 

@@ -35,7 +35,6 @@ public class GoalSpecification implements Specification<Goal> {
         pd = Helper.buildEqualPredicate(criteria.getInstitutionalProgramId(),
                 pd, root.get("institutionalProgramId"), cb);
         pd = Helper.buildLikePredicate(criteria.getDescription(), pd, root.get("description"), cb);
-        pd = Helper.buildEqualPredicate(criteria.getCustom(), pd, root.get("custom"), cb);
         pd = Helper.buildLikePredicate(criteria.getSubject(), pd, root.get("subject"), cb);
         return pd;
     }

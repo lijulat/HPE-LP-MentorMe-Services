@@ -84,28 +84,6 @@ public class LookupController {
     }
 
     /**
-     * This method is used to get goal category lookups.
-     *
-     * @return the lookups for goal category
-     * @throws MentorMeException if any other error occurred during operation
-     */
-    @RequestMapping(value = "/goalCategories", method = RequestMethod.GET)
-    public List<GoalCategory> getGoalCategories() throws MentorMeException {
-        return lookupService.getGoalCategories();
-    }
-
-    /**
-     * This method is used to program category lookups.
-     *
-     * @return the lookups for program category
-     * @throws MentorMeException if any other error occurred during operation
-     */
-    @RequestMapping(value = "/programCategories", method = RequestMethod.GET)
-    public List<ProgramCategory> getProgramCategories() throws MentorMeException {
-        return lookupService.getProgramCategories();
-    }
-
-    /**
      * This method is used to personal interest lookups.
      *
      * @return the lookups for personal interest
@@ -125,18 +103,6 @@ public class LookupController {
     @RequestMapping(value = "/professionalInterests", method = RequestMethod.GET)
     public List<ProfessionalInterest> getProfessionalInterests() throws MentorMeException {
         return lookupService.getProfessionalInterests();
-    }
-
-
-    /**
-     * This method is used to document type lookups.
-     *
-     * @return the lookups for document type
-     * @throws MentorMeException if any other error occurred during operation
-     */
-    @RequestMapping(value = "/documentTypes", method = RequestMethod.GET)
-    public List<DocumentType> getDocumentTypes() throws MentorMeException {
-        return lookupService.getDocumentTypes();
     }
 
     /**

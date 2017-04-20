@@ -12,12 +12,14 @@ import com.livingprogress.mentorme.entities.WeightedPersonalInterest;
 import com.livingprogress.mentorme.entities.WeightedProfessionalInterest;
 import com.livingprogress.mentorme.remote.services.HODClient;
 import org.hamcrest.Matchers;
+import org.hibernate.Hibernate;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -144,6 +146,7 @@ public class MentorControllerTest extends BaseTest {
      * @throws Exception throws if any error happens.
      */
     @Test
+    @Transactional
     public void update() throws Exception {
         // no updates
         mockMvc.perform(MockMvcRequestBuilders.put("/mentors/3")
@@ -227,7 +230,7 @@ public class MentorControllerTest extends BaseTest {
                .andExpect(jsonPath("$.personalInterests", Matchers.hasSize(0)))
                .andExpect(jsonPath("$.professionalInterests", Matchers.hasSize(0)))
                .andExpect(jsonPath("$.professionalExperiences", Matchers.hasSize(0)))
-               .andExpect(jsonPath("$.professionalAreas", Matchers.hasSize(0)));
+               .andExpect(jsonPath("$.professionalAreas").doesNotExist());
         // update with new nested values
         List<PersonalInterest> personalInterests = lookupService.getPersonalInterests();
         assertTrue(personalInterests.size() > 0);
@@ -266,6 +269,7 @@ public class MentorControllerTest extends BaseTest {
             data.setEndDate(new Date());
             demoEntity.getProfessionalExperiences().add(data);
         });
+        Hibernate.initialize(demoEntity);
         mockMvc.perform(MockMvcRequestBuilders.put("/mentors/3")
                                               .contentType(MediaType.APPLICATION_JSON)
                                               .content(objectMapper.writeValueAsString(demoEntity)))

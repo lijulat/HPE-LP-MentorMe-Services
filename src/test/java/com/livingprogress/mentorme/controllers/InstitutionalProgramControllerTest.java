@@ -74,8 +74,6 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         demoEntity.getGoals().forEach(g->{
             checkEntities(g.getTasks());
             checkEntities(g.getUsefulLinks());
-            checkEntity(g.getCustomData());
-            g.getTasks().forEach(t->checkEntity(t.getCustomData()));
         });
         // create without documents
         String res = mockMvc.perform(MockMvcRequestBuilders.post("/institutionalPrograms")
@@ -100,13 +98,11 @@ public class InstitutionalProgramControllerTest extends BaseTest {
                                      .size()).forEach(idx -> {
             Goal goal1 = demoEntity.getGoals().get(idx);
             Goal goal2 = result.getGoals().get(idx);
-            verifyEntity(goal1.getCustomData(), goal2.getCustomData());
             verifyEntities(goal1.getTasks(), goal2.getTasks());
             verifyEntities(goal1.getUsefulLinks(), goal2.getUsefulLinks());
-            IntStream.range(0, goal1.getTasks().size()).forEach(idy -> {
-                verifyEntity(goal1.getTasks().get(idy).getCustomData(), goal2.getTasks().get(idy).getCustomData());
-            });
         });
+        assertEquals(1, result.getLocale().getId());
+        result.setLocale(null);
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
         verifyDocuments(0);
         // upload file
@@ -162,8 +158,6 @@ public class InstitutionalProgramControllerTest extends BaseTest {
         demoEntity.getGoals().forEach(g->{
             checkEntities(g.getTasks());
             checkEntities(g.getUsefulLinks());
-            checkEntity(g.getCustomData());
-            g.getTasks().forEach(t->checkEntity(t.getCustomData()));
         });
         // try to update created on
         demoEntity.setCreatedOn(sampleFutureDate);
@@ -190,20 +184,15 @@ public class InstitutionalProgramControllerTest extends BaseTest {
                                  .size()).forEach(idx -> {
             Goal goal1 = demoEntity.getGoals().get(idx);
             Goal goal2 = result.getGoals().get(idx);
-            verifyEntity(goal1.getCustomData(), goal2.getCustomData());
+
             verifyEntities(goal1.getTasks(), goal2.getTasks());
             verifyEntities(goal1.getUsefulLinks(), goal2.getUsefulLinks());
-            IntStream.range(0, goal1.getTasks().size()).forEach(idy -> {
-                verifyEntity(goal1.getTasks()
-                                  .get(idy)
-                                  .getCustomData(), goal2.getTasks()
-                                                         .get(idy)
-                                                         .getCustomData());
-            });
         });
         demoEntity.setInstitution(result.getInstitution());
         demoEntity.setGoals(result.getGoals());
         demoEntity.setUsefulLinks(result.getUsefulLinks());
+        assertEquals(1, result.getLocale().getId());
+        result.setLocale(null);
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
         // upload file
         mockAuthMvc.perform(MockMvcRequestBuilders.fileUpload("/institutionalPrograms/1")
@@ -315,12 +304,6 @@ public class InstitutionalProgramControllerTest extends BaseTest {
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(3));
-        mockMvc.perform(MockMvcRequestBuilders.get("/institutionalPrograms?programCategory.id=3")
-                                              .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.total").value(2))
-               .andExpect(jsonPath("$.totalPages").value(1))
-               .andExpect(jsonPath("$.entities", Matchers.hasSize(2)));
         mockMvc.perform(MockMvcRequestBuilders.get("/institutionalPrograms?minDurationInDays=20")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
@@ -337,13 +320,31 @@ public class InstitutionalProgramControllerTest extends BaseTest {
                .andExpect(jsonPath("$.entities[0].id").value(6));
         mockMvc.perform(MockMvcRequestBuilders.get
                 ("/institutionalPrograms?pageNumber=0&pageSize=2&sortColumn=programName&sortOrder=DESC&programName" +
-                        "=programName1&institutionId=1&programCategory.id=1&minDurationInDays=1&maxDurationInDays=100")
+                        "=programName1&institutionId=1&minDurationInDays=1&maxDurationInDays=100")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(1));
+
+        // filter by locale
+        mockMvc.perform(MockMvcRequestBuilders.get
+                ("/institutionalPrograms?sortColumn=programName&sortOrder=ASC&locale=en")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.total").value(4))
+                .andExpect(jsonPath("$.totalPages").value(1))
+                .andExpect(jsonPath("$.entities", Matchers.hasSize(4)))
+                .andExpect(jsonPath("$.entities[0].id").value(1));
+        mockMvc.perform(MockMvcRequestBuilders.get
+                ("/institutionalPrograms?sortColumn=programName&sortOrder=ASC&locale=es")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.total").value(2))
+                .andExpect(jsonPath("$.totalPages").value(1))
+                .andExpect(jsonPath("$.entities", Matchers.hasSize(2)))
+                .andExpect(jsonPath("$.entities[0].id").value(3));
     }
 
     /**

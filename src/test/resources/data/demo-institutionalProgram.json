@@ -5,35 +5,18 @@
   "institution": {
     "id": 3
   },
-  "programCategory": {
-    "id": 3,
-    "value": "ProgramCategory3"
-  },
   "goals": [
     {
       "number": 1,
       "subject": "demoSubject",
       "description": "demoDescription",
-      "goalCategory": {
-        "id": 2,
-        "value" : "GoalCategory2"
-      },
       "durationInDays": 11,
       "tasks": [{
         "number":1,
         "description":"demoDescription",
         "durationInDays":2,
         "mentorAssignment":true,
-        "menteeAssignment":true,
-        "custom": true,
-        "customData":{
-          "mentor":{
-            "id":3
-          },
-          "mentee":{
-            "id":4
-          }
-        }
+        "menteeAssignment":true
       }],
       "usefulLinks": [
         {
@@ -52,16 +35,7 @@
           },
           "createdOn": "2016-12-08"
         }
-      ],
-      "custom": true,
-      "customData": {
-        "mentor": {
-          "id": 3
-        },
-        "mentee": {
-          "id": 4
-        }
-      }
+      ]
     }
   ],
   "responsibilities":[

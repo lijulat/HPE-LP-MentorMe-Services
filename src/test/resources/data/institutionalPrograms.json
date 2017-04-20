@@ -49,19 +49,11 @@
       "status" : "ACTIVE",
       "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
     },
-    "programCategory" : {
-      "id" : 1,
-      "value" : "ProgramCategory1"
-    },
     "goals" : [ {
       "id" : 1,
       "number" : 1,
       "subject" : "subject1",
       "description" : "description1",
-      "goalCategory" : {
-        "id" : 1,
-        "value" : "GoalCategory1"
-      },
       "durationInDays" : 1,
       "tasks" : [ {
         "id" : 1,
@@ -70,670 +62,6 @@
         "durationInDays" : 1,
         "mentorAssignment" : true,
         "menteeAssignment" : true,
-        "documents" : [ {
-          "id" : 5,
-          "createdOn" : "2016-12-05T00:00:00",
-          "lastModifiedOn" : "2016-12-05T00:00:00",
-          "createdBy" : 5,
-          "lastModifiedBy" : 5,
-          "name" : "name5",
-          "path" : "path5"
-        }, {
-          "id" : 6,
-          "createdOn" : "2016-12-06T00:00:00",
-          "lastModifiedOn" : "2016-12-06T00:00:00",
-          "createdBy" : 6,
-          "lastModifiedBy" : 6,
-          "name" : "name6",
-          "path" : "path6"
-        } ],
-        "usefulLinks" : [ {
-          "id" : 4,
-          "title" : "title4",
-          "address" : "address4",
-          "author" : {
-            "id" : 4,
-            "createdOn" : "2016-10-04T00:00:00",
-            "lastModifiedOn" : "2016-10-04T00:00:00",
-            "firstName" : "firstname4",
-            "lastName" : "lastname4",
-            "roles" : [ {
-              "id" : 4,
-              "value" : "MENTEE"
-            } ],
-            "email" : "email4@test.com",
-            "profilePicturePath" : "http://img4.imgtn.bdimg.com/it/u=3514646889,3827435585&fm=23&gp=0.jpg",
-            "status" : "ACTIVE",
-            "streetAddress" : "54-29 Metropolitan Ave",
-            "city" : "Ridgewood",
-            "state" : {
-              "id" : 32,
-              "value" : "New York"
-            },
-            "country" : {
-              "id" : 230,
-              "value" : "United States"
-            },
-            "postalCode" : "11385",
-            "longitude" : -73.90954940,
-            "latitude" : 40.71311970,
-            "institution" : {
-              "id" : 1,
-              "createdOn" : "2016-10-01T00:00:00",
-              "lastModifiedOn" : "2016-10-01T00:00:00",
-              "institutionName" : "institutionName1",
-              "parentOrganization" : "parentOrganization1",
-              "streetAddress" : "streetAddress1",
-              "city" : "city1",
-              "state" : {
-                "id" : 1,
-                "value" : "State1"
-              },
-              "zip" : "zip1",
-              "country" : {
-                "id" : 1,
-                "value" : "Country1"
-              },
-              "phone" : "phone1",
-              "email" : "institution1@test.com",
-              "description" : "description1",
-              "contacts" : [ {
-                "id" : 1,
-                "title" : "title1",
-                "firstName" : "firstName1",
-                "lastName" : "lastName1",
-                "email" : "institutionContact1@test.com",
-                "phoneNumber" : "phoneNumber1",
-                "primaryContact" : true
-              }, {
-                "id" : 2,
-                "title" : "title2",
-                "firstName" : "firstName2",
-                "lastName" : "lastName2",
-                "email" : "institutionContact2@test.com",
-                "phoneNumber" : "phoneNumber2",
-                "primaryContact" : false
-              } ],
-              "status" : "ACTIVE",
-              "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
-            },
-            "birthDate" : "1988-08-01",
-            "phone" : "phone1",
-            "skypeUsername" : "skypeUsername1",
-            "introVideoLink" : "introVideoLink1",
-            "description" : "description1",
-            "personalInterests" : [ {
-              "id" : 3,
-              "personalInterest" : {
-                "id" : 1,
-                "value" : "Arts & Entertainment",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 4
-            }, {
-              "id" : 4,
-              "personalInterest" : {
-                "id" : 2,
-                "value" : "Automotive",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 3,
-              "userId" : 4
-            } ],
-            "professionalInterests" : [ {
-              "id" : 3,
-              "professionalInterest" : {
-                "id" : 1,
-                "value" : "Arts & Entertainment",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 4
-            }, {
-              "id" : 4,
-              "professionalInterest" : {
-                "id" : 2,
-                "value" : "Automotive",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 3,
-              "userId" : 4
-            }, {
-              "id" : 6,
-              "professionalInterest" : {
-                "id" : 4,
-                "value" : "Careers",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 4
-            } ],
-            "averagePerformanceScore" : 0,
-            "familyIncome" : 101.91,
-            "school" : "school1",
-            "institutionAffiliationCode" : {
-              "id" : 1,
-              "code" : "code1",
-              "institutionId" : 1,
-              "used" : true
-            },
-            "parentConsent" : {
-              "id" : 1,
-              "parentName" : "parentName1",
-              "signatureFilePath" : "signatureFilePath1",
-              "parentEmail" : "parentEmail1@test.com",
-              "token" : "token1"
-            },
-            "facebookUrl" : "facebookUrl1",
-            "skills" : [ {
-              "id" : 1,
-              "userId" : 4,
-              "skill" : {
-                "id" : 1,
-                "value" : "Leadership Training",
-                "description" : "Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.",
-                "imagePath" : "http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg"
-              }
-            }, {
-              "id" : 2,
-              "userId" : 4,
-              "skill" : {
-                "id" : 3,
-                "value" : "Time Management",
-                "description" : "Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.",
-                "imagePath" : "http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg"
-              }
-            } ],
-            "agreedAgreement" : true,
-            "virtualUser" : true
-          },
-          "createdOn" : "2016-08-08T00:00:00"
-        }, {
-          "id" : 3,
-          "title" : "title3",
-          "address" : "address3",
-          "author" : {
-            "id" : 3,
-            "createdOn" : "2016-10-03T00:00:00",
-            "lastModifiedOn" : "2016-10-03T00:00:00",
-            "firstName" : "firstname3",
-            "lastName" : "lastname3",
-            "roles" : [ {
-              "id" : 3,
-              "value" : "MENTOR"
-            } ],
-            "email" : "email3@test.com",
-            "profilePicturePath" : "http://img4.imgtn.bdimg.com/it/u=3514646889,3827435585&fm=23&gp=0.jpg",
-            "status" : "ACTIVE",
-            "streetAddress" : "261 Moore St",
-            "city" : "Brooklyn",
-            "state" : {
-              "id" : 32,
-              "value" : "New York"
-            },
-            "country" : {
-              "id" : 230,
-              "value" : "United States"
-            },
-            "postalCode" : "11206",
-            "longitude" : -73.93358660,
-            "latitude" : 40.70506220,
-            "institution" : {
-              "id" : 1,
-              "createdOn" : "2016-10-01T00:00:00",
-              "lastModifiedOn" : "2016-10-01T00:00:00",
-              "institutionName" : "institutionName1",
-              "parentOrganization" : "parentOrganization1",
-              "streetAddress" : "streetAddress1",
-              "city" : "city1",
-              "state" : {
-                "id" : 1,
-                "value" : "State1"
-              },
-              "zip" : "zip1",
-              "country" : {
-                "id" : 1,
-                "value" : "Country1"
-              },
-              "phone" : "phone1",
-              "email" : "institution1@test.com",
-              "description" : "description1",
-              "contacts" : [ {
-                "id" : 1,
-                "title" : "title1",
-                "firstName" : "firstName1",
-                "lastName" : "lastName1",
-                "email" : "institutionContact1@test.com",
-                "phoneNumber" : "phoneNumber1",
-                "primaryContact" : true
-              }, {
-                "id" : 2,
-                "title" : "title2",
-                "firstName" : "firstName2",
-                "lastName" : "lastName2",
-                "email" : "institutionContact2@test.com",
-                "phoneNumber" : "phoneNumber2",
-                "primaryContact" : false
-              } ],
-              "status" : "ACTIVE",
-              "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
-            },
-            "birthDate" : "1988-08-01",
-            "phone" : "phone1",
-            "skypeUsername" : "skypeUsername1",
-            "introVideoLink" : "introVideoLink1",
-            "description" : "description1",
-            "personalInterests" : [ {
-              "id" : 1,
-              "personalInterest" : {
-                "id" : 1,
-                "value" : "Arts & Entertainment",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 1,
-              "userId" : 3
-            }, {
-              "id" : 2,
-              "personalInterest" : {
-                "id" : 2,
-                "value" : "Automotive",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 3
-            }, {
-              "id" : 10,
-              "personalInterest" : {
-                "id" : 3,
-                "value" : "Business",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 3
-            } ],
-            "professionalInterests" : [ {
-              "id" : 1,
-              "professionalInterest" : {
-                "id" : 1,
-                "value" : "Arts & Entertainment",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 1,
-              "userId" : 3
-            }, {
-              "id" : 2,
-              "professionalInterest" : {
-                "id" : 2,
-                "value" : "Automotive",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 3
-            } ],
-            "averagePerformanceScore" : 0,
-            "professionalExperiences" : [ {
-              "id" : 1,
-              "position" : "position1",
-              "workLocation" : "workLocation1",
-              "startDate" : "2016-10-11",
-              "endDate" : "2016-10-31",
-              "description" : "description1",
-              "mentorId" : 3
-            }, {
-              "id" : 2,
-              "position" : "position2",
-              "workLocation" : "workLocation2",
-              "startDate" : "2016-11-11",
-              "endDate" : "2016-11-30",
-              "description" : "description2",
-              "mentorId" : 3
-            } ],
-            "mentorType" : "MENTEE_PAIRED",
-            "professionalAreas" : [ {
-              "id" : 1,
-              "value" : "ProfessionalConsultantArea1"
-            }, {
-              "id" : 2,
-              "value" : "ProfessionalConsultantArea2"
-            } ],
-            "companyName" : "companyName1",
-            "linkedInUrl" : "linkedInUrl1",
-            "agreedAgreement" : true,
-            "virtualUser" : false
-          },
-          "createdOn" : "2016-03-18T00:00:00"
-        } ],
-        "custom" : true,
-        "customData" : {
-          "id" : 1,
-          "mentor" : {
-            "id" : 3,
-            "createdOn" : "2016-10-03T00:00:00",
-            "lastModifiedOn" : "2016-10-03T00:00:00",
-            "firstName" : "firstname3",
-            "lastName" : "lastname3",
-            "roles" : [ {
-              "id" : 3,
-              "value" : "MENTOR"
-            } ],
-            "email" : "email3@test.com",
-            "profilePicturePath" : "http://img4.imgtn.bdimg.com/it/u=3514646889,3827435585&fm=23&gp=0.jpg",
-            "status" : "ACTIVE",
-            "streetAddress" : "261 Moore St",
-            "city" : "Brooklyn",
-            "state" : {
-              "id" : 32,
-              "value" : "New York"
-            },
-            "country" : {
-              "id" : 230,
-              "value" : "United States"
-            },
-            "postalCode" : "11206",
-            "longitude" : -73.93358660,
-            "latitude" : 40.70506220,
-            "institution" : {
-              "id" : 1,
-              "createdOn" : "2016-10-01T00:00:00",
-              "lastModifiedOn" : "2016-10-01T00:00:00",
-              "institutionName" : "institutionName1",
-              "parentOrganization" : "parentOrganization1",
-              "streetAddress" : "streetAddress1",
-              "city" : "city1",
-              "state" : {
-                "id" : 1,
-                "value" : "State1"
-              },
-              "zip" : "zip1",
-              "country" : {
-                "id" : 1,
-                "value" : "Country1"
-              },
-              "phone" : "phone1",
-              "email" : "institution1@test.com",
-              "description" : "description1",
-              "contacts" : [ {
-                "id" : 1,
-                "title" : "title1",
-                "firstName" : "firstName1",
-                "lastName" : "lastName1",
-                "email" : "institutionContact1@test.com",
-                "phoneNumber" : "phoneNumber1",
-                "primaryContact" : true
-              }, {
-                "id" : 2,
-                "title" : "title2",
-                "firstName" : "firstName2",
-                "lastName" : "lastName2",
-                "email" : "institutionContact2@test.com",
-                "phoneNumber" : "phoneNumber2",
-                "primaryContact" : false
-              } ],
-              "status" : "ACTIVE",
-              "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
-            },
-            "birthDate" : "1988-08-01",
-            "phone" : "phone1",
-            "skypeUsername" : "skypeUsername1",
-            "introVideoLink" : "introVideoLink1",
-            "description" : "description1",
-            "personalInterests" : [ {
-              "id" : 1,
-              "personalInterest" : {
-                "id" : 1,
-                "value" : "Arts & Entertainment",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 1,
-              "userId" : 3
-            }, {
-              "id" : 2,
-              "personalInterest" : {
-                "id" : 2,
-                "value" : "Automotive",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 3
-            }, {
-              "id" : 10,
-              "personalInterest" : {
-                "id" : 3,
-                "value" : "Business",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 3
-            } ],
-            "professionalInterests" : [ {
-              "id" : 1,
-              "professionalInterest" : {
-                "id" : 1,
-                "value" : "Arts & Entertainment",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 1,
-              "userId" : 3
-            }, {
-              "id" : 2,
-              "professionalInterest" : {
-                "id" : 2,
-                "value" : "Automotive",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 3
-            } ],
-            "averagePerformanceScore" : 0,
-            "professionalExperiences" : [ {
-              "id" : 1,
-              "position" : "position1",
-              "workLocation" : "workLocation1",
-              "startDate" : "2016-10-11",
-              "endDate" : "2016-10-31",
-              "description" : "description1",
-              "mentorId" : 3
-            }, {
-              "id" : 2,
-              "position" : "position2",
-              "workLocation" : "workLocation2",
-              "startDate" : "2016-11-11",
-              "endDate" : "2016-11-30",
-              "description" : "description2",
-              "mentorId" : 3
-            } ],
-            "mentorType" : "MENTEE_PAIRED",
-            "professionalAreas" : [ {
-              "id" : 1,
-              "value" : "ProfessionalConsultantArea1"
-            }, {
-              "id" : 2,
-              "value" : "ProfessionalConsultantArea2"
-            } ],
-            "companyName" : "companyName1",
-            "linkedInUrl" : "linkedInUrl1",
-            "agreedAgreement" : true,
-            "virtualUser" : false
-          },
-          "mentee" : {
-            "id" : 4,
-            "createdOn" : "2016-10-04T00:00:00",
-            "lastModifiedOn" : "2016-10-04T00:00:00",
-            "firstName" : "firstname4",
-            "lastName" : "lastname4",
-            "roles" : [ {
-              "id" : 4,
-              "value" : "MENTEE"
-            } ],
-            "email" : "email4@test.com",
-            "profilePicturePath" : "http://img4.imgtn.bdimg.com/it/u=3514646889,3827435585&fm=23&gp=0.jpg",
-            "status" : "ACTIVE",
-            "streetAddress" : "54-29 Metropolitan Ave",
-            "city" : "Ridgewood",
-            "state" : {
-              "id" : 32,
-              "value" : "New York"
-            },
-            "country" : {
-              "id" : 230,
-              "value" : "United States"
-            },
-            "postalCode" : "11385",
-            "longitude" : -73.90954940,
-            "latitude" : 40.71311970,
-            "institution" : {
-              "id" : 1,
-              "createdOn" : "2016-10-01T00:00:00",
-              "lastModifiedOn" : "2016-10-01T00:00:00",
-              "institutionName" : "institutionName1",
-              "parentOrganization" : "parentOrganization1",
-              "streetAddress" : "streetAddress1",
-              "city" : "city1",
-              "state" : {
-                "id" : 1,
-                "value" : "State1"
-              },
-              "zip" : "zip1",
-              "country" : {
-                "id" : 1,
-                "value" : "Country1"
-              },
-              "phone" : "phone1",
-              "email" : "institution1@test.com",
-              "description" : "description1",
-              "contacts" : [ {
-                "id" : 1,
-                "title" : "title1",
-                "firstName" : "firstName1",
-                "lastName" : "lastName1",
-                "email" : "institutionContact1@test.com",
-                "phoneNumber" : "phoneNumber1",
-                "primaryContact" : true
-              }, {
-                "id" : 2,
-                "title" : "title2",
-                "firstName" : "firstName2",
-                "lastName" : "lastName2",
-                "email" : "institutionContact2@test.com",
-                "phoneNumber" : "phoneNumber2",
-                "primaryContact" : false
-              } ],
-              "status" : "ACTIVE",
-              "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
-            },
-            "birthDate" : "1988-08-01",
-            "phone" : "phone1",
-            "skypeUsername" : "skypeUsername1",
-            "introVideoLink" : "introVideoLink1",
-            "description" : "description1",
-            "personalInterests" : [ {
-              "id" : 3,
-              "personalInterest" : {
-                "id" : 1,
-                "value" : "Arts & Entertainment",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 4
-            }, {
-              "id" : 4,
-              "personalInterest" : {
-                "id" : 2,
-                "value" : "Automotive",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 3,
-              "userId" : 4
-            } ],
-            "professionalInterests" : [ {
-              "id" : 3,
-              "professionalInterest" : {
-                "id" : 1,
-                "value" : "Arts & Entertainment",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 4
-            }, {
-              "id" : 4,
-              "professionalInterest" : {
-                "id" : 2,
-                "value" : "Automotive",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 3,
-              "userId" : 4
-            }, {
-              "id" : 6,
-              "professionalInterest" : {
-                "id" : 4,
-                "value" : "Careers",
-                "picturePath" : null,
-                "parentCategory" : null
-              },
-              "weight" : 2,
-              "userId" : 4
-            } ],
-            "averagePerformanceScore" : 0,
-            "familyIncome" : 101.91,
-            "school" : "school1",
-            "institutionAffiliationCode" : {
-              "id" : 1,
-              "code" : "code1",
-              "institutionId" : 1,
-              "used" : true
-            },
-            "parentConsent" : {
-              "id" : 1,
-              "parentName" : "parentName1",
-              "signatureFilePath" : "signatureFilePath1",
-              "parentEmail" : "parentEmail1@test.com",
-              "token" : "token1"
-            },
-            "facebookUrl" : "facebookUrl1",
-            "skills" : [ {
-              "id" : 1,
-              "userId" : 4,
-              "skill" : {
-                "id" : 1,
-                "value" : "Leadership Training",
-                "description" : "Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.",
-                "imagePath" : "http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg"
-              }
-            }, {
-              "id" : 2,
-              "userId" : 4,
-              "skill" : {
-                "id" : 3,
-                "value" : "Time Management",
-                "description" : "Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.",
-                "imagePath" : "http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg"
-              }
-            } ],
-            "agreedAgreement" : true,
-            "virtualUser" : true
-          }
-        },
         "goalId" : 1
       } ],
       "institutionalProgramId" : 1,
@@ -822,327 +150,7 @@
         "lastModifiedBy" : 4,
         "name" : "name4",
         "path" : "path4"
-      } ],
-      "custom" : true,
-      "customData" : {
-        "id" : 1,
-        "mentor" : {
-          "id" : 3,
-          "createdOn" : "2016-10-03T00:00:00",
-          "lastModifiedOn" : "2016-10-03T00:00:00",
-          "firstName" : "firstname3",
-          "lastName" : "lastname3",
-          "roles" : [ {
-            "id" : 3,
-            "value" : "MENTOR"
-          } ],
-          "email" : "email3@test.com",
-          "profilePicturePath" : "http://img4.imgtn.bdimg.com/it/u=3514646889,3827435585&fm=23&gp=0.jpg",
-          "status" : "ACTIVE",
-          "streetAddress" : "261 Moore St",
-          "city" : "Brooklyn",
-          "state" : {
-            "id" : 32,
-            "value" : "New York"
-          },
-          "country" : {
-            "id" : 230,
-            "value" : "United States"
-          },
-          "postalCode" : "11206",
-          "longitude" : -73.93358660,
-          "latitude" : 40.70506220,
-          "institution" : {
-            "id" : 1,
-            "createdOn" : "2016-10-01T00:00:00",
-            "lastModifiedOn" : "2016-10-01T00:00:00",
-            "institutionName" : "institutionName1",
-            "parentOrganization" : "parentOrganization1",
-            "streetAddress" : "streetAddress1",
-            "city" : "city1",
-            "state" : {
-              "id" : 1,
-              "value" : "State1"
-            },
-            "zip" : "zip1",
-            "country" : {
-              "id" : 1,
-              "value" : "Country1"
-            },
-            "phone" : "phone1",
-            "email" : "institution1@test.com",
-            "description" : "description1",
-            "contacts" : [ {
-              "id" : 1,
-              "title" : "title1",
-              "firstName" : "firstName1",
-              "lastName" : "lastName1",
-              "email" : "institutionContact1@test.com",
-              "phoneNumber" : "phoneNumber1",
-              "primaryContact" : true
-            }, {
-              "id" : 2,
-              "title" : "title2",
-              "firstName" : "firstName2",
-              "lastName" : "lastName2",
-              "email" : "institutionContact2@test.com",
-              "phoneNumber" : "phoneNumber2",
-              "primaryContact" : false
-            } ],
-            "status" : "ACTIVE",
-            "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
-          },
-          "birthDate" : "1988-08-01",
-          "phone" : "phone1",
-          "skypeUsername" : "skypeUsername1",
-          "introVideoLink" : "introVideoLink1",
-          "description" : "description1",
-          "personalInterests" : [ {
-            "id" : 1,
-            "personalInterest" : {
-              "id" : 1,
-              "value" : "Arts & Entertainment",
-              "picturePath" : null,
-              "parentCategory" : null
-            },
-            "weight" : 1,
-            "userId" : 3
-          }, {
-            "id" : 2,
-            "personalInterest" : {
-              "id" : 2,
-              "value" : "Automotive",
-              "picturePath" : null,
-              "parentCategory" : null
-            },
-            "weight" : 2,
-            "userId" : 3
-          }, {
-            "id" : 10,
-            "personalInterest" : {
-              "id" : 3,
-              "value" : "Business",
-              "picturePath" : null,
-              "parentCategory" : null
-            },
-            "weight" : 2,
-            "userId" : 3
-          } ],
-          "professionalInterests" : [ {
-            "id" : 1,
-            "professionalInterest" : {
-              "id" : 1,
-              "value" : "Arts & Entertainment",
-              "picturePath" : null,
-              "parentCategory" : null
-            },
-            "weight" : 1,
-            "userId" : 3
-          }, {
-            "id" : 2,
-            "professionalInterest" : {
-              "id" : 2,
-              "value" : "Automotive",
-              "picturePath" : null,
-              "parentCategory" : null
-            },
-            "weight" : 2,
-            "userId" : 3
-          } ],
-          "averagePerformanceScore" : 0,
-          "professionalExperiences" : [ {
-            "id" : 1,
-            "position" : "position1",
-            "workLocation" : "workLocation1",
-            "startDate" : "2016-10-11",
-            "endDate" : "2016-10-31",
-            "description" : "description1",
-            "mentorId" : 3
-          }, {
-            "id" : 2,
-            "position" : "position2",
-            "workLocation" : "workLocation2",
-            "startDate" : "2016-11-11",
-            "endDate" : "2016-11-30",
-            "description" : "description2",
-            "mentorId" : 3
-          } ],
-          "mentorType" : "MENTEE_PAIRED",
-          "professionalAreas" : [ {
-            "id" : 1,
-            "value" : "ProfessionalConsultantArea1"
-          }, {
-            "id" : 2,
-            "value" : "ProfessionalConsultantArea2"
-          } ],
-          "companyName" : "companyName1",
-          "linkedInUrl" : "linkedInUrl1",
-          "agreedAgreement" : true,
-          "virtualUser" : false
-        },
-        "mentee" : {
-          "id" : 4,
-          "createdOn" : "2016-10-04T00:00:00",
-          "lastModifiedOn" : "2016-10-04T00:00:00",
-          "firstName" : "firstname4",
-          "lastName" : "lastname4",
-          "roles" : [ {
-            "id" : 4,
-            "value" : "MENTEE"
-          } ],
-          "email" : "email4@test.com",
-          "profilePicturePath" : "http://img4.imgtn.bdimg.com/it/u=3514646889,3827435585&fm=23&gp=0.jpg",
-          "status" : "ACTIVE",
-          "streetAddress" : "54-29 Metropolitan Ave",
-          "city" : "Ridgewood",
-          "state" : {
-            "id" : 32,
-            "value" : "New York"
-          },
-          "country" : {
-            "id" : 230,
-            "value" : "United States"
-          },
-          "postalCode" : "11385",
-          "longitude" : -73.90954940,
-          "latitude" : 40.71311970,
-          "institution" : {
-            "id" : 1,
-            "createdOn" : "2016-10-01T00:00:00",
-            "lastModifiedOn" : "2016-10-01T00:00:00",
-            "institutionName" : "institutionName1",
-            "parentOrganization" : "parentOrganization1",
-            "streetAddress" : "streetAddress1",
-            "city" : "city1",
-            "state" : {
-              "id" : 1,
-              "value" : "State1"
-            },
-            "zip" : "zip1",
-            "country" : {
-              "id" : 1,
-              "value" : "Country1"
-            },
-            "phone" : "phone1",
-            "email" : "institution1@test.com",
-            "description" : "description1",
-            "contacts" : [ {
-              "id" : 1,
-              "title" : "title1",
-              "firstName" : "firstName1",
-              "lastName" : "lastName1",
-              "email" : "institutionContact1@test.com",
-              "phoneNumber" : "phoneNumber1",
-              "primaryContact" : true
-            }, {
-              "id" : 2,
-              "title" : "title2",
-              "firstName" : "firstName2",
-              "lastName" : "lastName2",
-              "email" : "institutionContact2@test.com",
-              "phoneNumber" : "phoneNumber2",
-              "primaryContact" : false
-            } ],
-            "status" : "ACTIVE",
-            "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
-          },
-          "birthDate" : "1988-08-01",
-          "phone" : "phone1",
-          "skypeUsername" : "skypeUsername1",
-          "introVideoLink" : "introVideoLink1",
-          "description" : "description1",
-          "personalInterests" : [ {
-            "id" : 3,
-            "personalInterest" : {
-              "id" : 1,
-              "value" : "Arts & Entertainment",
-              "picturePath" : null,
-              "parentCategory" : null
-            },
-            "weight" : 2,
-            "userId" : 4
-          }, {
-            "id" : 4,
-            "personalInterest" : {
-              "id" : 2,
-              "value" : "Automotive",
-              "picturePath" : null,
-              "parentCategory" : null
-            },
-            "weight" : 3,
-            "userId" : 4
-          } ],
-          "professionalInterests" : [ {
-            "id" : 3,
-            "professionalInterest" : {
-              "id" : 1,
-              "value" : "Arts & Entertainment",
-              "picturePath" : null,
-              "parentCategory" : null
-            },
-            "weight" : 2,
-            "userId" : 4
-          }, {
-            "id" : 4,
-            "professionalInterest" : {
-              "id" : 2,
-              "value" : "Automotive",
-              "picturePath" : null,
-              "parentCategory" : null
-            },
-            "weight" : 3,
-            "userId" : 4
-          }, {
-            "id" : 6,
-            "professionalInterest" : {
-              "id" : 4,
-              "value" : "Careers",
-              "picturePath" : null,
-              "parentCategory" : null
-            },
-            "weight" : 2,
-            "userId" : 4
-          } ],
-          "averagePerformanceScore" : 0,
-          "familyIncome" : 101.91,
-          "school" : "school1",
-          "institutionAffiliationCode" : {
-            "id" : 1,
-            "code" : "code1",
-            "institutionId" : 1,
-            "used" : true
-          },
-          "parentConsent" : {
-            "id" : 1,
-            "parentName" : "parentName1",
-            "signatureFilePath" : "signatureFilePath1",
-            "parentEmail" : "parentEmail1@test.com",
-            "token" : "token1"
-          },
-          "facebookUrl" : "facebookUrl1",
-          "skills" : [ {
-            "id" : 1,
-            "userId" : 4,
-            "skill" : {
-              "id" : 1,
-              "value" : "Leadership Training",
-              "description" : "Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.",
-              "imagePath" : "http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg"
-            }
-          }, {
-            "id" : 2,
-            "userId" : 4,
-            "skill" : {
-              "id" : 3,
-              "value" : "Time Management",
-              "description" : "Help you develop a truly engaging and responsive communication skills, leading to positive results for your career path.",
-              "imagePath" : "http://pic.58pic.com/58pic/15/37/53/33H58PICXSr_1024.jpg"
-            }
-          } ],
-          "agreedAgreement" : true,
-          "virtualUser" : true
-        }
-      }
+      } ]
     } ],
     "responsibilities" : [ {
       "id" : 1,
@@ -1428,19 +436,11 @@
       "status" : "INACTIVE",
       "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
     },
-    "programCategory" : {
-      "id" : 2,
-      "value" : "ProgramCategory2"
-    },
     "goals" : [ {
       "id" : 2,
       "number" : 2,
       "subject" : "subject2",
       "description" : "description2",
-      "goalCategory" : {
-        "id" : 2,
-        "value" : "GoalCategory2"
-      },
       "durationInDays" : 2,
       "tasks" : [ {
         "id" : 2,
@@ -1449,17 +449,11 @@
         "durationInDays" : 2,
         "mentorAssignment" : true,
         "menteeAssignment" : false,
-        "documents" : [ ],
-        "usefulLinks" : [ ],
-        "custom" : false,
-        "customData" : null,
         "goalId" : 2
       } ],
       "institutionalProgramId" : 2,
       "usefulLinks" : [ ],
-      "documents" : [ ],
-      "custom" : false,
-      "customData" : null
+      "documents" : [ ]
     } ],
     "responsibilities" : [ {
       "id" : 2,
@@ -1516,19 +510,11 @@
       "status" : "ACTIVE",
       "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
     },
-    "programCategory" : {
-      "id" : 3,
-      "value" : "ProgramCategory3"
-    },
     "goals" : [ {
       "id" : 3,
       "number" : 3,
       "subject" : "subject3",
       "description" : "description3",
-      "goalCategory" : {
-        "id" : 3,
-        "value" : "GoalCategory3"
-      },
       "durationInDays" : 3,
       "tasks" : [ {
         "id" : 3,
@@ -1537,17 +523,11 @@
         "durationInDays" : 3,
         "mentorAssignment" : false,
         "menteeAssignment" : true,
-        "documents" : [ ],
-        "usefulLinks" : [ ],
-        "custom" : true,
-        "customData" : null,
         "goalId" : 3
       } ],
       "institutionalProgramId" : 3,
       "usefulLinks" : [ ],
-      "documents" : [ ],
-      "custom" : true,
-      "customData" : null
+      "documents" : [ ]
     } ],
     "responsibilities" : [ {
       "id" : 3,
@@ -1604,19 +584,11 @@
       "status" : "ACTIVE",
       "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
     },
-    "programCategory" : {
-      "id" : 1,
-      "value" : "ProgramCategory1"
-    },
     "goals" : [ {
       "id" : 4,
       "number" : 4,
       "subject" : "subject4",
       "description" : "description4",
-      "goalCategory" : {
-        "id" : 1,
-        "value" : "GoalCategory1"
-      },
       "durationInDays" : 4,
       "tasks" : [ {
         "id" : 4,
@@ -1625,17 +597,11 @@
         "durationInDays" : 4,
         "mentorAssignment" : true,
         "menteeAssignment" : false,
-        "documents" : [ ],
-        "usefulLinks" : [ ],
-        "custom" : true,
-        "customData" : null,
         "goalId" : 4
       } ],
       "institutionalProgramId" : 4,
       "usefulLinks" : [ ],
-      "documents" : [ ],
-      "custom" : false,
-      "customData" : null
+      "documents" : [ ]
     } ],
     "responsibilities" : [ {
       "id" : 4,
@@ -1692,19 +658,11 @@
       "status" : "ACTIVE",
       "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
     },
-    "programCategory" : {
-      "id" : 2,
-      "value" : "ProgramCategory2"
-    },
     "goals" : [ {
       "id" : 5,
       "number" : 5,
       "subject" : "subject5",
       "description" : "description5",
-      "goalCategory" : {
-        "id" : 2,
-        "value" : "GoalCategory2"
-      },
       "durationInDays" : 5,
       "tasks" : [ {
         "id" : 5,
@@ -1713,17 +671,11 @@
         "durationInDays" : 5,
         "mentorAssignment" : true,
         "menteeAssignment" : true,
-        "documents" : [ ],
-        "usefulLinks" : [ ],
-        "custom" : false,
-        "customData" : null,
         "goalId" : 5
       } ],
       "institutionalProgramId" : 5,
       "usefulLinks" : [ ],
-      "documents" : [ ],
-      "custom" : true,
-      "customData" : null
+      "documents" : [ ]
     } ],
     "responsibilities" : [ {
       "id" : 5,
@@ -1780,19 +732,11 @@
       "status" : "ACTIVE",
       "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
     },
-    "programCategory" : {
-      "id" : 3,
-      "value" : "ProgramCategory3"
-    },
     "goals" : [ {
       "id" : 6,
       "number" : 6,
       "subject" : "subject6",
       "description" : "description6",
-      "goalCategory" : {
-        "id" : 3,
-        "value" : "GoalCategory3"
-      },
       "durationInDays" : 6,
       "tasks" : [ {
         "id" : 6,
@@ -1801,17 +745,11 @@
         "durationInDays" : 2,
         "mentorAssignment" : false,
         "menteeAssignment" : true,
-        "documents" : [ ],
-        "usefulLinks" : [ ],
-        "custom" : true,
-        "customData" : null,
         "goalId" : 6
       } ],
       "institutionalProgramId" : 6,
       "usefulLinks" : [ ],
-      "documents" : [ ],
-      "custom" : false,
-      "customData" : null
+      "documents" : [ ]
     } ],
     "responsibilities" : [ {
       "id" : 6,
