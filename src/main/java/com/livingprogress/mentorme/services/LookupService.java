@@ -42,22 +42,6 @@ public interface LookupService {
     List<ProfessionalConsultantArea> getProfessionalConsultantAreas() throws MentorMeException;
 
     /**
-     * This method is used to get goal category lookups.
-     *
-     * @return the lookups for goal category
-     * @throws MentorMeException if any other error occurred during operation
-     */
-    List<GoalCategory> getGoalCategories() throws MentorMeException;
-
-    /**
-     * This method is used to program category lookups.
-     *
-     * @return the lookups for program category
-     * @throws MentorMeException if any other error occurred during operation
-     */
-    List<ProgramCategory> getProgramCategories() throws MentorMeException;
-
-    /**
      * This method is used to personal interest lookups.
      *
      * @return the lookups for personal interest
@@ -74,18 +58,21 @@ public interface LookupService {
     List<ProfessionalInterest> getProfessionalInterests() throws MentorMeException;
 
     /**
-     * This method is used to document type lookups.
+     * Gets all the skills.
      *
-     * @return the lookups for document type
-     * @throws MentorMeException if any other error occurred during operation
-     */
-    List<DocumentType> getDocumentTypes() throws MentorMeException;
-
- /**
-  * Gets all the skills.
-  * @return the skills.
-  * @throws MentorMeException if there are any errors.
+     * @return the skills.
+     * @throws MentorMeException if there are any errors.
      */
     List<Skill> getSkills() throws MentorMeException;
+
+    /**
+     * Get all the locales.
+     *
+     * @return the locales
+     * @throws MentorMeException if there are any errors.
+     */
+    List<Locale> getLocales() throws MentorMeException;
+
+
 }
 

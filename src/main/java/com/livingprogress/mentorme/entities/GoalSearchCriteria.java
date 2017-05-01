@@ -21,11 +21,6 @@ public class GoalSearchCriteria {
     private String description;
 
     /**
-     * The custom flag.
-     */
-    private Boolean custom;
-
-    /**
      * The subject.
      */
     private String subject;

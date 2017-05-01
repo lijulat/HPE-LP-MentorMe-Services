@@ -1,9 +1,13 @@
 package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.BaseTest;
+import com.livingprogress.mentorme.entities.LocaleContext;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.util.Arrays;
+import java.util.Locale;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -43,6 +47,21 @@ public class LookupControllerTest extends BaseTest {
     }
 
     /**
+     * Test getCountries by locale.
+     *
+     * @throws Exception throws if any error happens.
+     */
+    @Test
+    public void getCountriesByLocale() throws Exception {
+        LocaleContext.setCurrentLocales(Arrays.asList(new Locale("es")));
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/lookups/countries")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(readFile("countries-es.json")));
+    }
+
+    /**
      * Test getStates method.
      *
      * @throws Exception throws if any error happens.
@@ -54,6 +73,21 @@ public class LookupControllerTest extends BaseTest {
                                       .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(content().json(readFile("states.json")));
+    }
+
+    /**
+     * Test getStates by locale.
+     *
+     * @throws Exception throws if any error happens.
+     */
+    @Test
+    public void getStatesByLocale() throws Exception {
+        LocaleContext.setCurrentLocales(Arrays.asList(new Locale("es")));
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/lookups/states")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(readFile("states-es.json")));
     }
 
     /**
@@ -71,31 +105,18 @@ public class LookupControllerTest extends BaseTest {
     }
 
     /**
-     * Test getGoalCategories method.
+     * Test getProfessionalConsultantAreas by locale.
      *
      * @throws Exception throws if any error happens.
      */
     @Test
-    public void getGoalCategories() throws Exception {
+    public void getProfessionalConsultantAreasByLocale() throws Exception {
+        LocaleContext.setCurrentLocales(Arrays.asList(new Locale("es")));
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/lookups/goalCategories")
-                                      .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk())
-               .andExpect(content().json(readFile("goalCategories.json")));
-    }
-
-    /**
-     * Test getProgramCategories method.
-     *
-     * @throws Exception throws if any error happens.
-     */
-    @Test
-    public void getProgramCategories() throws Exception {
-        mockMvc.perform(
-                MockMvcRequestBuilders.get("/lookups/programCategories")
-                                      .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk())
-               .andExpect(content().json(readFile("programCategories.json")));
+                MockMvcRequestBuilders.get("/lookups/professionalConsultantAreas")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(readFile("professionalConsultantAreas-es.json")));
     }
 
     /**
@@ -113,6 +134,21 @@ public class LookupControllerTest extends BaseTest {
     }
 
     /**
+     * Test getPersonalInterests by locale.
+     *
+     * @throws Exception throws if any error happens.
+     */
+    @Test
+    public void getPersonalInterestsByLocale() throws Exception {
+        LocaleContext.setCurrentLocales(Arrays.asList(new Locale("es")));
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/lookups/personalInterests")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(readFile("personalInterests-es.json")));
+    }
+
+    /**
      * Test getProfessionalInterests method.
      *
      * @throws Exception throws if any error happens.
@@ -127,16 +163,44 @@ public class LookupControllerTest extends BaseTest {
     }
 
     /**
-     * Test getDocumentTypes method.
+     * Test getProfessionalInterests by locale.
      *
      * @throws Exception throws if any error happens.
      */
     @Test
-    public void getDocumentTypes() throws Exception {
+    public void getProfessionalInterestsByLocale() throws Exception {
+        LocaleContext.setCurrentLocales(Arrays.asList(new Locale("es")));
         mockMvc.perform(
-                MockMvcRequestBuilders.get("/lookups/documentTypes")
-                                      .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk())
-               .andExpect(content().json(readFile("documentTypes.json")));
+                MockMvcRequestBuilders.get("/lookups/professionalInterests")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(readFile("professionalInterests-es.json")));
+    }
+
+    /**
+     * Test getSkills.
+     *
+     * @throws Exception throws if any error happens.
+     */
+    public void getSkills() throws Exception {
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/lookups/skills")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(readFile("skills.json")));
+    }
+
+    /**
+     * Test getSkills by locale.
+     *
+     * @throws Exception throws if any error happens.
+     */
+    public void getSkillsByLocale() throws Exception {
+        LocaleContext.setCurrentLocales(Arrays.asList(new Locale("es")));
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/lookups/skills")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(readFile("skills-es.json")));
     }
 }

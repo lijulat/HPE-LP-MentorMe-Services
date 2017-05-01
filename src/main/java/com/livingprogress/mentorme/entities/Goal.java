@@ -41,13 +41,6 @@ public class Goal extends IdentifiableEntity {
     private String description;
 
     /**
-     * The goal category.
-     */
-    @ManyToOne
-    @JoinColumn(name = "goal_category_id")
-    private GoalCategory goalCategory;
-
-    /**
      * The duration in days.
      */
     private int durationInDays;
@@ -90,16 +83,5 @@ public class Goal extends IdentifiableEntity {
             joinColumns = {@JoinColumn(name = "goal_id")},
             inverseJoinColumns = {@JoinColumn(name = "document_id")})
     private List<Document> documents;
-
-    /**
-     * Flag for the custom goal (the custom goal created for the mentee-mentor pair).
-     */
-    private boolean custom;
-
-    /**
-     * Custom assigned goal data.
-     */
-    @OneToOne(mappedBy = "goal", cascade = ALL, orphanRemoval = true)
-    private CustomAssignedGoalData customData;
 }
 

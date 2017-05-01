@@ -6,11 +6,11 @@ import lombok.Setter;
 import javax.persistence.Entity;
 
 /**
- * The goal category.
+ * The locale.
  */
 @Getter
 @Setter
 @Entity
-public class GoalCategory extends LookupEntity {
+public class Locale extends LookupEntity {
 }
 
