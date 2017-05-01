@@ -76,9 +76,7 @@ public class GoalControllerTest extends BaseTest {
     public void create() throws Exception {
         Goal demoEntity = objectMapper.readValue(demoCreate, Goal.class);
         checkEntities(demoEntity.getUsefulLinks());
-        checkEntity(demoEntity.getCustomData());
         checkEntities(demoEntity.getTasks());
-        demoEntity.getTasks().forEach(t->checkEntity(t.getCustomData()));
         // create without documents
         String res = mockMvc.perform(MockMvcRequestBuilders.post("/goals")
                                                            .params(getGoalParams(demoEntity))
@@ -92,12 +90,7 @@ public class GoalControllerTest extends BaseTest {
         final Goal result = objectMapper.readValue(res, Goal.class);
         demoEntity.setId(result.getId());
         verifyEntities(demoEntity.getUsefulLinks(), result.getUsefulLinks());
-        verifyEntity(demoEntity.getCustomData(), result.getCustomData());
         verifyEntities(demoEntity.getTasks(), result.getTasks());
-        IntStream.range(0, demoEntity.getTasks()
-                                 .size()).forEach(idx -> {
-            verifyEntity(demoEntity.getTasks().get(idx).getCustomData(), result.getTasks().get(idx).getCustomData());
-        });
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
         verifyDocuments(0);
         // upload file
@@ -125,13 +118,11 @@ public class GoalControllerTest extends BaseTest {
         demoEntity.setId(0);
         demoEntity.setTasks(null);
         demoEntity.setDocuments(null);
-        demoEntity.setCustomData(null);
         mockMvc.perform(MockMvcRequestBuilders.post("/goals")
                                               .params(getGoalParams(demoEntity))
                                               .contentType(MediaType.MULTIPART_FORM_DATA))
                .andExpect(status().isCreated())
                .andExpect(jsonPath("$.id").isNumber())
-               .andExpect(jsonPath("$.customData").doesNotExist())
                .andExpect(jsonPath("$.documents", Matchers.hasSize(0)))
                .andExpect(jsonPath("$.tasks", Matchers.hasSize(0)));
     }
@@ -145,38 +136,19 @@ public class GoalControllerTest extends BaseTest {
     public void update() throws Exception {
         Goal demoEntity = objectMapper.readValue(demo, Goal.class);
         checkEntities(demoEntity.getUsefulLinks());
-        checkEntity(demoEntity.getCustomData());
         checkEntities(demoEntity.getTasks());
-        demoEntity.getTasks().forEach(t->checkEntity(t.getCustomData()));
         demoEntity.setId(1);
         // update without documents
         String res = mockMvc.perform(MockMvcRequestBuilders.post("/goals/1")
                                                            .params(getGoalParams(demoEntity))
                                                            .contentType(MediaType.MULTIPART_FORM_DATA))
                             .andExpect(status().isOk())
-                            .andExpect(jsonPath("$.customData.mentee.id").value((int) demoEntity.getCustomData()
-                                                                                                .getMentee()
-                                                                                                .getId()))
-                            .andExpect(jsonPath("$.customData.mentor.id").value((int) demoEntity.getCustomData()
-                                                                                                .getMentor()
-                                                                                                .getId()))
                             .andReturn()
                             .getResponse()
                             .getContentAsString();
         Goal result = objectMapper.readValue(res, Goal.class);
         verifyEntities(demoEntity.getUsefulLinks(), result.getUsefulLinks());
-        verifyEntity(demoEntity.getCustomData(), result.getCustomData());
         verifyEntities(demoEntity.getTasks(), result.getTasks());
-        IntStream.range(0, demoEntity.getTasks()
-                                     .size()).forEach(idx -> {
-            verifyEntity(demoEntity.getTasks().get(idx).getCustomData(), result.getTasks().get(idx).getCustomData());
-        });
-        demoEntity.getCustomData()
-                  .setMentee(result.getCustomData()
-                                   .getMentee());
-        demoEntity.getCustomData()
-                  .setMentor(result.getCustomData()
-                                   .getMentor());
         demoEntity.setTasks(result.getTasks());
         assertEquals(objectMapper.writeValueAsString(demoEntity), objectMapper.writeValueAsString(result));
         // upload file
@@ -287,12 +259,6 @@ public class GoalControllerTest extends BaseTest {
                .andExpect(jsonPath("$.totalPages").value(1))
                .andExpect(jsonPath("$.entities", Matchers.hasSize(1)))
                .andExpect(jsonPath("$.entities[0].id").value(3));
-        mockMvc.perform(MockMvcRequestBuilders.get("/goals?custom=true")
-                                              .accept(MediaType.APPLICATION_JSON))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.total").value(3))
-               .andExpect(jsonPath("$.totalPages").value(1))
-               .andExpect(jsonPath("$.entities", Matchers.hasSize(3)));
         mockMvc.perform(MockMvcRequestBuilders.get("/goals?subject=subject3")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
@@ -302,7 +268,7 @@ public class GoalControllerTest extends BaseTest {
                .andExpect(jsonPath("$.entities[0].id").value(3));
         mockMvc.perform(MockMvcRequestBuilders.get
                 ("/goals?pageNumber=0&pageSize=2&sortColumn=subject&sortOrder=DESC&institutionalProgramId=1" +
-                        "&description=description1&custom=true&subject=subject1")
+                        "&description=description1&subject=subject1")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.total").value(1))

@@ -5,10 +5,6 @@
       "durationInDays": 2,
       "mentorAssignment": true,
       "menteeAssignment": false,
-      "documents": [],
-      "usefulLinks": [],
-      "custom": false,
-      "customData": null,
       "goalId": 2
   },
   "completed": false,

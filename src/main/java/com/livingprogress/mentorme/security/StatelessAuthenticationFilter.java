@@ -1,5 +1,6 @@
 package com.livingprogress.mentorme.security;
 
+import com.livingprogress.mentorme.entities.LocaleContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +13,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Collections;
 
 /**
  * The state less auth filter.
@@ -45,6 +47,9 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
      * @param request the http servlet request.
      */
     private void setAuthenticationFromHeader(HttpServletRequest request) {
+        // set the current locales of the user
+        LocaleContext.setCurrentLocales(Collections.list(request.getLocales()));
+
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof UserAuthentication)) {
             final UserAuthentication userAuthentication = tokenAuthenticationService.getAuthentication(request);

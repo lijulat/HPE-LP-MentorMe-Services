@@ -52,13 +52,6 @@ public class InstitutionalProgram extends AuditableEntity {
     private Institution institution;
 
     /**
-     * The program category.
-     */
-    @ManyToOne
-    @JoinColumn(name = "program_category_id")
-    private ProgramCategory programCategory;
-
-    /**
      * The goals.
      */
     @OneToMany(mappedBy = "institutionalProgram", cascade = ALL)
@@ -75,7 +68,7 @@ public class InstitutionalProgram extends AuditableEntity {
      * The responsibilities.
      */
     @OneToMany(mappedBy = "institutionalProgram", cascade = ALL)
-    private List<ProgramSkill> skills;
+    private List<InstitutionalProgramSkill> skills;
 
     /**
      * The documents.
@@ -104,5 +97,12 @@ public class InstitutionalProgram extends AuditableEntity {
      * The program url.
      */
     private String programImageUrl;
+
+    /**
+     * The locale;
+     */
+    @ManyToOne
+    @JoinColumn(name = "locale_id", nullable = false)
+    private Locale locale;
 }
 

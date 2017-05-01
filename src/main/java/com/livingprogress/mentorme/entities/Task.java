@@ -40,35 +40,6 @@ public class Task extends IdentifiableEntity {
     private Boolean menteeAssignment;
 
     /**
-     * The documents.
-     */
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "task_document",
-            joinColumns = {@JoinColumn(name = "task_id")},
-            inverseJoinColumns = {@JoinColumn(name = "document_id")})
-    private List<Document> documents;
-
-    /**
-     * The useful links.
-     */
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "task_useful_link",
-            joinColumns = {@JoinColumn(name = "task_id")},
-            inverseJoinColumns = {@JoinColumn(name = "useful_link_id")})
-    private List<UsefulLink> usefulLinks;
-
-    /**
-     * Flag for the custom task (the custom goal created for the mentee-mentor pair).
-     */
-    private boolean custom;
-
-    /**
-     * Custom assigned task data.
-     */
-    @OneToOne(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CustomAssignedTaskData customData;
-
-    /**
      * The goal id.
      */
     @Column(name = "goal_id", insertable = false, updatable = false)

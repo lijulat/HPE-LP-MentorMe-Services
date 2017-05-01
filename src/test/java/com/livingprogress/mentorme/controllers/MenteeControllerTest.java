@@ -13,12 +13,14 @@ import com.livingprogress.mentorme.entities.WeightedPersonalInterest;
 import com.livingprogress.mentorme.entities.WeightedProfessionalInterest;
 import com.livingprogress.mentorme.remote.services.HODClient;
 import org.hamcrest.Matchers;
+import org.hibernate.Hibernate;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -146,6 +148,7 @@ public class MenteeControllerTest extends BaseTest {
      * @throws Exception throws if any error happens.
      */
     @Test
+    @Transactional
     public void update() throws Exception {
         // no updates
         mockMvc.perform(MockMvcRequestBuilders.put("/mentees/4")
@@ -250,6 +253,7 @@ public class MenteeControllerTest extends BaseTest {
                                                                      return weightedProfessionalInterest;
                                                                  })
                                                                  .collect(Collectors.toList()));
+        Hibernate.initialize(demoEntity);
         mockMvc.perform(MockMvcRequestBuilders.put("/mentees/4")
                                               .contentType(MediaType.APPLICATION_JSON)
                                               .content(objectMapper.writeValueAsString(demoEntity)))
@@ -465,6 +469,7 @@ public class MenteeControllerTest extends BaseTest {
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$", Matchers.hasSize(2)));
+
         mockMvc.perform(MockMvcRequestBuilders.get("/mentees/4/matchingMentors?distance=2")
                                               .accept(MediaType.APPLICATION_JSON))
                .andExpect(status().isOk())

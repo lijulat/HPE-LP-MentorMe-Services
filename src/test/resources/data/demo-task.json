@@ -4,25 +4,6 @@
   "durationInDays": 1,
   "mentorAssignment": true,
   "menteeAssignment": true,
-  "documents": [],
-  "usefulLinks": [
-    {
-      "title": "title4",
-      "address": "address4",
-      "author": {"id": 4},
-      "createdOn": "2016-12-01"
-    },
-    {
-      "title": "title3",
-      "address": "address3",
-      "author": {"id": 3},
-      "createdOn": "2016-12-01"
-    }
-  ],
-  "custom": true,
-  "customData": {
-    "mentor": {"id": 3},
-    "mentee":{"id": 4}
-  },
-  "goalId": 1
+  "goalId": 1,
+  "id": 1
 }

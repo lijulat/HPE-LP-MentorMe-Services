@@ -3,17 +3,11 @@
     "number": 2,
     "subject": "subject2",
     "description": "description2",
-    "goalCategory": {
-      "id": 2,
-      "value": "GoalCategory2"
-    },
     "durationInDays": 2,
     "tasks": null,
     "institutionalProgramId": null,
     "usefulLinks": [],
-    "documents": [],
-    "custom": false,
-    "customData": null
+    "documents": []
   },
   "completed": false,
   "completedOn": null,
