@@ -227,6 +227,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mentee` (
   `id` BIGINT NOT NULL,
   `institution_id` BIGINT NOT NULL,
+  `locale_id` BIGINT NOT NULL,
   `birth_date` DATE NOT NULL,
   `phone` VARCHAR(45) NULL,
   `skype_username` VARCHAR(45) NULL,
@@ -250,6 +251,11 @@ CREATE TABLE IF NOT EXISTS `mentee` (
    CONSTRAINT `me_ii_fk`
     FOREIGN KEY (`institution_id`)
     REFERENCES `institution` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `me_li_fk`
+    FOREIGN KEY (`locale_id`)
+    REFERENCES `locale` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `me_u_fk`
@@ -276,6 +282,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mentor` (
   `id` BIGINT NOT NULL,
   `institution_id` BIGINT NOT NULL,
+  `locale_id` BIGINT NOT NULL,
   `birth_date` DATE NULL,
   `phone` VARCHAR(45) NULL,
   `skype_username` VARCHAR(45) NULL,
@@ -295,6 +302,11 @@ CREATE TABLE IF NOT EXISTS `mentor` (
   CONSTRAINT `m_ii_fk`
     FOREIGN KEY (`institution_id`)
     REFERENCES `institution` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+   CONSTRAINT `m_li_fk`
+    FOREIGN KEY (`locale_id`)
+    REFERENCES `locale` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `m_u_fk`
