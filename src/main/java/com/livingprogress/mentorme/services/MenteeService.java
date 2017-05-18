@@ -1,6 +1,7 @@
 package com.livingprogress.mentorme.services;
 
 import com.livingprogress.mentorme.entities.InstitutionAffiliationCode;
+import com.livingprogress.mentorme.entities.Locale;
 import com.livingprogress.mentorme.entities.Mentee;
 import com.livingprogress.mentorme.entities.MenteeSearchCriteria;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
@@ -50,5 +51,15 @@ public interface MenteeService extends GenericService<Mentee, MenteeSearchCriter
      * @throws MentorMeException if there are any errors.
      */
     InstitutionAffiliationCode findInstitutionAffiliationCode(String code) throws MentorMeException;
+
+
+    /**
+     * Finds the Locale Instance.
+     * @param code the code.
+     * @return the Locale instance.
+     * @throws MentorMeException if there are any errors.
+     */
+    Locale findLocale(String value) throws MentorMeException;
+    
 }
 

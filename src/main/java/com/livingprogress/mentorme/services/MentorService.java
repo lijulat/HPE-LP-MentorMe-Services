@@ -1,5 +1,6 @@
 package com.livingprogress.mentorme.services;
 
+import com.livingprogress.mentorme.entities.Locale;
 import com.livingprogress.mentorme.entities.Mentor;
 import com.livingprogress.mentorme.entities.MentorSearchCriteria;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
@@ -31,5 +32,14 @@ public interface MentorService extends GenericService<Mentor, MentorSearchCriter
      * @throws MentorMeException if any other error occurred during operation
      */
     int getAverageMentorScore(long id) throws MentorMeException;
+    
+    
+    /**
+     * Finds the Locale Instance.
+     * @param code the code.
+     * @return the Locale instance.
+     * @throws MentorMeException if there are any errors.
+     */
+    Locale findLocale(String value) throws MentorMeException;
 }
 

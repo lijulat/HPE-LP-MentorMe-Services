@@ -2,6 +2,7 @@ package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.aop.LogAspect;
 import com.livingprogress.mentorme.entities.*;
+import com.livingprogress.mentorme.entities.Locale;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
@@ -177,6 +178,14 @@ public class MenteeController extends BaseEmailController {
                 break;
             }
         }
+        
+        if(entity.getLocale()!=null && entity.getLocale().getValue()!=null){
+			String value=entity.getLocale().getValue();
+			Locale localeobj = menteeService.findLocale(value);
+			entity.setLocale(localeobj);
+		}
+        
+        
 
         // set the status
         entity.setStatus(UserStatus.ACTIVE);

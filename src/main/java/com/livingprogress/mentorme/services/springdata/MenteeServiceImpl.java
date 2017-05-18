@@ -1,6 +1,7 @@
 package com.livingprogress.mentorme.services.springdata;
 
 import com.livingprogress.mentorme.entities.InstitutionAffiliationCode;
+import com.livingprogress.mentorme.entities.Locale;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.utils.Helper;
 import com.livingprogress.mentorme.entities.Mentee;
@@ -30,6 +31,10 @@ public class MenteeServiceImpl extends BaseService<Mentee, MenteeSearchCriteria>
     @Autowired
     private MenteeMentorProgramRepository menteeMentorProgramRepository;
 
+    @Autowired
+    private LocaleRepository localeRepository;
+    
+    
     /**
      * The mentee repository for CRUD operations. Should be non-null after injection.
      */
@@ -158,5 +163,13 @@ public class MenteeServiceImpl extends BaseService<Mentee, MenteeSearchCriteria>
     public InstitutionAffiliationCode findInstitutionAffiliationCode(String code) throws MentorMeException {
         return institutionAffiliationCodeRepository.findByCode(code);
     }
+    
+    
+
+	@Override
+	public Locale findLocale(String value) throws MentorMeException {
+		// TODO Auto-generated method stub
+		return localeRepository.findByValue(value);
+	}
 }
 

@@ -24,6 +24,11 @@ public abstract class InstitutionUserSearchCriteria {
     private Long institutionId;
 
     /**
+     * The locale id.
+     */
+    private Long localeId;
+    
+    /**
      * The status.
      */
     private UserStatus status;

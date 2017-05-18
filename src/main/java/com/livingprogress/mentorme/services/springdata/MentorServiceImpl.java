@@ -2,6 +2,7 @@ package com.livingprogress.mentorme.services.springdata;
 
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.utils.Helper;
+import com.livingprogress.mentorme.entities.Locale;
 import com.livingprogress.mentorme.entities.Mentor;
 import com.livingprogress.mentorme.entities.MentorSearchCriteria;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
@@ -29,6 +30,10 @@ public class MentorServiceImpl extends BaseService<Mentor, MentorSearchCriteria>
     @Autowired
     private MenteeMentorProgramRepository menteeMentorProgramRepository;
 
+    @Autowired
+    private LocaleRepository localeRepository;
+    
+    
     /**
      * Check if all required fields are initialized properly.
      *
@@ -128,5 +133,13 @@ public class MentorServiceImpl extends BaseService<Mentor, MentorSearchCriteria>
         }
         return existing;
     }
+    
+    
+
+	@Override
+	public Locale findLocale(String value) throws MentorMeException {
+		// TODO Auto-generated method stub
+		return localeRepository.findByValue(value);
+	}
 }
 

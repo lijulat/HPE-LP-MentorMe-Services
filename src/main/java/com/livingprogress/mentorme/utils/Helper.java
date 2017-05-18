@@ -504,6 +504,7 @@ public class Helper {
     public static Predicate
     buildPredicate(InstitutionUserSearchCriteria criteria, Predicate pd, Root<?> root, CriteriaBuilder cb) {
         Predicate resultPD = Helper.buildEqualPredicate(criteria.getInstitutionId(), pd, root.get("institution").get("id"), cb);
+        resultPD = Helper.buildEqualPredicate(criteria.getLocaleId(), resultPD, root.get("locale").get("id"), cb);
         resultPD = Helper.buildEqualPredicate(criteria.getStatus(), resultPD, root.get("status"), cb);
         resultPD = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinAveragePerformanceScore(),
                 resultPD, root.get("averagePerformanceScore"), cb);
@@ -1252,6 +1253,10 @@ public class Helper {
             GenericService<R, T> service) throws MentorMeException {
     	if (entity.getInstitution() != null) {
     		criteria.setInstitutionId(entity.getInstitution().getId());
+    	}
+    	
+    	if (entity.getLocale() != null) {
+    		criteria.setLocaleId(entity.getLocale().getId());
     	}
     	
         Paging paging = null;
