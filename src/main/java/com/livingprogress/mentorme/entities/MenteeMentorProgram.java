@@ -23,7 +23,6 @@ import static javax.persistence.EnumType.STRING;
 import static javax.persistence.FetchType.EAGER;
 import static javax.persistence.TemporalType.DATE;
 import static javax.persistence.TemporalType.TIMESTAMP;
-import static javax.persistence.CascadeType.ALL;
 
 /**
  * The mentee-mentor program.
