@@ -166,11 +166,18 @@ public class MentorController {
                 break;
             }
         }
-        if(entity.getLocale()!=null && entity.getLocale().getValue()!=null){
-			String value=entity.getLocale().getValue();
-			Locale localeobj = mentorService.findLocale(value);
-			entity.setLocale(localeobj);
-		}
+
+	//set the locale object
+        Locale localeObj = entity.getLocale();
+        String localeValue = localeObj.getValue();
+        if(localeObj!=null && localeValue!=null){
+	     Locale localeObjTemp = mentorService.findLocale(localeValue); // fetch the Locale Instance
+	     entity.setLocale(localeObjTemp);                              // Set in the entity
+        }
+	else {
+             //locale value is null
+	     throw new IllegalArgumentException("Language value not implemented");
+	}
 
         // set the status
         entity.setStatus(UserStatus.ACTIVE);

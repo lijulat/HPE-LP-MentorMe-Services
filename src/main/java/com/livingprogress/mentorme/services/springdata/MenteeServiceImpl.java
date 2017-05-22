@@ -31,6 +31,9 @@ public class MenteeServiceImpl extends BaseService<Mentee, MenteeSearchCriteria>
     @Autowired
     private MenteeMentorProgramRepository menteeMentorProgramRepository;
 
+    /**
+     * The locale repository for CRUD operations. Should be non-null after injection.
+     */
     @Autowired
     private LocaleRepository localeRepository;
     
@@ -165,11 +168,18 @@ public class MenteeServiceImpl extends BaseService<Mentee, MenteeSearchCriteria>
     }
     
     
-
-	@Override
-	public Locale findLocale(String value) throws MentorMeException {
-		// TODO Auto-generated method stub
-		return localeRepository.findByValue(value);
-	}
+    /**
+     * This method is used to get an Locale Instance.
+     *
+     * @param value, the entity to retrieve having this value
+     * @return the retrieved entity
+     * @throws EntityNotFoundException if the entity does not exist
+     * @throws IllegalArgumentException if entity is null or not valid
+     * @throws MentorMeException if any other error occurred during operation
+     */
+    @Override
+    public Locale findLocale(String value) throws MentorMeException {
+        return localeRepository.findByValue(value);
+    }
 }
 

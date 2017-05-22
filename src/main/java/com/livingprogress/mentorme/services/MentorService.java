@@ -35,8 +35,8 @@ public interface MentorService extends GenericService<Mentor, MentorSearchCriter
     
     
     /**
-     * Finds the Locale Instance.
-     * @param code the code.
+     * This method is used to get the Locale Instance from the value.
+     * @param the value.
      * @return the Locale instance.
      * @throws MentorMeException if there are any errors.
      */

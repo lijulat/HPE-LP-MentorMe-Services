@@ -1254,7 +1254,7 @@ public class Helper {
     	if (entity.getInstitution() != null) {
     		criteria.setInstitutionId(entity.getInstitution().getId());
     	}
-    	
+    	//match with language too
     	if (entity.getLocale() != null) {
     		criteria.setLocaleId(entity.getLocale().getId());
     	}

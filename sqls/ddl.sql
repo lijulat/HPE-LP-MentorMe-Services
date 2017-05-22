@@ -248,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `mentee` (
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-   CONSTRAINT `me_ii_fk`
+  CONSTRAINT `me_ii_fk`
     FOREIGN KEY (`institution_id`)
     REFERENCES `institution` (`id`)
     ON DELETE CASCADE
@@ -304,7 +304,7 @@ CREATE TABLE IF NOT EXISTS `mentor` (
     REFERENCES `institution` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-   CONSTRAINT `m_li_fk`
+  CONSTRAINT `m_li_fk`
     FOREIGN KEY (`locale_id`)
     REFERENCES `locale` (`id`)
     ON DELETE CASCADE

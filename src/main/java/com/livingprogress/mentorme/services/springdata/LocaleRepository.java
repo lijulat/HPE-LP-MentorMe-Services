@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
  */
 public interface LocaleRepository extends JpaRepository<Locale, Long>, JpaSpecificationExecutor<Locale> {
 
-	/**
-     * Find by the value.
+    /**
+     * This method retrieves locale object
      * @param  the value
      * @return the instance.
      */
