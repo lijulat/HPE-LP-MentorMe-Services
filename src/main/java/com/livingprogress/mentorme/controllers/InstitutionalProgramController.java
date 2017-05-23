@@ -298,17 +298,35 @@ public class InstitutionalProgramController extends BaseUploadController {
             List<MenteeMentorGoal> goals = new ArrayList<>();
             for (Goal goal : instProgram.getGoals()) {
                 MenteeMentorGoal mmGoal = new MenteeMentorGoal();
+                goal.setId(null);
+                goal.setinstitutionalProgramId(null);
 
+                if (goal.getDocuments() != null && !goal.getDocuments().isEmpty()) {
+                    List<Document> documents = new ArrayList<>();
+                    for (Document document : goal.getDocuments()) {                        
+                        document.setId(null);
+                        documents.add(document);
+                    }
+                    goal.setDocuments(documents);
+                }
+                
+                if (goal.getUsefulLinks() != null && !goal.getUsefulLinks().isEmpty()) {
+                    List<UsefulLink> usefulLinks = new ArrayList<>();
+                    for (UsefulLink usefulLink : goal.getUsefulLinks()) {                        
+                        usefulLink.setId(null);
+                        usefulLinks.add(usefulLink);
+                     }
+                     goal.setUsefulLinks(usefulLinks);
+                }
+                
                 mmGoal.setGoal(goal);
-                mmGoal.setMenteeMentorProgram(mmProgram);
-                mmGoal.setDocuments(new ArrayList<>(goal.getDocuments()));
-                mmGoal.setUsefulLinks(new ArrayList<>(goal.getUsefulLinks()));
+                mmGoal.setMenteeMentorProgram(mmProgram);             
                 
                 if (goal.getTasks() != null && !goal.getTasks().isEmpty()) {
                     List<MenteeMentorTask> tasks = new ArrayList<>();
                     for (Task task : goal.getTasks()) {
                         MenteeMentorTask mmTask = new MenteeMentorTask();
-
+                        task.setId(null);
                         mmTask.setTask(task);
                         mmTask.setMenteeMentorGoal(mmGoal);
                         mmTask.setStartDate(date.toDate());                        
