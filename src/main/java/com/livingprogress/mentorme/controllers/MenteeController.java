@@ -189,7 +189,7 @@ public class MenteeController extends BaseEmailController {
 	else {
             //locale value is null
 	    throw new IllegalArgumentException("Language value not implemented");
-	}
+        }
 
         // set the status
         entity.setStatus(UserStatus.ACTIVE);

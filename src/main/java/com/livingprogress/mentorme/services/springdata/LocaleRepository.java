@@ -15,7 +15,7 @@ public interface LocaleRepository extends JpaRepository<Locale, Long>, JpaSpecif
      * @param  the value
      * @return the instance.
      */
-	Locale findByValue(String value);
+    Locale findByValue(String value);
 
 }
 
