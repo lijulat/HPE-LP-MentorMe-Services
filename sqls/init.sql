@@ -3325,14 +3325,16 @@ INSERT INTO professional_consultant_area_locale VALUES (10,'Trabajo Social',2,4)
 INSERT INTO professional_consultant_area_locale VALUES (11,'Medicina',2,5);
 INSERT INTO professional_consultant_area_locale VALUES (12,'Consultoría Financiera',2,6);
 
-INSERT INTO institution VALUES (1, 'Pupilo', 'GTC Consulting' , 'Bahia de Acapulco #2988', 'Tlaquepaque', 63, '45609', 142,'52 133-1221-6072', 'pupilo@gtc.com', 'PUPILO is an innovative no profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', true);
+INSERT INTO institution VALUES (1, 'Pupilo', 'GTC Consulting' , 'Bahia de Acapulco #2988', 'Tlaquepaque', 63, '45609', 142,'52 133-1221-6072', 'pupilo@gtc.com', 'PUPILO is an innovative no profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', 'ACTIVE','http://54.213.111.178:8100/img/program/pupilo.png', '2016-12-13', '2016-12-13', true);
 INSERT INTO institution VALUES (2, 'Lideres del Mañana', 'ITESM' , 'Av. Eugenio Garza Sada 2501 Sur', 'Monterrey', 68, '64849', 142,'52 81-8358-2000', 'paulina.martinez@itesm.mx', 'Líderes del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', false);
 INSERT INTO institution VALUES (3, 'Incubación de Empresas CIETT', 'UANL' , 'Av. Lázaro Cárdenas 4600 Oriente', 'Monterrey', 68, '64930', 142,'52 81-8329-4000', 'ciett@uanl.mx', 'The main objective of the Business Incubator area is to create and develop micro and small businesses so they are profitable and innovative.  This is done through counseling, training, profesional consulting in any of the business areas as well as follow through to facilitate access to financial sources', 'ACTIVE','https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif', '2016-12-13', '2016-12-13', false);
 
 
-INSERT INTO institutional_program VALUES (1, 'Pupilo', 'PUPILO is an innovative no profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', '2016-10-11','2017-10-31',1,1, '2016-10-10','img/program/p2.png', '2016-10-10',1);
-INSERT INTO institutional_program VALUES (2, 'Lideres del Mañana', 'Líderes del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', '2016-10-11','2017-10-31',2,1, '2016-10-10','img/program/p3.png', '2016-10-10',2);
+INSERT INTO institutional_program VALUES (1, 'Pupilo-English', 'PUPILO is an innovative non-profit initiative that continuously grows thanks to the volunteering of business and professionals that are commited with society', '2016-10-11','2017-10-31',1,1, '2016-10-10','img/program/p2.png', '2016-10-10',1);
+INSERT INTO institutional_program VALUES (2, 'Lideres del Mañana', 'Lideres del Mañana looks to potentializing the formation and development of young talented Mexicans, that due to their econocmic and social condition require a full scholarship to study at the Tec', '2016-10-11','2017-10-31',2,1, '2016-10-10','img/program/p3.png', '2016-10-10',2);
 INSERT INTO institutional_program VALUES (3, 'Incubación de Empresas CIETT', 'The main objective of the Business Incubator area is to create and develop micro and small businesses so they are profitable and innovative.  This is done through counseling, training, profesional consulting in any of the business areas as well as follow through to facilitate access to financial sources', '2016-10-11','2017-10-31',3,1, '2016-10-10','img/program/p4.png', '2016-10-10',2);
+INSERT INTO institutional_program VALUES (4, 'Pupilo-Español', 'PUPILO es una iniciativa innovadora sin fines de lucro que crece continuamente gracias al voluntariado de empresarios y profesionistas compremetidos con la sociedad.', '2016-10-11','2017-10-31',1,20, '2016-10-10','img/program/p2.png', '2017-04-28', 2);
+
 
 insert into institution_affiliation_code values (1, 'pupilo', 1, true);
 insert into institution_affiliation_code values (2, 'lideres', 2, true);
@@ -3383,17 +3385,25 @@ insert into skill_locale values (26, 'Deportes, Fitness y Nutrición',2,12);
 insert into skill_locale values (27, 'Empleos y Pasantías',2,13);
 insert into skill_locale values (28, 'Innovación',2,14);
 
-
 INSERT INTO responsibility VALUES (1, 1, 'Book meetings', '2016-12-01', true, true, 1);
 INSERT INTO responsibility VALUES (2, 2, 'Followup on activities', '2016-12-01', false, true, 1);
 INSERT INTO responsibility VALUES (3, 3, 'Report progress', '2016-12-01', false, true, 1);
 INSERT INTO responsibility VALUES (4, 4, 'Evaluate mentor', '2016-12-01', true, false, 1);
 INSERT INTO responsibility VALUES (5, 5, 'Evaluate mentee', '2016-12-01', false, true, 1);
+INSERT INTO responsibility VALUES (6, 1, 'Agendar juntas', '2016-12-01', true, true, 4);
+INSERT INTO responsibility VALUES (7, 2, 'Dar seguimiento a actividades', '2016-12-01', false, true, 4);
+INSERT INTO responsibility VALUES (8, 3, 'Reportar progreso', '2016-12-01', false, true, 4);
+INSERT INTO responsibility VALUES (9, 4, 'Evaluar al mentor', '2016-12-01', true, false, 4);
+INSERT INTO responsibility VALUES (10, 5, 'Evaluar al mentee', '2016-12-01', false, true, 4);
 
 INSERT INTO goal VALUES (1, 1, 'Study a University Degree','Research scope and knowledge areas as well as work opportunities for the degree of Chemical and Food Engineering', 4, 1);
 INSERT INTO goal VALUES (2, 2, 'Taking Decisions','Improve the decision taking process to make it more effective', 1, 1);
 INSERT INTO goal VALUES (3, 3, 'English proficiency','Improve the current written and spoken English', 1, 1);
 INSERT INTO goal VALUES (4, 4, 'Improve grade average','Improve current grade average to be able to apply for a university scholarship', 1, 1);
+INSERT INTO goal VALUES (5, 1, 'Estudio de Carrera Universitaria','Investigar sobre el alcance y áreas de conocimiento y oportunidades laborales en las carreras de Ingeniería Química y de Alimentos.', 1, 4);
+INSERT INTO goal VALUES (6, 2, 'Toma de decisiones','Mejorar el proceso de tomas de decisiones para ser más efectivo.', 1, 4);
+INSERT INTO goal VALUES (7, 3, 'Nivel de Inglés','Mejorar el nivel actual de inglés escrito y hablado.', 1, 4);
+INSERT INTO goal VALUES (8, 4, 'Mejorar promedio de calificaciones','Mejorar el promedio actual para poder solicitar becas de universidad.', 1, 4);
 
 INSERT INTO task VALUES (1, 'Research scope and knowledge areas as well as work opportunities for the degree of Chemical and Food Engineering', 5, true, false, 1, 1);
 INSERT INTO task VALUES (2, 'Visit University which specializes in Chemical or Food Engineering', 5, true, false, 1, 2);
@@ -3405,27 +3415,56 @@ INSERT INTO task VALUES (7, 'Review English Language Schools identified by Mente
 INSERT INTO task VALUES (8, 'Explain how to create a study strategy', 14, false, true, 4, 8);
 INSERT INTO task VALUES (9, 'Suggest sample study guides and strategies', 7, false, true, 4, 9);
 INSERT INTO task VALUES (10, 'Plan a study strategy', 14, true, false, 4, 10);
+INSERT INTO task VALUES (11, 'Investigar las áreas de estudio y las oportunidades laborales de las carreras de Ingeniería Química y de Alimentos', 5, true, false, 5, 1);
+INSERT INTO task VALUES (12, 'Visitar universidades locales que se especialicen en ingenierías Química y de Alimentos', 5, true, false, 5, 2);
+INSERT INTO task VALUES (13, 'Revisar y explicar el programa de mentoría y sus materiales. Platicar sobre las oportunidades en Ingeniería Química y de Alimentos', 4, false, true, 5, 3);
+INSERT INTO task VALUES (14, 'Recomendar libros y artículos de planeación de carrera y toma de decisiones.', 7, false, true, 6, 4);
+INSERT INTO task VALUES (15, 'Leer artículos y recomendar libros sugeridos por el mentor.', 21, true, false, 6, 5);
+INSERT INTO task VALUES (16, 'Investigar escuelas de inglés y programas', 14, true, false, 7, 6);
+INSERT INTO task VALUES (17, 'Revisar las escuelas de inglés ique el estudiante haya investigado.', 7, false, true, 7, 7);
+INSERT INTO task VALUES (18, 'Explicar cómo crear un estrategia de estudio.', 14, false, true, 8, 8);
+INSERT INTO task VALUES (19, 'Sugerir guías de estudio y estrategias', 7, false, true, 8, 9);
+INSERT INTO task VALUES (20, 'Sugerir guías de estudio y estrategias', 14, true, false, 8, 10);
 
 INSERT INTO useful_link VALUES (1, 'GTC', 'http://gtcconsult.com/', 1, '2016-01-03');
 INSERT INTO useful_link VALUES (2, 'ITESM', 'http://tec.mx/', 1, '2016-01-03');
 INSERT INTO useful_link VALUES (3, 'UANL', 'http://www.uanl.mx/', 1, '2016-01-03');
+INSERT INTO useful_link VALUES (4, 'Escuela ICI', 'http://ici.edu.mx/', 1, '2016-01-03');
+INSERT INTO useful_link VALUES (5, 'Admisiones Tec', 'http://admision.itesm.mx/programas-academicos', 1, '2016-01-03');
+
 INSERT INTO institutional_program_link VALUES (1, 1);
 INSERT INTO institutional_program_link VALUES (2, 2);
 INSERT INTO institutional_program_link VALUES (3, 3);
+INSERT INTO institutional_program_link VALUES (4, 4);
 
 INSERT INTO document VALUES (1, 'Escuela ICI', 'https://drive.google.com/file/d/0B4WHaU2mA6WBUEZOUjFMMkRLSmM/view', 1, '2016-12-01', 1, '2016-12-01');
 INSERT INTO document VALUES (2, 'CV', 'https://drive.google.com/file/d/0B4WHaU2mA6WBTGJwTWtVZVJzY0k/view', 1, '2016-12-01', 1, '2016-12-01');
-INSERT INTO goal_document VALUES (3, 1);
-INSERT INTO goal_document VALUES (4, 2);
-
-INSERT INTO useful_link VALUES (4, 'Escuela ICI', 'http://ici.edu.mx/', 1, '2016-01-03');
-INSERT INTO useful_link VALUES (5, 'Admisiones Tec', 'http://admision.itesm.mx/programas-academicos', 1, '2016-01-03');
-INSERT INTO goal_useful_link VALUES (3, 4);
-INSERT INTO goal_useful_link VALUES (4, 5);
-
 INSERT INTO document VALUES (3, 'Presentation', 'https://drive.google.com/file/d/0B4WHaU2mA6WBZUxqV21nallic0U/view', 1, '2016-12-01', 1, '2016-12-01');
 INSERT INTO document VALUES (4, 'Banners', 'https://drive.google.com/file/d/0B4WHaU2mA6WBTlpYUG1xcy02OWM/view', 1, '2016-12-01', 1, '2016-12-01');
 INSERT INTO document VALUES (5, 'Support Letter ITESM', 'https://drive.google.com/file/d/0B4WHaU2mA6WBb0VvS0lMbWlwZVk/view', 1, '2016-12-01', 1, '2016-12-01');
+
+INSERT INTO goal_document VALUES (3, 1);
+INSERT INTO goal_document VALUES (4, 2);
+INSERT INTO goal_document VALUES (7, 1);
+INSERT INTO goal_document VALUES (8, 2);
+
+INSERT INTO goal_useful_link VALUES (3, 4);
+INSERT INTO goal_useful_link VALUES (4, 5);
+INSERT INTO goal_useful_link VALUES (7, 4);
+INSERT INTO goal_useful_link VALUES (8, 5);
+
 INSERT INTO institutional_program_document VALUES (1, 3);
 INSERT INTO institutional_program_document VALUES (2, 4);
 INSERT INTO institutional_program_document VALUES (2, 5);
+INSERT INTO institutional_program_document VALUES (4, 3);
+
+
+
+
+
+
+
+
+
+
+

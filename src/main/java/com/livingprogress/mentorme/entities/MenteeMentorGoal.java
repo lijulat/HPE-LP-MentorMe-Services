@@ -20,7 +20,7 @@ public class MenteeMentorGoal extends IdentifiableEntity {
     /**
      * The goal.
      */
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = { CascadeType.PERSIST })
     @JoinColumn(name = "goal_id")
     private Goal goal;
 
