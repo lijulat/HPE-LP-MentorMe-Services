@@ -227,7 +227,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mentee` (
   `id` BIGINT NOT NULL,
   `institution_id` BIGINT NOT NULL,
-  `locale_id` BIGINT NOT NULL,
   `birth_date` DATE NOT NULL,
   `phone` VARCHAR(45) NULL,
   `skype_username` VARCHAR(45) NULL,
@@ -240,6 +239,7 @@ CREATE TABLE IF NOT EXISTS `mentee` (
   `parent_consent_id` BIGINT NULL,
   `facebook_url` VARCHAR(256) NULL,
   `whats_app_name` VARCHAR(256) NULL,
+  `locale_id` BIGINT NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   INDEX `me_pk_fk_idx` (`parent_consent_id` ASC),
   INDEX `me_iac_fk_idx` (`institution_affiliation_code_id` ASC),
@@ -282,7 +282,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mentor` (
   `id` BIGINT NOT NULL,
   `institution_id` BIGINT NOT NULL,
-  `locale_id` BIGINT NOT NULL,
   `birth_date` DATE NULL,
   `phone` VARCHAR(45) NULL,
   `skype_username` VARCHAR(45) NULL,
@@ -293,6 +292,7 @@ CREATE TABLE IF NOT EXISTS `mentor` (
   `company_name` VARCHAR(45) NULL,
   `linked_in_url` VARCHAR(256) NULL,
   `whats_app_name` VARCHAR(256) NULL,
+  `locale_id` BIGINT NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   CONSTRAINT `m_id_fk`
     FOREIGN KEY (`id`)
