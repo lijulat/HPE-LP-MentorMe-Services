@@ -59,7 +59,7 @@ public interface MenteeService extends GenericService<Mentee, MenteeSearchCriter
      * @return the Locale instance.
      * @throws MentorMeException if there are any errors.
      */
-    Locale findLocale(String value) throws MentorMeException;
+    Locale findLocaleByValue(String value) throws MentorMeException;
     
 }
 
