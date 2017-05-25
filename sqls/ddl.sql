@@ -743,14 +743,14 @@ CREATE TABLE IF NOT EXISTS `institutional_program_skill` (
   `institutional_program_id` BIGINT NOT NULL,
   `skill_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `ps_ipi_fk_idx` (`institutional_program_id` ASC),
-  INDEX `ps_s_fk_idx` (`skill_id` ASC),
-    CONSTRAINT `ps_ipi_fk0`
+  INDEX `ps_ipi_fk_idx1` (`institutional_program_id` ASC),
+  INDEX `ps_s_fk_idx1` (`skill_id` ASC),
+    CONSTRAINT `ps_ipi_fk10`
         FOREIGN KEY (`institutional_program_id`)
         REFERENCES `institutional_program` (`id`)
         ON DELETE CASCADE
         ON UPDATE NO ACTION,
-      CONSTRAINT `ps_s_fk1`
+      CONSTRAINT `ps_s_fk10`
         FOREIGN KEY (`skill_id`)
         REFERENCES `skill` (`id`)
         ON DELETE CASCADE
