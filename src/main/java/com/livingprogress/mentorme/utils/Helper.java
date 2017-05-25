@@ -504,12 +504,12 @@ public class Helper {
     public static Predicate
     buildPredicate(InstitutionUserSearchCriteria criteria, Predicate pd, Root<?> root, CriteriaBuilder cb) {
         Predicate resultPD = Helper.buildEqualPredicate(criteria.getInstitutionId(), pd, root.get("institution").get("id"), cb);
-        resultPD = Helper.buildEqualPredicate(criteria.getLocaleId(), resultPD, root.get("locale").get("id"), cb);
+        resultPD = Helper.buildEqualPredicate(criteria.getLocaleId(), resultPD, root.get("locale").get("id"), cb); // match with locale id too
         resultPD = Helper.buildEqualPredicate(criteria.getStatus(), resultPD, root.get("status"), cb);
         resultPD = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinAveragePerformanceScore(),
                 resultPD, root.get("averagePerformanceScore"), cb);
         resultPD = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxAveragePerformanceScore(),
-                resultPD, root.get("averagePerformanceScore"), cb);
+                resultPD, root.get("averagePerformanceScore"), cb);you
         resultPD = Helper.buildNamePredicate(criteria.getName(), resultPD, root, cb);
         resultPD = Helper.buildInPredicate(criteria.getPersonalInterests(), resultPD,
                 root.join("personalInterests", JoinType.LEFT).get("personalInterest").get("id"), cb);
