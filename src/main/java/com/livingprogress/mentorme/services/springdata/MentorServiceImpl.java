@@ -147,7 +147,7 @@ public class MentorServiceImpl extends BaseService<Mentor, MentorSearchCriteria>
      * @throws MentorMeException if any other error occurred during operation
      */
     @Override
-    public Locale findLocale(String value) throws MentorMeException {
+    public Locale findLocaleByValue(String value) throws MentorMeException {
 
 	return localeRepository.findByValue(value);
     }
