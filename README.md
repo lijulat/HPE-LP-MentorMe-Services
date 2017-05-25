@@ -19,7 +19,7 @@ This is the deployment guide for the Mentor Me API.
 ## API Configuration
 ### application configuration
 Edit file `src/main/resources/application.properties`:
-- **spring.datasource.url**: MySQL server connection url
+- **spring.datasource.url**: MySQL server connection url (In order to compatible with all characters, add this param string after the database url: '?useUnicode=true&characterEncoding=UTF-8')
 - **spring.datasource.username**: MySQL Server username
 - **spring.datasource.password**: MySQL Server password
 - **spring.mail.host**: SMTP Server host

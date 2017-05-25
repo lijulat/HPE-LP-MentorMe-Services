@@ -1,1 +1,1 @@
-Reset password for ${user.username}!
+Reset password for ${user.email}!
