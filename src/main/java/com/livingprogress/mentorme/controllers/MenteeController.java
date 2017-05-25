@@ -185,8 +185,7 @@ public class MenteeController extends BaseEmailController {
 	   String localeValue = localeObj.getValue();
 	   Locale localeObjTemp = mentorService.findLocaleByValue(localeValue); // fetch the Locale Instance
 	   entity.setLocale(localeObjTemp);                              // Set in the entity 
-	}
-	else {
+	} else {
 	   Locale localeObjTemp = mentorService.findLocaleByValue("en");        // get locale Instance having "en" by default
 	   entity.setLocale(localeObjTemp);                              // Set in the entity by default english language
 	}
