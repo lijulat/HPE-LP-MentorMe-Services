@@ -509,7 +509,7 @@ public class Helper {
         resultPD = Helper.buildGreaterThanOrEqualToPredicate(criteria.getMinAveragePerformanceScore(),
                 resultPD, root.get("averagePerformanceScore"), cb);
         resultPD = Helper.buildLessThanOrEqualToPredicate(criteria.getMaxAveragePerformanceScore(),
-                resultPD, root.get("averagePerformanceScore"), cb);you
+                resultPD, root.get("averagePerformanceScore"), cb);
         resultPD = Helper.buildNamePredicate(criteria.getName(), resultPD, root, cb);
         resultPD = Helper.buildInPredicate(criteria.getPersonalInterests(), resultPD,
                 root.join("personalInterests", JoinType.LEFT).get("personalInterest").get("id"), cb);
