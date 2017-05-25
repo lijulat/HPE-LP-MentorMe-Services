@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.Collections;
-import java.util.Date;
-import java.util.List;
 
 /**
  * The Spring Data JPA implementation of MenteeMentorGoalService,extends BaseService<MenteeMentorGoal,
@@ -35,6 +33,7 @@ public class MenteeMentorGoalServiceImpl extends BaseService<MenteeMentorGoal, M
      */
     @Autowired
     private ActivityRepository activityRepository;
+
 
     /**
      * The mentee mentor program repository to create activity. Should be non-null after injection.
@@ -129,24 +128,7 @@ public class MenteeMentorGoalServiceImpl extends BaseService<MenteeMentorGoal, M
                 menteeMentorProgramRepository, ActivityType.GOAL_UPDATED, updated.getId(),
                 CustomMessageSource.getMessage("menteeMentorGoal.updated.description"),
                 Helper.getId(updated.getMenteeMentorProgram()), false);
-        checkMenteeMentorProgram(updated.getMenteeMentorProgram());
         return updated;
     }
-
-    /**
-     * Check if all goals in mentee/mentor program are completed and updated program.
-     * 
-     * @param menteeMentorProgram the program to check and update
-     */
-    private void checkMenteeMentorProgram(MenteeMentorProgram menteeMentorProgram) {
-		List<MenteeMentorGoal> goals = menteeMentorProgram.getGoals();
-		boolean completed = goals.stream().allMatch(t -> t.isCompleted());
-		if (completed != menteeMentorProgram.isCompleted()) {
-			menteeMentorProgram.setCompleted(completed);
-			menteeMentorProgram.setCompletedOn(completed ? new Date() : null);
-			menteeMentorProgramRepository.saveAndFlush(menteeMentorProgram);
-		}
-	}
-
 }
 
