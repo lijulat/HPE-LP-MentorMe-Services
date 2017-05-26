@@ -9,6 +9,7 @@ import com.livingprogress.mentorme.services.MenteeService;
 import com.livingprogress.mentorme.services.MentorService;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -160,8 +161,11 @@ public class MenteeMentorProgramController {
             }
         }
         Mentee mentee = menteeService.get(program.getMentee().getId());
-        mentee.setAveragePerformanceScore((int) (sum / c + 0.5));
-        menteeService.update(mentee.getId(), mentee);
+        Mentee cloneMentee = new Mentee();
+        BeanUtils.copyProperties(mentee, cloneMentee);
+        cloneMentee.setAveragePerformanceScore((int) (sum / c + 0.5));
+        cloneMentee.setPassword(null);
+        menteeService.update(mentee.getId(), cloneMentee);
 
     }
 
@@ -197,8 +201,11 @@ public class MenteeMentorProgramController {
             }
         }
         Mentor mentor = mentorService.get(program.getMentor().getId());
-        mentor.setAveragePerformanceScore((int) (sum / c + 0.5));
-        mentorService.update(mentor.getId(), mentor);
+        Mentor cloneMentor =  new Mentor();
+        BeanUtils.copyProperties(mentor, cloneMentor);
+        cloneMentor.setAveragePerformanceScore((int) (sum / c + 0.5));
+        cloneMentor.setPassword(null);        
+        mentorService.update(mentor.getId(), cloneMentor);
     }
 }
 
