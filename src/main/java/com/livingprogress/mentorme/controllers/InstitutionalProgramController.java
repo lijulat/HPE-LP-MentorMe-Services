@@ -298,18 +298,55 @@ public class InstitutionalProgramController extends BaseUploadController {
             List<MenteeMentorGoal> goals = new ArrayList<>();
             for (Goal goal : instProgram.getGoals()) {
                 MenteeMentorGoal mmGoal = new MenteeMentorGoal();
+                Goal cloneGoal = new Goal();
+                cloneGoal.setDescription(goal.getDescription());
+                cloneGoal.setSubject(goal.getSubject());
+                cloneGoal.setDurationInDays(goal.getDurationInDays());
+                cloneGoal.setNumber(goal.getNumber());
 
-                mmGoal.setGoal(goal);
-                mmGoal.setMenteeMentorProgram(mmProgram);
-                mmGoal.setDocuments(new ArrayList<>(goal.getDocuments()));
-                mmGoal.setUsefulLinks(new ArrayList<>(goal.getUsefulLinks()));
+                if (goal.getDocuments() != null && !goal.getDocuments().isEmpty()) {
+                    List<Document> documents = new ArrayList<>();                   
+                    for (Document document : goal.getDocuments()) {
+                        Document cloneDocument = new Document();
+                        cloneDocument.setName(document.getName());
+                        cloneDocument.setPath(document.getPath());  
+                        cloneDocument.setCreatedBy(document.getCreatedBy());                   
+                        cloneDocument.setCreatedOn(document.getCreatedOn());
+                        cloneDocument.setLastModifiedBy(document.getLastModifiedBy());             
+                        cloneDocument.setLastModifiedOn(document.getLastModifiedOn());
+                        documents.add(cloneDocument);
+                    }
+                    cloneGoal.setDocuments(documents);
+                }
+                
+                if (goal.getUsefulLinks() != null && !goal.getUsefulLinks().isEmpty()) {
+                    List<UsefulLink> usefulLinks = new ArrayList<>();
+                    for (UsefulLink usefulLink : goal.getUsefulLinks()) {
+                        UsefulLink cloneUsefulLink = new UsefulLink();
+                        cloneUsefulLink.setTitle(usefulLink.getTitle());
+                        cloneUsefulLink.setAddress(usefulLink.getAddress());
+                        cloneUsefulLink.setCreatedOn(usefulLink.getCreatedOn());
+                        cloneUsefulLink.setAuthor(usefulLink.getAuthor());
+                        usefulLinks.add(cloneUsefulLink);
+                     }
+                     cloneGoal.setUsefulLinks(usefulLinks);
+                }
+                
+                mmGoal.setGoal(cloneGoal);
+                mmGoal.setMenteeMentorProgram(mmProgram);             
                 
                 if (goal.getTasks() != null && !goal.getTasks().isEmpty()) {
                     List<MenteeMentorTask> tasks = new ArrayList<>();
                     for (Task task : goal.getTasks()) {
                         MenteeMentorTask mmTask = new MenteeMentorTask();
-
-                        mmTask.setTask(task);
+                        Task cloneTask = new Task();
+                        cloneTask.setNumber(task.getNumber());
+                        cloneTask.setDescription(task.getDescription());
+                        cloneTask.setDurationInDays(task.getDurationInDays());
+                        cloneTask.setMenteeAssignment(task.getMenteeAssignment());
+                        cloneTask.setMentorAssignment(task.getMentorAssignment());
+                        cloneTask.setGoal(cloneGoal);
+                        mmTask.setTask(cloneTask);
                         mmTask.setMenteeMentorGoal(mmGoal);
                         mmTask.setStartDate(date.toDate());                        
                         date = date.plusDays(task.getDurationInDays());
