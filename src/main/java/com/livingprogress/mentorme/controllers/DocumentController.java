@@ -4,6 +4,8 @@ import com.livingprogress.mentorme.entities.ActivityType;
 import com.livingprogress.mentorme.entities.Document;
 import com.livingprogress.mentorme.entities.MenteeMentorGoal;
 import com.livingprogress.mentorme.entities.MenteeMentorProgram;
+import com.livingprogress.mentorme.entities.User;
+import com.livingprogress.mentorme.exceptions.AccessDeniedException;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
@@ -98,9 +100,15 @@ public class DocumentController extends BaseUploadController {
             @RequestParam("files") MultipartFile[] documents) throws MentorMeException {
 
         List<Document> docs = Helper.uploadDocuments(getUploadDirectory(), documents);
+        User user = Helper.getAuthUser();
 
         if (EntityTypes.MENTEE_MENTOR_PROGRAM.equalsIgnoreCase(entityType)) {
             MenteeMentorProgram program = menteeMentorProgramService.get(entityId);
+
+            if (Helper.isMentee() && program.getMentee().getId() != user.getId()) {
+                throw new AccessDeniedException("You can not upload files to this program!");
+            }
+
             program.getDocuments().addAll(docs);
             // newly added document
             for (Document doc : docs) {
@@ -112,6 +120,9 @@ public class DocumentController extends BaseUploadController {
             }
         } else if (EntityTypes.MENTEE_MENTOR_GOAL.equalsIgnoreCase(entityType)) {
             MenteeMentorGoal goal = menteeMentorGoalService.get(entityId);
+            if (Helper.isMentee() && goal.getMenteeMentorProgram().getMentee().getId() != user.getId()) {
+                throw new AccessDeniedException("You can not upload files to this goal!");
+            }
             goal.getGoal().getDocuments().addAll(docs);
             goal.getDocuments().addAll(docs);
             // newly added document
