@@ -2392,14 +2392,14 @@ insert into institution_contact values(1, 'title1', 'firstName1', 'lastName1', '
 insert into institution_contact values(2, 'title2', 'firstName2', 'lastName2', 'institutionContact2@test.com', 'phoneNumber2', false, 1);
 insert into institution_contact values(3, 'title3', 'firstName3', 'lastName3', 'institutionContact3@test.com', 'phoneNumber3', true, 2);
 
-insert into mentor values(3, 1, '1988-08-01', 'phone1', 'skypeUsername1','introVideoLink1','description1',0,'MENTEE_PAIRED', 'companyName1','linkedInUrl1', 'whatsapp1');
-insert into mentor values(5, 2, '1988-08-02', 'phone2', 'skypeUsername2','introVideoLink2','description2',1,'PROFESSIONAL_CONSULTANT', 'companyName2','linkedInUrl2', 'whatsapp2');
+insert into mentor values(3, 1, '1988-08-01', 'phone1', 'skypeUsername1','introVideoLink1','description1',0,'MENTEE_PAIRED', 'companyName1','linkedInUrl1', 'whatsapp1',1);
+insert into mentor values(5, 2, '1988-08-02', 'phone2', 'skypeUsername2','introVideoLink2','description2',1,'PROFESSIONAL_CONSULTANT', 'companyName2','linkedInUrl2', 'whatsapp2',1);
 -- must use institution_id=1 for matching
-insert into mentor values(6, 1, '1988-08-03', 'phone3', 'skypeUsername3','introVideoLink3','description3',2,'MENTEE_PAIRED', 'companyName3','linkedInUrl3', 'whatsapp3');
-insert into mentor values(7, 4, '1988-08-04', 'phone4', 'skypeUsername4','introVideoLink4','description4',3,'PROFESSIONAL_CONSULTANT', 'companyName4','linkedInUrl4', 'whatsapp4');
+insert into mentor values(6, 1, '1988-08-03', 'phone3', 'skypeUsername3','introVideoLink3','description3',2,'MENTEE_PAIRED', 'companyName3','linkedInUrl3', 'whatsapp3',1);
+insert into mentor values(7, 4, '1988-08-04', 'phone4', 'skypeUsername4','introVideoLink4','description4',3,'PROFESSIONAL_CONSULTANT', 'companyName4','linkedInUrl4', 'whatsapp4',1);
 -- must use institution_id=1 for matching
-insert into mentor values(8, 1, '1988-08-05', 'phone5', 'skypeUsername5','introVideoLink5','description5',4,'MENTEE_PAIRED', 'companyName5','linkedInUrl5', 'whatsapp5');
-insert into mentor values(9, 6, '1988-08-06', 'phone6', 'skypeUsername6','introVideoLink5','description6',5,'PROFESSIONAL_CONSULTANT', 'companyName6','linkedInUrl6', 'whatsapp6');
+insert into mentor values(8, 1, '1988-08-05', 'phone5', 'skypeUsername5','introVideoLink5','description5',4,'MENTEE_PAIRED', 'companyName5','linkedInUrl5', 'whatsapp5',1);
+insert into mentor values(9, 6, '1988-08-06', 'phone6', 'skypeUsername6','introVideoLink5','description6',5,'PROFESSIONAL_CONSULTANT', 'companyName6','linkedInUrl6', 'whatsapp6',1);
 
 insert into mentor_professional_area values(3,1);
 insert into mentor_professional_area values(3,2);
@@ -2465,14 +2465,14 @@ insert into parent_consent values(1, 'parentName1', 'signatureFilePath1', 'paren
 insert into parent_consent values(2, 'parentName2', 'signatureFilePath2', 'parentEmail2@test.com', null, 'token2');
 
 
-insert into mentee values(4, 1, '1988-08-01', 'phone1', 'skypeUsername1','introVideoLink1','description1',0,101.91,'school1',1,1,'facebookUrl1', null);
-insert into mentee values(10, 2, '1988-08-02', 'phone2', 'skypeUsername2','introVideoLink2','description2',1,102.92,'school2',2,2,'facebookUrl2', null);
+insert into mentee values(4, 1, '1988-08-01', 'phone1', 'skypeUsername1','introVideoLink1','description1',0,101.91,'school1',1,1,'facebookUrl1', null,1);
+insert into mentee values(10, 2, '1988-08-02', 'phone2', 'skypeUsername2','introVideoLink2','description2',1,102.92,'school2',2,2,'facebookUrl2', null,1);
 -- must use institution_id=1 for matching
-insert into mentee values(11, 1, '1988-08-03', 'phone3', 'skypeUsername3','introVideoLink3','description3',2,103.93,'school3',3,NULL,'facebookUrl3', null);
-insert into mentee values(12, 4, '1988-08-04', 'phone4', 'skypeUsername4','introVideoLink4','description4',3,104.94,'school4',4,NULL,'facebookUrl4', null);
+insert into mentee values(11, 1, '1988-08-03', 'phone3', 'skypeUsername3','introVideoLink3','description3',2,103.93,'school3',3,NULL,'facebookUrl3', null,1);
+insert into mentee values(12, 4, '1988-08-04', 'phone4', 'skypeUsername4','introVideoLink4','description4',3,104.94,'school4',4,NULL,'facebookUrl4', null,1);
 -- must use institution_id=1 for matching
-insert into mentee values(13, 1, '1988-08-05', 'phone5', 'skypeUsername5','introVideoLink5','description5',4,105.95,'school5',5,NULL,'facebookUrl5', null);
-insert into mentee values(14, 6, '1988-08-06', 'phone6', 'skypeUsername6','introVideoLink6','description6',5,106.96,'school6',6,NULL,'facebookUrl6', null);
+insert into mentee values(13, 1, '1988-08-05', 'phone5', 'skypeUsername5','introVideoLink5','description5',4,105.95,'school5',5,NULL,'facebookUrl5', null,1);
+insert into mentee values(14, 6, '1988-08-06', 'phone6', 'skypeUsername6','introVideoLink6','description6',5,106.96,'school6',6,NULL,'facebookUrl6', null,1);
 
 insert into mentor_feedback values(1, 12, 'mentor_feedback_comment1', '2016-12-01');
 
