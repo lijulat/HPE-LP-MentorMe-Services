@@ -45,8 +45,8 @@
     "logoPath" : null
   },
   "locale": {
-    "id":1,
-    "value":"en"
+    "id": 1,
+    "value": "en"
   },
   "birthDate" : "1999-09-08T00:00:00",
   "phone" : "demoMentee1Phone",
