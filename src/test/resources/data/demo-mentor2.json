@@ -55,8 +55,8 @@
     "logoPath": "logoPath1"
   },
   "locale": {
-    "id":1,
-    "value":"en"
+    "id": 1,
+    "value": "en"
   },
   "birthDate": "1989-09-09",
   "phone": "demoMentor2Phone2",
