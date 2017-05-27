@@ -2,12 +2,13 @@ package com.livingprogress.mentorme.controllers;
 
 import com.livingprogress.mentorme.entities.MenteeMentorGoal;
 import com.livingprogress.mentorme.entities.MenteeMentorGoalSearchCriteria;
+import com.livingprogress.mentorme.entities.MenteeMentorProgram;
 import com.livingprogress.mentorme.entities.Paging;
 import com.livingprogress.mentorme.entities.SearchResult;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
-import com.livingprogress.mentorme.services.MenteeMentorGoalService;
+import com.livingprogress.mentorme.services.*;
 import com.livingprogress.mentorme.utils.Helper;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Date;
+
+
 
 /**
  * The mentee  mentor goal REST controller. Is effectively thread safe.
@@ -35,6 +40,12 @@ public class MenteeMentorGoalController {
      */
     @Autowired
     private MenteeMentorGoalService menteeMentorGoalService;
+
+    /**
+     * The mentee mentor program service used to create mentee mentor program
+     */
+    @Autowired
+    private MenteeMentorProgramService menteeMentorProgramService;
 
     /**
      * Check if all required fields are initialized properly.
@@ -91,7 +102,29 @@ public class MenteeMentorGoalController {
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public MenteeMentorGoal update(@PathVariable long id, @RequestBody MenteeMentorGoal entity) throws
             MentorMeException {
-        return menteeMentorGoalService.update(id, entity);
+
+        MenteeMentorGoal updated = menteeMentorGoalService.update(id, entity);;
+        if(updated.isCompleted())
+        {
+            MenteeMentorProgram menteeMentorProgram = updated.getMenteeMentorProgram();
+            List<MenteeMentorGoal> goals = menteeMentorProgram.getGoals();
+            boolean programCompleted = true; 
+            for (MenteeMentorGoal goal : goals) {
+                if(!goal.isCompleted())
+                {
+                    programCompleted = false;
+                    break;
+                }
+            }
+            if(programCompleted)
+            {
+                menteeMentorProgram.setCompleted(true);
+                menteeMentorProgram.setCompletedOn(new Date());
+                menteeMentorProgram.setEndDate(new Date());
+                menteeMentorProgramService.update(menteeMentorProgram.getId(), menteeMentorProgram);
+            }
+        }
+        return updated;
     }
 
     /**
@@ -123,4 +156,3 @@ public class MenteeMentorGoalController {
         return menteeMentorGoalService.search(criteria, paging);
     }
 }
-
