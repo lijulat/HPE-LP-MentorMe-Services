@@ -3,6 +3,8 @@ package com.livingprogress.mentorme.controllers;
 import com.livingprogress.mentorme.entities.MenteeMentorGoal;
 import com.livingprogress.mentorme.entities.MenteeMentorProgram;
 import com.livingprogress.mentorme.entities.UsefulLink;
+import com.livingprogress.mentorme.entities.User;
+import com.livingprogress.mentorme.exceptions.AccessDeniedException;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.exceptions.MentorMeException;
@@ -63,10 +65,15 @@ public class UsefulLinkController {
     @Transactional
     public UsefulLink create(@PathVariable String entityType, @PathVariable long entityId,
             @RequestBody UsefulLink usefulLink) throws MentorMeException {
+        User user= Helper.getAuthUser();
         usefulLink.setCreatedOn(new Date());
-        usefulLink.setAuthor(Helper.getAuthUser());
+        usefulLink.setAuthor(user);
         if (EntityTypes.MENTEE_MENTOR_PROGRAM.equalsIgnoreCase(entityType)) {
             MenteeMentorProgram program = menteeMentorProgramService.get(entityId);
+
+            if (Helper.isMentee() && program.getMentee().getId() != user.getId()) {
+                throw new AccessDeniedException("You can not add links to this program!");
+            }
 
             program.getUsefulLinks().add(usefulLink);
         } else if (EntityTypes.MENTEE_MENTOR_GOAL.equalsIgnoreCase(entityType)) {
