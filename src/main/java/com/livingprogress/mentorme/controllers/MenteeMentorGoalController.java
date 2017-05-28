@@ -104,26 +104,22 @@ public class MenteeMentorGoalController {
             MentorMeException {
 
         MenteeMentorGoal updated = menteeMentorGoalService.update(id, entity);;
-        if(updated.isCompleted())
-        {
-            MenteeMentorProgram menteeMentorProgram = updated.getMenteeMentorProgram();
-            List<MenteeMentorGoal> goals = menteeMentorProgram.getGoals();
-            boolean programCompleted = true; 
-            for (MenteeMentorGoal goal : goals) {
-                if(!goal.isCompleted())
-                {
-                    programCompleted = false;
-                    break;
-                }
-            }
-            if(programCompleted)
+       
+        MenteeMentorProgram menteeMentorProgram = updated.getMenteeMentorProgram();
+        List<MenteeMentorGoal> goals = menteeMentorProgram.getGoals();
+        boolean programCompleted = true; 
+        for (MenteeMentorGoal goal : goals) {
+            if(!goal.isCompleted())
             {
-                menteeMentorProgram.setCompleted(true);
-                menteeMentorProgram.setCompletedOn(new Date());
-                menteeMentorProgram.setEndDate(new Date());
-                menteeMentorProgramService.update(menteeMentorProgram.getId(), menteeMentorProgram);
+                programCompleted = false;
+                break;
             }
-        }
+        }            
+        menteeMentorProgram.setCompleted(programCompleted);
+        menteeMentorProgram.setCompletedOn(programCompleted ? new Date() : null);                
+        menteeMentorProgramService.update(menteeMentorProgram.getId(), menteeMentorProgram);
+           
+        
         return updated;
     }
 
