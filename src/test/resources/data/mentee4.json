@@ -64,6 +64,10 @@
     "status" : "ACTIVE",
     "logoPath" : "https://slice.mit.edu/wp-content/uploads/2010/04/mitseal.gif"
   },
+  "locale": {
+    "id": 1,
+    "value": "en"
+  },
   "birthDate" : "1988-08-01",
   "phone" : "phone1",
   "skypeUsername" : "skypeUsername1",

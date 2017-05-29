@@ -32,6 +32,13 @@ public abstract class InstitutionUser extends User {
     private Institution institution;
 
     /**
+     * The Locale
+     */
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "locale_id")
+    private Locale locale;
+    
+    /**
      * The birth date.
      */
     @Temporal(DATE)
