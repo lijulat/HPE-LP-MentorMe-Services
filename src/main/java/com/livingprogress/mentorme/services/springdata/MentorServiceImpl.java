@@ -2,6 +2,7 @@ package com.livingprogress.mentorme.services.springdata;
 
 import com.livingprogress.mentorme.exceptions.EntityNotFoundException;
 import com.livingprogress.mentorme.utils.Helper;
+import com.livingprogress.mentorme.entities.Locale;
 import com.livingprogress.mentorme.entities.Mentor;
 import com.livingprogress.mentorme.entities.MentorSearchCriteria;
 import com.livingprogress.mentorme.exceptions.ConfigurationException;
@@ -29,6 +30,13 @@ public class MentorServiceImpl extends BaseService<Mentor, MentorSearchCriteria>
     @Autowired
     private MenteeMentorProgramRepository menteeMentorProgramRepository;
 
+    /**
+     * The locale repository for CRUD operations. Should be non-null after injection.
+     */
+    @Autowired
+    private LocaleRepository localeRepository;
+    
+    
     /**
      * Check if all required fields are initialized properly.
      *
@@ -127,6 +135,21 @@ public class MentorServiceImpl extends BaseService<Mentor, MentorSearchCriteria>
             return getRepository().save(existing);
         }
         return existing;
+    }
+    
+     /**
+     * This method is used to get an Locale Instance.
+     *
+     * @param value, the entity to retrieve having this value
+     * @return the retrieved entity
+     * @throws EntityNotFoundException if the entity does not exist
+     * @throws IllegalArgumentException if entity is null or not valid
+     * @throws MentorMeException if any other error occurred during operation
+     */
+    @Override
+    public Locale findLocaleByValue(String value) throws MentorMeException {
+
+	return localeRepository.findByValue(value);
     }
 }
 

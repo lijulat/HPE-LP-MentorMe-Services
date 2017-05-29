@@ -239,6 +239,7 @@ CREATE TABLE IF NOT EXISTS `mentee` (
   `parent_consent_id` BIGINT NULL,
   `facebook_url` VARCHAR(256) NULL,
   `whats_app_name` VARCHAR(256) NULL,
+  `locale_id` BIGINT NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   INDEX `me_pk_fk_idx` (`parent_consent_id` ASC),
   INDEX `me_iac_fk_idx` (`institution_affiliation_code_id` ASC),
@@ -247,9 +248,14 @@ CREATE TABLE IF NOT EXISTS `mentee` (
     REFERENCES `user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-   CONSTRAINT `me_ii_fk`
+  CONSTRAINT `me_ii_fk`
     FOREIGN KEY (`institution_id`)
     REFERENCES `institution` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `me_li_fk`
+    FOREIGN KEY (`locale_id`)
+    REFERENCES `locale` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `me_u_fk`
@@ -286,6 +292,7 @@ CREATE TABLE IF NOT EXISTS `mentor` (
   `company_name` VARCHAR(45) NULL,
   `linked_in_url` VARCHAR(256) NULL,
   `whats_app_name` VARCHAR(256) NULL,
+  `locale_id` BIGINT NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   CONSTRAINT `m_id_fk`
     FOREIGN KEY (`id`)
@@ -295,6 +302,11 @@ CREATE TABLE IF NOT EXISTS `mentor` (
   CONSTRAINT `m_ii_fk`
     FOREIGN KEY (`institution_id`)
     REFERENCES `institution` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION,
+  CONSTRAINT `m_li_fk`
+    FOREIGN KEY (`locale_id`)
+    REFERENCES `locale` (`id`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `m_u_fk`
